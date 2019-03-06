@@ -96,6 +96,9 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf
 INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/proposta/images/dblocos.png
+INPUT c:/Users/user/Documents/isel/ps/social-routing/proposta/images/dblocos.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/proposta/images/dblocos.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
