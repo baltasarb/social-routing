@@ -43,35 +43,20 @@
     %enquadramento,  %descrição clara do projeto,  %citação de literatura já lida;
     %discussão dos problemas a resolver e de possíveis técnicas e ferramentas
 
-    From a tourism perspective, when visiting an unknown place it is usually hard to know which areas to visit without 
-    checking either an online or book resource and even then some of the resources might be outdated or business directed 
-    (when a restaurant appears in a guide because it payed the guide creators to include it in it for instance). 
-    This is what this project aims to solve, a quick way to search and undergo user made routes that might include places
-    of interest.     
+        From a tourism perspective, when visiting an unknown place it is usually hard to know which areas to visit without 
+        checking either an online or book resource and even then some of the resources might be outdated or business directed 
+        (when a restaurant appears in a guide because it payed the guide creators to include it in it for instance). 
+        This is what this project aims to solve, a quick way to search and undergo user made routes that might include places
+        of interest.     
 
-    The idea is to create a mobile application that provides this service and has the following functionalities:
-    \begin{itemize}
-        \item Route creation.
-        \item Ability to search (with filters) and go on a route, following it in real time on a map.
-        \item Route updates and suggestions (by a different user).
-        \item Ability to engage in conversation with a user that is undergoing the same route.  
-    \end{itemize}
+        The idea is to create a mobile application that provides this service and has the following functionalities:
+        \begin{itemize}
+            \item Route creation.
+            \item Ability to search (with filters) and go on a route, following it in real time on a map.
+            \item Route updates and suggestions (by a different user).
+            \item Ability to engage in conversation with a user that is undergoing the same route.  
+        \end{itemize}
 
-    In the context of the application, a route is a path from point A to point B, that goes through user determined sub paths
-    that might either have relevance or simply provide the fastest way to the next point of interest of that route. 
-
-    An example of events when using the application might be something like this:
-    A user at his hotel decides he wants to go sightseeing for an hour and check the surrounding area by foot.
-    \begin{itemize}  
-        \item The user starts the application and searches for a route inserting his location and time available to spend on a route.
-        \item The application suggests the top 3 routes available according to proximity to the user starting point, route evaluation and time necessary to complete the given route. 
-        \item The user selects the route and is shown the directions in real time on a map that he has to follow to undergo such route until it is done.
-        \item The user finishes the route and evaluates it, with the possibility of adding a suggestion to it. 
-    \end{itemize}
-    
-    When a route is started the user is immediately added to that route's chat which gives him the possibility to engage in conversation with other users.
-    Of course this is optional and one can chose to do the route alone but this enables another feature when used, the possibility of a guided route,
-    or in other words, the pairing of local (regarding the place) users with foreign or unknowledgeable ones. 
     
     %Turn the unknown into a known worth knowing. Explore a new place through a route worth exploring, made by someone
     %who already visited that same place. It's guided exploration.   
@@ -81,20 +66,32 @@
 
     \section*{Analysis}
 
+        In the context of the application, a route is a path from point A to point B, that goes through user determined sub paths
+        that might either have relevance or simply provide the fastest way to the next point of interest of that route. 
+
+        An example of events when using the application might be:
+
+        A user at his hotel decides he wants to go sightseeing for an hour and check the surrounding area by foot.
+    
+        \begin{itemize}  
+            \item The user starts the application and searches for a route inserting his location and time available to spend on a route.
+            \item The application suggests the top 3 routes available according to proximity to the user starting point, route evaluation and time necessary to complete the given route. 
+            \item The user selects the route and is shown the directions in real time on a map that he has to follow to undergo such route until it is done.
+            \item The user finishes the route and evaluates it, with the possibility of adding a suggestion to it. 
+        \end{itemize}
+    
+        When a route is started the user is immediately added to that route's chat which gives him the possibility to engage in conversation with other users.
+        Of course this is optional and one can chose to do the route alone but this enables another feature when used, the possibility of a guided route,
+        or in other words, the pairing of local (regarding the place) users with foreign or unknowledgeable ones. 
+   
+
         \begin{subsection}{Route Creation and Storage}
-        The starting point of the application is route creation which has a direct impact on how a route is saved. When in route creation mode, the user
-        will be able to see a map where he will be able to add pins to form a route. Each of the pins represents a pair of coordinates and together
-        they form the path to follow. Here comes the first problem, should free pin placement be allowed? The solution is a duplicity of input modes, 
-        free placement and fixed placement. The first will be used when creating a route in a garden or rural area and the second when in a street (road filled) area. 
-        For free placement a line will be drawn directly to the next pin, when on fixed placement the Google Roads API will be used to form a perfect road 
-        type path instead of a line that crosses buildings and ignores curves.
-
-            \begin{figure}[h]
-                \center
-                \caption {An example of a possible route creation. Fixed placement in blue, free placement in yellow.}
-                \includegraphics[scale=0.5]{images/route-creation-modes.png}
-            \end{figure}    
-
+            The starting point of the application is route creation which has a direct impact on how a route is saved. When in route creation mode, the user
+            will be able to see a map where he will be able to add pins to form a route. Each of the pins represents a pair of coordinates and together
+            they form the path to follow. Here comes the first problem, should free pin placement be allowed? The solution is a duplicity of input modes, 
+            free placement and fixed placement. The first will be used when creating a route in a garden or rural area and the second when in a street (road filled) area. 
+            For free placement a line will be drawn directly to the next pin, when on fixed placement the Google Roads API will be used to form a perfect road 
+            type path instead of a line that crosses buildings and ignores curves.           
         \end{subsection}
 
         \begin{subsection}{Path to the Route}
