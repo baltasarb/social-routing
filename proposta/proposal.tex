@@ -50,17 +50,13 @@
             \item Route updates.
             \item Route characterization.
         \end{itemize}
-    
-
-    %Turn the unknown into a known worth knowing. Explore a new place through a route worth exploring, made by someone
-    %who already visited that same place. It's guided exploration.   
 
     \newpage
     
 
     \section{Analysis}
 
-        \subsection{Use case example}
+        \subsection{Use case}
             In the context of the application, a route is a path from point A to point B, that goes through user selected sub paths
             that might either have relevance or simply provide the fastest way to the next point of interest of that route. 
 
@@ -75,45 +71,31 @@
             \item The user finishes the route and evaluates it, with the possibility of adding a suggestion to it. 
         \end{itemize}
         
-        \subsection{Route Creation and Storage}
-            The starting point of the application is route creation which has a direct impact on how a route is saved. When in route creation mode, the user
-            will be able to see a map where he will be able to add pins to form a route. Each of the pins represents a pair of coordinates and together
-            they form the path to follow. Here comes the first problem, should free pin placement be allowed? The solution is a duplicity of input modes, 
-            free placement and fixed placement. The first will be used when creating a route in a garden or rural area and the second when in a street (road filled) area. 
-            For free placement a line will be drawn directly to the next pin, when on fixed placement the Google Roads API will be used to form a perfect road 
-            type path instead of a line that crosses buildings and ignores curves.
+        \subsection{Challenges}
+            
+            Considering the geolocation focused nature of the project there are some challenges to overcome:
 
-        \subsection{Path to the Route}
-            When a route is suggested to a user it must be had in consideration the distance to the starting point of such route, for a route
-            is the existing one plus the distance to its beginning. Before suggesting a route to the user this must be taken into consideration,
-            specially considering the user's time constraints. There might be a perfect route to such user that is situated 30min away and 
-            as such, when suggested, a path to the route must be built and suggested. To be considered also is the case where it's justifiable 
-            to include means of transportation to a route, when walking would not be feasible due to the distance and a bus or train would.
-        
-        \subsection{Route Ordering}            
-            In a scenario where the user is closer to the end than the beginning of a route it 
-            might make more sense to start from the end. 
-            So an option to consider is to make the route available either in reverse or starting from a specific point of interest.       
+            \begin{itemize}
+                \item Characterization of a route: the metadata of a route which may contain elements such as travel time, ground elevation, ground type, age range, category, best time of day to transverse.(cont.......) 
+                \item Route creation, storage and visual representation: on the front-end side, how a route is represented and its creation made available to a user and on the back-end side the way that the information regarding the route is saved.
+                \item Route searching: given search parameters it should be presented to the user the best possible route for his personal case.  
+                \item User authentication: using an external service.
+                \item Live tracking: using an external service, the user must be able to follow the route in real time.
+                \item Path to the route and its ordering: given a starting location, a path to the beginning of a route must be generated, taking the route's ordering into consideration.
+            \end{itemize}
 
-        \subsection{Route Group Chat}
-            When a route is started the user is immediately added to that route's chat which gives him the possibility to engage in conversation with other users.
-            Of course this is optional and one can chose to do the route alone but this enables another feature when used, the possibility of a guided route,
-            or in other words, the pairing of local (regarding the place) users with foreign or unknowledgeable ones.
-        
-        %todo possible friend system? or too much of a social network resemblance?
-
-    \section{Project Structure}
+    \section{System Structure}
         The project will be developed in three major components communicating with each other, separating concerns and business logic.
         
         \begin{figure}[h]
             \includegraphics[width=\textwidth]{images/dblocos.png}
         \end{figure} 
 
-        \subsection{SQL Database}  
+        \subsection{Database Management System (DBMS)}  
             Used to store information regarding each user and created routes. The Social Routing API retrieves user information and is able
             to make better route suggestions to a user because of it. The technologies being considered are MySQL and SQLServer.    
 
-        \subsection{Social Routing API}
+        \subsection{Social Routing Service}
             This http API is responsible for receiving requests from the application component, getting the necessary information from the Database or external APIs
             and responding accordingly. It's in this API that the algorithm for suggesting routes is implemented, the application will only need to show what it
             received from the request.
