@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1551895319 "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf" "proposal" 1551895321
-  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux" 1551895321 397 29c26877a608de122912e0c7ebc0e305 ""
-  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" 1551895317 7905 22b2c714907664c363a033faa19460ce ""
+["pdflatex"] 1552060103 "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf" "proposal" 1552060104
+  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux" 1552060104 1263 3343691c85aef0a82a9bf1e4eb581c71 ""
+  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" 1552060101 7292 b599b22a539eee5e5e7214194713d7d1 ""
   "c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1551109916 3332 103109f5612ad95229751940c61aada0 ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1551108964 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm" 1551108964 1300 63a6111ee6274895728663cf4b4e7e81 ""
@@ -64,11 +64,11 @@
   "c:/texlive/2018/texmf.cnf" 1551113799 673 4ae7b2f49cee444c5343a45b5d0f169c ""
   "images/dblocos.PNG" 1551893865 8224 176abf0c27ca89c40fbda69921a0375a ""
   "images/dblocos.png" 1551893865 8224 176abf0c27ca89c40fbda69921a0375a ""
-  "proposal.aux" 1551895321 397 29c26877a608de122912e0c7ebc0e305 ""
-  "proposal.tex" 1551895317 7905 22b2c714907664c363a033faa19460ce ""
+  "proposal.aux" 1552060104 1263 3343691c85aef0a82a9bf1e4eb581c71 ""
+  "proposal.tex" 1552060101 7292 b599b22a539eee5e5e7214194713d7d1 ""
   (generated)
-  "proposal.log"
-  "proposal.aux"
-  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf"
   "proposal.pdf"
+  "proposal.aux"
   "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.log"
+  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf"
+  "proposal.log"
