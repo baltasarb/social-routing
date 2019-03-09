@@ -76,12 +76,13 @@
             Considering the geolocation focused nature of the project there are some challenges to overcome:
 
             \begin{itemize}
-                \item Characterization of a route: the metadata of a route which may contain elements such as travel time, ground elevation, ground type, age range, category, best time of day to transverse.(cont.......) 
+                \item Characterization of a route: the metadata of a route which may contain elements such as travel time, ground elevation, ground type, age range, category, best time of day to transverse.
                 \item Route creation, storage and visual representation: on the front-end side, how a route is represented and its creation made available to a user and on the back-end side the way that the information regarding the route is saved.
                 \item Route searching: given search parameters it should be presented to the user the best possible route for his personal case.  
                 \item User authentication: using an external service.
                 \item Live tracking: using an external service, the user must be able to follow the route in real time.
                 \item Path to the route and its ordering: given a starting location, a path to the beginning of a route must be generated, taking the route's ordering into consideration.
+                \item External APIs comprehension and usage.
             \end{itemize}
 
     \section{System Structure}
@@ -92,11 +93,14 @@
         \end{figure}  
 
         \subsection{Device}  
-          
+            The project will have a mobile component which consists of an Android application. 
+            This is the component that a user will interact with and is dependent of other internal and external services.
         \subsection{Social Routing Service}
-           
+            The system database and server are located in this component and together they hold the business logic of the system.
+            This logic is exposed to the outside components through an API.
         \subsection{External APIs}
-            
+            This component encompasses the external elements of the system, already created by a third party, to provide a faster project development
+            and to allow functionality extension instead of functionality recreation. 
     \section{Timeline}   
 
 \end{document}
