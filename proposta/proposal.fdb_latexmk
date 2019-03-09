@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1552062655 "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf" "proposal" 1552062656
-  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux" 1552062656 943 e6a7c02c5432c886b9e91f09f53de65c ""
-  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" 1552062652 5699 a9589ab9094ca934fb287945e84dc6fd ""
+["pdflatex"] 1552148622 "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf" "proposal" 1552148623
+  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux" 1552148623 910 a272d10fc98e78fb51f7d65040cc6838 ""
+  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex" 1552148619 4489 cac38a9e669a4d1f334406da7b2a5c4c ""
   "c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1551109916 3332 103109f5612ad95229751940c61aada0 ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm" 1551108964 1324 c910af8c371558dc20f2d7822f66fe64 ""
   "c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm" 1551108964 1300 63a6111ee6274895728663cf4b4e7e81 ""
@@ -62,13 +62,12 @@
   "c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1551113832 3265573 655ac40406f2c37c0d9078d533adef20 ""
   "c:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1551113979 4223237 68c8497177d00a6f8b1925b6970b42a4 ""
   "c:/texlive/2018/texmf.cnf" 1551113799 673 4ae7b2f49cee444c5343a45b5d0f169c ""
-  "images/dblocos.PNG" 1551893865 8224 176abf0c27ca89c40fbda69921a0375a ""
-  "images/dblocos.png" 1551893865 8224 176abf0c27ca89c40fbda69921a0375a ""
-  "proposal.aux" 1552062656 943 e6a7c02c5432c886b9e91f09f53de65c ""
-  "proposal.tex" 1552062652 5699 a9589ab9094ca934fb287945e84dc6fd ""
+  "images/project-structure/system-structure.PNG" 1552148162 37443 19d34cd298aab650a478ced61f7179b0 ""
+  "proposal.aux" 1552148623 910 a272d10fc98e78fb51f7d65040cc6838 ""
+  "proposal.tex" 1552148619 4489 cac38a9e669a4d1f334406da7b2a5c4c ""
   (generated)
-  "proposal.log"
-  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.log"
   "proposal.pdf"
+  "proposal.log"
   "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf"
   "proposal.aux"
+  "c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.log"

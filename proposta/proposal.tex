@@ -87,25 +87,16 @@
     \section{System Structure}
         The project will be developed in three major components communicating with each other, separating concerns and business logic.
         
-        \begin{figure}[h]
-            \includegraphics[width=\textwidth]{images/dblocos.png}
-        \end{figure} 
+        \begin{figure}[h]            
+            \includegraphics[width=\textwidth]{images/project-structure/system-structure.PNG}
+        \end{figure}  
 
-        \subsection{Database Management System (DBMS)}  
-            Used to store information regarding each user and created routes. The Social Routing API retrieves user information and is able
-            to make better route suggestions to a user because of it. The technologies being considered are MySQL and SQLServer.    
-
+        \subsection{Device}  
+          
         \subsection{Social Routing Service}
-            This http API is responsible for receiving requests from the application component, getting the necessary information from the Database or external APIs
-            and responding accordingly. It's in this API that the algorithm for suggesting routes is implemented, the application will only need to show what it
-            received from the request.
-            Considering the database relational model, the technologies being considered are java and kotlin with usage of the Spring Framework. 
-            The external APIs being used are from Google Maps Platform, namely the Google Maps and Google Roads APIs.  
-
-        \subsection{Android Application}
-            In the application resides the visual component of the project, responsible for showing the routes and putting users in contact with each other.
-            While it will require internet to be used, the application will have an offline mode, using persistent storage, to check the current route with no internet connection.
-
+           
+        \subsection{External APIs}
+            
     \section{Timeline}   
 
 \end{document}
