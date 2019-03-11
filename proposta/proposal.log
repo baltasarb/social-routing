@@ -1,14 +1,14 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.3.10)  11 MAR 2019 15:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  11 MAR 2019 20:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/Bernardo/Documents/P.S/social-routing/proposta/proposal.tex
-(c:/Users/Bernardo/Documents/P.S/social-routing/proposta/proposal.tex
+**c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex
+(c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.tex
 LaTeX2e <2018-12-01>
-(e:/texlive/2018/texmf-dist/tex/latex/base/article.cls
+(c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2018/09/03 v1.4i Standard LaTeX document class
-(e:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+(c:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
 File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 )
 \c@part=\count80
@@ -22,11 +22,11 @@ File: size10.clo 2018/09/03 v1.4i Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (e:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+) (c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 Package: pdfpages 2017/10/31 v0.5l Insert pages of external PDF documents (AM)
- (e:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+ (c:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
-) (e:/texlive/2018/texmf-dist/tex/latex/tools/calc.sty
+) (c:/texlive/2018/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
 \calc@Acount=\count88
 \calc@Bcount=\count89
@@ -38,26 +38,26 @@ LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
 \calc@Ccount=\count90
 \calc@Cskip=\skip45
-) (e:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+) (c:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
- (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/atbegshi.sty
 Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
- (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-) (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+) (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
-) (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+) (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
-)) (e:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+)) (c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
-) (e:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
+) (c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
- (e:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+ (c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
- (e:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+ (c:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 )
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
@@ -69,13 +69,13 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
-)) (e:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+)) (c:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
- (e:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+ (c:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
- (e:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+ (c:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-) (e:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 99.
@@ -85,7 +85,7 @@ Package graphics Info: Driver file: pdftex.def on input line 99.
 )
 \AM@pagewidth=\dimen107
 \AM@pageheight=\dimen108
- (e:/texlive/2018/texmf-dist/tex/latex/pdfpages/pppdftex.def
+ (c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2017/10/31 v0.5l Pdfpages driver for pdfTeX (AM)
 )
 \AM@pagebox=\box27
@@ -93,48 +93,105 @@ File: pppdftex.def 2017/10/31 v0.5l Pdfpages driver for pdfTeX (AM)
 \AM@toc@title=\toks16
 \c@AM@survey=\count91
 \AM@templatesizebox=\box28
-) (c:/Users/Bernardo/Documents/P.S/social-routing/proposta/proposal.aux)
+) (c:/texlive/2018/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count92
+\float@exts=\toks17
+\float@box=\box29
+\@float@everytoks=\toks18
+\@floatcapt=\box30
+) (c:/texlive/2018/texmf-dist/tex/latex/graphics/rotating.sty
+Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
+\c@r@tfl@t=\count93
+\rotFPtop=\skip46
+\rotFPbot=\skip47
+\rot@float@box=\box31
+\rot@mess@toks=\toks19
+) (c:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2019/01/04 v1.2 Adjusting TeX boxes (trim, clip, ...)
+ (c:/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+ (c:/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex (c:/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks20
+\XKV@tempa@toks=\toks21
+)
+\XKV@depth=\count94
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+)) (c:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back-ends (calc, etex, pgfmath)
+) (c:/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2018/04/08 v1.1 Trim and clip general TeX material
+ (c:/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
+Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
+\collectedbox=\box32
+)
+\tc@llx=\dimen109
+\tc@lly=\dimen110
+\tc@urx=\dimen111
+\tc@ury=\dimen112
+Package trimclip Info: Using driver 'tc-pdftex.def'.
+ (c:/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+File: tc-pdftex.def 2019/01/04 v2.2 Clipping driver for pdftex
+))
+\adjbox@Width=\dimen113
+\adjbox@Height=\dimen114
+\adjbox@Depth=\dimen115
+\adjbox@Totalheight=\dimen116
+\adjbox@pwidth=\dimen117
+\adjbox@pheight=\dimen118
+\adjbox@pdepth=\dimen119
+\adjbox@ptotalheight=\dimen120
+ (c:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count95
+) (c:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box33
+\sift@deathcycles=\count96
+\@vwid@loff=\dimen121
+\@vwid@roff=\dimen122
+)) (c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux)
 \openout1 = `proposal.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
-LaTeX Font Info:    ... okay on input line 38.
-\AtBeginShipoutBox=\box29
- (e:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+\AtBeginShipoutBox=\box34
+ (c:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count92
-\scratchdimen=\dimen109
-\scratchbox=\box30
-\nofMPsegments=\count93
-\nofMParguments=\count94
-\everyMPshowfont=\toks17
-\MPscratchCnt=\count95
-\MPscratchDim=\dimen110
-\MPnumerator=\count96
-\makeMPintoPDFobject=\count97
-\everyMPtoPDFconversion=\toks18
-) (e:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+\scratchcounter=\count97
+\scratchdimen=\dimen123
+\scratchbox=\box35
+\nofMPsegments=\count98
+\nofMParguments=\count99
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count100
+\MPscratchDim=\dimen124
+\MPnumerator=\count101
+\makeMPintoPDFobject=\count102
+\everyMPtoPDFconversion=\toks23
+) (c:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
- (e:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+ (c:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
- (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-)) (e:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+)) (c:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
- (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
- (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
- (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -142,7 +199,7 @@ Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
-))) (e:/texlive/2018/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+))) (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO)
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
@@ -153,51 +210,61 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 43
 Package grfext Info: Graphics extension search list:
 (grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPEG,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 456.
- (e:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+ (c:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-)) (e:/texlive/2018/texmf-dist/tex/latex/oberdiek/pdflscape.sty
+)) (c:/texlive/2018/texmf-dist/tex/latex/oberdiek/pdflscape.sty
 Package: pdflscape 2016/05/14 v0.11 Display of landscape pages in PDF (HO)
- (e:/texlive/2018/texmf-dist/tex/latex/graphics/lscape.sty
+ (c:/texlive/2018/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
- (e:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+ (c:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 40.
+(Font)              <12> on input line 45.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 40.
+(Font)              <8> on input line 45.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 40.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 47.
- (e:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+(Font)              <6> on input line 45.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 52.
+ (c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 47.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 52.
  [1
 
-{e:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+{c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 <images/project-structure/system-structure.PNG, id=14, 667.74469pt x 281.55188pt>
 File: images/project-structure/system-structure.PNG Graphic file (type png)
 <use images/project-structure/system-structure.PNG>
-Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 92.
+Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 97.
 (pdftex.def)             Requested size: 345.0pt x 145.47125pt.
- [2] [3 <c:/Users/Bernardo/Documents/P.S/social-routing/proposta/images/project-structure/system-structure.PNG>] (c:/Users/Bernardo/Documents/P.S/social-routing/proposta/proposal.aux) ) 
+ [2] [3 <c:/Users/user/Documents/isel/ps/social-routing/proposta/images/project-structure/system-structure.PNG>]
+<timeline/timeline.png, id=23, 1035.11719pt x 344.78813pt>
+File: timeline/timeline.png Graphic file (type png)
+<use timeline/timeline.png>
+Package pdftex.def Info: timeline/timeline.png  used on input line 119.
+(pdftex.def)             Requested size: 494.99664pt x 164.88087pt.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 120.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 120.
+ [4 <c:/Users/user/Documents/isel/ps/social-routing/proposta/timeline/timeline.png>] (c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.aux) ) 
 Here is how much of TeX's memory you used:
- 2779 strings out of 492616
- 40366 string characters out of 6132768
- 113043 words of memory out of 5000000
- 6653 multiletter control sequences out of 15000+600000
+ 3910 strings out of 492616
+ 58838 string characters out of 6132768
+ 133251 words of memory out of 5000000
+ 7740 multiletter control sequences out of 15000+600000
  9435 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,9n,39p,334b,380s stack positions out of 5000i,500n,10000p,200000b,80000s
-<e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on c:/Users/Bernardo/Documents/P.S/social-routing/proposta/proposal.pdf (3 pages, 120306 bytes).
+ 41i,9n,39p,334b,402s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on c:/Users/user/Documents/isel/ps/social-routing/proposta/proposal.pdf (4 pages, 152169 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+ 53 PDF objects out of 1000 (max. 8388607)
+ 35 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

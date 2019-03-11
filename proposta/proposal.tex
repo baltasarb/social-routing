@@ -3,6 +3,11 @@
 \usepackage{pdfpages}
 \usepackage{graphicx}
 
+\usepackage{float}
+\usepackage{rotating}
+
+\usepackage{adjustbox}
+
 \graphicspath{ {./images/} }
 
 \title{
@@ -90,6 +95,7 @@
         
         \begin{figure}[h]            
             \includegraphics[width=\textwidth]{images/project-structure/system-structure.PNG}
+            \caption{System architecture.}
         \end{figure}  
 
         \subsection{Client}  
@@ -101,6 +107,18 @@
         \subsection{External APIs}
             This component encompasses the external elements of the system, already created by a third party, to provide a faster project development
             and to allow functionality extension instead of functionality recreation. 
-    \section{Timeline}   
+    
+    
+        \newpage 
+        \section{Timeline}    
+                \begin{figure}[H]
+                    \begin{adjustbox}{addcode={
+                        \begin{minipage}{\width}}{
+                            \caption{Project timeline.}
+                        \end{minipage}},rotate=90,center}
+                    \includegraphics[width=0.9\textheight]{timeline/timeline.png}
+                    \end{adjustbox}
+                \end{figure}
+                  
 
-\end{document}
+\end{document} 
