@@ -93,17 +93,17 @@
             Considering the geolocation focused nature of the project there are some challenges to overcome:
 
             \begin{itemize}
-                \item Characterization of a route: the metadata of a route which may contain elements such as travel time, ground elevation, ground type, age range, category, best time of day to transverse.
+                \item Characterization of a route: the metadata of a route which may contain elements such as travel time, ground elevation, ground type, age range, category, best time of day to transverse amongst others.
                 \item Route creation, storage and visual representation: on the front-end side, how a route is represented and its creation made available to a user and on the back-end side the way that the information regarding the route is saved.
-                \item Route searching: given search parameters it should be presented to the user the best possible route for his personal case.  
+                \item Route searching: given search parameters each user should have the best possible route suggested to him.  
                 \item User authentication: using an external service.
-                \item Live tracking: using an external service, the user must be able to follow the route in real time.
+                \item Live tracking: the user should be able to follow the route in real time, on his device.
                 \item Path to the route and its ordering: given a starting location, a path to the beginning of a route must be generated, taking the route's ordering into consideration.
                 \item External APIs comprehension and usage.
             \end{itemize}
 
     \section{System Structure}
-        The project will be developed in three major components communicating with each other, separating concerns and business logic.
+        The project will be developed in two major components and a third exterior one, communicating with each other, separating concerns and business logic.
         
         \begin{figure}[h]            
             \includegraphics[width=\textwidth]{images/project-structure/system-structure.PNG}
