@@ -12,7 +12,7 @@ The project consists of a system that provides the ability to define and share t
 * Route characterization.
 
 
-This information is from a project proposal and as such is incomplete. More accurate information can be found [here](https://github.com/baltasarb/social-routing/wiki).
+This information is from a project proposal and as such is incomplete. More accurate information can be found in the [wiki](https://github.com/baltasarb/social-routing/wiki).
 
 ## Table of Contents
 * [Analysis](#analysis)
