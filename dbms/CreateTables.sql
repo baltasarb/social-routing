@@ -1,1 +1,5 @@
-CREATE TABLE Person (id int);
+create table customer (
+	first_name text,
+	last_name text,
+	id bigint
+)
