@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice
+package ps.g49.socialroutingservice.model
 
 import javax.persistence.*
 
