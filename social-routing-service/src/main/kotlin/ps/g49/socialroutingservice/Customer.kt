@@ -8,5 +8,5 @@ data class Customer(
         val firstName: String,
         val lastName: String,
         @Id
-        val id: Long? = null
+        val id: Long? = null 
 )
