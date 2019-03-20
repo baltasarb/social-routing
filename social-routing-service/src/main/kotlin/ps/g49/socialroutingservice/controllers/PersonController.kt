@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestController
 import ps.g49.socialroutingservice.repositories.PersonRepository
 
 @RestController
-@RequestMapping("/api.sr")
+@RequestMapping("/api.sr/persons")
 class PersonController(private val personRepository: PersonRepository) {
 
-    @GetMapping("/persons")
+    @GetMapping
     fun findAll() = personRepository.findAll()
 
-    @GetMapping("/persons/{lastName}")
+    @GetMapping("/{lastName}")
     fun findByLastName(@PathVariable lastName: String) = personRepository.findByLastName(lastName)
 
 }
