@@ -25,6 +25,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8'
 }
 
 compileKotlin {

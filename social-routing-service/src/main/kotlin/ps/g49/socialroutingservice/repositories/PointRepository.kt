@@ -1,5 +1,4 @@
 package ps.g49.socialroutingservice.repositories
 
-interface PersonRepository  {
-
+interface PointRepository {
 }
