@@ -28,8 +28,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
-	// https://mvnrepository.com/artifact/org.jdbi/jdbi
+	
 	compile group: 'org.jdbi', name: 'jdbi', version: '2.78'
+	compile group: 'org.jdbi', name: 'jdbi3-postgres', version: '3.6.0'
+	compile group: 'org.jdbi', name: 'jdbi3-kotlin', version: '3.6.0'
 }
 
 compileKotlin {
