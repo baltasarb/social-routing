@@ -10,14 +10,19 @@ CREATE TABLE Route(
 );
 
 CREATE TABLE Point(
+	Id bigint NOT NULL,
 	Latitude double precision NOT NULL,
 	Longitude double precision NOT NULL,
-	OwnerRoute text REFERENCES Route(Name)
+	RouteName text REFERENCES Route(Name)
 );
 
+-- Used to generate point ids
+CREATE SEQUENCE PointSequence
+OWNED BY Point.ID
+
 SELECT FirstName, LastName, Email FROM Person;
-SELECT Name, CreatedByPerson FROM Route;
-SELECT Latitude, Longitude, OwnerRoute FROM Point;
+SELECT Name FROM Route;
+SELECT Latitude, Longitude, RouteName FROM Point;
 
 DROP TABLE Point;
 DROP TABLE Route;
