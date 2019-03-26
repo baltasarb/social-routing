@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 @Component
 class SqlConnection {
 
-    val jdbi: Jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/SocialRouting", "baltasarb", "baltasarb")
+    val jdbi: Jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/SocialRouting", "socialRoutingApi", "123")
 
 
 }
