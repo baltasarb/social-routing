@@ -5,12 +5,15 @@ import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import org.json.JSONObject
 import com.example.socialrouting.SocialRoutingApplication
+import java.lang.reflect.Method
 
 class SocialRoutingApiService(val application: SocialRoutingApplication) {
 
     companion object {
         private const val socialRoutingApiUrl = ""
         private const val routesUrl = ""
+        private const val personsUrl = "${socialRoutingApiUrl}/persons"
+        private const val personByNameUrl = "${socialRoutingApiUrl}/persons/%s"
         private const val userRequestUrl = ""
     }
 
@@ -52,6 +55,31 @@ class SocialRoutingApiService(val application: SocialRoutingApplication) {
         application.queue.add(jsonArrayRequest)
     }
 
+    fun requestPersonByLastName(lastName: String, successCallback: (JSONObject) -> Unit, errorMessageHandler: (String) -> Unit) {
+        val url = String.format(personByNameUrl, lastName)
+
+        val jsonArrayRequest = JsonRequestFactory(
+            url,
+            successCallback,
+            errorMessageHandler
+        )
+            .addHeader("Authorization", "token ${application.token}")
+            .buildJsonArrayRequest()
+
+        application.queue.add(jsonArrayRequest)
+    }
+
+    fun requestPersons (successCallback: (JSONObject) -> Unit, errorMessageHandler: (String) -> Unit) {
+        val jsonArrayRequest = JsonRequestFactory(
+            personsUrl,
+            successCallback,
+            errorMessageHandler
+        )
+            .addHeader("Authorization", "token ${application.token}")
+            .buildJsonArrayRequest()
+
+        application.queue.add(jsonArrayRequest)
+    }
 
     private class JsonRequestFactory<T>(
         val url: String,
