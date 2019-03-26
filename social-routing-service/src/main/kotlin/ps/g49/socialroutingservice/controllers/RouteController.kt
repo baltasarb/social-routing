@@ -1,28 +1,16 @@
 package ps.g49.socialroutingservice.controllers
 
 import org.springframework.web.bind.annotation.*
-import org.jdbi.v3.core.Jdbi
-import org.jdbi.v3.core.statement.StatementContext
-import java.lang.RuntimeException
-import java.sql.ResultSet
-
+import ps.g49.socialroutingservice.services.RouteService
 
 @RestController
 @RequestMapping("/api.sr/routes")
-class RouteController {
+class RouteController (private val routeService: RouteService){
 
     @GetMapping
-    fun findAllRoutes() : String{
+    fun findAllRoutes() = routeService.findAllRoutes()
 
-        val jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/SocialRouting", "baltasarb", "baltasarb")
-
-        val routeName : String = jdbi.withHandle<String, RuntimeException> { handle ->
-            handle.createQuery("SELECT Name FROM Route WHERE Name = 'testRoute';")
-                    .mapTo(String::class.java)//when a query returns a single column, we can map it to the desired Java type:
-                    .findOnly()//for a single result
-        }
-
-        return routeName
-    }
+    @GetMapping("/{id}")
+    fun findRouteById(@PathVariable id : String) = routeService.findRouteById(id)
 
 }
