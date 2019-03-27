@@ -8,5 +8,4 @@ class SqlConnection {
 
     val jdbi: Jdbi = Jdbi.create("jdbc:postgresql://localhost:5432/SocialRouting", "socialRoutingApi", "123")
 
-
 }

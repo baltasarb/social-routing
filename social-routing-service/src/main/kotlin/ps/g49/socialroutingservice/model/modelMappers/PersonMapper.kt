@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice.modelMappers
+package ps.g49.socialroutingservice.model.modelMappers
 
 import org.jdbi.v3.core.mapper.RowMapper
 import org.jdbi.v3.core.statement.StatementContext

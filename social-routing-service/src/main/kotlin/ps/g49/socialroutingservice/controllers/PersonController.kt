@@ -8,17 +8,15 @@ import ps.g49.socialroutingservice.services.PersonService
 
 @RestController
 @RequestMapping("/api.sr/persons")
-class PersonController (private val personService : PersonService) {
+class PersonController(private val personService: PersonService) {
 
-    /**
-     * returns a person resource
-     */
     @GetMapping("/{identifier}")
-    fun findUserById(@PathVariable identifier : String) = personService.findPersonById(identifier)
+    fun findUserById(@PathVariable identifier: String) = personService.findPersonById(identifier)
 
-    @GetMapping("/routes")
-    fun findUserCreatedRoutes(){
+    @GetMapping("/{identifier}/createdRoutes")
+    fun findUserCreatedRoutes(@PathVariable identifier: String) = personService.findUserCreatedRoutes(identifier)
 
-    }
+    @GetMapping("/{identifier}/performedRoutes")
+    fun findUserPerformedRoutes(@PathVariable identifier: String) = personService.findUserPerformedRoutes(identifier)
 
 }

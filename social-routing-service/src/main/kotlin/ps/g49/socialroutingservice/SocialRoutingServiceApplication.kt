@@ -14,7 +14,7 @@ class SocialRoutingServiceApplication {
     @Bean
     fun initTests() = CommandLineRunner {
         log.info("Initialization Test Started.")
-       //todo when testing is required
+        //todo when testing is required
         log.info("Initialization Test Finished.")
     }
 

@@ -3,7 +3,7 @@ package ps.g49.socialroutingservice.repositories.implementations
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.SqlConnection
 import ps.g49.socialroutingservice.model.Route
-import ps.g49.socialroutingservice.modelMappers.RouteMapper
+import ps.g49.socialroutingservice.model.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.repositories.RouteRepository
 import java.sql.SQLException
 
