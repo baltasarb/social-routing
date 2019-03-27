@@ -14,20 +14,12 @@ class RouteRepositoryImplementation(private val sqlConnection: SqlConnection, pr
      * @Param id is the name of the route
      */
     override fun findRouteById(id: String): Route {
-        return sqlConnection.jdbi.withHandle<Route, SQLException> { handle ->
-            handle.select("SELECT Identifier FROM Route WHERE Identifier = ?;", id)
-                    .map(mapper)//when a query returns a single column, we can map it to the desired Java type:
-                    .findOnly()//for a single result
-        }
+        val query = "SELECT Identifier FROM Route WHERE Identifier = ?;"
+        return sqlConnection.findOnly(query, mapper, id)
     }
 
     override fun findAll(): List<Route> {
-        return sqlConnection
-                .jdbi
-                .withHandle<List<Route>, SQLException> { handle ->
-                    handle.select("SELECT Identifier, PersonIdentifier FROM Route;")
-                            .map(mapper)
-                            .list()
-                }
+        val query = "SELECT Identifier, PersonIdentifier FROM Route;"
+        return sqlConnection.findMany(query, mapper)
     }
 }

@@ -13,13 +13,8 @@ import java.sql.SQLException
 class PersonRepositoryImplementation(private val sqlConnection: SqlConnection, private val personMapper: PersonMapper, private val routeMapper: RouteMapper) : PersonRepository {
 
     override fun findUserCreatedRoutes(identifier: String): List<Route> {
-        return sqlConnection
-                .jdbi
-                .withHandle<List<Route>, SQLException> { handle ->
-                    handle.select("SELECT Identifier, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;", identifier)
-                            .map(routeMapper)
-                            .list()
-                }
+        val query = "SELECT Identifier, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
+        return sqlConnection.findMany(query, routeMapper, identifier)
     }
 
     override fun findUserPerformedRoutes(identifier: String): List<Route> {
@@ -27,12 +22,7 @@ class PersonRepositoryImplementation(private val sqlConnection: SqlConnection, p
     }
 
     override fun findPersonById(identifier: String): Person {
-        return sqlConnection
-                .jdbi
-                .withHandle<Person, SQLException> { handle ->
-                    handle.select("SELECT Name FROM Person WHERE Name = ?;", identifier)
-                            .map(personMapper)
-                            .findOnly()
-                }
+        val query = "SELECT Name FROM Person WHERE Name = ?;"
+        return sqlConnection.findOnly(query, personMapper, identifier)
     }
 }
