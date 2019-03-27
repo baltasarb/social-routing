@@ -11,7 +11,8 @@ class RouteMapper : RowMapper<Route>{
 
     override fun map(rs: ResultSet?, ctx: StatementContext?): Route {
         return Route(
-                rs!!.getString("Name")
+                rs!!.getLong("Identifier"),
+                rs.getString("PersonIdentifier")
         )
     }
 

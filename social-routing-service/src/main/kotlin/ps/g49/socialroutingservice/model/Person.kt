@@ -1,7 +1,8 @@
 package ps.g49.socialroutingservice.model
 
 data class Person(
-        val firstName: String,
-        val lastName: String,
-        val email: String? = null
+        val name : String/*,
+        val token : String,
+        val identifier : String
+        */
 )

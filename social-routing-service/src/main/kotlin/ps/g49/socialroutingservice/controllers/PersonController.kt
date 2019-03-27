@@ -10,7 +10,15 @@ import ps.g49.socialroutingservice.services.PersonService
 @RequestMapping("/api.sr/persons")
 class PersonController (private val personService : PersonService) {
 
-    @GetMapping("/{id}")
-    fun findUserById(@PathVariable id : String) = personService.findPersonById(id)
+    /**
+     * returns a person resource
+     */
+    @GetMapping("/{identifier}")
+    fun findUserById(@PathVariable identifier : String) = personService.findPersonById(identifier)
+
+    @GetMapping("/routes")
+    fun findUserCreatedRoutes(){
+
+    }
 
 }

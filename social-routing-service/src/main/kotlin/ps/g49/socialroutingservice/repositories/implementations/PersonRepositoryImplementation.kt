@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice.repositoryImplementations
+package ps.g49.socialroutingservice.repositories.implementations
 
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.SqlConnection
@@ -13,7 +13,7 @@ class PersonRepositoryImplementation(private val sqlConnection: SqlConnection, p
         return sqlConnection
                 .jdbi
                 .withHandle<Person, SQLException> { handle ->
-                    handle.select("SELECT FirstName, LastName, Email FROM Person WHERE Email = ?;", id)
+                    handle.select("SELECT Name FROM Person WHERE Name = ?;", id)
                             .map(mapper)
                             .findOnly()
                 }
