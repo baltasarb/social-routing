@@ -1,29 +1,37 @@
 CREATE TABLE Person(
-	FirstName text,
-	LastName text,
-	Email text PRIMARY KEY
+	-- Idtoken text NOT NULL PRIMARY KEY,
+	-- Identifier text NOT NULL, hash do email
+	Name text PRIMARY KEY
 );
 
 CREATE TABLE Route(
-	Name text PRIMARY KEY, 
-	CreatedByPerson text REFERENCES Person(Email)
+	Identifier bigint PRIMARY KEY,
+	--Location text,
+	--Name text, 
+	--Description text,
+	--Classification real,
+	--Duration bigint, -- minutes
+	--DateCreated date,
+	--Points json,
+	PersonIdentifier text REFERENCES Person(Name) -- change name to email
 );
 
-CREATE TABLE Point(
-	Id bigint NOT NULL,
-	Latitude double precision NOT NULL,
-	Longitude double precision NOT NULL,
-	RouteName text REFERENCES Route(Name)
+CREATE TABLE Category(
+	Name text PRIMARY KEY
 );
 
--- Used to generate point ids
-CREATE SEQUENCE PointSequence
-OWNED BY Point.ID
+CREATE TABLE RouteCategory(
+	CategoryName text REFERENCES Category(Name),
+	RouteIdentifier bigint REFERENCES Route(Identifier),
+	PRIMARY KEY (CategoryName, RouteIdentifier)
+);
 
-SELECT FirstName, LastName, Email FROM Person;
-SELECT Name FROM Route;
-SELECT Latitude, Longitude, RouteName FROM Point;
+SELECT Name FROM Person;
+SELECT Identifier, PersonIdentifier FROM Route;
+SELECT Name FROM Category;
+SELECT RouteIdentifier, CategoryName FROM RouteCategory;
 
-DROP TABLE Point;
-DROP TABLE Route;
+DROP TABLE RouteCategory;
+DROP TABLE Category;
+DROP TABLE Route ;
 DROP TABLE Person;
