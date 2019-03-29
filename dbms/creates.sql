@@ -1,21 +1,23 @@
 CREATE TABLE Person(
-	-- Idtoken text NOT NULL PRIMARY KEY,
-	-- Identifier text NOT NULL, hash do email
-	Name text PRIMARY KEY
+	Identifier serial PRIMARY KEY,
+	Name text NOT NULL,
+	Email text UNIQUE NOT NULL
 );
 
 CREATE TABLE Route(
-	Identifier bigint PRIMARY KEY,
-	--Location text,
-	--Name text, 
-	--Description text,
-	--Classification real,
-	--Duration bigint, -- minutes
-	--DateCreated date,
-	--Points json,
-	PersonIdentifier text REFERENCES Person(Name) -- change name to email
+	Identifier serial PRIMARY KEY,
+	Location text NOT NULL,
+	Name text NOT NULL, 
+	Description text,
+	Classification real, -- different no classified with zero classification
+	-- Duration in minutes (provided by google api)
+	Duration bigint NOT NULL, 
+	DateCreated date NOT NULL,
+	Points json NOT NULL,
+	PersonIdentifier serial REFERENCES Person(Identifier) -- change name to email
 );
 
+/*
 CREATE TABLE Category(
 	Name text PRIMARY KEY
 );
@@ -25,3 +27,4 @@ CREATE TABLE RouteCategory(
 	RouteIdentifier bigint REFERENCES Route(Identifier),
 	PRIMARY KEY (CategoryName, RouteIdentifier)
 );
+*/

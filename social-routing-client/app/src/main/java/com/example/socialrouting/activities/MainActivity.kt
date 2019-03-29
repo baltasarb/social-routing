@@ -1,7 +1,9 @@
 package com.example.socialrouting
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.socialrouting.services.SocialRoutingApiService
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -14,25 +16,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        test()
     }
 
-    fun test() {
-        val url = "https://api.github.com/users/events"
-        val app = getSocialRoutingApplication()
 
-        SocialRoutingApiService(app).requestTest(url, {
-
-            textView.text = it.toString(2)
-
-        }, {
-
-            textView.text = it
-
-        })
+    fun create (view: View) {
+        val intent = Intent(this, )
+        startActivity(intent)
     }
 
-    fun getSocialRoutingApplication(): SocialRoutingApplication
-            = this@MainActivity.application as SocialRoutingApplication
+
+
 
 }
