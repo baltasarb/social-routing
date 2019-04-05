@@ -32,6 +32,13 @@ dependencies {
 	compile group: 'org.jdbi', name: 'jdbi', version: '2.78'
 	compile group: 'org.jdbi', name: 'jdbi3-postgres', version: '3.6.0'
 	compile group: 'org.jdbi', name: 'jdbi3-kotlin', version: '3.6.0'
+
+	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-jackson2
+	//compile group: 'org.jdbi', name: 'jdbi3-jackson2', version: '3.6.0'
+
+	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-json
+	//compile group: 'org.jdbi', name: 'jdbi3-json', version: '3.6.0'
+
 }
 
 compileKotlin {
