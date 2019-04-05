@@ -4,10 +4,11 @@ import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.mapper.RowMapper
 import org.springframework.stereotype.Component
+import ps.g49.socialroutingservice.model.Point
 import java.sql.SQLException
 
 @Component
-class SqlConnection {
+class ConnectionManager {
 
     private val host = "localhost"
     private val port = "5432"
@@ -16,7 +17,6 @@ class SqlConnection {
     private val password = "123"
 
     private val url = "jdbc:postgresql://localhost:5432/SocialRouting"
-
 
     val jdbi: Jdbi = Jdbi.create(url, username, password) // returns a Jdbi which uses DriverManager as a connection factory.
 
@@ -68,13 +68,6 @@ class SqlConnection {
         }
     }
 
-    fun <R> transaction( h : Handle -> Unit ): R {
-        val handle = jdbi.open()
-        val result =
-        handle.close()
-        return result
-    }
-
     fun insert(query: String, vararg params: String){
         val handle = jdbi.open()
         val result = handle.execute(query, *params)
@@ -87,5 +80,7 @@ class SqlConnection {
         val result = handle.execute(query, id)
         handle.close()
     }
+
+    fun generateHandle() = jdbi.open()
 
 }
