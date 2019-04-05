@@ -11,7 +11,9 @@ class PersonMapper : RowMapper<Person> {
 
     override fun map(rs: ResultSet?, ctx: StatementContext?): Person {
         return Person(
-                name = rs!!.getString("Name")
+                identifier = rs!!.getInt("Identifier"),
+                name = rs.getString("Name"),
+                email = rs.getString("Email")
         )
     }
 

@@ -1,7 +1,6 @@
 package ps.g49.socialroutingservice.inputModel
 
-data class InputPerson(
+data class PersonInput(
         val name: String,
-        val email: String,
-        val token: Long
+        val email: String
 )
