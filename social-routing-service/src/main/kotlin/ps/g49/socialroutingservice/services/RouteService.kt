@@ -3,7 +3,9 @@ package ps.g49.socialroutingservice.services
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
 import ps.g49.socialroutingservice.dtos.RouteDto
+import ps.g49.socialroutingservice.dtos.SearchDto
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
+import ps.g49.socialroutingservice.model.Route
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Service
@@ -25,9 +27,8 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
         routeRepository.update(connectionHandle, route)
     }
 
-    fun search(routeDto: RouteDto) {
-        val route = routeMapper.map(routeDto)
-        routeRepository.findAllByParameter(route.location)
+    fun search(searchDto: SearchDto) : List<Route> {
+        return routeRepository.findAllByParameter(searchDto.location)
     }
 
 }

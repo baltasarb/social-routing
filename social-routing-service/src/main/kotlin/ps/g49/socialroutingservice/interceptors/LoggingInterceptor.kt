@@ -14,6 +14,8 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         super.preHandle(request, response, handler)
 
+        logger.info("\n")
+
         logger.info(request.method + " " + request.requestURI)
 
         val headerNames = request.headerNames
@@ -22,6 +24,8 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
             logger.info(headerName + " : " + request.getHeader(headerName))
         }
         logger.info("\n")
+
+        //logger.info(request.)
         return true
     }
 
