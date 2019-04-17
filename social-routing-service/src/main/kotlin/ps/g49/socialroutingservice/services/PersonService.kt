@@ -15,4 +15,5 @@ class PersonService(private val personRepository: PersonRepository, private val 
     fun createPerson(personInput: PersonInput) = personRepository.create(personInput.name, personInput.email)
 
     fun deletePerson(identifier: Int) = personRepository.delete(identifier)
+
 }

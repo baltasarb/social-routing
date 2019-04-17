@@ -1,4 +1,6 @@
 package ps.g49.socialroutingservice.dtos
 
-class PersonDto {
-}
+data class PersonDto (
+    val name: String,
+    val email: String
+)

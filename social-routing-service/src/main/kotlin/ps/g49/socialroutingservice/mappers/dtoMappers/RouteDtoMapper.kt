@@ -1,12 +1,18 @@
 package ps.g49.socialroutingservice.mappers.dtoMappers
 
+import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.dtos.RouteDto
 import ps.g49.socialroutingservice.inputModel.RouteInput
-import ps.g49.socialroutingservice.model.PointCollection
-import ps.g49.socialroutingservice.model.Route
 
+@Component
 class RouteDtoMapper : DtoMapper<RouteInput, RouteDto> {
-    override fun map(from: RouteInput): RouteDto {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+
+    override fun map(from: RouteInput): RouteDto = RouteDto(
+            location = from.location,
+            name = from.name,
+            description = from.description,
+            points = from.points,
+            personIdentifier = from.personIdentifier
+    )
+
 }
