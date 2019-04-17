@@ -2,13 +2,12 @@ package ps.g49.socialroutingservice.mappers.dtoMappers
 
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.dtos.SearchDto
-import ps.g49.socialroutingservice.inputModel.SearchInput
 
 @Component
-class SearchDtoMapper : DtoMapper<SearchInput, SearchDto> {
+class SearchDtoMapper : DtoMapper<HashMap<String, String>, SearchDto> {
 
-    override fun map(from: SearchInput): SearchDto = SearchDto(
-            location = from.location!!
+    override fun map(from: HashMap<String, String>): SearchDto = SearchDto(
+            location = from["location"]!!
     )
 
 }

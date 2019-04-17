@@ -4,16 +4,18 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.inputModel.PersonInput
+import ps.g49.socialroutingservice.mappers.dtoMappers.PersonDtoMapper
 import ps.g49.socialroutingservice.model.Person
 import ps.g49.socialroutingservice.services.PersonService
 
 @RestController
 @RequestMapping("/api.sr/persons")
-class PersonController(private val personService: PersonService) {
+class PersonController(private val personService: PersonService, private val connectionManager: ConnectionManager, val personDtoMapper: PersonDtoMapper) {
 
     @GetMapping("/{identifier}")
-    fun findUserById(@PathVariable identifier: Int) : ResponseEntity<Person> {
+    fun findUserById(@PathVariable identifier: Int): ResponseEntity<Person> {
         val person = personService.findPersonById(identifier)
 
         return ResponseEntity(person, HttpStatus.OK)
@@ -24,9 +26,19 @@ class PersonController(private val personService: PersonService) {
 
     //change to request attribute if anything comes from an interceptor eg auth token
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun createPerson(@RequestBody person : PersonInput) = personService.createPerson(person)
+    fun createPerson(@RequestBody personInput: PersonInput) {
+        val personDto = personDtoMapper.map(personInput)
+        personService.createPerson(personDto)
+    }
 
     @DeleteMapping("/{identifier}")
     fun deletePerson(@PathVariable identifier: Int) = personService.deletePerson(identifier)
 
+    @PutMapping
+    fun updatePerson(@RequestBody personInput: PersonInput) {
+        val personDto = personDtoMapper.map(personInput)
+        val connectionHandle = connectionManager.generateHandle()
+        personService.updatePerson(connectionHandle, personDto)
+        connectionHandle.close()
+    }
 }

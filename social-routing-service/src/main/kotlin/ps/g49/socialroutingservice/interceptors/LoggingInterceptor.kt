@@ -2,7 +2,9 @@ package ps.g49.socialroutingservice.interceptors
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import org.springframework.web.servlet.ModelAndView
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
+import java.lang.Exception
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -29,4 +31,13 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
         return true
     }
 
+    override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
+        println()
+        super.postHandle(request, response, handler, modelAndView)
+    }
+
+    override fun afterCompletion(request: HttpServletRequest, response: HttpServletResponse, handler: Any, ex: Exception?) {
+        println()
+        super.afterCompletion(request, response, handler, ex)
+    }
 }

@@ -55,7 +55,7 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
     }
 
     override fun findAllByParameter(parameter: String): List<Route> {
-        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = '?';"
+        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = ?;"
         return connectionManager.findMany(query, mapper, parameter)
     }
 
@@ -63,4 +63,5 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
         val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
         return connectionManager.findManyByIntId(query, mapper, identifier)
     }
+
 }

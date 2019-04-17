@@ -27,8 +27,8 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
         routeRepository.update(connectionHandle, route)
     }
 
-    fun search(searchDto: SearchDto) : List<Route> {
-        return routeRepository.findAllByParameter(searchDto.location)
+    fun search(searchDto: SearchDto): List<Route> {
+        return routeRepository.findAllByParameter(searchDto.location!!)
     }
 
 }

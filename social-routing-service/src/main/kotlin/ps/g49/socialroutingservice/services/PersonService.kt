@@ -1,19 +1,29 @@
 package ps.g49.socialroutingservice.services
 
+import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
-import ps.g49.socialroutingservice.inputModel.PersonInput
+import ps.g49.socialroutingservice.dtos.PersonDto
+import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper
 import ps.g49.socialroutingservice.repositories.PersonRepository
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Service
-class PersonService(private val personRepository: PersonRepository, private val routeRepository: RouteRepository) {
+class PersonService(private val personRepository: PersonRepository, private val routeRepository: RouteRepository, val personMapper: PersonMapper) {
 
     fun findPersonById(identifier: Int) = personRepository.findPersonById(identifier)
 
     fun findUserCreatedRoutes(identifier: Int) = routeRepository.findPersonCreatedRoutes(identifier)
 
-    fun createPerson(personInput: PersonInput) = personRepository.create(personInput.name, personInput.email)
+    fun createPerson(personDto: PersonDto) {
+        val person = personMapper.map(personDto)
+        personRepository.create(person)
+    }
 
     fun deletePerson(identifier: Int) = personRepository.delete(identifier)
+
+    fun updatePerson(connectionHandle: Handle, personDto: PersonDto) {
+        val person = personMapper.map(personDto)
+        personRepository.update(connectionHandle, person)
+    }
 
 }

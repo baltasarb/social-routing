@@ -10,14 +10,12 @@ CREATE TABLE Route(
 	Name text NOT NULL, 
 	Description text,
 	Classification real, -- different no classified with zero classification
-	-- Duration in minutes (provided by google api)
-	Duration bigint NOT NULL, 
+	Duration bigint NOT NULL, -- Duration in minutes (provided by google api)
 	DateCreated date NOT NULL,
 	Points json NOT NULL,
-	PersonIdentifier serial REFERENCES Person(Identifier) -- change name to email
+	PersonIdentifier serial REFERENCES Person(Identifier)
 );
 
-/*
 CREATE TABLE Category(
 	Name text PRIMARY KEY
 );
@@ -27,4 +25,3 @@ CREATE TABLE RouteCategory(
 	RouteIdentifier bigint REFERENCES Route(Identifier),
 	PRIMARY KEY (CategoryName, RouteIdentifier)
 );
-*/

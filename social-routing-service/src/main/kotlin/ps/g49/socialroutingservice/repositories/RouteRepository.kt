@@ -7,16 +7,16 @@ interface RouteRepository {
 
     fun findAll(): List<Route>
 
-    fun findAllByParameter(parameter : String) : List<Route>
+    fun findAllByParameter(parameter: String): List<Route>
 
     fun findRouteById(id: Int): Route
 
     fun findPersonCreatedRoutes(identifier: Int): List<Route>
 
-    fun create(connectionHandle : Handle, route: Route)
+    fun create(connectionHandle: Handle, route: Route)
 
     fun delete(identifier: Int)
 
-    fun update(connectionHandle : Handle, route: Route)
+    fun update(connectionHandle: Handle, route: Route)
 
 }

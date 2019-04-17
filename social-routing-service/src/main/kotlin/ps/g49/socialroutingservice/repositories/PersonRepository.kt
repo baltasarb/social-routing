@@ -1,5 +1,6 @@
 package ps.g49.socialroutingservice.repositories
 
+import org.jdbi.v3.core.Handle
 import ps.g49.socialroutingservice.model.Person
 
 interface PersonRepository {
@@ -9,8 +10,10 @@ interface PersonRepository {
      */
     fun findPersonById(identifier: Int): Person
 
-    fun create(name : String, email : String)
+    fun create(person: Person)
 
     fun delete(identifier: Int)
+
+    fun update(connectionHandle: Handle, person: Person)
 
 }

@@ -1,10 +1,9 @@
 package ps.g49.socialroutingservice
 
-import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.mapper.RowMapper
 import org.springframework.stereotype.Component
-import ps.g49.socialroutingservice.model.Point
+import ps.g49.socialroutingservice.exceptions.types.ResourceNotFoundException
 import java.sql.SQLException
 
 @Component
@@ -36,12 +35,18 @@ class ConnectionManager {
         }
     }
 
-    fun <R> findOnlyByIntId(query: String, mapper: RowMapper<R>, id : Int): R {
-        return jdbi.withHandle<R, SQLException> { handle ->
-            handle.select(query, id)
-                    .map(mapper)
-                    .findOnly()
+    fun <R> findOnlyByIntId(query: String, mapper: RowMapper<R>, id: Int): R {
+        val result: Any?
+        try {
+            result = jdbi.withHandle<R, SQLException> { handle ->
+                handle.select(query, id)
+                        .map(mapper)
+                        .findOnly()
+            }
+        } catch (exception: IllegalStateException) {
+            throw ResourceNotFoundException()
         }
+        return result
     }
 
     /**
@@ -60,7 +65,7 @@ class ConnectionManager {
         }
     }
 
-    fun <R> findManyByIntId(query: String, mapper: RowMapper<R>, id : Int): List<R> {
+    fun <R> findManyByIntId(query: String, mapper: RowMapper<R>, id: Int): List<R> {
         return jdbi.withHandle<List<R>, SQLException> { handle ->
             handle.select(query, id)
                     .map(mapper)
@@ -68,14 +73,14 @@ class ConnectionManager {
         }
     }
 
-    fun insert(query: String, vararg params: String){
+    fun insert(query: String, vararg params: String) {
         val handle = jdbi.open()
         val result = handle.execute(query, *params)
         //TODO check result
         handle.close()
     }
 
-    fun deleteByIntId(query: String, id : Int){
+    fun deleteByIntId(query: String, id: Int) {
         val handle = jdbi.open()
         val result = handle.execute(query, id)
         handle.close()
