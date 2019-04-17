@@ -7,6 +7,8 @@ interface RouteRepository {
 
     fun findAll(): List<Route>
 
+    fun findAllByParameter(parameter : String) : List<Route>
+
     fun findRouteById(id: Int): Route
 
     fun findPersonCreatedRoutes(identifier: Int): List<Route>

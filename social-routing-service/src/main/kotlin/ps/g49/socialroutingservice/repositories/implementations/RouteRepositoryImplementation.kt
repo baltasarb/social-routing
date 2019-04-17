@@ -3,8 +3,8 @@ package ps.g49.socialroutingservice.repositories.implementations
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
+import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.model.Route
-import ps.g49.socialroutingservice.model.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Component
@@ -52,6 +52,11 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
     override fun findAll(): List<Route> {
         val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
         return connectionManager.findMany(query, mapper)
+    }
+
+    override fun findAllByParameter(parameter: String): List<Route> {
+        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = '?';"
+        return connectionManager.findMany(query, mapper, parameter)
     }
 
     override fun findPersonCreatedRoutes(identifier: Int): List<Route> {
