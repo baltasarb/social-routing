@@ -25,7 +25,7 @@ class RouteController(private val connectionManager: ConnectionManager, private 
         return routeService.search(searchDto)
     }
 
-    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping
     fun createRoute(@RequestBody route: RouteInput) {
         val connectionHandle = connectionManager.generateHandle()
         val routeDto = routeDtoMapper.map(route)
@@ -33,7 +33,7 @@ class RouteController(private val connectionManager: ConnectionManager, private 
         connectionHandle.close()
     }
 
-    @PutMapping("/{identifier}", consumes = [MediaType.APPLICATION_JSON_VALUE])
+    @PutMapping("/{identifier}")
     fun updateRoute(@RequestBody route: RouteInput) {
         val connectionHandle = connectionManager.generateHandle()
         val routeDto = routeDtoMapper.map(route)

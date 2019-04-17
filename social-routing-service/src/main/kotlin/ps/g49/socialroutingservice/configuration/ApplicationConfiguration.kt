@@ -4,12 +4,17 @@ import org.springframework.stereotype.Component
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import ps.g49.socialroutingservice.interceptors.LoggingInterceptor
+import ps.g49.socialroutingservice.interceptors.MediaTypeInterceptor
 
 @Component
-class ApplicationConfiguration(private val loggingInterceptor: LoggingInterceptor) : WebMvcConfigurer {
+class ApplicationConfiguration(
+        private val loggingInterceptor: LoggingInterceptor,
+        private val mediaTypeInterceptor: MediaTypeInterceptor
+) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(loggingInterceptor)
+        registry.addInterceptor(mediaTypeInterceptor)
         super.addInterceptors(registry)
     }
 
