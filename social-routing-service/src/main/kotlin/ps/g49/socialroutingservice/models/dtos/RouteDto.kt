@@ -1,6 +1,6 @@
-package ps.g49.socialroutingservice.dtos
+package ps.g49.socialroutingservice.models.dtos
 
-import ps.g49.socialroutingservice.model.Point
+import ps.g49.socialroutingservice.models.domainModel.Point
 
 data class RouteDto(
         var location: String,

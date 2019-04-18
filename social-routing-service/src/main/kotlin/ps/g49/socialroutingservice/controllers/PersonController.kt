@@ -3,9 +3,9 @@ package ps.g49.socialroutingservice.controllers
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
-import ps.g49.socialroutingservice.inputModel.PersonInput
+import ps.g49.socialroutingservice.models.inputModel.PersonInput
 import ps.g49.socialroutingservice.mappers.dtoMappers.PersonDtoMapper
-import ps.g49.socialroutingservice.model.Person
+import ps.g49.socialroutingservice.models.domainModel.Person
 import ps.g49.socialroutingservice.services.PersonService
 
 @RestController

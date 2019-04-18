@@ -1,8 +1,8 @@
 package ps.g49.socialroutingservice.mappers.dtoMappers
 
 import org.springframework.stereotype.Component
-import ps.g49.socialroutingservice.dtos.RouteDto
-import ps.g49.socialroutingservice.inputModel.RouteInput
+import ps.g49.socialroutingservice.models.dtos.RouteDto
+import ps.g49.socialroutingservice.models.inputModel.RouteInput
 
 @Component
 class RouteDtoMapper : DtoMapper<RouteInput, RouteDto> {

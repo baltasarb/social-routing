@@ -2,7 +2,7 @@ package ps.g49.socialroutingservice.services
 
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
-import ps.g49.socialroutingservice.dtos.PersonDto
+import ps.g49.socialroutingservice.models.dtos.PersonDto
 import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper
 import ps.g49.socialroutingservice.repositories.PersonRepository
 import ps.g49.socialroutingservice.repositories.RouteRepository

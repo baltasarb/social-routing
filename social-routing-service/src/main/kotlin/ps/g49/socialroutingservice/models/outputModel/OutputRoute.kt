@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice.outputModel
+package ps.g49.socialroutingservice.models.outputModel
 
 data class OutputRoute(
         val name: String,

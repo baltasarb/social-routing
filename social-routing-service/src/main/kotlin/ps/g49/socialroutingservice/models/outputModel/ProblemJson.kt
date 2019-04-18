@@ -1,6 +1,6 @@
-package ps.g49.socialroutingservice.exceptions
+package ps.g49.socialroutingservice.models.outputModel
 
-data class ProblemJsonResponse (
+data class ProblemJson (
         val type : String,
         val title : String,
         val status : Int,

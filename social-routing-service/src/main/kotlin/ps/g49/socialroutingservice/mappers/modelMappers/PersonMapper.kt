@@ -1,8 +1,8 @@
 package ps.g49.socialroutingservice.mappers.modelMappers
 
 import org.springframework.stereotype.Component
-import ps.g49.socialroutingservice.dtos.PersonDto
-import ps.g49.socialroutingservice.model.Person
+import ps.g49.socialroutingservice.models.dtos.PersonDto
+import ps.g49.socialroutingservice.models.domainModel.Person
 import java.sql.ResultSet
 
 @Component

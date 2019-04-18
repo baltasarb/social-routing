@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper
-import ps.g49.socialroutingservice.model.Person
+import ps.g49.socialroutingservice.models.domainModel.Person
 import ps.g49.socialroutingservice.repositories.PersonRepository
 
 @Component

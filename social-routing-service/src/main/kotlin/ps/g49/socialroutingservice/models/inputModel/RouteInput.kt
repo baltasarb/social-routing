@@ -1,6 +1,6 @@
-package ps.g49.socialroutingservice.inputModel
+package ps.g49.socialroutingservice.models.inputModel
 
-import ps.g49.socialroutingservice.model.Point
+import ps.g49.socialroutingservice.models.domainModel.Point
 
 data class RouteInput (
         val location : String,

@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice.dtos
+package ps.g49.socialroutingservice.models.dtos
 
 data class PersonDto (
     val name: String,

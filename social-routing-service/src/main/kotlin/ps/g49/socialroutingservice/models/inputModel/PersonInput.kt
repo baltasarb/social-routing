@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice.inputModel
+package ps.g49.socialroutingservice.models.inputModel
 
 data class PersonInput(
         val name: String,

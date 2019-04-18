@@ -2,10 +2,10 @@ package ps.g49.socialroutingservice.services
 
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
-import ps.g49.socialroutingservice.dtos.RouteDto
-import ps.g49.socialroutingservice.dtos.SearchDto
+import ps.g49.socialroutingservice.models.dtos.RouteDto
+import ps.g49.socialroutingservice.models.dtos.SearchDto
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
-import ps.g49.socialroutingservice.model.Route
+import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Service

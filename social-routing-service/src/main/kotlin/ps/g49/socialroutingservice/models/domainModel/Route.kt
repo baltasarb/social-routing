@@ -1,4 +1,4 @@
-package ps.g49.socialroutingservice.model
+package ps.g49.socialroutingservice.models.domainModel
 
 import java.util.*
 

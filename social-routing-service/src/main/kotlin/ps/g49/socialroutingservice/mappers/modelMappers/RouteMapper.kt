@@ -1,9 +1,9 @@
 package ps.g49.socialroutingservice.mappers.modelMappers
 
 import org.springframework.stereotype.Component
-import ps.g49.socialroutingservice.dtos.RouteDto
-import ps.g49.socialroutingservice.model.PointCollection
-import ps.g49.socialroutingservice.model.Route
+import ps.g49.socialroutingservice.models.dtos.RouteDto
+import ps.g49.socialroutingservice.models.domainModel.PointCollection
+import ps.g49.socialroutingservice.models.domainModel.Route
 import java.sql.ResultSet
 import java.util.*
 
