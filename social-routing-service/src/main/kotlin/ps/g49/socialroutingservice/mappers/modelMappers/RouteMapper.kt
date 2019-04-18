@@ -15,7 +15,7 @@ class RouteMapper : ModelMapper<RouteDto, Route> {
             location = rs.getString("Location"),
             name = rs.getString("Name"),
             description = rs.getString("Description"),
-            classification = rs.getDouble("Classification"),
+            rating = rs.getDouble("Rating"),
             duration = rs.getLong("Duration"),
             dateCreated = rs.getDate("DateCreated"),
             points = PointCollection(Arrays.asList()),//TODO

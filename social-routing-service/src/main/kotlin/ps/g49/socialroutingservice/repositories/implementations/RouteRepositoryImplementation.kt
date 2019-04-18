@@ -30,13 +30,14 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
     }
 
     override fun update(connectionHandle: Handle, route: Route) {
-        val query = "UPDATE Route SET (Location, Name, Description, Points) = (:location, :name, :description, to_json(:points)) WHERE identifier = :identifier;"
+        val query = "UPDATE Route SET (Location, Name, Description, Rating, Points) = (:location, :name, :description, :rating, to_json(:points)) WHERE identifier = :identifier;"
 
         connectionHandle.createUpdate(query)
                 .bind("identifier", route.identifier)
                 .bind("location", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
+                .bind("rating", route.rating)
                 .bind("points", route.points.toString())
                 .execute()
     }
@@ -45,22 +46,22 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
      * @Param id is the name of the route
      */
     override fun findRouteById(id: Int): Route {
-        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
+        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
         return connectionManager.findOnlyByIntId(query, mapper, id)
     }
 
     override fun findAll(): List<Route> {
-        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
+        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
         return connectionManager.findMany(query, mapper)
     }
 
     override fun findAllByParameter(parameter: String): List<Route> {
-        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = ?;"
+        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = ?;"
         return connectionManager.findMany(query, mapper, parameter)
     }
 
     override fun findPersonCreatedRoutes(identifier: Int): List<Route> {
-        val query = "SELECT Identifier, Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
+        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
         return connectionManager.findManyByIntId(query, mapper, identifier)
     }
 

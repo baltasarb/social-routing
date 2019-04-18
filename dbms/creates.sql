@@ -9,7 +9,7 @@ CREATE TABLE Route(
 	Location text NOT NULL,
 	Name text NOT NULL, 
 	Description text,
-	Classification real, -- different no classified with zero classification
+	Rating real, -- different no classified with zero classification
 	Duration bigint NOT NULL, -- Duration in minutes (provided by google api)
 	DateCreated date NOT NULL,
 	Points json NOT NULL,

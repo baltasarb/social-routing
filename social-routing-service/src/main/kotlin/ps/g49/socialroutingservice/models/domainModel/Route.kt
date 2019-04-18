@@ -7,7 +7,7 @@ data class Route(
         val location: String,
         val name: String,
         val description: String,
-        var classification: Double? = null, // created by db
+        var rating: Double? = null, // created by db
         var duration: Long? = null,// TODO created by service
         var dateCreated: Date? = null, // created by db
         val points: PointCollection,

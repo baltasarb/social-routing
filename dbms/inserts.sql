@@ -2,7 +2,7 @@ INSERT INTO Person (Name, Email)
 VALUES('Baltasar', 'baltasar@gmail.com'),
 	  ('Bernardo', 'bernardo@gmail.com');
 
-INSERT INTO Route (Location, Name, Description, Classification, Duration, DateCreated, Points, PersonIdentifier)
+INSERT INTO Route (Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier)
 VALUES ('Lisbon', 'Route 1', 'Description 1', 0, 10, now(), '[]', 3),
 	   ('Lisbon', 'Route 2', 'Description 2', 2.5, 20, now(), '[]', 4),
 	   ('Lisbon', 'Route 3', 'Description 3', 3, 30, now(), '[]', 3),
