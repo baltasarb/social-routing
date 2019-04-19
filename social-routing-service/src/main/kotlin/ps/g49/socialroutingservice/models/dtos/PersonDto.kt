@@ -1,6 +1,8 @@
 package ps.g49.socialroutingservice.models.dtos
 
-data class PersonDto (
-    val name: String,
-    val email: String
+data class PersonDto(
+        val identifier: Int? = null,
+        val name: String,
+        val email: String,
+        val rating: Double? = null
 )

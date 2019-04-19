@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
 import ps.g49.socialroutingservice.models.dtos.PersonDto
 import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper
+import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.repositories.PersonRepository
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
@@ -12,11 +13,11 @@ class PersonService(private val personRepository: PersonRepository, private val 
 
     fun findPersonById(identifier: Int) = personRepository.findPersonById(identifier)
 
-    fun findUserCreatedRoutes(identifier: Int) = routeRepository.findPersonCreatedRoutes(identifier)
+    fun findUserCreatedRoutes(identifier: Int): List<Route> = routeRepository.findPersonCreatedRoutes(identifier)
 
-    fun createPerson(personDto: PersonDto) {
+    fun createPerson(connectionHandle: Handle, personDto: PersonDto) : Int{
         val person = personMapper.map(personDto)
-        personRepository.create(person)
+        return personRepository.create(connectionHandle, person)
     }
 
     fun deletePerson(identifier: Int) = personRepository.delete(identifier)

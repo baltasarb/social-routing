@@ -9,8 +9,10 @@ import ps.g49.socialroutingservice.mappers.Mapper
 class PersonDtoMapper : Mapper<PersonInput, PersonDto> {
 
     override fun map(from: PersonInput): PersonDto = PersonDto(
+            identifier = from.identifier,
             name = from.name,
-            email = from.email
+            email = from.email,
+            rating = from.rating
     )
 
 }

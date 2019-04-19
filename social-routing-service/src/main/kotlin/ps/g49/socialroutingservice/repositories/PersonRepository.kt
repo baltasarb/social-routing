@@ -10,7 +10,7 @@ interface PersonRepository {
      */
     fun findPersonById(identifier: Int): Person
 
-    fun create(person: Person)
+    fun create(connectionHandle: Handle, person: Person) : Int
 
     fun delete(identifier: Int)
 

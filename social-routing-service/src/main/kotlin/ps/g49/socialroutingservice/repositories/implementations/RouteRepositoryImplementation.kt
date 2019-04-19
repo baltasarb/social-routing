@@ -1,27 +1,32 @@
 package ps.g49.socialroutingservice.repositories.implementations
 
 import org.jdbi.v3.core.Handle
+import org.jdbi.v3.core.mapper.RowMapper
+import org.jdbi.v3.core.statement.StatementContext
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.repositories.RouteRepository
+import java.sql.ResultSet
 
 @Component
 class RouteRepositoryImplementation(private val connectionManager: ConnectionManager, private val mapper: RouteMapper) : RouteRepository {
 
-    override fun create(connectionHandle: Handle, route: Route) {
+    override fun create(connectionHandle: Handle, route: Route): Int {
         val query = "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier)" +
                 "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier);"
 
-        connectionHandle.createUpdate(query)
+        return connectionHandle.createUpdate(query)
                 .bind("location", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
                 .bind("duration", 0) //TODO (time needs to be calculated by the server)
                 .bind("personIdentifier", route.personIdentifier)
                 .bind("points", route.points.toString())
-                .execute()
+                .executeAndReturnGeneratedKeys("identifier")
+                .mapTo(Int::class.java)
+                .findOnly()
     }
 
     override fun delete(identifier: Int) {
@@ -61,8 +66,15 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
     }
 
     override fun findPersonCreatedRoutes(identifier: Int): List<Route> {
-        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
-        return connectionManager.findManyByIntId(query, mapper, identifier)
+        val query = "SELECT Identifier, Name, Rating, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
+        return connectionManager.findManyByIntId(query, RowMapper { rs: ResultSet?, _: StatementContext? ->
+            Route(
+                    identifier = rs!!.getInt("Identifier"),
+                    name = rs.getString("Name"),
+                    rating = rs.getDouble("Rating"),
+                    personIdentifier = rs.getInt("PersonIdentifier")
+            )
+        }, identifier)
     }
 
 }

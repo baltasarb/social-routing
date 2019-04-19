@@ -73,12 +73,15 @@ class ConnectionManager {
         }
     }
 
-    fun insert(query: String, vararg params: String) {
+    fun insert(query: String, vararg params: String) : Int{
         val handle = jdbi.open()
         val result = handle.execute(query, *params)
         //TODO check result
         handle.close()
+        return result
     }
+
+
 
     fun deleteByIntId(query: String, id: Int) {
         val handle = jdbi.open()

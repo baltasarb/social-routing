@@ -8,6 +8,7 @@ import ps.g49.socialroutingservice.models.inputModel.RouteInput
 class RouteDtoMapper : DtoMapper<RouteInput, RouteDto> {
 
     override fun map(from: RouteInput): RouteDto = RouteDto(
+            identifier = from.identifier,
             location = from.location,
             name = from.name,
             description = from.description,

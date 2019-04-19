@@ -1,12 +1,22 @@
 package ps.g49.socialroutingservice.mappers.outputMappers
 
+import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.models.domainModel.Person
-import ps.g49.socialroutingservice.models.outputModel.OutputPerson
+import ps.g49.socialroutingservice.models.outputModel.PersonOutput
+import ps.g49.socialroutingservice.utils.OutputUtils
 
-class PersonOutputMapper : OutputMapper<Person, OutputPerson> {
+@Component
+class PersonOutputMapper : OutputMapper<Person, PersonOutput> {
 
-    override fun map(from: Person): OutputPerson {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun map(from: Person): PersonOutput {
+        val id = from.identifier!!
+        return PersonOutput(
+                identifier = id,
+                name = from.name,
+                email = from.email,
+                rating = from.rating!!,
+                routesUrl = OutputUtils.personRoutesUrl(id)
+        )
     }
 
 }

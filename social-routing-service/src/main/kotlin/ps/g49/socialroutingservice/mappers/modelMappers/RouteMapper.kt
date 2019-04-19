@@ -11,14 +11,14 @@ import java.util.*
 class RouteMapper : ModelMapper<RouteDto, Route> {
 
     override fun mapFromResultSet(rs: ResultSet): Route = Route(
-            identifier = rs.getLong("Identifier"),
+            identifier = rs.getInt("Identifier"),
             location = rs.getString("Location"),
             name = rs.getString("Name"),
             description = rs.getString("Description"),
             rating = rs.getDouble("Rating"),
             duration = rs.getLong("Duration"),
             dateCreated = rs.getDate("DateCreated"),
-            points = PointCollection(Arrays.asList()),//TODO
+            points = listOf(),//TODO
             personIdentifier = rs.getInt("PersonIdentifier")
     )
 
@@ -27,9 +27,15 @@ class RouteMapper : ModelMapper<RouteDto, Route> {
                     location = from.location,
                     name = from.name,
                     description = from.description,
-                    points = PointCollection(from.points),
+                    points = listOf(),//TODO
                     personIdentifier = from.personIdentifier
             )
 
+    fun mapSimpleRouteFromResultSet(rs: ResultSet): Route = Route(
+            identifier = rs.getInt("Identifier"),
+            name = rs.getString("Name"),
+            rating = rs.getDouble("Rating"),
+            personIdentifier = rs.getInt("PersonIdentifier")
+    )
 
 }

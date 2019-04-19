@@ -15,9 +15,9 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
 
     fun findRouteById(id: Int) = routeRepository.findRouteById(id)
 
-    fun createRoute(connectionHandle: Handle, routeDto: RouteDto) {
+    fun createRoute(connectionHandle: Handle, routeDto: RouteDto) : Int {
         val route = routeMapper.map(routeDto)
-        routeRepository.create(connectionHandle, route)
+        return routeRepository.create(connectionHandle, route)
     }
 
     fun deleteRoute(identifier: Int) = routeRepository.delete(identifier)

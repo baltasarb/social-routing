@@ -13,7 +13,7 @@ interface RouteRepository {
 
     fun findPersonCreatedRoutes(identifier: Int): List<Route>
 
-    fun create(connectionHandle: Handle, route: Route)
+    fun create(connectionHandle: Handle, route: Route) : Int
 
     fun delete(identifier: Int)
 
