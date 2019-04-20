@@ -58,8 +58,9 @@ class PersonController(
     }
 
     @PutMapping("/{identifier}")
-    fun updatePerson(@RequestBody personInput: PersonInput): ResponseEntity<Void> {
+    fun updatePerson(@PathVariable identifier: Int, @RequestBody personInput: PersonInput): ResponseEntity<Void> {
         val personDto = personDtoMapper.map(personInput)
+        personDto.identifier = identifier
         val connectionHandle = connectionManager.generateHandle()
         personService.updatePerson(connectionHandle, personDto)
         connectionHandle.close()

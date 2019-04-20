@@ -4,7 +4,6 @@ import ps.g49.socialroutingservice.models.domainModel.Point
 import java.util.*
 
 data class RouteInput (
-        val identifier : Int? = null,//might be used on an update but not on a create
         val location : String,
         val name : String,
         val description : String,

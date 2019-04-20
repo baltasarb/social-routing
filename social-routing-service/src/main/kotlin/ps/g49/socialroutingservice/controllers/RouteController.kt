@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
+import ps.g49.socialroutingservice.DtoBuilder
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.dtoMappers.RouteDtoMapper
 import ps.g49.socialroutingservice.mappers.dtoMappers.SearchDtoMapper
@@ -44,8 +45,10 @@ class RouteController(
     @PostMapping
     fun createRoute(@RequestBody route: RouteInput) : ResponseEntity<Void>{
         val connectionHandle = connectionManager.generateHandle()
+
         val routeDto = routeDtoMapper.map(route)
         val id = routeService.createRoute(connectionHandle, routeDto)
+
         connectionHandle.close()
 
         val headers = HttpHeaders()
@@ -55,11 +58,15 @@ class RouteController(
     }
 
     @PutMapping("/{identifier}")
-    fun updateRoute(@RequestBody route: RouteInput) : ResponseEntity<Void>{
+    fun updateRoute(@PathVariable identifier : Int, @RequestBody route: RouteInput) : ResponseEntity<Void>{
         val connectionHandle = connectionManager.generateHandle()
-        val routeDto = routeDtoMapper.map(route)
+
+        val routeDto = DtoBuilder.buildRouteDto(route, identifier)
+
         routeService.updateRoute(connectionHandle, routeDto)
+
         connectionHandle.close()
+
         return OutputUtils.ok()
     }
 
