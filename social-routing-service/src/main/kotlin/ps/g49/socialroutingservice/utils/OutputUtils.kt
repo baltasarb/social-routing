@@ -29,12 +29,13 @@ class OutputUtils {
         }
 
         //used for post or put responses with empty body
-        fun ok(headers : HttpHeaders) : ResponseEntity<Void>{
+        fun ok(headers: HttpHeaders): ResponseEntity<Void> {
             return ResponseEntity
                     .ok()
                     .headers(headers)
                     .build()
         }
+
     }
 
 }

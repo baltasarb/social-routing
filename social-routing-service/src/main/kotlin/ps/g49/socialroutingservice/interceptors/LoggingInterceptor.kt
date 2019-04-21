@@ -27,7 +27,6 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
         }
         logger.info("\n")
 
-        //logger.info(request.)
         return true
     }
 

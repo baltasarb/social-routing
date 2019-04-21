@@ -1,8 +1,6 @@
 package ps.g49.socialroutingservice.repositories.implementations
 
 import org.jdbi.v3.core.Handle
-import org.jdbi.v3.core.kotlin.mapTo
-import org.jdbi.v3.core.statement.Update
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper

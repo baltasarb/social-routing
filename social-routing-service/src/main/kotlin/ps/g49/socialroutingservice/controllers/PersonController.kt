@@ -5,12 +5,12 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.models.inputModel.PersonInput
-import ps.g49.socialroutingservice.mappers.dtoMappers.PersonDtoMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.PersonOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.PersonOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
 import ps.g49.socialroutingservice.services.PersonService
+import ps.g49.socialroutingservice.utils.DtoBuilder
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @RestController
@@ -18,7 +18,6 @@ import ps.g49.socialroutingservice.utils.OutputUtils
 class PersonController(
         private val personService: PersonService,
         private val connectionManager: ConnectionManager,
-        private val personDtoMapper: PersonDtoMapper,
         private val personOutputMapper: PersonOutputMapper,
         private val routeOutputMapper: RouteOutputMapper
 ) {
@@ -41,7 +40,7 @@ class PersonController(
     @PostMapping
     fun createPerson(@RequestBody personInput: PersonInput): ResponseEntity<Void> {
         val handle = connectionManager.generateHandle()
-        val personDto = personDtoMapper.map(personInput)
+        val personDto = DtoBuilder.buildPersonDto(personInput)
         val id = personService.createPerson(handle, personDto)
         handle.close()
 
@@ -59,12 +58,12 @@ class PersonController(
 
     @PutMapping("/{identifier}")
     fun updatePerson(@PathVariable identifier: Int, @RequestBody personInput: PersonInput): ResponseEntity<Void> {
-        val personDto = personDtoMapper.map(personInput)
-        personDto.identifier = identifier
+        val personDto = DtoBuilder.buildPersonDto(personInput, identifier)
         val connectionHandle = connectionManager.generateHandle()
         personService.updatePerson(connectionHandle, personDto)
         connectionHandle.close()
         return OutputUtils.ok()
     }
+
 }
 

@@ -22,4 +22,5 @@ data class PointCollection(
     private fun buildAndGetJsonPoint(latitude: Double, longitude: Double): String {
         return "{\"latitude\":$latitude, \"longitude\":$longitude}"
     }
+
 }

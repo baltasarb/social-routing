@@ -1,5 +1,6 @@
 package ps.g49.socialroutingservice
 
+import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.mapper.RowMapper
 import org.springframework.stereotype.Component
@@ -73,7 +74,7 @@ class ConnectionManager {
         }
     }
 
-    fun insert(query: String, vararg params: String) : Int{
+    fun insert(query: String, vararg params: String): Int {
         val handle = jdbi.open()
         val result = handle.execute(query, *params)
         //TODO check result
@@ -82,13 +83,12 @@ class ConnectionManager {
     }
 
 
-
     fun deleteByIntId(query: String, id: Int) {
         val handle = jdbi.open()
         val result = handle.execute(query, id)
         handle.close()
     }
 
-    fun generateHandle() = jdbi.open()
+    fun generateHandle() : Handle = jdbi.open()
 
 }

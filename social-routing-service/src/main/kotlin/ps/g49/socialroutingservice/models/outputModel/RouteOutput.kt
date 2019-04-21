@@ -9,7 +9,7 @@ data class RouteOutput(
         val name : String,
         val description : String,
         val rating : Double,
-        val duration : Long,
+        val duration : Int,
         val dateCreated : Date,
         val points : List<Point>,
         val ownerUrl : String
