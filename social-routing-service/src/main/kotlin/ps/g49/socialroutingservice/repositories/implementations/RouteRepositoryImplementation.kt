@@ -1,6 +1,9 @@
 package ps.g49.socialroutingservice.repositories.implementations
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.readValues
 import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.mapper.RowMapper
 import org.jdbi.v3.core.statement.StatementContext
@@ -19,13 +22,17 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
         val query = "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier)" +
                 "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier);"
 
+        //convert list of points to json
+        val jsonMapper = jacksonObjectMapper()
+        val points = jsonMapper.writeValueAsString(route.points)
+
         return connectionHandle.createUpdate(query)
                 .bind("location", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
                 .bind("duration", 0) //TODO (time needs to be calculated by the server)
                 .bind("personIdentifier", route.personIdentifier)
-                .bind("points", route.points.toString())
+                .bind("points", points)
                 .executeAndReturnGeneratedKeys("identifier")
                 .mapTo(Int::class.java)
                 .findOnly()
@@ -39,13 +46,17 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
     override fun update(connectionHandle: Handle, route: Route) {
         val query = "UPDATE Route SET (Location, Name, Description, Rating, Points) = (:location, :name, :description, :rating, to_json(:points)) WHERE identifier = :identifier;"
 
+        //convert list of points to json
+        val jsonMapper = jacksonObjectMapper()
+        val points = jsonMapper.writeValueAsString(route.points)
+
         connectionHandle.createUpdate(query)
                 .bind("identifier", route.identifier)
                 .bind("location", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
                 .bind("rating", route.rating)
-                .bind("points", route.points.toString())
+                .bind("points", points)
                 .execute()
     }
 
@@ -53,17 +64,8 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
      * @Param id is the name of the route
      */
     override fun findRouteById(id: Int): Route {
-        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = :identifier;"
-
-        val query2 = "SELECT Points FROM JsonTest;"
-        val h = connectionManager.generateHandle()
-        //val route = h.createQuery(query).bind("identifier", id).mapTo<R>().findOnly()
-        val route = h.createQuery(query2).map(JsonTestMapper()).list()
-        h.close()
-
-        val route2 : Route? = null
-        return route2!!
-        //return connectionManager.findOnlyByIntId(query, mapper, id)
+        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
+        return connectionManager.findOnlyByIntId(query, mapper, id)
     }
 
     override fun findAll(): List<Route> {
@@ -88,12 +90,4 @@ class RouteRepositoryImplementation(private val connectionManager: ConnectionMan
         }, identifier)
     }
 
-    inner class JsonTestMapper : RowMapper<Array<Point>>{
-        override fun map(rs: ResultSet?, ctx: StatementContext?): Array<Point>{
-            val mapper = jacksonObjectMapper()
-            val jsonString : String = rs!!.getString("Points")
-            return mapper.readValue(jsonString, Array<Point>::class.java)
-        }
-
-    }
 }

@@ -14,7 +14,7 @@ CREATE TABLE Route(
 	Duration bigint NOT NULL, -- Duration in minutes (provided by google api)
 	DateCreated date NOT NULL,
 	Points json NOT NULL,
-	PersonIdentifier serial REFERENCES Person(Identifier)
+	PersonIdentifier serial REFERENCES Person(Identifier) ON DELETE CASCADE
 );
 
 CREATE TABLE Category(
@@ -23,6 +23,6 @@ CREATE TABLE Category(
 
 CREATE TABLE RouteCategory(
 	CategoryName text REFERENCES Category(Name),
-	RouteIdentifier bigint REFERENCES Route(Identifier),
+	RouteIdentifier bigint REFERENCES Route(Identifier) ON DELETE CASCADE,
 	PRIMARY KEY (CategoryName, RouteIdentifier)
 );

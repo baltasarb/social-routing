@@ -1,0 +1,17 @@
+PWD c:/Users/user/Documents/isel/ps/social-routing/progress report
+INPUT c:/texlive/2018/texmf.cnf
+INPUT c:/texlive/2018/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.tex
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.log
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/report.cls
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/report.cls
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.pdf
+INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
