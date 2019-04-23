@@ -13,10 +13,12 @@ VALUES('100', 'Baltasar', 'baltasar@gmail.com'),
 INSERT INTO Category (Name) VALUES ('Sea');
 INSERT INTO Category (Name) VALUES ('Sports');
 INSERT INTO Category (Name) VALUES ('Nature');
+INSERT INTO Category (Name) VALUES ('Other');
 
---INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sea', 100);
---INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sports', 100);
---INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Nature', 100);
+
+INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sea', 1);
+INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sports', 2);
+INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Nature', 1);
 --INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Nature', 200);
 --INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sports', 200);
 
@@ -25,7 +27,13 @@ SELECT * FROM RouteCategory;
 SELECT * FROM Person;
 SELECT * FROM Route;
 
+SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, RouteCategory.CategoryName 
+FROM Route 
+JOIN RouteCategory ON Route.Identifier = RouteCategory.RouteIdentifier
+WHERE Route.Identifier = 1
+
+
 --UPDATE Person SET (Name, Email) = ('ze', 'm') WHERE identifier = 6;
 
-
+SELECT CategoryName FROM RouteCategory WHERE RouteIdentifier = 1
 

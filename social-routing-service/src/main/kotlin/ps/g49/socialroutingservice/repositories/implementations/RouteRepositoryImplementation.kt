@@ -49,20 +49,22 @@ class RouteRepositoryImplementation(
     }
 
     override fun update(connectionHandle: Handle, route: Route) {
-        val query = "UPDATE Route SET (Location, Name, Description, Rating, Points) = (:location, :name, :description, :rating, to_json(:points)) WHERE identifier = :identifier;"
-
         //convert list of points to json
         val jsonMapper = jacksonObjectMapper()
         val points = jsonMapper.writeValueAsString(route.points)
 
-        connectionHandle.createUpdate(query)
+        val query = "{call updateRouteAndRouteCategories(:identifier, :location, :name, :description, :rating, :duration, to_json(:points), <categories>)}"
+        connectionHandle
+                .createCall(query)
                 .bind("identifier", route.identifier)
                 .bind("location", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
                 .bind("rating", route.rating)
+                .bind("duration", 0) //TODO (time needs to be calculated by the server)
                 .bind("points", points)
-                .execute()
+                .bindList("categories", route.categories)
+                .invoke()
     }
 
     /**
@@ -71,7 +73,7 @@ class RouteRepositoryImplementation(
     override fun findRouteById(connectionHandle: Handle, id: Int): Route {
         val routeQuery = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
         val route = connectionHandle.select(routeQuery, id).map(mapper).findOnly()
-
+        //TODO sql function for both queries
         val categoriesQuery = "SELECT CategoryName FROM RouteCategory WHERE RouteIdentifier = ?;"
         val categories = connectionHandle.select(categoriesQuery, id).map(categoryMapper).toList()
 

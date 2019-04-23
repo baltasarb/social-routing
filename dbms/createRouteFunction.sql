@@ -23,8 +23,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---select insertRouteAndRouteCategories('loc 3','t2','d2',0,' [{"latitude": 3,"longitude": 4},{"latitude": 3,"longitude": 4}]',100,ARRAY['Sea', 'Sports']);
-
 --drop function insertRouteAndRouteCategories;
 
 
