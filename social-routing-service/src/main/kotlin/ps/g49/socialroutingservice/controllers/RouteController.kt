@@ -7,8 +7,11 @@ import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.utils.DtoBuilder
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
+import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
 import ps.g49.socialroutingservice.models.domainModel.Route
+import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
+import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
 import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
@@ -17,7 +20,8 @@ import ps.g49.socialroutingservice.utils.OutputUtils
 class RouteController(
         private val connectionManager: ConnectionManager,
         private val routeService: RouteService,
-        private val routeOutputMapper: RouteOutputMapper
+        private val routeOutputMapper: RouteOutputMapper,
+        private val simplifiedRouteOutputMapper: SimplifiedRouteOutputMapper
 ) {
 
     @GetMapping
@@ -25,16 +29,19 @@ class RouteController(
 
     @GetMapping("/{identifier}")
     fun findRouteById(@PathVariable identifier: Int): ResponseEntity<RouteOutput> {
-        val route = routeService.findRouteById(identifier)
+        val connectionHandle = connectionManager.generateHandle()
+        val route = routeService.findRouteById(connectionHandle, identifier)
+        connectionHandle.close()
         val output = routeOutputMapper.map(route)
         return ResponseEntity.ok(output)
     }
 
     @GetMapping("/search")
-    fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<List<Route>> {
+    fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<List<SimplifiedRouteOutput>> {
         val searchDto = DtoBuilder.buildSearchDto(params)
         val routes = routeService.search(searchDto)
-        return OutputUtils.ok(routes)
+        val output = simplifiedRouteOutputMapper.mapSimplifiedRouteCollection(routes)
+        return OutputUtils.ok(output)
     }
 
     @PostMapping

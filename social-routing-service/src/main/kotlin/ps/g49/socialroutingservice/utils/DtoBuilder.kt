@@ -19,7 +19,8 @@ class DtoBuilder {
                 points = routeInput.points,
                 personIdentifier = routeInput.personIdentifier,
                 dateCreated = routeInput.dateCreated,
-                duration = routeInput.duration
+                duration = routeInput.duration,
+                categories = routeInput.categories
         )
 
         fun buildPersonDto(personInput: PersonInput, id: Int? = null): PersonDto = PersonDto(

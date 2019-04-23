@@ -42,7 +42,8 @@ class RouteMapper : ModelMapper<RouteDto, Route> {
                     personIdentifier = from.personIdentifier,
                     rating = from.rating,
                     duration = from.duration,
-                    dateCreated = from.dateCreated
+                    dateCreated = from.dateCreated,
+                    categories = from.categories
             )
 
 
@@ -50,7 +51,7 @@ class RouteMapper : ModelMapper<RouteDto, Route> {
      * the result set returns the json object with \ escape characters that need o be removed
      * it also adds an extra pair of " characters. They are removed by using the substring of the json
      *
-     * this method build valid jason from a string with the following format:
+     * this method builds valid jason from a string with the following format:
      *  "[{\"latitude\":3.0,\"longitude\":4.0},{\"latitude\":3.0,\"longitude\":4.0}]"
      *  to:
      *  [{"latitude":3.0,"longitude":4.0},{"latitude":3.0,"longitude":4.0}]

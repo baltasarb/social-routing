@@ -18,7 +18,8 @@ class RouteOutputMapper : OutputMapper<Route, RouteOutput> {
             duration = from.duration!!,
             dateCreated = from.dateCreated!!,
             points = from.points!!,
-            ownerUrl = OutputUtils.personUrl(from.personIdentifier)
+            ownerUrl = OutputUtils.personUrl(from.personIdentifier),
+            categories = from.categories!!
     )
 
     fun mapSimplifiedRouteCollection(collection: List<Route>): List<SimplifiedRouteOutput> {

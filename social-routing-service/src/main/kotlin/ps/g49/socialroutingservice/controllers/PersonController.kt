@@ -7,6 +7,7 @@ import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.models.inputModel.PersonInput
 import ps.g49.socialroutingservice.mappers.outputMappers.PersonOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
+import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.PersonOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
 import ps.g49.socialroutingservice.services.PersonService
@@ -19,7 +20,7 @@ class PersonController(
         private val personService: PersonService,
         private val connectionManager: ConnectionManager,
         private val personOutputMapper: PersonOutputMapper,
-        private val routeOutputMapper: RouteOutputMapper
+        private val simplifiedRouteOutputMapper: SimplifiedRouteOutputMapper
 ) {
 
     @GetMapping("/{identifier}")
@@ -32,7 +33,7 @@ class PersonController(
     @GetMapping("/{identifier}/routes")
     fun findUserCreatedRoutes(@PathVariable identifier: Int): ResponseEntity<List<SimplifiedRouteOutput>> {
         val routes = personService.findUserCreatedRoutes(identifier)
-        val output = routeOutputMapper.mapSimplifiedRouteCollection(routes)
+        val output = simplifiedRouteOutputMapper.mapSimplifiedRouteCollection(routes)
         return OutputUtils.ok(output)
     }
 

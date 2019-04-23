@@ -6,6 +6,7 @@ import ps.g49.socialroutingservice.models.dtos.RouteDto
 import ps.g49.socialroutingservice.models.dtos.SearchDto
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.models.domainModel.Route
+import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Service
@@ -13,7 +14,7 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
 
     fun findAllRoutes() = routeRepository.findAll()
 
-    fun findRouteById(id: Int) = routeRepository.findRouteById(id)
+    fun findRouteById(connectionHandle: Handle, id: Int) = routeRepository.findRouteById(connectionHandle, id)
 
     fun createRoute(connectionHandle: Handle, routeDto: RouteDto) : Int {
         val route = routeMapper.map(routeDto)
@@ -27,7 +28,7 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
         routeRepository.update(connectionHandle, route)
     }
 
-    fun search(searchDto: SearchDto): List<Route> {
+    fun search(searchDto: SearchDto): List<SimplifiedRoute> {
         return routeRepository.findAllByParameter(searchDto.location!!)
     }
 

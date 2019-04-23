@@ -9,6 +9,7 @@ data class RouteInput (
         val description : String,
         val personIdentifier: Int,
         val points: List<Point>,
+        val categories : List<String>,
         var rating: Double? = null, //might be used on an update but not on a create
         var duration: Int? = null, //might be used on an update but not on a create
         var dateCreated: Date? = null //might be used on an update but not on a create

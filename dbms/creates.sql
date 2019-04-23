@@ -23,6 +23,6 @@ CREATE TABLE Category(
 
 CREATE TABLE RouteCategory(
 	CategoryName text REFERENCES Category(Name),
-	RouteIdentifier bigint REFERENCES Route(Identifier) ON DELETE CASCADE,
+	RouteIdentifier integer REFERENCES Route(Identifier) ON DELETE CASCADE,
 	PRIMARY KEY (CategoryName, RouteIdentifier)
 );

@@ -11,5 +11,6 @@ data class Route(
         var duration: Int? = null,// TODO created by service
         var dateCreated: Date? = null, // created by db
         val points: List<Point>? = null,
-        val personIdentifier: Int
+        val personIdentifier: Int,
+        var categories : List<String>? = null
 )
