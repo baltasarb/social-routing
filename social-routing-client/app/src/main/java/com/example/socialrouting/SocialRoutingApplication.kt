@@ -3,19 +3,33 @@ package com.example.socialrouting
 import android.app.Application
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.example.socialrouting.services.webService.GeocodingWebService
+import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
 
 class SocialRoutingApplication : Application() {
 
-    // TODO: token from Social Routing Server
     lateinit var token: String
     lateinit var queue: RequestQueue
+    lateinit var geocodingService: GeocodingWebService
 
     override fun onCreate() {
         super.onCreate()
 
         queue = Volley.newRequestQueue(this)
-        token = "c005bef494e39dd2db6d56854bcba0c8e0ecec24"
 
+        initGeocodingRetrofit()
     }
 
+
+    fun initGeocodingRetrofit() {
+        val retrofitGeocoding = Retrofit.Builder()
+            .baseUrl("https://maps.googleapis.com/maps/api/")
+            .addConverterFactory(JacksonConverterFactory.create())
+            .build()
+
+        geocodingService = retrofitGeocoding.create(GeocodingWebService::class.java)
+    }
+
+    fun getGoogleMapsKey() = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
 }
