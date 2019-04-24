@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Social Routing</string>
+    <string name="title_activity_route_creation">Map</string>
+    <string name="finish">Finish</string>
+    <string name="search_image_button_description">Search for the current location, to zoom on it in map</string>
+    <string name="location">Location</string>
+    <string name="back_image_button_description">Go one step back, remove one marker and line from the map</string>
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="no_email">No Email</string>
+    <string name="default_value_rating">0.0</string>
+    <string name="star_image_to_represent_rating">Star Image to represent rating</string>
+    <string name="routes_created">Routes Created :</string>
+    <string name="no_routes_to_show">Nothing Found …</string>
+    <string name="finish_route_creation">Finish Route Creation</string>
+    <string name="name">Name:</string>
+    <string name="description">Description:</string>
+    <string name="category">Categories</string>
+    <string name="results">Results:</string>
 </resources>
