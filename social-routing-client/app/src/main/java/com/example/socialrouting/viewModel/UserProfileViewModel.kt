@@ -1,18 +1,18 @@
 package com.example.socialrouting.viewModel
 
-import android.arch.lifecycle.ViewModel
-import com.example.socialrouting.model.User
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import com.example.socialrouting.model.inputModel.PersonInput
+import com.example.socialrouting.model.inputModel.RouteInput
+import com.example.socialrouting.repositories.RouteRepository
+import com.example.socialrouting.utils.Resource
 
 class UserProfileViewModel : ViewModel() {
 
-    lateinit var userId: String
-    lateinit var user: User
+    private val routeRepository = RouteRepository()
 
-    fun init(userId: String) {
-        this.userId = userId
-    }
+    fun getUser(id: Int): LiveData<Resource<PersonInput>> = routeRepository.getPerson(id.toString())
 
-    fun getUser() = user
-
+    fun getUserRoutesFromUrl(routesUrl: String): LiveData<Resource<List<RouteInput>>> = routeRepository.getUserRoutes(routesUrl)
 
 }
