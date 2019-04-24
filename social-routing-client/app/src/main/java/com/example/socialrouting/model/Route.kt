@@ -1,9 +1,7 @@
 package com.example.socialrouting.model
 
 import com.example.socialrouting.model.inputModel.PointCollection
-import com.example.socialrouting.model.inputModel.RouteInput
 import java.util.*
-
 
 data class Route(
     var identifier: Long? = null, // created by db

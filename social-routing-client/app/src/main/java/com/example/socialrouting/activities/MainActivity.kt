@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun search(view: View) {
-        val intent = Intent(this, SearchRoutesActivity::class.java)
+        val intent = Intent(this, RouteSearchActivity::class.java)
         startActivity(intent)
     }
 

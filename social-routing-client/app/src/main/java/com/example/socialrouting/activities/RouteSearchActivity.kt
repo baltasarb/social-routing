@@ -10,7 +10,7 @@ import com.example.socialrouting.utils.SearchRoutesAdapter
 import com.example.socialrouting.viewModel.RouteViewModel
 import kotlinx.android.synthetic.main.activity_search_routes.*
 
-class SearchRoutesActivity : BaseActivity() {
+class RouteSearchActivity : BaseActivity() {
 
     private lateinit var routeViewModel: RouteViewModel
 
@@ -41,5 +41,5 @@ class SearchRoutesActivity : BaseActivity() {
 
     }
 
-    private fun getSocialRoutingApplication() = this@SearchRoutesActivity.application as SocialRoutingApplication
+    private fun getSocialRoutingApplication() = this@RouteSearchActivity.application as SocialRoutingApplication
 }
