@@ -54,33 +54,70 @@
     \newpage
 
     \section{Introduction}
-    
-        \subsection*{Report Structure}
-        The structure of the report is based on the previously made timeline. Each of the timeline's points is explained and evaluated with regards to it's completion and difficulties that were overcome in it's implementation.\par
-        The previously made timeline had incorrect delivery dates and as such this report will also present a correct and improved version of the future timeline to follow as well as the risks it might contain.
-    
+        This progress report provides information about the current state of the project, specifically about what is done until now and what will 
+        be done in the future. It also details the future project goals and the risks that we will deal with.\par
+        The structure of the report is based on the previously created timeline. Each of the timeline's points is explained and evaluated with regards to it's 
+        completion and difficulties that were overcome in it's implementation. The timeline points match with each of the report's sections.\par
+        The previously made timeline had incorrect delivery dates and as such this report will also present a correct and improved version 
+        of the future timeline to follow as well as the risks it might contain.
+        
         \newpage
     
     \section{System Structure}
+        The project still follows the same System Structure that was established initially in the proposal, which has two major components and a 
+        third exterior one, communicating with each other, separating concerns and business logic. The following figure illustrates the system's structure:
+        
         \begin{figure}[h]            
             \includegraphics[width=\textwidth]{images/project-structure/system-structure.PNG}
             \caption{System structure.}
             \label{fig:systemstructure}
         \end{figure}  
-        \newpage
+        \newpage    
 
     \section{Client Application}
-        \subsection*{Infrastructure Design}
-
+        The first step was choosing the proper technology\cite{technologiesclientdocs} for this component and Kotlin \cite{kotlinwebsite} seemed the best choice as far as supported programming languages 
+        of the Android Platform go, because it introduces functional features to support interoperability and intelligibility. The main reason Kotlin was chosen was to improve the coding experience in a way that was practical, fast, and effectual.
+        After the technology was chosen the definition of the Client application\cite{clientapplicationdocs} Architectural principles followed, which is the core of this component. 
+        So the principles were the separation of concerns, where each module has its own purpose and the other core principle were that the user interface(UI) 
+        should be driven from a model, which in turn means that the view objects and the application components are independent of data handlers.
+        
+        
         \subsection*{Route Creation}
-
+            The Route Creation functionality is already done in the Client Application and is where the user can create its own Routes to show others, when searched. 
+            Initially the user is asked where is the location of the Route and then using the google maps API the map is obtained and it is zoomed to the chosen location. 
+            After that, the user can click on the map to select the Route points which are then connected by the application, forming a route. When it the route is complete it is 
+            the user then needs to fill a form to complete the metadata such as the name, description and category of the Route that is about to be created. 
+            The Route metadata could have some improvements in the future, to be more useful when searching the correct Route.
+    
         \subsection*{Communication with the Social Routing API}
+            To build communication with the Social Routing Service\cite{communicationwithexternalapis}, the library Retrofit\cite{retrofit} was used, which is responsible for making HTTP \cite{httponlinedocs} requests. 
+            \newpage
 
+        \subsection*{Infrastructure Design}
+            The infrastructure design\cite{clientdesignandimplementationdocs} of the Client Application follows the principles described before and as such, it can be divided in four blocks: Activities and Fragments, 
+            View Models, Repository and the Remote Data Source. Where each has one objective in the Client Application:
+        \begin{itemize}
+                \item Activities and Fragments: contain logic that handles the UI and the actions related to operating system. These are the components that 
+                the user can interact with and obtain feedback about what is currently happening on the Client Application.
+                \item ViewModels : when the UI experiences a change, the ViewModel calls other components to load the data, and it can forward user requests 
+                to modify the data, however the ViewModel doesn't know about UI components, it is completely separated from them.
+                \item Repository : handles data operations and knows where to get the data from and what API calls to make when data is updated. 
+                A repository can be considered to be a mediator between different data sources, such as web services.
+                \item Remote Data Source: module that has the objective of communicating with external APIs and it communicates by doing requests to some Services, 
+                in this case to our API.
+            \end{itemize}
+    
+        \begin{figure}[h]            
+            \includegraphics[width=\textwidth]{images/project-structure/social-routing-client-application-structure.PNG}
+            \caption{Client Application Structure.}
+            \label{fig:clientapplicationtructure}
+        \end{figure}          
+    
         \newpage
 
     \section{Social Routing Service}
 
-        The Social Routing Service is responsible for providing access to data and functionalities to a client through an an HTTP \cite{httponlinedocs} based API. It receives HTTP made requests
+        The Social Routing Service is responsible for providing access to data and functionalities to a client through an an HTTP based API. It receives HTTP made requests
         with certain specifications and responds with resources generated by the the server. The following diagram details the building blocks of the service:
 
         \begin{figure}[h]            
@@ -92,18 +129,20 @@
            
             The goal of the Social Routing API is to expose the service's functionalities to a client, in this case the an Android\cite{androiddocs} based client application. The API
             should be used to store or retrieve routes and user information, as well as to find the closest route available to a specific user or location.\par
-            It was built in the Kotlin \cite{kotlinwebsite} programming language and using the {Spring MVC framework} \cite{springwebsite}. The build system is that of the server,
+            It was built in the Kotlin programming language and using the {Spring MVC framework} \cite{springwebsite}. The build system is that of the server,
             which they both share with the framework itself, Gradle \cite{gradlewebsite}. \par 
             All API access is done over Hypertext Transfer Protocol and the API data is sent and received in the JSON \cite{jsonwebsite} format. The exception is on error responses
             which follows the JSON+problem \cite{jsonproblemonlinedocs} standard. \par
             Currently the API supports requests in a limited number of HTTP \textit{verbs} (GET, POST, PUT, DELETE) \cite{apihttpverbsdocs}, and has a functional but incomplete error handling system. 
             Some request specifications are already complete, such as the media type desired in a POST request but some are not such as user authentication. 
 
+            \newpage
+
             \subsubsection*{Endpoint for Route Creation}
             The first task when building the API was to provide a way for a Route to be created because of the considerations it requires. Namely, the 
             characterization of a Route in it's data form and the metadata it needs in order to be stored and retrieved.\par
             
-            This goal was achieved with success \cite{routecreationdocs} but with some minor problems in the characterization aspect occurring from time to time. 
+            This goal was achieved with success \cite{routecreationdocs} but with some minor problems in the definition aspect occurring from time to time. 
             Initially a route was characterized by a set of coordinate pairs, that each had the latitude and longitude of a given geographic point, but 
             as the project grew the metadata required to characterize a route grew with it. At this time, for a route to be created it requires not only the 
             set of coordinates but also its creator's information and its assigned categories.
@@ -126,24 +165,23 @@
 
             \subsubsection*{Communication with the Database Management System}
             Initially the communication with the database was made using Spring Data JPA \cite{springjpadocs} but after the initial implementation with it, it revealed 
-            itself to be time consuming on the learning side, and limited in the management of the database connection and SQL queries desired. That caused a switch to a different approach, using JDBI \cite{jdbidocs}.
-            JDBI \cite{jdbidocs} is an API which is built on top of the JDBC driver \cite{jdbcdocs}.\par and is used directly in the server by the Repository component to communicate with the database.        
+            itself to be time consuming on the learning side, and limited in the management of the database connection and SQL queries desired. 
+            That caused a switch to a different approach, using JDBI \cite{jdbidocs} which is an API that is built on top of the JDBC driver \cite{jdbcdocs} and is used directly in the server by the Repository component to communicate with the database.        
 
             \subsubsection*{Infrastructure Design and Implementation}
             The structure of the server follows the one showed in figure \ref{fig:systemstructure}. 
-            Two Controllers were built, one for user related requests and other for route related ones. Following the diagram, the services follow the same logic, one for route related 
-            processing and other one for user processing. The final layer is the repositories which depends directly on the entities present on the database. There are two repositories as well,
-            one for user related operations and another for those that are route related.\par
+            Considering the presented logic and the necessities of the project's business model which contains two big entities (Person and Route), those were the most important pieces of each component.
+            Two controllers, two services and two repositories were created, one for each of the entities.
             An also very important part of the server is also the conversion of data. Currently, a received request is transformed from received data in the JSON format to an input type object which is received by a controller, then to a data 
             transfer object and sent to one or multiple services and after that to a domain object which might be sent to a repository if database storage or retrieval is necessary.
 
             Setting this goal so early in the timeline allowed us to establish a foundation to build on top of in a very quick fashion, being that most of the work was done decided initially the rest 
             was just a question of adding an extra Repository, Service or Controller as well as the required type converters. 
 
-            \subsubsection*{Add All Functionalities Except Search}
+            \subsubsection*{Remaining Functionalities Except Search}
             The functionalities of the server required in this point were all the ones considered to support a functional API and as such, after the initial structure was done, most of the requirements
             that followed were a matter of adding and extra component horizontally being that the vertical structure was already complete. As far as the search functionality goes, it is implemented in 
-            a minimalistic version, allowing for rout searching by location only.
+            a minimalistic version, allowing for route searching by location only.
 
             \newpage
 
@@ -196,8 +234,30 @@
     
         \newpage    
     
-    \section{Conclusion}
-    
+    \section{Conclusion}    
+        A major issue so far with the project was the incorrect planning of the first timeline. The dates for the deliverable milestones (progress report, beta and final version)
+        were considered to be about one month earlier than the actual correct date and therefore the progress cannot be based solely on the original timeline. 
+        However, all the goals set for before the original delivery date of the progress report were accomplished and because of the extra time, some features planned 
+        only for after the delivery were also done. The tasks completed after the delivery were:\par
+
+        \begin{itemize}
+            \item Client: the route search functionality is already done, albeit in a minimalistic way. The user profile is also completed as well as route visual representation. All these tasks were in the API - finalize timeline task point.
+            \item Social Routing Service: close to complete lacking only (complete) error handling, pagination and search algorithm improvement.
+        \end{itemize}
+
+        Considering this initial mistake in the original timeline creation, we created a new one to better suit the needs of the project's implementation.
+        Creating a new timeline has some risks and as such we dedicated a chapter to list them.
+        One of the first problems encountered was how a route should be defined. Several iterations were made before arriving at the current one. We avoid saying final
+        because the definition of a route is susceptive to change when new functionalities are implemented.
+        While implementing the Client Application some problems were encountered when utilizing the Google Maps API, namely the API key and the service's usage. 
+        Without an account with a credit card associated we were limited to one API call per day, which was limiting our testing capabilities. This was overcome by creating a wallet (offered by the service with an initial value).
+        The process that is required to create a route was also a problem, there are some considerations to be had due to the nature of a path: where it starts, where it ends, if it is circular, if it is doable in a determined time amongst others.
+        This topic is intertwined with route definition, changes in the definition also change the creation.\par
+
+        The Service had problems initially with the connection to the Database Management System, specifically because the choice of technologies was not the appropriate one, which
+        forced a shift to a different one. This used valuable time because two different libraries were learned (Spring Data and JDBI) and later Spring Data was discarded.
+
+
         \newpage    
     
     \printbibliography

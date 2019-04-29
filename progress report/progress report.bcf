@@ -1995,23 +1995,27 @@
     <bcf:datasource type="file" datatype="bibtex">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">httponlinedocs</bcf:citekey>
-    <bcf:citekey order="2">androiddocs</bcf:citekey>
-    <bcf:citekey order="3">kotlinwebsite</bcf:citekey>
-    <bcf:citekey order="4">springwebsite</bcf:citekey>
-    <bcf:citekey order="5">gradlewebsite</bcf:citekey>
-    <bcf:citekey order="6">jsonwebsite</bcf:citekey>
-    <bcf:citekey order="7">jsonproblemonlinedocs</bcf:citekey>
-    <bcf:citekey order="8">apihttpverbsdocs</bcf:citekey>
-    <bcf:citekey order="9">routecreationdocs</bcf:citekey>
-    <bcf:citekey order="10">apidocs</bcf:citekey>
-    <bcf:citekey order="11">springjpadocs</bcf:citekey>
-    <bcf:citekey order="12">jdbidocs</bcf:citekey>
-    <bcf:citekey order="13">jdbidocs</bcf:citekey>
-    <bcf:citekey order="14">jdbcdocs</bcf:citekey>
-    <bcf:citekey order="15">postgresql</bcf:citekey>
-    <bcf:citekey order="16">postgresqljson</bcf:citekey>
-    <bcf:citekey order="17">dbmsroutecharacterization</bcf:citekey>
+    <bcf:citekey order="1">technologiesclientdocs</bcf:citekey>
+    <bcf:citekey order="2">kotlinwebsite</bcf:citekey>
+    <bcf:citekey order="3">clientapplicationdocs</bcf:citekey>
+    <bcf:citekey order="4">communicationwithexternalapis</bcf:citekey>
+    <bcf:citekey order="5">retrofit</bcf:citekey>
+    <bcf:citekey order="6">httponlinedocs</bcf:citekey>
+    <bcf:citekey order="7">clientdesignandimplementationdocs</bcf:citekey>
+    <bcf:citekey order="8">androiddocs</bcf:citekey>
+    <bcf:citekey order="9">springwebsite</bcf:citekey>
+    <bcf:citekey order="10">gradlewebsite</bcf:citekey>
+    <bcf:citekey order="11">jsonwebsite</bcf:citekey>
+    <bcf:citekey order="12">jsonproblemonlinedocs</bcf:citekey>
+    <bcf:citekey order="13">apihttpverbsdocs</bcf:citekey>
+    <bcf:citekey order="14">routecreationdocs</bcf:citekey>
+    <bcf:citekey order="15">apidocs</bcf:citekey>
+    <bcf:citekey order="16">springjpadocs</bcf:citekey>
+    <bcf:citekey order="17">jdbidocs</bcf:citekey>
+    <bcf:citekey order="18">jdbcdocs</bcf:citekey>
+    <bcf:citekey order="19">postgresql</bcf:citekey>
+    <bcf:citekey order="20">postgresqljson</bcf:citekey>
+    <bcf:citekey order="21">dbmsroutecharacterization</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

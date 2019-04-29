@@ -167,10 +167,15 @@ INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress re
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.toc
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.toc
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
-INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
-INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/social-routing-client-application-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/social-routing-client-application-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/social-routing-client-application-structure.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/service-structure.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/service-structure.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/service-structure.PNG
@@ -181,8 +186,6 @@ INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/proj
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/timeline/updatedTimeline.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/timeline/updatedTimeline.png
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/timeline/updatedTimeline.png
-INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
-INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
