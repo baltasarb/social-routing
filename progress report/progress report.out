@@ -1,11 +1,10 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
-\BOOKMARK [2][-]{subsection.1.1}{Report Structure}{section.1}% 2
-\BOOKMARK [1][-]{section.2}{System Structure}{}% 3
-\BOOKMARK [1][-]{section.3}{Technologies}{}% 4
-\BOOKMARK [1][-]{section.4}{Client Application}{}% 5
-\BOOKMARK [1][-]{section.5}{Database Management System}{}% 6
-\BOOKMARK [1][-]{section.6}{Server}{}% 7
-\BOOKMARK [1][-]{section.7}{Social Routing API}{}% 8
-\BOOKMARK [1][-]{section.8}{Updated Timeline}{}% 9
-\BOOKMARK [1][-]{section.9}{Future Risks}{}% 10
-\BOOKMARK [1][-]{section.10}{Conclusion}{}% 11
+\BOOKMARK [1][-]{section.2}{System Structure}{}% 2
+\BOOKMARK [1][-]{section.3}{Client Application}{}% 3
+\BOOKMARK [1][-]{section.4}{Social Routing Service}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Social Routing API}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Server}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{Database Management System}{section.4}% 7
+\BOOKMARK [1][-]{section.5}{Updated Timeline}{}% 8
+\BOOKMARK [1][-]{section.6}{Risks}{}% 9
+\BOOKMARK [1][-]{section.7}{Conclusion}{}% 10

@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Updated Timeline" company="Social Routing" webLink="http://" view-date="2019-04-22" view-index="0" gantt-divider-location="576" resource-divider-location="300" version="2.8.10" locale="en_GB">
+<?xml version="1.0" encoding="UTF-8"?><project name="Updated Timeline" company="Social Routing" webLink="http://" view-date="2019-04-28" view-index="0" gantt-divider-location="426" resource-divider-location="300" version="2.8.10" locale="en_US">
     <description/>
-    <view zooming-state="default:6" id="gantt-chart">
-        <field id="tpd3" name="Name" width="331" order="0"/>
-        <field id="tpd4" name="Begin date" width="124" order="1"/>
-        <field id="tpd5" name="End date" width="117" order="2"/>
+    <view zooming-state="default:7" id="gantt-chart">
+        <field id="tpd3" name="Name" width="291" order="0"/>
+        <field id="tpd4" name="Begin date" width="69" order="1"/>
+        <field id="tpd5" name="End date" width="62" order="2"/>
         <timeline><![CDATA[2]]></timeline>
         <option id="color.recent"><![CDATA[#ff0000 #ff3333 #33cc00]]></option>
     </view>

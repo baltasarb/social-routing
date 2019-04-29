@@ -1,11 +1,21 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}% 
-\contentsline {subsection}{\numberline {1.1}Report Structure}{3}{subsection.1.1}% 
+\defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2}System Structure}{4}{section.2}% 
-\contentsline {section}{\numberline {3}Technologies}{5}{section.3}% 
-\contentsline {section}{\numberline {4}Client Application}{6}{section.4}% 
-\contentsline {section}{\numberline {5}Database Management System}{7}{section.5}% 
-\contentsline {section}{\numberline {6}Server}{8}{section.6}% 
-\contentsline {section}{\numberline {7}Social Routing API}{9}{section.7}% 
-\contentsline {section}{\numberline {8}Updated Timeline}{9}{section.8}% 
-\contentsline {section}{\numberline {9}Future Risks}{9}{section.9}% 
-\contentsline {section}{\numberline {10}Conclusion}{9}{section.10}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3}Client Application}{5}{section.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4}Social Routing Service}{6}{section.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.1}Social Routing API}{6}{subsection.4.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2}Server}{8}{subsection.4.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.3}Database Management System}{10}{subsection.4.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5}Updated Timeline}{11}{section.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6}Risks}{12}{section.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7}Conclusion}{13}{section.7}% 

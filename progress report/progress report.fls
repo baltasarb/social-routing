@@ -88,6 +88,30 @@ INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
 INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
 INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
@@ -115,6 +139,10 @@ OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress r
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.out
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.out
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.bcf
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.bbl
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.bbl
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.bbl
 INPUT c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
@@ -143,11 +171,25 @@ INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/system-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/service-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/service-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/service-structure.PNG
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/timeline/updatedTimeline.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/timeline/updatedTimeline.png
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/images/timeline/updatedTimeline.png
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.aux
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.run.xml
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/progress report/progress report.run.xml
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
@@ -156,4 +198,6 @@ INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
