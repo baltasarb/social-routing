@@ -2,6 +2,7 @@ package com.example.socialrouting.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.socialrouting.model.inputModel.RouteDetailedInput
 import com.example.socialrouting.model.inputModel.RouteInput
 import com.example.socialrouting.model.inputModel.RouteSearchInput
 import com.example.socialrouting.model.outputModel.RouteOutput
@@ -18,5 +19,8 @@ class RouteViewModel: ViewModel() {
     // ToDo upgrade search algorithm
     fun searchRoutes(): LiveData<Resource<List<RouteSearchInput>>> =
             routeRepository.searchRoutes()
+
+    fun getRoute(routeId: Int): LiveData<Resource<RouteDetailedInput>>
+     = routeRepository.getRoute(routeId)
 
 }

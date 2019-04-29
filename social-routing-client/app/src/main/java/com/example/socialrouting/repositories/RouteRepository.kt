@@ -3,6 +3,7 @@ package com.example.socialrouting.repositories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.socialrouting.model.inputModel.PersonInput
+import com.example.socialrouting.model.inputModel.RouteDetailedInput
 import com.example.socialrouting.model.inputModel.RouteInput
 import com.example.socialrouting.model.inputModel.RouteSearchInput
 import com.example.socialrouting.model.outputModel.RouteOutput
@@ -97,24 +98,34 @@ class RouteRepository {
     fun deletePerson() {
         TODO("not implemented")
     }
+    */
 
     // Route Request
-    fun getRoute(routeIdentifier: String): LiveData<RouteDetailedInput> {
-        val liveData = MutableLiveData<RouteDetailedInput>()
-        socialRoutingWebService.getRoute(routeIdentifier).enqueue(object: Callback<RouteDetailedInput> {
+    fun getRoute(routeIdentifier: Int): LiveData<Resource<RouteDetailedInput>> {
+        val resource = MutableLiveData<Resource<RouteDetailedInput>>()
+        resource.value = Resource.loading()
+
+        socialRoutingWebService
+            .getRoute(routeIdentifier)
+            .enqueue(object: Callback<RouteDetailedInput> {
 
             override fun onFailure(call: Call<RouteDetailedInput>, t: Throwable) {
-                Log.i("SOCIAL ROUTING",t.message)
+                resource.value = Resource.error(t.message.toString(), null)
             }
 
             override fun onResponse(call: Call<RouteDetailedInput>, response: Response<RouteDetailedInput>) {
-                Log.i("SOCIAL ROUTING",response.message())
+                val code = response.code()
+                if (code == 200)
+                    resource.value = Resource.success(response.body()!!)
+                else
+                    resource.value = Resource.error(response.message(), null)
             }
 
         })
-        return liveData
+
+        return resource
     }
-    */
+
 
     fun createRoute(routeOutput: RouteOutput): LiveData<Resource<String>> {
         val resource = MutableLiveData<Resource<String>>()
