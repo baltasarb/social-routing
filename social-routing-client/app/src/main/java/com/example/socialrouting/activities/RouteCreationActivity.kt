@@ -6,20 +6,20 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import com.example.socialrouting.R
 import com.example.socialrouting.kotlinx.getViewModel
-import com.example.socialrouting.model.Point
 import com.example.socialrouting.model.outputModel.RouteOutput
-import com.example.socialrouting.repositories.RouteRepository
 import com.example.socialrouting.utils.GoogleMapsManager
+import com.example.socialrouting.utils.Resource
 import com.example.socialrouting.viewModel.RouteViewModel
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import kotlinx.android.synthetic.main.route_creation_dialog.*
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
@@ -32,7 +32,12 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     companion object {
         private const val SEARCH = "Search"
         private const val TITLE_DIALOG_ALERT = "Route location"
-        private const val MARKERS_NEEDED = "First add markers to path, to save the Route."
+        private const val MARKERS_REQUIRED = "First add markers to path, to save the Route."
+        private const val CANCEL = "Cancel"
+        private const val CREATE = "Create"
+        private const val ROUTE_CREATED_SUCCESS = "The Route was created Successfully!"
+        private const val LOCATION_NOT_FOUND = "Location not Found."
+        private const val NAME_REQUIRED = "Fill the Name field, at least."
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,17 +87,21 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
             .setView(editText)
 
         // Set up the buttons
-        alertDialog.setPositiveButton(SEARCH) { dialog, which ->
+        alertDialog
+            .setPositiveButton(SEARCH) { dialog, which ->
 
-            location = editText.text.toString()
-            if (location.isEmpty())
-                getLocationFromViewInput()
-            else
-                mMapManager.zoomInLocation(location) {
-                    viewToast("Location not Found.")
+                location = editText.text.toString()
+                if (location.isEmpty())
                     getLocationFromViewInput()
-                }
-        }
+                else
+                    mMapManager.zoomInLocation(location) {
+                        viewToast(LOCATION_NOT_FOUND)
+                        getLocationFromViewInput()
+                    }
+            }
+            .setNegativeButton(CANCEL) { dialog, which ->
+                finish()
+            }
 
         // Show in UI.
         alertDialog.show()
@@ -104,7 +113,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
     fun finish(view: View) {
         if (!mMapManager.mapIsMarked())
-            viewToast(MARKERS_NEEDED)
+            viewToast(MARKERS_REQUIRED)
         else
             showDialogForm()
         // TODO If the device is connected to the internet makes a post request to the service to save the routeDetailed in db, or if the device is not connected to internet, this work will wait until the connection is on again.
@@ -118,18 +127,20 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         val nameEditText = rowView.findViewById<EditText>(R.id.nameEditText)
         val descriptionEditText = rowView.findViewById<EditText>(R.id.descriptionEditText)
         val spinner = rowView.findViewById<ProgressBar>(R.id.creationProgressBar)
-        // TODO fazer/obter categories
+        val chipGroup = rowView.findViewById<ChipGroup>(R.id.categoriesChipGroup)
+        setChipGroupView(chipGroup)
+
         spinner.visibility = View.GONE
 
         builder
             .setView(rowView)
-            .setPositiveButton("Create") { dialog, which ->
+            .setPositiveButton(CREATE) { dialog, which ->
                 spinner.visibility = View.VISIBLE
                 val name = nameEditText.text.toString()
                 val description = descriptionEditText.text.toString()
 
                 if (name.isEmpty())
-                    viewToast("Fill the Name field, at least.")
+                    viewToast(NAME_REQUIRED)
                 else {
                     val route = RouteOutput(location, name, description, mMapManager.getMarkerPoints(), 100, listOf("Other"))
                     val liveData = routeViewModel.createRoute(route)
@@ -137,18 +148,47 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                 }
 
             }
-            .setNegativeButton("Cancel") { dialog, which ->
+            .setNegativeButton(CANCEL) { dialog, which ->
                 dialog.cancel()
             }
             .create()
             .show()
     }
 
+    private fun setChipGroupView(chipGroup: ChipGroup) {
+        val liveData = routeViewModel.getRouteCategories()
+        liveData.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    requestLoadingHandler()
+                }
+                Resource.Status.ERROR -> {
+                    //stopSpinner()
+                    requestErrorHandler(it.message!!)
+                }
+                Resource.Status.SUCCESS -> {
+                    //stopSpinner()
+                    val categoriesCollection = it.data!!
+                    val categories = categoriesCollection.categories
+                    /*categories.forEach {
+                        val chip = Chip(this)
+                        chip.text = it.name
+
+                        chip.isClickable = true
+                        chip.isCheckable = true
+                        chipGroup.addView(chip)
+                    }*/
+                }
+            }
+        })
+    }
+
+
     private fun viewToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
     override fun <T> requestSuccessHandler(result: T) {
-        viewToast("The Route was created Successfully!")
+        viewToast(ROUTE_CREATED_SUCCESS)
     }
 }

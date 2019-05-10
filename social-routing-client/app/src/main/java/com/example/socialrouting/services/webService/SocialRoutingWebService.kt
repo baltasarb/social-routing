@@ -1,9 +1,6 @@
 package com.example.socialrouting.services.webService
 
-import com.example.socialrouting.model.inputModel.PersonInput
-import com.example.socialrouting.model.inputModel.RouteDetailedInput
-import com.example.socialrouting.model.inputModel.RouteInput
-import com.example.socialrouting.model.inputModel.RouteSearchInput
+import com.example.socialrouting.model.inputModel.*
 import com.example.socialrouting.model.outputModel.PersonOutput
 import com.example.socialrouting.model.outputModel.RouteOutput
 import retrofit2.Call
@@ -49,6 +46,6 @@ interface SocialRoutingWebService {
     @GET("routes")
     fun searchRoutes(): Call<List<RouteSearchInput>>
 
-    // TODO Missing one endPoint
-
+    @GET("categories")
+    fun getCategories(): Call<CategoryCollectionInput>
 }
