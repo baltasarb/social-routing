@@ -42,13 +42,14 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
         googleMapsManager = GoogleMapsManager(mMap)
         routeViewModel = getViewModel()
+
         val liveData = routeViewModel.getRoute(routeId)
         handleRequestedData(liveData)
     }
 
     override fun <T> requestSuccessHandler(result: T) {
         val routeDetailed = result as RouteDetailedInput
-        val points = routeDetailed.points.points
+        val points = routeDetailed.points
         googleMapsManager.drawLinesSet(points)
     }
 }

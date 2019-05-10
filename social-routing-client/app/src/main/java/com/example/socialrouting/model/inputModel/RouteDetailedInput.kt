@@ -7,10 +7,10 @@ data class RouteDetailedInput(
     val location: String,
     val name: String,
     val description: String,
-    val classification: Double,
-    //val categories: List<String>?,
+    val rating: Double,
     val duration: Int,
     val dateCreated: String,
-    val points: PointCollection,
-    val personIdentifier: String
+    val points: List<Point>,
+    val categories: List<CategoryInput>,
+    val ownerUrl: String
 )

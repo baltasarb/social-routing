@@ -16,6 +16,7 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
     companion object {
         private const val START = "Start"
         private const val CITY_ZOOM = 13F
+        private const val MARKER_ZOOM = 16F
     }
 
     fun onMapClickListener(): GoogleMap.OnMapClickListener {
@@ -42,7 +43,7 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
         val marker = googleMap.addMarker(markerOption)
         markerOptions.addLast(marker)
 
-        centerCamera()
+        centerCameraInFinalMarker()
     }
 
     private fun drawLine(position1: LatLng, position2: LatLng) {
@@ -61,15 +62,22 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
         if (polylines.isNotEmpty())
             polylines.removeLast().isVisible = false
 
-        centerCamera()
+        centerCameraInFinalMarker()
     }
 
-    private fun centerCamera() {
+    private fun centerCameraInFinalMarker() {
         if (markerOptions.isNotEmpty()) {
             val lastMarkerPosition = markerOptions.last().position
             val cameraZoom = googleMap.cameraPosition.zoom
 
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastMarkerPosition, cameraZoom))
+        }
+    }
+
+    private fun centerCameraInInitialMarker() {
+        if (markerOptions.isNotEmpty()) {
+            val lastMarkerPosition = markerOptions.first().position
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastMarkerPosition, MARKER_ZOOM))
         }
     }
 
@@ -120,8 +128,13 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
                 .position(LatLng(lastPoint.latitude, lastPoint.longitude))
                 .title("Final Point")
 
-            googleMap.addMarker(firstMarker)
-            googleMap.addMarker(lastMarker)
+            val initalMarker = googleMap.addMarker(firstMarker)
+            val finalMarker = googleMap.addMarker(lastMarker)
+
+            markerOptions.add(initalMarker)
+            markerOptions.add(finalMarker)
+
+            centerCameraInInitialMarker()
         }
     }
 }
