@@ -9,7 +9,6 @@ import ps.g49.socialroutingservice.services.CategoryService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @RestController
-@RequestMapping("/api.sr")
 class CategoryController(
         private val categoryService : CategoryService
 ) {

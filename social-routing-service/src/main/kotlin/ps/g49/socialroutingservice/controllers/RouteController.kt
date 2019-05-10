@@ -16,7 +16,7 @@ import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @RestController
-@RequestMapping("/api.sr/routes")
+@RequestMapping("/routes")
 class RouteController(
         private val connectionManager: ConnectionManager,
         private val routeService: RouteService,

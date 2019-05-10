@@ -15,7 +15,7 @@ import ps.g49.socialroutingservice.utils.DtoBuilder
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @RestController
-@RequestMapping("/api.sr/persons")
+@RequestMapping("/persons")
 class PersonController(
         private val personService: PersonService,
         private val connectionManager: ConnectionManager,
