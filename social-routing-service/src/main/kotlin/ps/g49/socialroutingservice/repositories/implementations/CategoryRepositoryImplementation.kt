@@ -5,6 +5,7 @@ import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.mappers.modelMappers.NewCategoryMapper
 import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.repositories.CategoryRepository
+import ps.g49.socialroutingservice.utils.sqlQueries.CategoryQueries
 
 @Component
 class CategoryRepositoryImplementation(
@@ -12,7 +13,6 @@ class CategoryRepositoryImplementation(
         private val categoryMapper: NewCategoryMapper
 ) : CategoryRepository {
     override fun findAll(): List<Category> {
-        val query = "SELECT Name FROM Category;"
-        return connectionManager.findMany(query, categoryMapper)
+        return connectionManager.findMany(CategoryQueries.SELECT_MANY, categoryMapper)
     }
 }

@@ -21,7 +21,7 @@ class OutputUtils {
             return ResponseEntity.ok(body)
         }
 
-        //used for delete responses
+        //used for DELETE responses
         fun ok(): ResponseEntity<Void> {
             return ResponseEntity
                     .ok()

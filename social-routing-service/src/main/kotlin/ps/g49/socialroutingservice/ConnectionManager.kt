@@ -21,7 +21,7 @@ class ConnectionManager {
     val jdbi: Jdbi = Jdbi.create(url, username, password) // returns a Jdbi which uses DriverManager as a connection factory.
 
     /**
-     * @param query an sql select query
+     * @param query an sql SELECT query
      * @param mapper a mapper of the desired returning type
      * @param params the conditional parameters of the sql query, necessary if the query haves where clauses
      * @return an object of the type <R>, element found with the specified query conditions if any
@@ -51,7 +51,7 @@ class ConnectionManager {
     }
 
     /**
-     * @param query an sql select query
+     * @param query an sql SELECT query
      * @param mapper a mapper of the desired returning type
      * @param params the conditional parameters of the sql query, necessary if the query haves where clauses     *
      * @return a list of objects of the type <R>, elements found with the specified query conditions if any

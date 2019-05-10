@@ -12,6 +12,7 @@ import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.repositories.RouteRepository
+import ps.g49.socialroutingservice.utils.sqlQueries.RouteQueries
 
 @Component
 class RouteRepositoryImplementation(
@@ -26,14 +27,10 @@ class RouteRepositoryImplementation(
         val jsonMapper = jacksonObjectMapper()
         val points = jsonMapper.writeValueAsString(route.points)
 
-        val routeInsertQuery = "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier);"
-
-        val categoryInsertQuery = "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) VALUES (:routeIdentifier, unnest(:categories));"
-
         //guarantee that either both transactions are made or none at all with inTransaction
         return connectionHandle.inTransaction<Int, Exception> { h ->
-            //insert every route
-            val routeIdentifier = h.createUpdate(routeInsertQuery)
+            //INSERT every route
+            val routeIdentifier = h.createUpdate(RouteQueries.INSERT)
                     .bind("location", route.location)
                     .bind("name", route.name)
                     .bind("description", route.description)
@@ -47,8 +44,8 @@ class RouteRepositoryImplementation(
             //register the type converter
             h.registerArrayType(CategoryArrayType())
 
-            //insert the route categories
-            h.createUpdate(categoryInsertQuery)
+            //INSERT the route categories
+            h.createUpdate(RouteQueries.INSERT_ROUTE_CATEGORIES)
                     .bind("categories", route.categories!!.toTypedArray())
                     .bind("routeIdentifier", routeIdentifier!!)
                     .execute()
@@ -58,8 +55,7 @@ class RouteRepositoryImplementation(
     }
 
     override fun delete(identifier: Int) {
-        val query = "DELETE FROM Route WHERE identifier = ?;"
-        return connectionManager.deleteByIntId(query, identifier)
+        return connectionManager.deleteByIntId(RouteQueries.DELETE, identifier)
     }
 
     override fun update(connectionHandle: Handle, route: Route) {
@@ -68,9 +64,8 @@ class RouteRepositoryImplementation(
         val points = jsonMapper.writeValueAsString(route.points)
 
         connectionHandle.inTransaction<Int, Exception> { h ->
-            //update every route
-            val routeUpdateQuery = "UPDATE Route SET (Location, Name, Description, Rating, Duration, Points) = (:location, :name, :description, :rating, :duration, to_json(:points));"
-            h.createUpdate(routeUpdateQuery)
+            //UPDATE every route
+            h.createUpdate(RouteQueries.UPDATE)
                     .bind("location", route.location)
                     .bind("name", route.name)
                     .bind("description", route.description)
@@ -79,51 +74,40 @@ class RouteRepositoryImplementation(
                     .bind("points", points)
                     .execute()
 
-            //delete existing categories
-            val categoryDeleteQuery = "DELETE FROM RouteCategory WHERE RouteIdentifier = :identifier;"
-            h.createUpdate(categoryDeleteQuery)
+            //DELETE existing categories
+            h.createUpdate(RouteQueries.DELETE_ROUTE_CATEGORIES)
                     .bind("identifier", route.identifier)
                     .execute()
 
             //register the type converter
             h.registerArrayType(CategoryArrayType())
 
-            //insert the new route categories
-            val categoryInsertQuery = "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) VALUES (:routeIdentifier, unnest(:categories));"
-            h.createUpdate(categoryInsertQuery)
+            //INSERT the new route categories
+            h.createUpdate(RouteQueries.INSERT_ROUTE_CATEGORIES)
                     .bind("categories", route.categories!!.toTypedArray())
                     .bind("routeIdentifier", route.identifier)
                     .execute()
         }
     }
 
-    /**
-     * @Param id is the name of the route
-     */
     override fun findById(connectionHandle: Handle, id: Int): Route {
-        val routeQuery = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
-        val route = connectionHandle.select(routeQuery, id).map(mapper).findOnly()
-        //TODO sql function for both queries
-        val categoriesQuery = "SELECT CategoryName FROM RouteCategory WHERE RouteIdentifier = ?;"
-        val categories = connectionHandle.select(categoriesQuery, id).map(categoryMapper).toList()
-
+        //TODO split into transaction
+        val route = connectionHandle.select(RouteQueries.SELECT, id).map(mapper).findOnly()
+        val categories = connectionHandle.select(RouteQueries.SELECT_ROUTE_CATEGORIES, id).map(categoryMapper).toList()
         route.categories = categories.map { Category(it) }
         return route
     }
 
     override fun findAll(): List<SimplifiedRoute> {
-        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
-        return connectionManager.findMany(query, simplifiedRouteMapper)
+        return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
     }
 
     override fun findAllByParameter(parameter: String): List<SimplifiedRoute> {
-        val query = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = ?;"
-        return connectionManager.findMany(query, simplifiedRouteMapper, parameter)
+        return connectionManager.findMany(RouteQueries.SELECT_MANY_BY_LOCATION, simplifiedRouteMapper, parameter)
     }
 
     override fun findPersonCreatedRoutes(identifier: Int): List<SimplifiedRoute> {
-        val query = "SELECT Identifier, Name, Rating, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
-        return connectionManager.findManyByIntId(query, simplifiedRouteMapper, identifier)
+        return connectionManager.findManyByIntId(RouteQueries.SELECT_MANY_BY_OWNER, simplifiedRouteMapper, identifier)
     }
 
 }

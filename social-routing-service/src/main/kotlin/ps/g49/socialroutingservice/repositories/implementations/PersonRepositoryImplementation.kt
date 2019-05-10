@@ -6,6 +6,7 @@ import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper
 import ps.g49.socialroutingservice.models.domainModel.Person
 import ps.g49.socialroutingservice.repositories.PersonRepository
+import ps.g49.socialroutingservice.utils.sqlQueries.PersonQueries
 
 @Component
 class PersonRepositoryImplementation(
@@ -14,8 +15,7 @@ class PersonRepositoryImplementation(
 ) : PersonRepository {
 
     override fun create(connectionHandle: Handle, person: Person): Int {
-        val query = "INSERT INTO Person (name, email) VALUES (:name, :email);"
-        return connectionHandle.createUpdate(query)
+        return connectionHandle.createUpdate(PersonQueries.INSERT)
                 .bind("name", person.name)
                 .bind("email", person.email)
                 .executeAndReturnGeneratedKeys("identifier")
@@ -24,19 +24,15 @@ class PersonRepositoryImplementation(
     }
 
     override fun delete(identifier: Int) {
-        val query = "DELETE FROM Person WHERE identifier = ?;"
-        connectionManager.deleteByIntId(query, identifier)
+        connectionManager.deleteByIntId(PersonQueries.DELETE, identifier)
     }
 
     override fun findById(identifier: Int): Person {
-        val query = "SELECT Identifier, Name, Email, Rating FROM Person WHERE Identifier = ?;"
-        return connectionManager.findOnlyByIntId(query, mapper, identifier)
+        return connectionManager.findOnlyByIntId(PersonQueries.SELECT, mapper, identifier)
     }
 
     override fun update(connectionHandle: Handle, person: Person) {
-        val query = "UPDATE Person SET (Name, Email, Rating) = (:name, :email, :rating) WHERE identifier = :identifier;"
-
-        connectionHandle.createUpdate(query)
+        connectionHandle.createUpdate(PersonQueries.UPDATE)
                 .bind("name", person.name)
                 .bind("email", person.email)
                 .bind("rating", person.rating)
