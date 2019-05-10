@@ -40,8 +40,8 @@ interface SocialRoutingWebService {
     @PUT("routes")
     fun updateRoute(@Body routeOutput: RouteOutput): Call<RouteInput>
 
-    @DELETE("routes")
-    fun deleteRoute(@Body routeOutput: RouteOutput): Call<RouteInput>
+    @DELETE("routes/{routeIdentifier}")
+    fun deleteRoute(@Path("routeIdentifier") routeIdentifier: Int): Call<Void>
 
     @GET("routes")
     fun searchRoutes(): Call<List<RouteSearchInput>>

@@ -209,9 +209,30 @@ class RouteRepository {
     fun updateRoute(routeOutput: RouteOutput): LiveData<RouteInput> {
         TODO("not implemented")
     }
+*/
+    fun deleteRoute (routeIdentifier: Int) : LiveData<Resource<Void>> {
+        val resource = MutableLiveData<Resource<Void>>()
+        resource.value = Resource.loading()
 
-    fun deleteRoute(routeOutput: RouteOutput):LiveData<RouteInput> {
-        TODO("not implemented")
-    }*/
+        socialRoutingWebService
+            .deleteRoute(routeIdentifier)
+            .enqueue(object : Callback<Void> {
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    resource.value = Resource.error(t.message.orEmpty(), null)
+                }
+
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    val code = response.code()
+                    if (code == 200)
+                        resource.value = Resource.success()
+                    else
+                        resource.value = Resource.error(response.message(), null)
+                }
+
+            })
+
+        return resource
+    }
 
 }

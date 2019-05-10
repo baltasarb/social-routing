@@ -5,11 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socialrouting.model.inputModel.RouteInput
 import android.view.View
+import android.widget.ImageButton
 import android.widget.RatingBar
 import android.widget.TextView
 import com.example.socialrouting.R
 
-class UserCreatedRoutesAdapter(val routes: List<RouteInput>, val onRouteListener: OnRouteListener)
+class UserCreatedRoutesAdapter(
+    val routes: List<RouteInput>,
+    val onRouteListener: OnRouteListener
+)
     : RecyclerView.Adapter<UserCreatedRoutesAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -21,6 +25,7 @@ class UserCreatedRoutesAdapter(val routes: List<RouteInput>, val onRouteListener
 
         val textView: TextView = view.findViewById(R.id.routeTitleTextView)
         val ratingBar: RatingBar = view.findViewById(R.id.routeRatingBar)
+
         private val listener: OnRouteListener = onRouteListener
 
         init {

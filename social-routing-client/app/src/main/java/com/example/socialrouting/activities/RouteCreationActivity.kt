@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.example.socialrouting.R
 import com.example.socialrouting.kotlinx.getViewModel
+import com.example.socialrouting.model.outputModel.CategoryOutput
 import com.example.socialrouting.model.outputModel.RouteOutput
 import com.example.socialrouting.utils.GoogleMapsManager
 import com.example.socialrouting.utils.Resource
@@ -142,7 +143,9 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                 if (name.isEmpty())
                     viewToast(NAME_REQUIRED)
                 else {
-                    val route = RouteOutput(location, name, description, mMapManager.getMarkerPoints(), 100, listOf("Other"))
+                    val route = RouteOutput(
+                        location, name, description, 100, mMapManager.getMarkerPoints(), listOf(CategoryOutput("Other"))
+                    )
                     val liveData = routeViewModel.createRoute(route)
                     handleRequestedData(liveData)
                 }

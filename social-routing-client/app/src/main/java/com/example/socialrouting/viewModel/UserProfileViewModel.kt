@@ -15,4 +15,5 @@ class UserProfileViewModel : ViewModel() {
 
     fun getUserRoutesFromUrl(routesUrl: String): LiveData<Resource<List<RouteInput>>> = routeRepository.getUserRoutes(routesUrl)
 
+    fun deleteUserRoute(routeId: Int): LiveData<Resource<Void>> = routeRepository.deleteRoute(routeId)
 }
