@@ -4,7 +4,7 @@ import org.jdbi.v3.core.Handle
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.core.mapper.RowMapper
 import org.springframework.stereotype.Component
-import ps.g49.socialroutingservice.exceptions.types.ResourceNotFoundException
+import ps.g49.socialroutingservice.exceptions.ResourceNotFoundException
 import java.sql.SQLException
 
 @Component
