@@ -1,35 +1,32 @@
 package com.example.socialrouting.utils
 
-import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.RatingBar
-import android.widget.TextView
-import com.example.socialrouting.R
-import com.example.socialrouting.SocialRoutingApplication
+import androidx.recyclerview.widget.RecyclerView
 import com.example.socialrouting.model.inputModel.RouteInput
 
-class UserCreatedRoutesAdapter(
-    socialRoutingApplication: SocialRoutingApplication,
-    val routes: List<RouteInput>): ArrayAdapter<RouteInput>(socialRoutingApplication, -1, routes){
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var rowView: View? = convertView
+class UserCreatedRoutesAdapter(val routes: List<RouteInput>)
+    : RecyclerView.Adapter<UserCreatedRoutesAdapter.ViewHolder>() {
 
-        if (rowView == null) {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            rowView = inflater.inflate(R.layout.created_routes_list_item_layout, parent, false)
-        }
+    // Provide a reference to the views for each data item
+    // Complex data items may need more than one view per item, and
+    // you provide access to all the views for a data item in a view holder.
+    // Each data item is just a string in this case that is shown in a TextView.
+    class ViewHolder(textView: TextView) : RecyclerView.ViewHolder(textView)
 
-        val textViewRouteName = rowView!!.findViewById<TextView>(R.id.routeTitleTextView)
-        val ratingBarRoute = rowView.findViewById<RatingBar>(R.id.routeRatingBar)
-
-        val route = routes[position]
-        textViewRouteName.text = route.name
-        ratingBarRoute.rating = route.rating.toFloat()
-
-        return rowView
+    // Create new views (invoked by the layout manager)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
+    override fun getItemCount(): Int = routes.size
+
+    // Replace the contents of a view (invoked by the layout manager)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
+
+
 }
