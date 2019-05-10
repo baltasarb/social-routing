@@ -27,7 +27,7 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
     private fun addMarkerOptions(position: LatLng) {
         val markerOption: MarkerOptions
 
-        if (markerOptions.size == 0)
+        if (markerOptions.isEmpty())
             markerOption = MarkerOptions()
                 .position(position)
                 .title(START)
@@ -98,4 +98,30 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
 
     fun mapIsMarked() = markerOptions.isNotEmpty()
 
+    fun drawLinesSet(points: List<Point>) {
+        if (points.isNotEmpty()) {
+            val firstPoint = points.get(0)
+            val lastPoint = points.get(points.size - 1)
+
+            val firstMarker = MarkerOptions()
+                .position(LatLng(firstPoint.latitude, firstPoint.longitude))
+                .title("Initial Point")
+
+            var idx = 1
+            var point = firstPoint
+            while (idx < points.size) {
+                val currentPoint = points.get(idx)
+                drawLine(LatLng(point.latitude, point.longitude), LatLng(currentPoint.latitude, currentPoint.longitude))
+                point = points.get(idx)
+                idx++
+            }
+
+            val lastMarker = MarkerOptions()
+                .position(LatLng(lastPoint.latitude, lastPoint.longitude))
+                .title("Final Point")
+
+            googleMap.addMarker(firstMarker)
+            googleMap.addMarker(lastMarker)
+        }
+    }
 }

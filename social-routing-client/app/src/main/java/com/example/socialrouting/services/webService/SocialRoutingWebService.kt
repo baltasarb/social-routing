@@ -34,7 +34,7 @@ interface SocialRoutingWebService {
 
     //  Route Requests
     @GET("routes/{routeIdentifier}")
-    fun getRoute(@Path("routeIdentifier") routeIdentifier: String): Call<RouteDetailedInput>
+    fun getRoute(@Path("routeIdentifier") routeIdentifier: Int): Call<RouteDetailedInput>
 
     @Headers(HEADER_CONTENT_TYPE)
     @POST("routes")
