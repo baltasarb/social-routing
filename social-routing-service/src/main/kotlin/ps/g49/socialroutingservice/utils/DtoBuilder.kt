@@ -1,5 +1,6 @@
 package ps.g49.socialroutingservice.utils
 
+import ps.g49.socialroutingservice.models.dtos.CategoryDto
 import ps.g49.socialroutingservice.models.dtos.PersonDto
 import ps.g49.socialroutingservice.models.dtos.RouteDto
 import ps.g49.socialroutingservice.models.dtos.SearchDto
@@ -20,7 +21,7 @@ class DtoBuilder {
                 personIdentifier = routeInput.personIdentifier,
                 dateCreated = routeInput.dateCreated,
                 duration = routeInput.duration,
-                categories = routeInput.categories
+                categories = routeInput.categories.map { CategoryDto(it.name) }
         )
 
         fun buildPersonDto(personInput: PersonInput, id: Int? = null): PersonDto = PersonDto(

@@ -2,6 +2,7 @@ package ps.g49.socialroutingservice.mappers.outputMappers
 
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.models.domainModel.Route
+import ps.g49.socialroutingservice.models.outputModel.CategoryOutput
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
 import ps.g49.socialroutingservice.utils.OutputUtils
@@ -19,7 +20,7 @@ class RouteOutputMapper : OutputMapper<Route, RouteOutput> {
             dateCreated = from.dateCreated!!,
             points = from.points!!,
             ownerUrl = OutputUtils.personUrl(from.personIdentifier),
-            categories = from.categories!!
+            categories = from.categories!!.map { CategoryOutput(it.name) }
     )
 
     fun mapSimplifiedRouteCollection(collection: List<Route>): List<SimplifiedRouteOutput> {

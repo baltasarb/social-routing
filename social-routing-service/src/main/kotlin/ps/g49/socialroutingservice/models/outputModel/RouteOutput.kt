@@ -12,7 +12,7 @@ data class RouteOutput(
         val duration : Int,
         val dateCreated : Date,
         val points : List<Point>,
-        val categories : List<String>,
+        val categories : List<CategoryOutput>,
         val ownerUrl : String
 
 )

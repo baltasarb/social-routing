@@ -13,5 +13,5 @@ data class RouteDto(
         var rating: Double? = null,
         var dateCreated: Date? = null,
         var duration : Int? = null,
-        var categories : List<String>
+        var categories : List<CategoryDto>
 )
