@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 import ps.g49.socialroutingservice.models.dtos.RouteDto
 import ps.g49.socialroutingservice.models.dtos.SearchDto
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
-import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
@@ -14,7 +13,7 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
 
     fun findAllRoutes() = routeRepository.findAll()
 
-    fun findRouteById(connectionHandle: Handle, id: Int) = routeRepository.findRouteById(connectionHandle, id)
+    fun findRouteById(connectionHandle: Handle, id: Int) = routeRepository.findById(connectionHandle, id)
 
     fun createRoute(connectionHandle: Handle, routeDto: RouteDto) : Int {
         val route = routeMapper.map(routeDto)

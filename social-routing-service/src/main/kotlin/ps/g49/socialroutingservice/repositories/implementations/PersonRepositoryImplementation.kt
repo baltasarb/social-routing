@@ -28,7 +28,7 @@ class PersonRepositoryImplementation(
         connectionManager.deleteByIntId(query, identifier)
     }
 
-    override fun findPersonById(identifier: Int): Person {
+    override fun findById(identifier: Int): Person {
         val query = "SELECT Identifier, Name, Email, Rating FROM Person WHERE Identifier = ?;"
         return connectionManager.findOnlyByIntId(query, mapper, identifier)
     }

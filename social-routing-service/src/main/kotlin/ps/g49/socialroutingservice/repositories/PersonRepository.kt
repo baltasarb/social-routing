@@ -5,7 +5,7 @@ import ps.g49.socialroutingservice.models.domainModel.Person
 
 interface PersonRepository {
 
-    fun findPersonById(identifier: Int): Person
+    fun findById(identifier: Int): Person
 
     fun create(connectionHandle: Handle, person: Person) : Int
 

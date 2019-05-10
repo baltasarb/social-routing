@@ -70,7 +70,7 @@ class RouteRepositoryImplementation(
     /**
      * @Param id is the name of the route
      */
-    override fun findRouteById(connectionHandle: Handle, id: Int): Route {
+    override fun findById(connectionHandle: Handle, id: Int): Route {
         val routeQuery = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
         val route = connectionHandle.select(routeQuery, id).map(mapper).findOnly()
         //TODO sql function for both queries

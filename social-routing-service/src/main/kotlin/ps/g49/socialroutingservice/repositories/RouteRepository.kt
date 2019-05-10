@@ -10,7 +10,7 @@ interface RouteRepository {
 
     fun findAllByParameter(parameter: String): List<SimplifiedRoute>
 
-    fun findRouteById(connectionHandle: Handle, id: Int): Route
+    fun findById(connectionHandle: Handle, id: Int): Route
 
     fun findPersonCreatedRoutes(identifier: Int): List<SimplifiedRoute>
 
