@@ -8,13 +8,17 @@ import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.test.web.servlet.MockMvc
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class HttpRequestTest {
+class HttpRequestTest (
+        private val m : MockMvc
+){
 
     @LocalServerPort
     private val port: Int = 0
+
 
     @Autowired
     private val restTemplate: TestRestTemplate? = null
@@ -24,5 +28,11 @@ class HttpRequestTest {
     fun greetingShouldReturnDefaultMessage() {
         assertThat(this.restTemplate!!.getForObject<String>("http://localhost:$port/api.sr/persons",
                 String::class.java)).contains("Bauer")
+    }
+
+
+    @Test
+    fun t (){
+        //m.perform(get("/categories"))
     }
 }

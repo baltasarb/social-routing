@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.models.inputModel.PersonInput
 import ps.g49.socialroutingservice.mappers.outputMappers.PersonOutputMapper
-import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.PersonOutput
-import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
+import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutputCollection
 import ps.g49.socialroutingservice.services.PersonService
 import ps.g49.socialroutingservice.utils.DtoBuilder
 import ps.g49.socialroutingservice.utils.OutputUtils
@@ -31,9 +30,9 @@ class PersonController(
     }
 
     @GetMapping("/{identifier}/routes")
-    fun findUserCreatedRoutes(@PathVariable identifier: Int): ResponseEntity<List<SimplifiedRouteOutput>> {
+    fun findUserCreatedRoutes(@PathVariable identifier: Int): ResponseEntity<SimplifiedRouteOutputCollection> {
         val routes = personService.findUserCreatedRoutes(identifier)
-        val output = simplifiedRouteOutputMapper.mapSimplifiedRouteCollection(routes)
+        val output = simplifiedRouteOutputMapper.mapCollection(routes)
         return OutputUtils.ok(output)
     }
 

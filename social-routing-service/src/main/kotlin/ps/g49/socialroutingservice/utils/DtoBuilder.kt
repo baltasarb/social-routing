@@ -31,9 +31,13 @@ class DtoBuilder {
                 rating = personInput.rating
         )
 
-        fun buildSearchDto(params: HashMap<String, String>): SearchDto = SearchDto(
-                location = params["location"]
-        )
+        fun buildSearchDto(params: HashMap<String, String>): SearchDto {
+            val page = params["page"]?.toInt()
+            return SearchDto(
+                    location = params["location"],
+                    page = page?:1
+            )
+        }
 
     }
 

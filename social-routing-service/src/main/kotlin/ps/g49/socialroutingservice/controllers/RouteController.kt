@@ -8,10 +8,8 @@ import ps.g49.socialroutingservice.utils.DtoBuilder
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
-import ps.g49.socialroutingservice.models.domainModel.Route
-import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
-import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
+import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutputCollection
 import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
@@ -37,10 +35,10 @@ class RouteController(
     }
 
     @GetMapping("/search")
-    fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<List<SimplifiedRouteOutput>> {
+    fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteOutputCollection> {
         val searchDto = DtoBuilder.buildSearchDto(params)
         val routes = routeService.search(searchDto)
-        val output = simplifiedRouteOutputMapper.mapSimplifiedRouteCollection(routes)
+        val output = simplifiedRouteOutputMapper.mapCollection(routes)
         return OutputUtils.ok(output)
     }
 
