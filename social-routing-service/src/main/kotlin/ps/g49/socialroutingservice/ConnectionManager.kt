@@ -79,30 +79,6 @@ class ConnectionManager {
         }
     }
 
-    fun <R> findManyByIntId(query: String, mapper: RowMapper<R>, id: Int): List<R> {
-        return jdbi.withHandle<List<R>, SQLException> { handle ->
-            handle.select(query, id)
-                    .map(mapper)
-                    .list()
-        }
-    }
-
-    fun <R> findManyByIntIdWithPagination(query: String, mapper: RowMapper<R>, id: Int, page : Int): List<R> {
-        return jdbi.withHandle<List<R>, SQLException> { handle ->
-            handle.select(query, id)
-                    .map(mapper)
-                    .list()
-        }
-    }
-
-    fun insert(query: String, vararg params: String): Int {
-        val handle = jdbi.open()
-        val result = handle.execute(query, *params)
-        //TODO check result
-        handle.close()
-        return result
-    }
-
 
     fun deleteByIntId(query: String, id: Int) {
         val handle = jdbi.open()

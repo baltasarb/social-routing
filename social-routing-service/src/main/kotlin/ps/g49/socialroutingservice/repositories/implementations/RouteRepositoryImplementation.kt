@@ -6,10 +6,8 @@ import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.exceptions.InsertException
 import ps.g49.socialroutingservice.mappers.sqlArrayTypeMappers.CategoryArrayType
-import ps.g49.socialroutingservice.mappers.modelMappers.CategoryMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
-import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.repositories.RouteRepository
@@ -19,16 +17,14 @@ import ps.g49.socialroutingservice.utils.sqlQueries.RouteQueries
 class RouteRepositoryImplementation(
         private val connectionManager: ConnectionManager,
         private val mapper: RouteMapper,
-        private val categoryMapper: CategoryMapper,
         private val simplifiedRouteMapper: SimplifiedRouteMapper
 ) : RouteRepository {
 
     override fun findById(connectionHandle: Handle, id: Int): Route {
-        //TODO split into transaction
-        val route = connectionHandle.select(RouteQueries.SELECT, id).map(mapper).findOnly()
-        val categories = connectionHandle.select(RouteQueries.SELECT_ROUTE_CATEGORIES, id).map(categoryMapper).toList()
-        route.categories = categories.map { Category(it) }
-        return route
+        return connectionHandle.select(RouteQueries.SELECT_WITH_CATEGORIES)
+                .bind("routeIdentifier", id)
+                .map(mapper)
+                .findOnly()
     }
 
     override fun findAll(): List<SimplifiedRoute> {

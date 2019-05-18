@@ -13,12 +13,14 @@ import kotlin.streams.toList
 class RouteMapper : ModelMapper<RouteRequest, Route> {
 
     override fun mapFromResultSet(rs: ResultSet): Route {
-        val s = rs.getString("Points")
         val jsonString = buildValidJsonString(rs.getString("Points"))
 
         val mapper = jacksonObjectMapper()
         val pointArray = mapper.readValue(jsonString, Array<Point>::class.java)
         val pointList = pointArray.toList()
+
+        val categoriesSQLArray : java.sql.Array = rs.getArray("Categories")
+        val categoriesStringArray : Array<String> = categoriesSQLArray.array as Array<String>
 
         return Route(
                 identifier = rs.getInt("Identifier"),
@@ -28,8 +30,9 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
                 rating = rs.getDouble("Rating"),
                 duration = rs.getInt("Duration"),
                 dateCreated = rs.getDate("DateCreated"),
-                points = pointList,//TODO
-                personIdentifier = rs.getInt("PersonIdentifier")
+                points = pointList,
+                personIdentifier = rs.getInt("PersonIdentifier"),
+                categories = categoriesStringArray.toList().map { Category(it) }
         )
     }
 

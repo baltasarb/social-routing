@@ -5,6 +5,15 @@ class RouteQueries {
     companion object {
         // Select Queries
         const val SELECT = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Identifier = ?;"
+
+        const val SELECT_WITH_CATEGORIES = "" +
+                "SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, array_agg(RouteCategory.CategoryName) AS Categories " +
+                "FROM Route " +
+                "JOIN RouteCategory " +
+                "ON RouteCategory.RouteIdentifier = Route.Identifier " +
+                "WHERE Identifier = :routeIdentifier " +
+                "GROUP BY Route.Identifier;"
+
         const val SELECT_ROUTE_CATEGORIES = "SELECT CategoryName FROM RouteCategory WHERE RouteIdentifier = ?;"
         const val SELECT_MANY = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
         const val SELECT_MANY_BY_LOCATION = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = ?;"
