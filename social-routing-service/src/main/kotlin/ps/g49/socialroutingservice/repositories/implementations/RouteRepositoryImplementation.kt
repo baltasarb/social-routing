@@ -35,12 +35,14 @@ class RouteRepositoryImplementation(
         return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
     }
 
-    override fun findAllByParameter(parameter: String): List<SimplifiedRoute> {
-        return connectionManager.findMany(RouteQueries.SELECT_MANY_BY_LOCATION, simplifiedRouteMapper, parameter)
+    override fun findAllByParameter(parameter: String,page : Int): List<SimplifiedRoute> {
+        val params = hashMapOf<String, Any>("location" to parameter)
+        return connectionManager.findManyWithPagination(RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION, simplifiedRouteMapper, page, params)
     }
 
-    override fun findPersonCreatedRoutes(identifier: Int): List<SimplifiedRoute> {
-        return connectionManager.findManyByIntId(RouteQueries.SELECT_MANY_BY_OWNER, simplifiedRouteMapper, identifier)
+    override fun findPersonCreatedRoutes(identifier: Int, page : Int): List<SimplifiedRoute> {
+        val params = hashMapOf<String, Any>("personIdentifier" to identifier)
+        return connectionManager.findManyWithPagination(RouteQueries.SELECT_MANY_BY_OWNER_WITH_PAGINATION, simplifiedRouteMapper, page, params)
     }
 
     override fun create(connectionHandle: Handle, route: Route): Int {

@@ -30,8 +30,9 @@ class PersonController(
     }
 
     @GetMapping("/{identifier}/routes")
-    fun findUserCreatedRoutes(@PathVariable identifier: Int): ResponseEntity<SimplifiedRouteOutputCollection> {
-        val routes = personService.findUserCreatedRoutes(identifier)
+    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteOutputCollection> {
+        val userRoutesRequest = RequestBuilder.buildUserRoutesRequest(identifier, params)
+        val routes = personService.findUserCreatedRoutes(userRoutesRequest)
         val output = simplifiedRouteOutputMapper.mapCollection(routes)
         return OutputUtils.ok(output)
     }

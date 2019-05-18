@@ -36,8 +36,8 @@ class RouteController(
 
     @GetMapping("/search")
     fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteOutputCollection> {
-        val searchDto = RequestBuilder.buildSearchDto(params)
-        val routes = routeService.search(searchDto)
+        val searchRequest = RequestBuilder.buildSearchRequest(params)
+        val routes = routeService.search(searchRequest)
         val output = simplifiedRouteOutputMapper.mapCollection(routes)
         return OutputUtils.ok(output)
     }

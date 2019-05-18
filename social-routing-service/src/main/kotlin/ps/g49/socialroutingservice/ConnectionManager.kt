@@ -66,7 +66,28 @@ class ConnectionManager {
         }
     }
 
+    fun <R> findManyWithPagination(stringQuery: String, mapper: RowMapper<R>, page: Int, params: HashMap<String, Any>): List<R> {
+        val limit = 5
+        val offset = page * limit - limit
+        return jdbi.withHandle<List<R>, SQLException> { handle ->
+            val query = handle.select(stringQuery)
+            params.forEach { (key, value) -> query.bind(key, value) }
+            query.bind("limit", limit)
+                    .bind("offset", offset)
+                    .map(mapper)
+                    .list()
+        }
+    }
+
     fun <R> findManyByIntId(query: String, mapper: RowMapper<R>, id: Int): List<R> {
+        return jdbi.withHandle<List<R>, SQLException> { handle ->
+            handle.select(query, id)
+                    .map(mapper)
+                    .list()
+        }
+    }
+
+    fun <R> findManyByIntIdWithPagination(query: String, mapper: RowMapper<R>, id: Int, page : Int): List<R> {
         return jdbi.withHandle<List<R>, SQLException> { handle ->
             handle.select(query, id)
                     .map(mapper)
@@ -89,6 +110,6 @@ class ConnectionManager {
         handle.close()
     }
 
-    fun generateHandle() : Handle = jdbi.open()
+    fun generateHandle(): Handle = jdbi.open()
 
 }

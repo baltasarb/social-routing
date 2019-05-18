@@ -1,11 +1,8 @@
 package ps.g49.socialroutingservice.utils
 
-import ps.g49.socialroutingservice.models.requests.CategoryRequest
-import ps.g49.socialroutingservice.models.requests.PersonRequest
-import ps.g49.socialroutingservice.models.requests.RouteRequest
-import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.models.inputModel.PersonInput
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
+import ps.g49.socialroutingservice.models.requests.*
 
 class RequestBuilder {
 
@@ -31,10 +28,18 @@ class RequestBuilder {
                 rating = personInput.rating
         )
 
-        fun buildSearchDto(params: HashMap<String, String>): SearchRequest {
+        fun buildSearchRequest(params: HashMap<String, String>): SearchRequest {
             val page = params["page"]?.toInt()
             return SearchRequest(
                     location = params["location"],
+                    page = page?:1
+            )
+        }
+
+        fun buildUserRoutesRequest(identifier: Int, params: HashMap<String, String>): UserRoutesRequest {
+            val page = params["page"]?.toInt()
+            return UserRoutesRequest(
+                    identifier = identifier,
                     page = page?:1
             )
         }

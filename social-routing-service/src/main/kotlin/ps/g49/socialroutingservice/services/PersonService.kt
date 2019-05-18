@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import ps.g49.socialroutingservice.models.requests.PersonRequest
 import ps.g49.socialroutingservice.mappers.modelMappers.PersonMapper
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
+import ps.g49.socialroutingservice.models.requests.UserRoutesRequest
 import ps.g49.socialroutingservice.repositories.PersonRepository
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
@@ -13,9 +14,9 @@ class PersonService(private val personRepository: PersonRepository, private val 
 
     fun findPersonById(identifier: Int) = personRepository.findById(identifier)
 
-    fun findUserCreatedRoutes(identifier: Int): List<SimplifiedRoute> = routeRepository.findPersonCreatedRoutes(identifier)
+    fun findUserCreatedRoutes(userRoutesRequest: UserRoutesRequest): List<SimplifiedRoute> = routeRepository.findPersonCreatedRoutes(userRoutesRequest.identifier, userRoutesRequest.page)
 
-    fun createPerson(connectionHandle: Handle, personRequest: PersonRequest) : Int{
+    fun createPerson(connectionHandle: Handle, personRequest: PersonRequest): Int {
         val person = personMapper.map(personRequest)
         return personRepository.create(connectionHandle, person)
     }

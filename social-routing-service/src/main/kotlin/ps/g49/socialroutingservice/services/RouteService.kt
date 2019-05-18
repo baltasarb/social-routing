@@ -28,7 +28,7 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
     }
 
     fun search(searchRequest: SearchRequest): List<SimplifiedRoute> {
-        return routeRepository.findAllByParameter(searchRequest.location!!)
+        return routeRepository.findAllByParameter(searchRequest.location!!, searchRequest.page)
     }
 
 }

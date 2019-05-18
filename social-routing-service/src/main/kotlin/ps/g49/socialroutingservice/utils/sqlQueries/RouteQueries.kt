@@ -8,7 +8,23 @@ class RouteQueries {
         const val SELECT_ROUTE_CATEGORIES = "SELECT CategoryName FROM RouteCategory WHERE RouteIdentifier = ?;"
         const val SELECT_MANY = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
         const val SELECT_MANY_BY_LOCATION = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route WHERE Location = ?;"
+
+        const val SELECT_MANY_BY_LOCATION_WITH_PAGINATION = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
+                "FROM Route " +
+                "WHERE Location = :location " +
+                "ORDER BY Rating DESC " +
+                "LIMIT :limit " +
+                "OFFSET :offset;"
+
         const val SELECT_MANY_BY_OWNER = "SELECT Identifier, Name, Rating, PersonIdentifier FROM Route WHERE PersonIdentifier = ?;"
+
+        const val SELECT_MANY_BY_OWNER_WITH_PAGINATION = "" +
+                "SELECT Identifier, Name, Rating, PersonIdentifier " +
+                "FROM Route " +
+                "WHERE PersonIdentifier = :personIdentifier " +
+                "ORDER BY Rating DESC " +
+                "LIMIT :limit " +
+                "OFFSET :offset;"
 
         // Insert Queries
         const val INSERT_WITH_CATEGORIES = "WITH InsertedRoute AS (" +

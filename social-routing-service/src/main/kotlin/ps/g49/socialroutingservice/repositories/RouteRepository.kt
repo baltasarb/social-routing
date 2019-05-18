@@ -8,11 +8,11 @@ interface RouteRepository {
 
     fun findAll(): List<SimplifiedRoute>
 
-    fun findAllByParameter(parameter: String): List<SimplifiedRoute>
+    fun findAllByParameter(parameter: String, page : Int): List<SimplifiedRoute>
 
     fun findById(connectionHandle: Handle, id: Int): Route
 
-    fun findPersonCreatedRoutes(identifier: Int): List<SimplifiedRoute>
+    fun findPersonCreatedRoutes(identifier: Int, page : Int): List<SimplifiedRoute>
 
     fun create(connectionHandle: Handle, route: Route) : Int
 
