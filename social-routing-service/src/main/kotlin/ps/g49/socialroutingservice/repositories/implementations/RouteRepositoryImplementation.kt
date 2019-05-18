@@ -27,31 +27,25 @@ class RouteRepositoryImplementation(
         val jsonMapper = jacksonObjectMapper()
         val points = jsonMapper.writeValueAsString(route.points)
 
-        //guarantee that either both transactions are made or none at all with inTransaction
-        return connectionHandle.inTransaction<Int, Exception> { h ->
-            //INSERT every route
-            val routeIdentifier = h.createUpdate(RouteQueries.INSERT)
-                    .bind("location", route.location)
-                    .bind("name", route.name)
-                    .bind("description", route.description)
-                    .bind("duration", 0) //TODO (time needs to be calculated by the server)
-                    .bind("personIdentifier", route.personIdentifier)
-                    .bind("points", points)
-                    .executeAndReturnGeneratedKeys("identifier")
-                    .mapTo(Int::class.java)
-                    .findOnly()
+        //register the type converter
+        connectionHandle.registerArrayType(CategoryArrayType())
 
-            //register the type converter
-            h.registerArrayType(CategoryArrayType())
+        val insertedRouteId = connectionHandle.createUpdate(RouteQueries.INSERT_WITH_CATEGORIES)
+                .bind("location", route.location)
+                .bind("name", route.name)
+                .bind("description", route.description)
+                .bind("duration", 0) //TODO (time needs to be calculated by the server)
+                .bind("personIdentifier", route.personIdentifier)
+                .bind("points", points)
+                .bind("categories", route.categories!!.toTypedArray())
+                .executeAndReturnGeneratedKeys("route_id")
+                .mapTo(Int::class.java)
+                .findFirst()
 
-            //INSERT the route categories
-            h.createUpdate(RouteQueries.INSERT_ROUTE_CATEGORIES)
-                    .bind("categories", route.categories!!.toTypedArray())
-                    .bind("routeIdentifier", routeIdentifier!!)
-                    .execute()
+        if (!insertedRouteId.isPresent)
+            throw Exception()
 
-            routeIdentifier
-        }
+        return insertedRouteId.get()
     }
 
     override fun delete(identifier: Int) {
