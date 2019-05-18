@@ -8,6 +8,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import ps.g49.socialroutingservice.models.outputModel.ProblemJson
 import java.lang.Exception
+import java.sql.SQLException
 
 @ControllerAdvice
 class ExceptionHandler : ResponseEntityExceptionHandler() {
@@ -40,11 +41,27 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
     fun handleBadRequestException(exception: Exception): ResponseEntity<ProblemJson> {
         val error = ProblemJson(
                 "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#bad-request",
-                "Bad Request",
+                "Bad Request.",
                 400,
                 "brief description of instance problem",
                 "link to full description"
         )
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
+
+    @ExceptionHandler(value= [SQLException::class])
+    fun handleSqlException(exception : SQLException) : ResponseEntity<ProblemJson>{
+
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#bad-request",
+                "Internal Server Error.",
+                500,
+                "brief description of instance problem",
+                "link to full description"
+        )
+        return ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR)
+
+    }
+
+    //fun handleJson
 }

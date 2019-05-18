@@ -4,7 +4,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
-import ps.g49.socialroutingservice.utils.DtoBuilder
+import ps.g49.socialroutingservice.utils.RequestBuilder
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
@@ -36,7 +36,7 @@ class RouteController(
 
     @GetMapping("/search")
     fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteOutputCollection> {
-        val searchDto = DtoBuilder.buildSearchDto(params)
+        val searchDto = RequestBuilder.buildSearchDto(params)
         val routes = routeService.search(searchDto)
         val output = simplifiedRouteOutputMapper.mapCollection(routes)
         return OutputUtils.ok(output)
@@ -46,7 +46,7 @@ class RouteController(
     fun createRoute(@RequestBody route: RouteInput) : ResponseEntity<Void>{
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = DtoBuilder.buildRouteDto(route)
+        val routeDto = RequestBuilder.buildRouteDto(route)
         val id = routeService.createRoute(connectionHandle, routeDto)
 
         connectionHandle.close()
@@ -61,7 +61,7 @@ class RouteController(
     fun updateRoute(@PathVariable identifier : Int, @RequestBody route: RouteInput) : ResponseEntity<Void>{
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = DtoBuilder.buildRouteDto(route, identifier)
+        val routeDto = RequestBuilder.buildRouteDto(route, identifier)
 
         routeService.updateRoute(connectionHandle, routeDto)
 

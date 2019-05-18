@@ -2,11 +2,11 @@ package ps.g49.socialroutingservice.mappers.modelMappers
 
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
-import ps.g49.socialroutingservice.models.dtos.RouteDto
+import ps.g49.socialroutingservice.models.requests.RouteRequest
 import java.sql.ResultSet
 
 @Component
-class SimplifiedRouteMapper : ModelMapper<RouteDto, SimplifiedRoute> {
+class SimplifiedRouteMapper : ModelMapper<RouteRequest, SimplifiedRoute> {
 
     override fun mapFromResultSet(rs: ResultSet): SimplifiedRoute {
         return SimplifiedRoute(
@@ -17,7 +17,7 @@ class SimplifiedRouteMapper : ModelMapper<RouteDto, SimplifiedRoute> {
         )
     }
 
-    override fun map(from: RouteDto): SimplifiedRoute {
+    override fun map(from: RouteRequest): SimplifiedRoute {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

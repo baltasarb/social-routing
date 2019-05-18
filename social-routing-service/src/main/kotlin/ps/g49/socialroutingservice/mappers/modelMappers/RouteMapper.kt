@@ -4,13 +4,13 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.models.domainModel.Point
-import ps.g49.socialroutingservice.models.dtos.RouteDto
+import ps.g49.socialroutingservice.models.requests.RouteRequest
 import ps.g49.socialroutingservice.models.domainModel.Route
 import java.sql.ResultSet
 import kotlin.streams.toList
 
 @Component
-class RouteMapper : ModelMapper<RouteDto, Route> {
+class RouteMapper : ModelMapper<RouteRequest, Route> {
 
     override fun mapFromResultSet(rs: ResultSet): Route {
         val s = rs.getString("Points")
@@ -34,7 +34,7 @@ class RouteMapper : ModelMapper<RouteDto, Route> {
     }
 
 
-    override fun map(from: RouteDto): Route {
+    override fun map(from: RouteRequest): Route {
         val convertedCategories = from.categories.stream().map { Category(it.name) }.toList()
         return Route(
                 identifier = from.identifier,

@@ -1,9 +1,9 @@
-package ps.g49.socialroutingservice.models.dtos
+package ps.g49.socialroutingservice.models.requests
 
 import ps.g49.socialroutingservice.models.domainModel.Point
 import java.util.*
 
-data class RouteDto(
+data class RouteRequest(
         var identifier: Int? = null,
         var location: String,
         var name: String,
@@ -13,5 +13,5 @@ data class RouteDto(
         var rating: Double? = null,
         var dateCreated: Date? = null,
         var duration : Int? = null,
-        var categories : List<CategoryDto>
+        var categories : List<CategoryRequest>
 )

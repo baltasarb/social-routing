@@ -10,7 +10,7 @@ import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMa
 import ps.g49.socialroutingservice.models.outputModel.PersonOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutputCollection
 import ps.g49.socialroutingservice.services.PersonService
-import ps.g49.socialroutingservice.utils.DtoBuilder
+import ps.g49.socialroutingservice.utils.RequestBuilder
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @RestController
@@ -40,7 +40,7 @@ class PersonController(
     @PostMapping
     fun createPerson(@RequestBody personInput: PersonInput): ResponseEntity<Void> {
         val handle = connectionManager.generateHandle()
-        val personDto = DtoBuilder.buildPersonDto(personInput)
+        val personDto = RequestBuilder.buildPersonDto(personInput)
         val id = personService.createPerson(handle, personDto)
         handle.close()
 
@@ -58,7 +58,7 @@ class PersonController(
 
     @PutMapping("/{identifier}")
     fun updatePerson(@PathVariable identifier: Int, @RequestBody personInput: PersonInput): ResponseEntity<Void> {
-        val personDto = DtoBuilder.buildPersonDto(personInput, identifier)
+        val personDto = RequestBuilder.buildPersonDto(personInput, identifier)
         val connectionHandle = connectionManager.generateHandle()
         personService.updatePerson(connectionHandle, personDto)
         connectionHandle.close()
