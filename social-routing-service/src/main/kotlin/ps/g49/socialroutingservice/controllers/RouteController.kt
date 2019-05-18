@@ -46,7 +46,7 @@ class RouteController(
     fun createRoute(@RequestBody route: RouteInput) : ResponseEntity<Void>{
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = RequestBuilder.buildRouteDto(route)
+        val routeDto = RequestBuilder.buildRouteRequest(route)
         val id = routeService.createRoute(connectionHandle, routeDto)
 
         connectionHandle.close()
@@ -61,7 +61,7 @@ class RouteController(
     fun updateRoute(@PathVariable identifier : Int, @RequestBody route: RouteInput) : ResponseEntity<Void>{
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = RequestBuilder.buildRouteDto(route, identifier)
+        val routeDto = RequestBuilder.buildRouteRequest(route, identifier)
 
         routeService.updateRoute(connectionHandle, routeDto)
 

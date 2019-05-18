@@ -49,7 +49,7 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(value= [SQLException::class])
+   /* @ExceptionHandler(value= [SQLException::class])
     fun handleSqlException(exception : SQLException) : ResponseEntity<ProblemJson>{
 
         val error = ProblemJson(
@@ -62,6 +62,6 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR)
 
     }
-
+*/
     //fun handleJson
 }

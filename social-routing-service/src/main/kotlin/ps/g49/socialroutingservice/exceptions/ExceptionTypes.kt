@@ -14,3 +14,8 @@ class ResourceNotFoundException : Exception()
  * thrown when the media type requested is not supported by the API
  */
 class UnsupportedMediaTypeException : Exception()
+
+/**
+ * thrown when an SQL insert fails
+ */
+class InsertException : Exception()

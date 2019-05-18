@@ -12,22 +12,29 @@ class RouteQueries {
 
         // Insert Queries
         const val INSERT_WITH_CATEGORIES = "WITH InsertedRoute AS (" +
-                    "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) " +
-                    "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier) " +
-                    "RETURNING Identifier AS route_id" +
+                "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) " +
+                "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier) " +
+                "RETURNING Identifier AS route_id" +
                 ") " +
                 "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) " +
                 "VALUES (" +
-                    "(SELECT route_id FROM InsertedRoute), " +
-                    "unnest(:categories)" +
+                "(SELECT route_id FROM InsertedRoute), " +
+                "UNNEST(:categories)" +
                 ") " +
                 "RETURNING (SELECT route_id FROM InsertedRoute);"
 
-        const val INSERT = "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier);"
-        const val INSERT_ROUTE_CATEGORIES = "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) VALUES (:routeIdentifier, unnest(:categories));"
-
-        // Update Queries
-        const val UPDATE = "UPDATE Route SET (Location, Name, Description, Rating, Duration, Points) = (:location, :name, :description, :rating, :duration, to_json(:points));"
+        //Update Queries
+        const val UPDATE_WITH_CATEGORIES = "" +
+                "WITH UpdatedRoute AS (" +
+                "UPDATE Route SET (Location, Name, Description, Rating, Duration, Points) = (:location, :name, :description, :rating, :duration, to_json(:points))" +
+                "WHERE Identifier = :routeIdentifier " +
+                ")" +
+                "DELETE FROM RouteCategory WHERE RouteIdentifier = :routeIdentifier; " +
+                "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) " +
+                "VALUES (" +
+                ":routeIdentifier, " +
+                "UNNEST(:categories)" +
+                ");"
 
         // Delete Queries
         const val DELETE = "DELETE FROM Route WHERE identifier = ?;"

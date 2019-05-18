@@ -11,7 +11,7 @@ class RequestBuilder {
 
     companion object {
 
-        fun buildRouteDto(routeInput: RouteInput, id: Int? = null): RouteRequest = RouteRequest(
+        fun buildRouteRequest(routeInput: RouteInput, id: Int? = null): RouteRequest = RouteRequest(
                 identifier = id,
                 location = routeInput.location,
                 name = routeInput.name,
