@@ -1,0 +1,52 @@
+package ps.g49.socialroutingclient.activities
+
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import ps.g49.socialroutingclient.utils.Resource
+
+abstract class BaseActivity : AppCompatActivity() {
+
+    protected fun <T> handleRequestedData(
+        data: LiveData<Resource<T>>,
+        requestSuccessHandler: (result: T) -> Unit
+    ) {
+        data.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    requestLoadingHandler()
+                }
+                Resource.Status.ERROR -> {
+                    //stopSpinner()
+                    requestErrorHandler(it.message!!)
+                }
+                Resource.Status.SUCCESS -> {
+                    //stopSpinner()
+                    requestSuccessHandler(it.data!!)
+                }
+            }
+        })
+    }
+
+    /*
+    protected fun startSpinner() {
+        val spinner = findViewById<ProgressBar>(spinnerId)
+        spinner.visibility = View.VISIBLE
+    }
+
+    protected fun stopSpinner() {
+        val spinner = findViewById<ProgressBar>(spinnerId)
+        spinner.visibility = View.GONE
+    }
+    */
+
+    protected open fun requestLoadingHandler() {
+        // TODO Loading Handling
+        //startSpinner()
+    }
+
+    protected open fun requestErrorHandler(errorMessage: String) {
+        // ToDo Error Handling
+    }
+
+}
