@@ -29,10 +29,10 @@ class RouteSearchActivity : BaseActivity(), OnRouteListener {
 
     private fun searchRoutes() {
         val liveData = routeViewModel.searchRoutes()
-        handleRequestedData(liveData, ::requestSuccessHandler)
+        handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch)
     }
 
-    fun requestSuccessHandler(result: List<RouteSearchInput>) {
+    fun requestSuccessHandlerRouteSearch(result: List<RouteSearchInput>) {
         routesSearched = result
         if (result.isEmpty())
             emptySearchRoutesTextView.visibility = View.VISIBLE

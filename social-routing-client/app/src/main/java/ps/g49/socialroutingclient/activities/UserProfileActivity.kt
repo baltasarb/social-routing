@@ -3,7 +3,6 @@ package ps.g49.socialroutingclient.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_user_profile.*
@@ -14,7 +13,6 @@ import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.RouteInput
 import ps.g49.socialroutingclient.utils.OnRouteListener
-import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.utils.UserCreatedRoutesAdapter
 import ps.g49.socialroutingclient.viewModel.UserProfileViewModel
 
@@ -35,12 +33,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
     private fun getUserProfileInfo(userId: Int) {
         val liveData = viewModel.getUser(userId)
-        handleRequestedData(liveData, ::requestSuccessHandler)
-    }
-
-    fun requestSuccessHandler(personInput: PersonInput) {
-        setView(personInput)
-        requestUserRoutes(personInput)
+        handleRequestedData(liveData, ::requestSuccessHandlerUserProfile)
     }
 
     private fun setView(personInput: PersonInput) {
@@ -51,28 +44,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
     private fun requestUserRoutes(personInput: PersonInput) {
         val liveDataRoutes = viewModel.getUserRoutesFromUrl(personInput.routesUrl)
-        liveDataRoutes.observe(this, Observer {
-            when (it.status) {
-                Resource.Status.LOADING -> {
-                    requestLoadingHandler()
-                }
-                Resource.Status.ERROR -> {
-                    //stopSpinner()
-                    requestErrorHandler(it.message!!)
-                }
-                Resource.Status.SUCCESS -> {
-                    //stopSpinner()
-                    val routesList = it.data!!
-                    routesInputs = routesList
-                    if (routesList.isEmpty())
-                        emptyUserRoutesTextView.visibility = View.VISIBLE
-                    else {
-                        emptyUserRoutesTextView.visibility = View.INVISIBLE
-                        setRecyclerView(routesList)
-                    }
-                }
-            }
-        })
+        handleRequestedData(liveDataRoutes, ::requestSuccessHandlerUserRoutes)
     }
 
     private fun setRecyclerView(routesList: List<RouteInput>) {
@@ -90,7 +62,21 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
             intent.putExtra(RouteRepresentationActivity.ROUTE_ID_MESSAGE, routeInput.identifier)
             startActivity(intent)
         }
+    }
 
+    private fun requestSuccessHandlerUserProfile(personInput: PersonInput) {
+        setView(personInput)
+        requestUserRoutes(personInput)
+    }
+
+    private fun requestSuccessHandlerUserRoutes(routesList: List<RouteInput>) {
+        routesInputs = routesList
+        if (routesList.isEmpty())
+            emptyUserRoutesTextView.visibility = View.VISIBLE
+        else {
+            emptyUserRoutesTextView.visibility = View.INVISIBLE
+            setRecyclerView(routesList)
+        }
     }
 
     private fun getSocialRoutingApplication() = this@UserProfileActivity.application as SocialRoutingApplication

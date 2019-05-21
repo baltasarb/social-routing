@@ -1,5 +1,6 @@
 package ps.g49.socialroutingclient.activities
 
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -47,6 +48,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected open fun requestErrorHandler(errorMessage: String) {
         // ToDo Error Handling
+    }
+
+    protected open fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 
 }

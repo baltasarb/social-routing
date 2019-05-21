@@ -69,10 +69,10 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         }
 
         val liveData = routeViewModel.getRoute(routeId)
-        handleRequestedData(liveData, ::requestSuccessHandler)
+        handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
     }
 
-    fun requestSuccessHandler(routeDetailed: RouteDetailedInput) {
+    fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput) {
         val points = routeDetailed.points
         googleMapsManager.drawLinesSet(points)
     }

@@ -94,7 +94,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                     getLocationFromViewInput()
                 else
                     mMapManager.zoomInLocation(location) {
-                        viewToast(LOCATION_NOT_FOUND)
+                        showToast(LOCATION_NOT_FOUND)
                         getLocationFromViewInput()
                     }
             }
@@ -112,7 +112,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
     fun finish(view: View) {
         if (!mMapManager.mapIsMarked())
-            viewToast(MARKERS_REQUIRED)
+            showToast(MARKERS_REQUIRED)
         else
             showDialogForm()
         // TODO If the device is connected to the internet makes a post request to the service to save the routeDetailed in db, or if the device is not connected to internet, this work will wait until the connection is on again.
@@ -139,7 +139,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                 val description = descriptionEditText.text.toString()
 
                 if (name.isEmpty())
-                    viewToast(NAME_REQUIRED)
+                    showToast(NAME_REQUIRED)
                 else {
                     val route = RouteOutput(
                         location, name, description, 100, mMapManager.getMarkerPoints(), listOf(CategoryOutput("Other"))
@@ -161,15 +161,11 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories)
     }
 
-    private fun viewToast(msg: String) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    private fun requestSuccessHandlerRouteCreation(result: String) {
+        showToast(ROUTE_CREATED_SUCCESS)
     }
 
-    fun requestSuccessHandlerRouteCreation(result: String) {
-        viewToast(ROUTE_CREATED_SUCCESS)
-    }
-
-    fun requestSuccessHandlerRouteCategories (categoriesCollection: CategoryCollectionInput) {
+    private fun requestSuccessHandlerRouteCategories (categoriesCollection: CategoryCollectionInput) {
         val categories = categoriesCollection.categories
         /*categories.forEach {
             val chip = Chip(this)
