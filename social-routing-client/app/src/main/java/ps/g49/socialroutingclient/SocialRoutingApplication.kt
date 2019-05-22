@@ -30,5 +30,4 @@ class SocialRoutingApplication : Application() {
         geocodingService = retrofitGeocoding.create(GeocodingWebService::class.java)
     }
 
-    fun getGoogleMapsKey() = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
 }

@@ -12,6 +12,10 @@ interface SocialRoutingWebService {
         const val HEADER_CONTENT_TYPE = "Content-type: application/json"
     }
 
+    @Headers(HEADER_CONTENT_TYPE)
+    @POST("signin")
+    fun signIn(@Query("idTokenString") idTokenString: String): Call<Void>
+
     // Person Requests
     @GET("persons/{personIdentifier}")
     fun getPerson(@Path("personIdentifier") personIdentifier: String): Call<PersonInput>

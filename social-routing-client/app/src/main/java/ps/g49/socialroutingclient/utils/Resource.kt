@@ -16,16 +16,16 @@ class Resource<T> private constructor(
             return Resource(Status.SUCCESS, data, null)
         }
 
-        fun success(): Resource<Void> {
-            return Resource(Status.SUCCESS, null, null)
-        }
-
         fun <T> error(msg: String, data: T?): Resource<T> {
             return Resource(Status.ERROR, data, msg)
         }
 
         fun <T> loading(): Resource<T> {
             return Resource(Status.LOADING, null, null)
+        }
+
+        fun <T> success(): Resource<T> {
+            return Resource(Status.SUCCESS, null, null)
         }
     }
 }

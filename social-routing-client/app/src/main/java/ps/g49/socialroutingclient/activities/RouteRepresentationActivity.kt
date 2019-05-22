@@ -15,13 +15,13 @@ import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
-import ps.g49.socialroutingclient.viewModel.RouteViewModel
+import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 
 class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var googleMapsManager: GoogleMapsManager
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var routeViewModel: RouteViewModel
+    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var mMap: GoogleMap
     private var routeId: Int = -1
     val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -59,7 +59,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         googleMapsManager = GoogleMapsManager(mMap)
-        routeViewModel = getViewModel()
+        socialRoutingViewModel = getViewModel()
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             mMap.isMyLocationEnabled = true
@@ -68,12 +68,12 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
         }
 
-        val liveData = routeViewModel.getRoute(routeId)
+        val liveData = socialRoutingViewModel.getRoute(routeId)
         handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
     }
 
-    fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput) {
-        val points = routeDetailed.points
+    fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {
+        val points = routeDetailed!!.points
         googleMapsManager.drawLinesSet(points)
     }
 }

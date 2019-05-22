@@ -34,4 +34,10 @@
             app:layout_constraintTop_toBottomOf="@+id/email_account_textview" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="128dp"/>
 
+    <include layout="@layout/spinner_progress_bar" android:layout_height="65dp" android:layout_width="83dp"
+             android:layout_marginTop="20dp"
+             app:layout_constraintTop_toBottomOf="@+id/sign_in_google_account_button"
+             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="164dp"
+             android:id="@+id/spinnerProgressBar"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

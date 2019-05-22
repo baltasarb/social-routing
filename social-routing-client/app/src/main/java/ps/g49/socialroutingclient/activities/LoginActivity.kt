@@ -2,8 +2,6 @@ package ps.g49.socialroutingclient.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -13,11 +11,14 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.common.api.ApiException
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import ps.g49.socialroutingclient.kotlinx.getViewModel
+import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 
 
 class LoginActivity : BaseActivity() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
 
     companion object {
         private const val RC_SIGN_IN = 1
@@ -33,16 +34,18 @@ class LoginActivity : BaseActivity() {
         // ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            //.requestIdToken()
+            .requestIdToken(getString(R.string.server_client_id))
             .requestEmail()
             .build()
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        socialRoutingViewModel = getViewModel()
 
         sign_in_google_account_button.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
+            startSpinner()
         }
     }
 
@@ -60,16 +63,22 @@ class LoginActivity : BaseActivity() {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)!!
-            // TODO save the id token in application
-            showToast(SUCCESS_LOGIN_MESSAGE)
+            val idToken = account.idToken!!
 
-            val intent = Intent(this, NavigationActivity::class.java)
-            startActivity(intent)
+            val liveData = socialRoutingViewModel.signIn(idToken)
+            handleRequestedData(liveData, ::requestSuccessHandlerSignIn)
 
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             showToast(ERROR_LOGIN_MESSAGE)
+            stopSpinner()
         }
+    }
+
+    private fun requestSuccessHandlerSignIn() {
+        showToast(SUCCESS_LOGIN_MESSAGE)
+        val intent = Intent(this, NavigationActivity::class.java)
+        startActivity(intent)
     }
 
 }

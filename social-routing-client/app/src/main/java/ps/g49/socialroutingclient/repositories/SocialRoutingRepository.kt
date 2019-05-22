@@ -11,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RouteRepository {
+class SocialRoutingRepository {
 
     companion object {
         const val baseUrl = "http://10.0.2.2:8080/api.sr/"
@@ -19,6 +19,29 @@ class RouteRepository {
 
     private val retrofitSocialRouting = RetrofitClient(baseUrl).getClient()
     private val socialRoutingWebService = retrofitSocialRouting.create(SocialRoutingWebService::class.java)
+
+    fun signIn(idTokenString: String): LiveData<Resource<Void>> {
+        val resource = MutableLiveData<Resource<Void>>()
+        resource.value = Resource.loading()
+
+        socialRoutingWebService
+            .signIn(idTokenString)
+            .enqueue(object : Callback<Void> {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    resource.value = Resource.error(t.message.toString(), null)
+                }
+
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    val code = response.code()
+                    if (code == 200)
+                        resource.value = Resource.success()
+                    else
+                        resource.value = Resource.error(response.message(), null)
+                }
+            })
+
+        return resource
+    }
 
     // Person Request
     fun getPerson(personIdentifier: String): LiveData<Resource<PersonInput>> {

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,14 +17,14 @@ import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
 import ps.g49.socialroutingclient.model.outputModel.CategoryOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
-import ps.g49.socialroutingclient.viewModel.RouteViewModel
+import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 
 class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mMapManager: GoogleMapsManager
 
-    private lateinit var routeViewModel: RouteViewModel
+    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private var location: String = ""
 
     companion object {
@@ -52,7 +51,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         // Initialize the Route Repository.
-        routeViewModel = getViewModel()
+        socialRoutingViewModel = getViewModel()
     }
 
     /*
@@ -67,7 +66,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         mMap.setOnMapClickListener(mMapManager.onMapClickListener())
 
         getLocationFromViewInput()
-        routeViewModel = getViewModel()
+        socialRoutingViewModel = getViewModel()
     }
 
     private fun getLocationFromViewInput() {
@@ -144,7 +143,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                     val route = RouteOutput(
                         location, name, description, 100, mMapManager.getMarkerPoints(), listOf(CategoryOutput("Other"))
                     )
-                    val liveData = routeViewModel.createRoute(route)
+                    val liveData = socialRoutingViewModel.createRoute(route)
                     handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
                 }
 
@@ -157,16 +156,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun setChipGroupView(chipGroup: ChipGroup) {
-        val liveData = routeViewModel.getRouteCategories()
+        val liveData = socialRoutingViewModel.getRouteCategories()
         handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories)
     }
 
-    private fun requestSuccessHandlerRouteCreation(result: String) {
+    private fun requestSuccessHandlerRouteCreation() {
         showToast(ROUTE_CREATED_SUCCESS)
     }
 
-    private fun requestSuccessHandlerRouteCategories (categoriesCollection: CategoryCollectionInput) {
-        val categories = categoriesCollection.categories
+    private fun requestSuccessHandlerRouteCategories (categoriesCollection: CategoryCollectionInput?) {
+        val categories = categoriesCollection!!.categories
+        // TODO ("Add: Categories to the Route Creation")
         /*categories.forEach {
             val chip = Chip(this)
             chip.text = it.name

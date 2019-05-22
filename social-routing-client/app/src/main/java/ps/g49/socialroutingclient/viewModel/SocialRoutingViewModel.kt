@@ -3,15 +3,15 @@ package ps.g49.socialroutingclient.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
-import ps.g49.socialroutingclient.repositories.RouteRepository
+import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
 import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
 import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
 
-class RouteViewModel: ViewModel() {
+class SocialRoutingViewModel: ViewModel() {
 
-    private val routeRepository = RouteRepository()
+    private val routeRepository = SocialRoutingRepository()
 
     fun createRoute(routeOutput: RouteOutput): LiveData<Resource<String>> =
             routeRepository.createRoute(routeOutput)
@@ -24,5 +24,8 @@ class RouteViewModel: ViewModel() {
 
     fun getRouteCategories(): LiveData<Resource<CategoryCollectionInput>> =
             routeRepository.getCategories()
+
+    fun signIn(idTokenString: String): LiveData<Resource<Void>> =
+            routeRepository.signIn(idTokenString)
 
 }

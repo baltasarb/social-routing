@@ -42,8 +42,8 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         userEmailTextView.text = personInput.email
     }
 
-    private fun requestUserRoutes(personInput: PersonInput) {
-        val liveDataRoutes = viewModel.getUserRoutesFromUrl(personInput.routesUrl)
+    private fun requestUserRoutes(personInput: PersonInput?) {
+        val liveDataRoutes = viewModel.getUserRoutesFromUrl(personInput!!.routesUrl)
         handleRequestedData(liveDataRoutes, ::requestSuccessHandlerUserRoutes)
     }
 
@@ -64,14 +64,13 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         }
     }
 
-    private fun requestSuccessHandlerUserProfile(personInput: PersonInput) {
-        setView(personInput)
+    private fun requestSuccessHandlerUserProfile(personInput: PersonInput?) {
+        setView(personInput!!)
         requestUserRoutes(personInput)
     }
 
-    private fun requestSuccessHandlerUserRoutes(routesList: List<RouteInput>) {
-        routesInputs = routesList
-        if (routesList.isEmpty())
+    private fun requestSuccessHandlerUserRoutes(routesList: List<RouteInput>?) {
+        if (routesList!!.isEmpty())
             emptyUserRoutesTextView.visibility = View.VISIBLE
         else {
             emptyUserRoutesTextView.visibility = View.INVISIBLE

@@ -4,12 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ps.g49.socialroutingclient.model.inputModel.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.RouteInput
-import ps.g49.socialroutingclient.repositories.RouteRepository
+import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource
 
 class UserProfileViewModel : ViewModel() {
 
-    private val routeRepository = RouteRepository()
+    private val routeRepository = SocialRoutingRepository()
 
     fun getUser(id: Int): LiveData<Resource<PersonInput>> = routeRepository.getPerson(id.toString())
 

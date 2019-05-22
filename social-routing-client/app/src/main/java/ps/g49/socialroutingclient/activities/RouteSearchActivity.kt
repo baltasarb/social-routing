@@ -12,33 +12,32 @@ import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
 import ps.g49.socialroutingclient.utils.OnRouteListener
 import ps.g49.socialroutingclient.utils.SearchRoutesAdapter
-import ps.g49.socialroutingclient.viewModel.RouteViewModel
+import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 
 class RouteSearchActivity : BaseActivity(), OnRouteListener {
 
-    private lateinit var routeViewModel: RouteViewModel
+    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var routesSearched: List<RouteSearchInput>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_routes)
 
-        routeViewModel = getViewModel()
+        socialRoutingViewModel = getViewModel()
         searchRoutes()
     }
 
     private fun searchRoutes() {
-        val liveData = routeViewModel.searchRoutes()
+        val liveData = socialRoutingViewModel.searchRoutes()
         handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch)
     }
 
-    fun requestSuccessHandlerRouteSearch(result: List<RouteSearchInput>) {
-        routesSearched = result
-        if (result.isEmpty())
+    fun requestSuccessHandlerRouteSearch(routesSearched: List<RouteSearchInput>?) {
+        if (routesSearched!!.isEmpty())
             emptySearchRoutesTextView.visibility = View.VISIBLE
         else {
             emptySearchRoutesTextView.visibility = View.INVISIBLE
-            setRecyclerView(result)
+            setRecyclerView(routesSearched)
         }
 
     }
