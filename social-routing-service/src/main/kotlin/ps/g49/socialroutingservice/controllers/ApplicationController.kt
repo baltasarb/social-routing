@@ -20,7 +20,8 @@ import com.google.api.client.json.jackson2.JacksonFactory
 @RestController
 class ApplicationController {
 
-    val CLIENT_ID = ""
+    val CLIENT_ID = "989313558568-hqdfgtllk76149mgf6t627504bojucfg.apps.googleusercontent.com"
+
     @GetMapping
     fun index() : ResponseEntity<ApiRootResource>{
         return OutputUtils.ok(ApiRootResource())
@@ -34,7 +35,7 @@ class ApplicationController {
 
         val verifier = GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
                 // Specify the CLIENT_ID of the app that accesses the backend:
-                .setAudience(Collections.singletonList(CLIENT_ID))
+                .setAudience(singletonList(CLIENT_ID))
                 // Or, if multiple clients access the backend:
                 //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .build()
