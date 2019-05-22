@@ -1,5 +1,4 @@
 plugins {
-	id 'org.jetbrains.kotlin.plugin.jpa' version '1.3.21'
 	id 'org.springframework.boot' version '2.1.3.RELEASE'
 	id 'org.jetbrains.kotlin.jvm' version '1.3.21'
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.3.21'
@@ -23,8 +22,6 @@ dependencies {
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 	
-	runtimeOnly 'com.h2database:h2'
-	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
@@ -32,19 +29,13 @@ dependencies {
 	compile group: 'org.jdbi', name: 'jdbi', version: '2.78'
 	compile group: 'org.jdbi', name: 'jdbi3-postgres', version: '3.6.0'
 	compile group: 'org.jdbi', name: 'jdbi3-kotlin', version: '3.6.0'
-
-	//api client library used for token id verification 
-	compile 'com.google.api-client:google-api-client:1.25.0'
 	
-	//extensions for the api client library (url fetch)
+	// api client library used for token id verification and extensions for it (url fetch)
 	compile group: 'com.google.api-client', name: 'google-api-client-appengine', version: '1.29.0'
+}
 
-	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-jackson2
-	//compile group: 'org.jdbi', name: 'jdbi3-jackson2', version: '3.6.0'
-
-	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-json
-	//compile group: 'org.jdbi', name: 'jdbi3-json', version: '3.6.0'
-
+configurations {
+	provided.all*.exclude group: 'javax.servlet'
 }
 
 compileKotlin {

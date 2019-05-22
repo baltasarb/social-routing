@@ -22,7 +22,7 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
 
         val headerNames = request.headerNames
         while (headerNames.hasMoreElements()) {
-            val headerName = headerNames.nextElement()
+            val headerName = headerNames.nextElement() as String
             logger.info(headerName + " : " + request.getHeader(headerName))
         }
         logger.info("\n")

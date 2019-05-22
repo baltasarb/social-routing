@@ -1,6 +1,9 @@
 package ps.g49.socialroutingservice.controllers
 
+//import com.google.api.client.extensions.appengine.http.UrlFetchTransport
 import com.google.api.client.extensions.appengine.http.UrlFetchTransport
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
+import com.google.api.client.json.jackson2.JacksonFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -8,14 +11,11 @@ import org.springframework.web.bind.annotation.RestController
 import ps.g49.socialroutingservice.ApiRootResource
 import ps.g49.socialroutingservice.utils.OutputUtils
 import java.util.Collections.singletonList
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
+//import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
 import java.util.*
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken
+//import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken
 import org.springframework.web.bind.annotation.RequestParam
-import com.google.api.client.json.jackson2.JacksonFactory
-
-
-
+//import com.google.api.client.json.jackson2.JacksonFactory
 
 @RestController
 class ApplicationController {
@@ -46,12 +46,12 @@ class ApplicationController {
             val payload = idToken!!.getPayload()
 
             // Print user identifier
-            val userId = payload.getSubject()
+            val userId = payload.subject
             println("User ID: $userId")
 
             // Get profile information from payload
-            val email = payload.getEmail()
-            val emailVerified = java.lang.Boolean.valueOf(payload.getEmailVerified())
+            val email = payload.email
+            val emailVerified = java.lang.Boolean.valueOf(payload.emailVerified)
             val name = payload.get("name") as String
             val pictureUrl = payload.get("picture") as String
             val locale = payload.get("locale") as String
