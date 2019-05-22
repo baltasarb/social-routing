@@ -33,6 +33,12 @@ dependencies {
 	compile group: 'org.jdbi', name: 'jdbi3-postgres', version: '3.6.0'
 	compile group: 'org.jdbi', name: 'jdbi3-kotlin', version: '3.6.0'
 
+	//api client library used for token id verification 
+	compile 'com.google.api-client:google-api-client:1.25.0'
+	
+	//extensions for the api client library (url fetch)
+	compile group: 'com.google.api-client', name: 'google-api-client-appengine', version: '1.29.0'
+
 	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-jackson2
 	//compile group: 'org.jdbi', name: 'jdbi3-jackson2', version: '3.6.0'
 
