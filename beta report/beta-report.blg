@@ -1,0 +1,9 @@
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is 'beta-report.blg'
+[39] biber-MSWIN32:315> INFO - === 
+[81] Biber.pm:371> INFO - Reading 'beta-report.bcf'
+[203] Biber.pm:889> INFO - Found 0 citekeys in bib section 0
+[211] Utils.pm:193> WARN - The file 'beta-report.bcf' does not contain any citations!
+[221] bbl.pm:636> INFO - Writing 'beta-report.bbl' with encoding 'UTF-8'
+[221] bbl.pm:739> INFO - Output to beta-report.bbl
+[223] Biber.pm:110> INFO - WARNINGS: 1
