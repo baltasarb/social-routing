@@ -94,32 +94,6 @@ class SocialRoutingRepository {
         return resource
     }
 
-    /*
-    fun createPerson(personOutput: PersonOutput): LiveData<PersonInput> {
-        val liveData = MutableLiveData<PersonInput>()
-        socialRoutingWebService.createPerson(personOutput).enqueue(object : Callback<PersonInput> {
-
-            override fun onFailure(call: Call<PersonInput>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onResponse(call: Call<PersonInput>, response: Response<PersonInput>) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-        })
-        return liveData
-    }
-
-    fun updatePerson() {
-        TODO("not implemented")
-    }
-
-    fun deletePerson() {
-        TODO("not implemented")
-    }
-    */
-
     // Route Request
     fun getRoute(routeIdentifier: Int): LiveData<Resource<RouteDetailedInput>> {
         val resource = MutableLiveData<Resource<RouteDetailedInput>>()
@@ -228,11 +202,11 @@ class SocialRoutingRepository {
         return resource
     }
 
-    /*
+
     fun updateRoute(routeOutput: RouteOutput): LiveData<RouteInput> {
         TODO("not implemented")
     }
-*/
+
     fun deleteRoute (routeIdentifier: Int) : LiveData<Resource<Void>> {
         val resource = MutableLiveData<Resource<Void>>()
         resource.value = Resource.loading()
