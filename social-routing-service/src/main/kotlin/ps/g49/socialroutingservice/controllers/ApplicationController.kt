@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 @RestController
 class ApplicationController {
 
-    val CLIENT_ID = "989313558568-o26u2esr0tuua06hmgeqoagnjroq3ngq.apps.googleusercontent.com"
+    val CLIENT_ID = "989313558568-hqdfgtllk76149mgf6t627504bojucfg.apps.googleusercontent.com"
 
     @GetMapping
     fun index() : ResponseEntity<ApiRootResource>{
