@@ -1,6 +1,5 @@
 package ps.g49.socialroutingservice.controllers
 
-//import com.google.api.client.extensions.appengine.http.UrlFetchTransport
 import com.google.api.client.extensions.appengine.http.UrlFetchTransport
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
 import com.google.api.client.json.jackson2.JacksonFactory
@@ -11,16 +10,12 @@ import org.springframework.web.bind.annotation.RestController
 import ps.g49.socialroutingservice.ApiRootResource
 import ps.g49.socialroutingservice.utils.OutputUtils
 import java.util.Collections.singletonList
-//import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
-import java.util.*
-//import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken
 import org.springframework.web.bind.annotation.RequestParam
-//import com.google.api.client.json.jackson2.JacksonFactory
 
 @RestController
 class ApplicationController {
 
-    val CLIENT_ID = "989313558568-hqdfgtllk76149mgf6t627504bojucfg.apps.googleusercontent.com"
+    val CLIENT_ID = "989313558568-o26u2esr0tuua06hmgeqoagnjroq3ngq.apps.googleusercontent.com"
 
     @GetMapping
     fun index() : ResponseEntity<ApiRootResource>{
