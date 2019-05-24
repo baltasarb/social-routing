@@ -55,6 +55,27 @@ abstract class BaseActivity : AppCompatActivity() {
         })
     }
 
+    protected fun <T> handleRequestedData(
+        data: LiveData<Resource<T>>,
+        requestSuccessHandler: (result: T?) -> Unit,
+        requestErrorHandler: (msg: String) -> Unit
+    ) {
+        data.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    requestLoadingHandler()
+                }
+                Resource.Status.ERROR -> {
+                    stopSpinner()
+                    requestErrorHandler(it.message!!)
+                }
+                Resource.Status.SUCCESS -> {
+                    stopSpinner()
+                    requestSuccessHandler(it.data)
+                }
+            }
+        })
+    }
 
     protected fun startSpinner() {
         val spinner = findViewById<ProgressBar>(spinnerId)
@@ -67,8 +88,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected open fun requestLoadingHandler() {
-        // TODO Loading Handling
-        //startSpinner()
+        startSpinner()
     }
 
     protected open fun requestErrorHandler(errorMessage: String) {

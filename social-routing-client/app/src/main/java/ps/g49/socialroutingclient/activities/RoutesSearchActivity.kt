@@ -14,7 +14,7 @@ import ps.g49.socialroutingclient.utils.OnRouteListener
 import ps.g49.socialroutingclient.utils.SearchRoutesAdapter
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 
-class RouteSearchActivity : BaseActivity(), OnRouteListener {
+class RoutesSearchActivity : BaseActivity(), OnRouteListener {
 
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var routesSearched: List<RouteSearchInput>
@@ -29,22 +29,24 @@ class RouteSearchActivity : BaseActivity(), OnRouteListener {
 
     private fun searchRoutes() {
         val liveData = socialRoutingViewModel.searchRoutes()
-        handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch)
+        handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch, ::requestErrorHandlerSearch)
     }
 
-    fun requestSuccessHandlerRouteSearch(routesSearched: List<RouteSearchInput>?) {
+    private fun requestSuccessHandlerRouteSearch(routesSearched: List<RouteSearchInput>?) {
         if (routesSearched!!.isEmpty())
             emptySearchRoutesTextView.visibility = View.VISIBLE
-        else {
-            emptySearchRoutesTextView.visibility = View.INVISIBLE
+        else
             setRecyclerView(routesSearched)
-        }
+    }
 
+    private fun requestErrorHandlerSearch(msg: String) {
+        emptySearchRoutesTextView.visibility = View.VISIBLE
     }
 
     private fun setRecyclerView(list: List<RouteSearchInput>) {
         val adapter = SearchRoutesAdapter(list, this)
         val layoutManager = LinearLayoutManager(applicationContext)
+        routesSearched = list
         routesRecyclerView.layoutManager = layoutManager
         routesRecyclerView.itemAnimator = DefaultItemAnimator()
         routesRecyclerView.adapter = adapter
@@ -59,5 +61,5 @@ class RouteSearchActivity : BaseActivity(), OnRouteListener {
         }
     }
 
-    private fun getSocialRoutingApplication() = this@RouteSearchActivity.application as SocialRoutingApplication
+    private fun getSocialRoutingApplication() = this@RoutesSearchActivity.application as SocialRoutingApplication
 }

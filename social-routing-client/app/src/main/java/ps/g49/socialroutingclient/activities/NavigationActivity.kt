@@ -1,22 +1,34 @@
 package ps.g49.socialroutingclient.activities
 
+import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import android.view.View
+import android.view.WindowManager
+import kotlinx.android.synthetic.main.content_navigation.*
 import ps.g49.socialroutingclient.R
 
 class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    companion object {
+        const val INCORRECT_TEXT_INPUT = "Fill the Location first"
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+
         setContentView(R.layout.activity_navigation)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -65,10 +77,10 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_route_creation -> {
-
+                startNewActivity(RouteCreationActivity::class.java)
             }
             R.id.nav_user_profile -> {
-
+                startNewActivity(UserProfileActivity::class.java)
             }
             R.id.nav_share -> {
 
@@ -80,5 +92,20 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun searchRoutesOnClick(view: View) {
+        if (location_editText.text.isEmpty()) {
+            showToast(INCORRECT_TEXT_INPUT)
+            return
+        }
+
+        val intent = Intent(this, RoutesSearchActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun <T> startNewActivity(cls: Class<T>) {
+        val intent = Intent(this, cls)
+        startActivity(intent)
     }
 }

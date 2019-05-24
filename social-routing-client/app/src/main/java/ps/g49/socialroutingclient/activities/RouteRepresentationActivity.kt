@@ -29,7 +29,6 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
     companion object{
         const val ROUTE_ID_MESSAGE = "ROUTE_ID_MESSAGE"
-        const val REQUEST_CODE = 101
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -20,7 +20,6 @@
             android:theme="@style/AppTheme">
         <activity
                 android:name=".activities.NavigationActivity"
-                android:label="@string/title_activity_navigation"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <!--
@@ -39,7 +38,9 @@
                 android:name=".activities.RouteRepresentationActivity"
                 android:label="@string/title_activity_route_representation">
         </activity>
-        <activity android:name=".activities.RouteSearchActivity">
+        <activity
+                android:name=".activities.RoutesSearchActivity"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".activities.UserProfileActivity"

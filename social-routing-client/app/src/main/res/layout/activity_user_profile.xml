@@ -36,4 +36,6 @@
 
     <include layout="@layout/content_user_profile"/>
 
+    <include layout="@layout/spinner_progress_bar" android:id="@+id/spinnerProgressBar"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

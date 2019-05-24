@@ -43,9 +43,10 @@ class LoginActivity : BaseActivity() {
         socialRoutingViewModel = getViewModel()
 
         sign_in_google_account_button.setOnClickListener {
-            val signInIntent = mGoogleSignInClient.signInIntent
+            /*val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
-            startSpinner()
+            */
+            requestSuccessHandlerSignIn()
         }
     }
 
