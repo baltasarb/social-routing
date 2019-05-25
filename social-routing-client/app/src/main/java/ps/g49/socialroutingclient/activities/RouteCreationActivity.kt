@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.WindowManager
+import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.material.chip.ChipGroup
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
@@ -23,9 +23,9 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mMapManager: GoogleMapsManager
-
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private var location: String = ""
+    private lateinit var categoriesLinearLayout: LinearLayout
 
     companion object {
         private const val SEARCH = "Search"
@@ -35,7 +35,10 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         private const val CREATE = "Create"
         private const val ROUTE_CREATED_SUCCESS = "The Route was created Successfully!"
         private const val LOCATION_NOT_FOUND = "Location not Found."
-        private const val NAME_REQUIRED = "Fill the Name field, at least."
+        private const val NAME_AND_CATEGORIES_REQUIRED = "Need to fill at least the name and one category"
+        private const val QUESTION_TO_DELETE = "Are you sure you want to erase your creation ?"
+        private const val YES = "Yes"
+        private const val NO = "No"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +70,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
         getLocationFromViewInput()
         socialRoutingViewModel = getViewModel()
+    }
+
+    override fun onBackPressed() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setMessage(QUESTION_TO_DELETE)
+        alertDialog
+            .setCancelable(true)
+            .setPositiveButton(YES) { dialog, which -> finish() }
+            .setNegativeButton(NO) { dialog, which -> dialog.cancel() }
+        alertDialog.create()
+        alertDialog.show()
     }
 
     private fun getLocationFromViewInput() {
@@ -114,7 +128,6 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
             showToast(MARKERS_REQUIRED)
         else
             showDialogForm()
-        // TODO If the device is connected to the internet makes a post request to the service to save the routeDetailed in db, or if the device is not connected to internet, this work will wait until the connection is on again.
     }
 
     private fun showDialogForm() {
@@ -124,38 +137,46 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         val rowView: View = inflater.inflate(R.layout.route_creation_dialog, null)
         val nameEditText = rowView.findViewById<EditText>(R.id.nameEditText)
         val descriptionEditText = rowView.findViewById<EditText>(R.id.descriptionEditText)
-        val spinner = rowView.findViewById<ProgressBar>(R.id.creationProgressBar)
-        val chipGroup = rowView.findViewById<ChipGroup>(R.id.categoriesChipGroup)
-        setChipGroupView(chipGroup)
+        categoriesLinearLayout = rowView.findViewById(R.id.categoriesLinearLayout)
 
-        spinner.visibility = View.GONE
+        setChipGroupView()
 
         builder
             .setView(rowView)
             .setPositiveButton(CREATE) { dialog, which ->
-                spinner.visibility = View.VISIBLE
                 val name = nameEditText.text.toString()
                 val description = descriptionEditText.text.toString()
 
-                if (name.isEmpty())
-                    showToast(NAME_REQUIRED)
+                val categoriesChecked = mutableListOf<CheckBox>()
+                for (i in 0 until categoriesLinearLayout.childCount)
+                    categoriesChecked.add(categoriesLinearLayout.getChildAt(i) as CheckBox)
+                val categories = categoriesChecked
+                    .filter { it.isChecked }
+                    .map { CategoryOutput(it.text.toString()) }
+                    .toList()
+
+                if (name.isEmpty() || categories.isEmpty())
+                    showToast(NAME_AND_CATEGORIES_REQUIRED)
                 else {
                     val route = RouteOutput(
-                        location, name, description, 100, mMapManager.getMarkerPoints(), listOf(CategoryOutput("Other"))
+                        location,
+                        name,
+                        description,
+                        100,
+                        mMapManager.getMarkerPoints(),
+                        categories
                     )
                     val liveData = socialRoutingViewModel.createRoute(route)
                     handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
                 }
 
             }
-            .setNegativeButton(CANCEL) { dialog, which ->
-                dialog.cancel()
-            }
+            .setNegativeButton(CANCEL) { dialog, which -> dialog.cancel() }
             .create()
             .show()
     }
 
-    private fun setChipGroupView(chipGroup: ChipGroup) {
+    private fun setChipGroupView() {
         val liveData = socialRoutingViewModel.getRouteCategories()
         handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories)
     }
@@ -164,16 +185,13 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         showToast(ROUTE_CREATED_SUCCESS)
     }
 
-    private fun requestSuccessHandlerRouteCategories (categoriesCollection: CategoryCollectionInput?) {
+    private fun requestSuccessHandlerRouteCategories(categoriesCollection: CategoryCollectionInput?) {
         val categories = categoriesCollection!!.categories
-        // TODO ("Add: Categories to the Route Creation")
-        /*categories.forEach {
-            val chip = Chip(this)
-            chip.text = it.name
-
-            chip.isClickable = true
-            chip.isCheckable = true
-            chipGroup.addView(chip)
-        }*/
+        categories.forEach {
+            val checkBox = CheckBox(applicationContext)
+            checkBox.text = it.name
+            categoriesLinearLayout.addView(checkBox)
+        }
     }
+
 }

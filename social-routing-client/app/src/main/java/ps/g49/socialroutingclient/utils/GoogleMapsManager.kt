@@ -1,7 +1,7 @@
 package ps.g49.socialroutingclient.utils
 
 import ps.g49.socialroutingclient.model.Point
-import ps.g49.socialroutingclient.repositories.GeocodingRepository
+import ps.g49.socialroutingclient.repositories.GoogleRepository
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -11,7 +11,7 @@ class GoogleMapsManager(val googleMap: GoogleMap) {
 
     private val markerOptions = LinkedList<Marker>()
     private val polylines = LinkedList<Polyline>()
-    private val geocodingRepository = GeocodingRepository()
+    private val geocodingRepository = GoogleRepository()
 
     companion object {
         private const val START = "Start"

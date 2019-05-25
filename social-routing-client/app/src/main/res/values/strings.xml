@@ -31,4 +31,10 @@
     <string name="route_creation">Route Creation</string>
     <string name="user_profile">User Profile</string>
     <string name="save_credentials">Save Credentials</string>
+    <string name="start_live_tracking">Start Live Tracking</string>
+    <string name="mode_of_transport">Mode of Transport</string>
+    <string name="driving">driving</string>
+    <string name="walking">walking</string>
+    <string name="bicycling">bicycling</string>
+    <string name="transit">transit</string>
 </resources>

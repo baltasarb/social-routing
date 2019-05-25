@@ -3,7 +3,9 @@ package ps.g49.socialroutingclient.activities
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -11,6 +13,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.material.chip.Chip
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
@@ -62,17 +65,36 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             mMap.isMyLocationEnabled = true
-        else {
+        else
             // Show rationale and request permission.
             ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
-        }
+
 
         val liveData = socialRoutingViewModel.getRoute(routeId)
         handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
     }
 
-    fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {
+    private fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {
         val points = routeDetailed!!.points
         googleMapsManager.drawLinesSet(points)
+    }
+
+    fun liveTrackingOnClick(view: View) {
+        showInitialForm()
+    }
+
+    private fun showInitialForm() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+
+        val rowView = inflater.inflate(R.layout.route_directions_dialog, null)
+
+        builder.setView(rowView)
+            .setPositiveButton("Done") { dialog, which ->
+
+            }
+            .setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+            .create()
+            .show()
     }
 }

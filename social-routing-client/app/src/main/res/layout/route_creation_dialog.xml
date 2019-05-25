@@ -38,12 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/categorytextView"
             android:textAlignment="center" android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
-    <ProgressBar
-            style="?android:attr/progressBarStyle"
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:id="@+id/creationProgressBar" tools:visibility="gone" android:layout_gravity="center"/>
-    <com.google.android.material.chip.ChipGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/categoriesChipGroup"/>
+            android:layout_height="match_parent" android:id="@+id/categoriesLinearLayout">
+    </LinearLayout>
+
+    <include layout="@layout/spinner_progress_bar" android:id="@+id/spinnerProgressBar"/>
+
 </LinearLayout>
