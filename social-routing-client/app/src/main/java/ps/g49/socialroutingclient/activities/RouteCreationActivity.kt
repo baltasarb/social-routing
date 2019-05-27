@@ -73,14 +73,16 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     override fun onBackPressed() {
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setMessage(QUESTION_TO_DELETE)
-        alertDialog
-            .setCancelable(true)
-            .setPositiveButton(YES) { dialog, which -> finish() }
-            .setNegativeButton(NO) { dialog, which -> dialog.cancel() }
-        alertDialog.create()
-        alertDialog.show()
+        if (mMapManager.mapIsMarked()) {
+            val alertDialog = AlertDialog.Builder(this)
+            alertDialog.setMessage(QUESTION_TO_DELETE)
+            alertDialog
+                .setCancelable(true)
+                .setPositiveButton(YES) { dialog, which -> finish() }
+                .setNegativeButton(NO) { dialog, which -> dialog.cancel() }
+            alertDialog.create()
+            alertDialog.show()
+        }
     }
 
     private fun getLocationFromViewInput() {

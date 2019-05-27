@@ -12,6 +12,7 @@ import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.RouteInput
+import ps.g49.socialroutingclient.model.inputModel.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.utils.OnRouteListener
 import ps.g49.socialroutingclient.utils.UserCreatedRoutesAdapter
 import ps.g49.socialroutingclient.viewModel.UserProfileViewModel
@@ -57,7 +58,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
     override fun onRouteClick(position: Int) {
         if (routesInputs.isNotEmpty()) {
-            val routeInput = routesInputs.get(position)
+            val routeInput = routesInputs[position]
             val intent = Intent(this, RouteRepresentationActivity::class.java)
             intent.putExtra(RouteRepresentationActivity.ROUTE_ID_MESSAGE, routeInput.identifier)
             startActivity(intent)
@@ -69,8 +70,10 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         requestUserRoutes(personInput)
     }
 
-    private fun requestSuccessHandlerUserRoutes(routesList: List<RouteInput>?) {
-        if (routesList!!.isEmpty())
+    private fun requestSuccessHandlerUserRoutes(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
+        val routesList = simplifiedRouteInputCollection!!.routes
+        routesInputs = routesList
+        if (routesList.isEmpty())
             emptyUserRoutesTextView.visibility = View.VISIBLE
         else {
             emptyUserRoutesTextView.visibility = View.INVISIBLE
@@ -78,5 +81,4 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         }
     }
 
-    private fun getSocialRoutingApplication() = this@UserProfileActivity.application as SocialRoutingApplication
 }

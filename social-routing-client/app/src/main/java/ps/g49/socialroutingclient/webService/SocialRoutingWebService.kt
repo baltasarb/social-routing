@@ -31,7 +31,7 @@ interface SocialRoutingWebService {
     fun deletePerson(@Path("personIdentifier") personIdentifier: String, @Body peron: PersonInput): Call<PersonInput>
 
     @GET
-    fun getPersonRoutes(@Url routesUrl: String): Call<List<RouteInput>>
+    fun getPersonRoutes(@Url routesUrl: String): Call<SimplifiedRouteInputCollection>
 
     //  Route Requests
     @GET("routes/{routeIdentifier}")

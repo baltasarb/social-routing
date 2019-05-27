@@ -44,6 +44,4 @@
             android:layout_height="match_parent" android:id="@+id/categoriesLinearLayout">
     </LinearLayout>
 
-    <include layout="@layout/spinner_progress_bar" android:id="@+id/spinnerProgressBar"/>
-
 </LinearLayout>

@@ -69,19 +69,19 @@ class SocialRoutingRepository {
         return resource
     }
 
-    fun getUserRoutes(routesUrl: String): LiveData<Resource<List<RouteInput>>> {
-        val resource = MutableLiveData<Resource<List<RouteInput>>>()
+    fun getUserRoutes(routesUrl: String): LiveData<Resource<SimplifiedRouteInputCollection>> {
+        val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
         resource.value = Resource.loading()
 
         socialRoutingWebService
             .getPersonRoutes(routesUrl)
-            .enqueue(object : Callback<List<RouteInput>> {
+            .enqueue(object : Callback<SimplifiedRouteInputCollection> {
 
-                override fun onFailure(call: Call<List<RouteInput>>, t: Throwable) {
+                override fun onFailure(call: Call<SimplifiedRouteInputCollection>, t: Throwable) {
                     resource.value = Resource.error(t.message.toString(), null)
                 }
 
-                override fun onResponse(call: Call<List<RouteInput>>, response: Response<List<RouteInput>>) {
+                override fun onResponse(call: Call<SimplifiedRouteInputCollection>, response: Response<SimplifiedRouteInputCollection>) {
                     val routesInput = response.body()
                     if (routesInput != null)
                         resource.value = Resource.success(routesInput)

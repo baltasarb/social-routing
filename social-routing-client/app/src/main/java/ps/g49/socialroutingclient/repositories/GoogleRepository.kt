@@ -1,10 +1,9 @@
 package ps.g49.socialroutingclient.repositories
 
-import android.util.Base64
-import com.google.android.gms.maps.model.LatLng
 import ps.g49.socialroutingclient.model.Point
 import ps.g49.socialroutingclient.model.inputModel.directions.DirectionsResponse
 import ps.g49.socialroutingclient.model.inputModel.geocoding.GeoCodingResponse
+import ps.g49.socialroutingclient.utils.GoogleOverviewPolylineDecoder
 import ps.g49.socialroutingclient.webService.GoogleWebService
 import ps.g49.socialroutingclient.webService.RetrofitClient
 import retrofit2.Call
@@ -56,9 +55,15 @@ class GoogleRepository {
         errorScenario: (String) -> Unit
     ) {
         val initialLocationString = initialLocation.latitude.toString() + "," + initialLocation.longitude.toString()
-        val destinationLocationString = destinationLocation.latitude.toString() + "," + destinationLocation.longitude.toString()
+        val destinationLocationString =
+            destinationLocation.latitude.toString() + "," + destinationLocation.longitude.toString()
 
-        val call = googleWebService.getDirections(initialLocationString, destinationLocationString, modeOfTransport, googleMapsKey)
+        val call = googleWebService.getDirections(
+            initialLocationString,
+            destinationLocationString,
+            modeOfTransport,
+            googleMapsKey
+        )
         call.enqueue(object : Callback<DirectionsResponse> {
             override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
                 errorScenario(t.message.toString())
@@ -67,9 +72,13 @@ class GoogleRepository {
             override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
                 if (response.isSuccessful && response.code() == 200) {
                     val directionsResponse = response.body()!!
-                    val encoded_points = directionsResponse.routes.get(0).overview_polyline.points
-
-                    success()
+                    if (directionsResponse.status == "REQUEST_DENIED") {
+                        errorScenario("Could not find the directions to the route, sorry...")
+                        return
+                    }
+                    val encodedPoints = directionsResponse.routes!!.get(0).overview_polyline.points
+                    val points = GoogleOverviewPolylineDecoder.googleOverviewPolylineDecode(encodedPoints)
+                    success(points)
                     return
                 }
                 errorScenario(response.errorBody().toString())
@@ -77,8 +86,4 @@ class GoogleRepository {
         })
     }
 
-
-    private fun decodeOverviewPolyline(encoded_points: String) {
-
-    }
 }

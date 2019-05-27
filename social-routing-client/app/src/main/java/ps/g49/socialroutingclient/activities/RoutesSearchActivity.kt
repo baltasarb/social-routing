@@ -61,5 +61,4 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         }
     }
 
-    private fun getSocialRoutingApplication() = this@RoutesSearchActivity.application as SocialRoutingApplication
 }
