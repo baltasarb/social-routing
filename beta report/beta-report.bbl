@@ -16,5 +16,372 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global}
+    \entry{applicationjson}{online}{}
+      \field{sortinit}{a}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{application/json documentation.}
+      \verb{urlraw}
+      \verb https://tools.ietf.org/html/rfc4627
+      \endverb
+      \verb{url}
+      \verb https://tools.ietf.org/html/rfc4627
+      \endverb
+    \endentry
+    \entry{clientapplicationdocs}{online}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labeltitlesource}{title}
+      \field{title}{Client Application Documentation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/Client-Application
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/Client-Application
+      \endverb
+      \keyw{client}
+    \endentry
+    \entry{contenttype}{online}{}
+      \field{sortinit}{C}
+      \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
+      \field{labeltitlesource}{title}
+      \field{title}{Content Type documentation.}
+      \verb{urlraw}
+      \verb https://tools.ietf.org/html/rfc7231#section-3.2
+      \endverb
+      \verb{url}
+      \verb https://tools.ietf.org/html/rfc7231#section-3.2
+      \endverb
+    \endentry
+    \entry{dbmsdefinition}{online}{}
+      \field{sortinit}{D}
+      \field{sortinithash}{2ef1bd9a78cc71eb74d7231c635177b8}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{DBMS definition}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Database#Database_management_system
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Database#Database_management_system
+      \endverb
+    \endentry
+    \entry{httponlinedocs}{online}{}
+      \name{author}{13}{}{%
+        {{hash=a6155135a306bddfc30cc4f52d1924e6}{%
+           family={Fielding},
+           familyi={F\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+        {{hash=7f652fb9af82c18af36f0683b2d1bacd}{%
+           family={Irvine},
+           familyi={I\bibinitperiod},
+           given={UC},
+           giveni={U\bibinitperiod}}}%
+        {{hash=4991b9e5bfacbd86d4f778b16c57f9fa}{%
+           family={Gettys},
+           familyi={G\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=678f2bf9948e77716864ffb3316b8959}{%
+           family={Mogul},
+           familyi={M\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod}}}%
+        {{hash=589e046404563c624f1ef2c1b0536946}{%
+           family={Compaq/W3C},
+           familyi={C\bibinitperiod}}}%
+        {{hash=b5c17667af68a58038b624101ab91e1f}{%
+           family={Frystyk},
+           familyi={F\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=5253bee936128c6254554f27646f50aa}{%
+           family={W3C/MIT},
+           familyi={W\bibinitperiod}}}%
+        {{hash=6c0c9e27a4c2f882efbbe395bd186936}{%
+           family={Masinter},
+           familyi={M\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod}}}%
+        {{hash=ea30ac4e7fab386732f700380ce39137}{%
+           family={Xerox},
+           familyi={X\bibinitperiod}}}%
+        {{hash=b02d4916a516d9ce8550642ddd60faaa}{%
+           family={Leach},
+           familyi={L\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod}}}%
+        {{hash=140864078aeca1c7c35b4beb33c53c34}{%
+           family={Microsoft},
+           familyi={M\bibinitperiod}}}%
+        {{hash=89ce6361749d05e9c8f47cae979594e9}{%
+           family={Berners-Lee},
+           familyi={B\bibinithyphendelim L\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+        {{hash=5253bee936128c6254554f27646f50aa}{%
+           family={W3C/MIT},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{55d7afa00010e0ea88cf7be388134e11}
+      \strng{fullhash}{2b29a4650730019b9292ae18e458f05d}
+      \strng{bibnamehash}{55d7afa00010e0ea88cf7be388134e11}
+      \strng{authorbibnamehash}{55d7afa00010e0ea88cf7be388134e11}
+      \strng{authornamehash}{55d7afa00010e0ea88cf7be388134e11}
+      \strng{authorfullhash}{2b29a4650730019b9292ae18e458f05d}
+      \field{sortinit}{F}
+      \field{sortinithash}{669c706c6f1fbf3b5a83d26f1d9e9e72}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Hypertext Transfer Protocol -- HTTP/1.1}
+      \verb{urlraw}
+      \verb https://tools.ietf.org/html/rfc2616?spm=5176.doc32013.2.3.Aimyd7
+      \endverb
+      \verb{url}
+      \verb https://tools.ietf.org/html/rfc2616?spm=5176.doc32013.2.3.Aimyd7
+      \endverb
+      \keyw{http}
+    \endentry
+    \entry{httppostdocs}{online}{}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labeltitlesource}{title}
+      \field{title}{HTTP POST request documentation.}
+      \verb{urlraw}
+      \verb https://tools.ietf.org/html/rfc2616#section-9.5
+      \endverb
+      \verb{url}
+      \verb https://tools.ietf.org/html/rfc2616#section-9.5
+      \endverb
+    \endentry
+    \entry{jdbcdocs}{online}{}
+      \field{sortinit}{J}
+      \field{sortinithash}{fce5f8d0bd05e8d93f3dbe21c78897ca}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{JDBC driver definition}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/JDBC_driver
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/JDBC_driver
+      \endverb
+    \endentry
+    \entry{jdbidocs}{online}{}
+      \field{sortinit}{J}
+      \field{sortinithash}{fce5f8d0bd05e8d93f3dbe21c78897ca}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{JDBI Documentation}
+      \verb{urlraw}
+      \verb http://jdbi.org/
+      \endverb
+      \verb{url}
+      \verb http://jdbi.org/
+      \endverb
+    \endentry
+    \entry{jsonwebsite}{online}{}
+      \field{sortinit}{J}
+      \field{sortinithash}{fce5f8d0bd05e8d93f3dbe21c78897ca}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{Json Documentation}
+      \verb{urlraw}
+      \verb https://www.json.org
+      \endverb
+      \verb{url}
+      \verb https://www.json.org
+      \endverb
+    \endentry
+    \entry{postgresqljson}{online}{}
+      \field{sortinit}{J}
+      \field{sortinithash}{fce5f8d0bd05e8d93f3dbe21c78897ca}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{JSON PostgreSQL Documentation}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/docs/9.3/functions-json.html
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/docs/9.3/functions-json.html
+      \endverb
+    \endentry
+    \entry{log4j}{online}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labeltitlesource}{title}
+      \field{title}{Log4J documentation.}
+      \verb{urlraw}
+      \verb https://logging.apache.org/log4j/2.x/
+      \endverb
+      \verb{url}
+      \verb https://logging.apache.org/log4j/2.x/
+      \endverb
+    \endentry
+    \entry{jsonproblemonlinedocs}{online}{}
+      \name{author}{3}{}{%
+        {{hash=55ac868e62f6d4ea8f9f143c4c584739}{%
+           family={Nottingham},
+           familyi={N\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=1ab76f9caa3a625a6ebaed2e41c3ea9b}{%
+           family={Akamai},
+           familyi={A\bibinitperiod}}}%
+        {{hash=7df114961180efa3bda0efa1ee39a1a2}{%
+           family={Wilde},
+           familyi={W\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{b24ead24c74e05418c156202eb6a640f}
+      \strng{fullhash}{b24ead24c74e05418c156202eb6a640f}
+      \strng{bibnamehash}{b24ead24c74e05418c156202eb6a640f}
+      \strng{authorbibnamehash}{b24ead24c74e05418c156202eb6a640f}
+      \strng{authornamehash}{b24ead24c74e05418c156202eb6a640f}
+      \strng{authorfullhash}{b24ead24c74e05418c156202eb6a640f}
+      \field{sortinit}{N}
+      \field{sortinithash}{f7242c3ed3dc50029fca1be76c497c7c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{Json+problem Documentation}
+      \verb{urlraw}
+      \verb https://tools.ietf.org/html/rfc7807
+      \endverb
+      \verb{url}
+      \verb https://tools.ietf.org/html/rfc7807
+      \endverb
+    \endentry
+    \entry{postgresql}{online}{}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{PostgreSQL Documentation}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/files/documentation/pdf/11/postgresql-11-A4.pdf
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/files/documentation/pdf/11/postgresql-11-A4.pdf
+      \endverb
+    \endentry
+    \entry{apihttpverbsdocs}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{Social Routing API - HTTP Verbs Documentation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#http-verbs
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#http-verbs
+      \endverb
+    \endentry
+    \entry{apidocs}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{Social Routing API Documentation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API
+      \endverb
+    \endentry
+    \entry{apipostdocs}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Social Routing API POST documentation.}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#post-example
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#post-example
+      \endverb
+    \endentry
+    \entry{apiputdocs}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Social Routing API PUT documentation.}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#put-example
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#put-example
+      \endverb
+    \endentry
+    \entry{schemadocs}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Social Routing API Schema Documentation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#schema
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#schema
+      \endverb
+    \endentry
+    \entry{servicedbms}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Social Routing Service's DBMS documentation.}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/wiki/database-management-system
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/wiki/database-management-system
+      \endverb
+    \endentry
+    \entry{springexception}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Spring Exception handling documentation.}
+      \verb{urlraw}
+      \verb https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/ResponseEntityExceptionHandler.html
+      \endverb
+      \verb{url}
+      \verb https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/mvc/method/annotation/ResponseEntityExceptionHandler.html
+      \endverb
+    \endentry
+    \entry{springinterceptor}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Spring interceptor documentation.}
+      \verb{urlraw}
+      \verb https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/HandlerInterceptor.html
+      \endverb
+      \verb{url}
+      \verb https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/servlet/HandlerInterceptor.html
+      \endverb
+    \endentry
+    \entry{springwebsite}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Spring MVC Documentation}
+      \verb{urlraw}
+      \verb https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html
+      \endverb
+      \verb{url}
+      \verb https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html
+      \endverb
+      \keyw{spring,mvc}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 

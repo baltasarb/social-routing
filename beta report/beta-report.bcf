@@ -1995,6 +1995,28 @@
     <bcf:datasource type="file" datatype="bibtex">references.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
+    <bcf:citekey order="1">clientapplicationdocs</bcf:citekey>
+    <bcf:citekey order="2">httponlinedocs</bcf:citekey>
+    <bcf:citekey order="3">apidocs</bcf:citekey>
+    <bcf:citekey order="4">jsonwebsite</bcf:citekey>
+    <bcf:citekey order="5">schemadocs</bcf:citekey>
+    <bcf:citekey order="6">httppostdocs</bcf:citekey>
+    <bcf:citekey order="7">log4j</bcf:citekey>
+    <bcf:citekey order="8">apihttpverbsdocs</bcf:citekey>
+    <bcf:citekey order="9">contenttype</bcf:citekey>
+    <bcf:citekey order="10">applicationjson</bcf:citekey>
+    <bcf:citekey order="11">apipostdocs</bcf:citekey>
+    <bcf:citekey order="12">apiputdocs</bcf:citekey>
+    <bcf:citekey order="13">jsonproblemonlinedocs</bcf:citekey>
+    <bcf:citekey order="14">springwebsite</bcf:citekey>
+    <bcf:citekey order="15">jdbidocs</bcf:citekey>
+    <bcf:citekey order="16">jdbcdocs</bcf:citekey>
+    <bcf:citekey order="17">springinterceptor</bcf:citekey>
+    <bcf:citekey order="18">springexception</bcf:citekey>
+    <bcf:citekey order="19">dbmsdefinition</bcf:citekey>
+    <bcf:citekey order="20">postgresql</bcf:citekey>
+    <bcf:citekey order="21">postgresqljson</bcf:citekey>
+    <bcf:citekey order="22">servicedbms</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

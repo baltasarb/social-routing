@@ -1,9 +1,15 @@
-[1] Config.pm:304> INFO - This is Biber 2.12
-[1] Config.pm:307> INFO - Logfile is 'beta-report.blg'
-[122] biber-MSWIN32:315> INFO - === 
-[168] Biber.pm:371> INFO - Reading 'beta-report.bcf'
-[359] Biber.pm:889> INFO - Found 0 citekeys in bib section 0
-[368] Utils.pm:193> WARN - The file 'beta-report.bcf' does not contain any citations!
-[382] bbl.pm:636> INFO - Writing 'beta-report.bbl' with encoding 'UTF-8'
-[382] bbl.pm:739> INFO - Output to beta-report.bbl
-[388] Biber.pm:110> INFO - WARNINGS: 1
+[0] Config.pm:304> INFO - This is Biber 2.12
+[0] Config.pm:307> INFO - Logfile is 'beta-report.blg'
+[43] biber-MSWIN32:315> INFO - === 
+[87] Biber.pm:371> INFO - Reading 'beta-report.bcf'
+[220] Biber.pm:889> INFO - Found 22 citekeys in bib section 0
+[240] Biber.pm:4093> INFO - Processing section 0
+[261] Biber.pm:4254> INFO - Looking for bibtex format file 'references.bib' for section 0
+[266] bibtex.pm:1523> INFO - LaTeX decoding ...
+[295] bibtex.pm:1340> INFO - Found BibTeX data source 'references.bib'
+[375] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[375] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[375] Biber.pm:3921> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[375] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[402] bbl.pm:636> INFO - Writing 'beta-report.bbl' with encoding 'UTF-8'
+[409] bbl.pm:739> INFO - Output to beta-report.bbl

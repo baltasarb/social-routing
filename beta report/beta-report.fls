@@ -4,10 +4,28 @@ INPUT c:/texlive/2018/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.tex
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.log
-INPUT c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
-INPUT c:/texlive/2018/texmf-dist/tex/latex/base/article.cls
-INPUT c:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
-INPUT c:/texlive/2018/texmf-dist/tex/latex/base/size10.clo
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrreprt.cls
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrreprt.cls
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrkbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrkbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrlfile.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrlfile.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/tocbasic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/tocbasic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
+INPUT c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/typearea.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/typearea.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/blindtext/blindtext.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/blindtext/blindtext.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
@@ -24,8 +42,6 @@ INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
-INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
 INPUT c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
@@ -141,41 +157,44 @@ INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
-OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bookmark.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bookmark.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bcf
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl
-INPUT c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmss10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
+INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
-INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/introduction.tex
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/introduction.tex
-INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/system-architecture.tex
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/system-architecture.tex
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/system-structure.PNG
@@ -190,14 +209,16 @@ INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/service-structure.PNG
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex
 INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex
-INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
 INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
@@ -208,8 +229,7 @@ INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
-INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb
-INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb

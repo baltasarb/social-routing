@@ -1,13 +1,13 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Introduction}{3}{section.1}% 
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}System Architecture}{4}{section.2}% 
+\contentsline {chapter}{\numberline {2}System Architecture}{4}{chapter.2}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3}Social Routing Client Application}{5}{section.3}% 
+\contentsline {section}{\numberline {2.1}Social Routing Client Application}{5}{section.2.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Social Routing Service}{6}{section.4}% 
+\contentsline {chapter}{\numberline {3}Social Routing Service}{6}{chapter.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5}Tests}{14}{section.5}% 
+\contentsline {chapter}{\numberline {4}Tests}{15}{chapter.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6}Conclusion}{15}{section.6}% 
+\contentsline {chapter}{\numberline {5}Conclusion}{16}{chapter.5}% 
