@@ -19,6 +19,54 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global}
+    \entry{activities}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Activity documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/guide/components/activities.html
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/guide/components/activities.html
+      \endverb
+    \endentry
+    \entry{fragments}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Fragment documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/guide/components/fragments
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/guide/components/fragments
+      \endverb
+    \endentry
+    \entry{livedata}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Live Data documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/topic/libraries/architecture/livedata
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/topic/libraries/architecture/livedata
+      \endverb
+    \endentry
+    \entry{viewmodel}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android View Model documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/topic/libraries/architecture/viewmodel
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/topic/libraries/architecture/viewmodel
+      \endverb
+    \endentry
     \entry{applicationjson}{online}{}
       \field{sortinit}{a}
       \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
@@ -146,6 +194,30 @@
       \endverb
       \keyw{http}
     \endentry
+    \entry{googlemaps}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Maps documentation.}
+      \verb{urlraw}
+      \verb https://developers.google.com/maps/documentation/
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/maps/documentation/
+      \endverb
+    \endentry
+    \entry{googlesignindocs}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Sign-In API Documentation}
+      \verb{urlraw}
+      \verb https://developers.google.com/identity/sign-in/web/sign-in
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/identity/sign-in/web/sign-in
+      \endverb
+    \endentry
     \entry{httppostdocs}{online}{}
       \field{sortinit}{H}
       \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
@@ -156,6 +228,18 @@
       \endverb
       \verb{url}
       \verb https://tools.ietf.org/html/rfc2616#section-9.5
+      \endverb
+    \endentry
+    \entry{jackson}{online}{}
+      \field{sortinit}{J}
+      \field{sortinithash}{fce5f8d0bd05e8d93f3dbe21c78897ca}
+      \field{labeltitlesource}{title}
+      \field{title}{Jackson documentation.}
+      \verb{urlraw}
+      \verb https://github.com/FasterXML/jackson
+      \endverb
+      \verb{url}
+      \verb https://github.com/FasterXML/jackson
       \endverb
     \endentry
     \entry{jdbcdocs}{online}{}
@@ -269,6 +353,20 @@
       \verb{url}
       \verb https://www.postgresql.org/files/documentation/pdf/11/postgresql-11-A4.pdf
       \endverb
+    \endentry
+    \entry{retrofit}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{Retrofit Documentation}
+      \verb{urlraw}
+      \verb http://square.github.io/retrofit/
+      \endverb
+      \verb{url}
+      \verb http://square.github.io/retrofit/
+      \endverb
+      \keyw{retrofit}
     \endentry
     \entry{apihttpverbsdocs}{online}{}
       \field{sortinit}{S}

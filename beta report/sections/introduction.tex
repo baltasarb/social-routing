@@ -1,10 +1,34 @@
 \chapter{Introduction}
-contexto do pronlema
-propor resolucao
-estrutura do doc
 
-\subsection*{Background}
-talvez dentro da introducao
+    The project is a system that provides the ability to define and share touristic pedestrian routes. It allows
+    area exploration by utilizing user made routes as virtual tour guides to other users. 
+    Essentially a user of the Social Routing Application is be able to:
+    \begin{itemize}
+        \item Create any Route that is possible to represent on a map.
+        \item Search user made routes and see them drawn on a map.
+        \item Perform any chosen Route while being tracked by location in a live fashion.
+        \item View his own or other user's profile.
+        \item Rate routes based on his experience when undergoing such route.
+    \end{itemize}
 
-trabalho relacionado, sistemas ou aplicações similares
-características dos dados
+    \section*{Use case}
+        In the context of the application, a route is a path from point A to point B, that goes through user selected sub paths
+        that might either have relevance or simply provide the fastest way to the next point of interest of that route. 
+
+        An example of events when using the application might be:
+
+        A user at his hotel decides he wants to go sightseeing for an hour and check the surrounding area by foot.
+        \begin{itemize}  
+            \item The user starts the application and searches for a route specifying either his location or a desired one.
+            \item The search parameter Cultural is chosen as a route category.
+            \item The application suggests the first five routes available that match the user parameters. 
+            \item The user selects one of the suggested routes and is shown the route on a map.
+            \item The user chooses to begin the route and receives directions in real time on a map that he has to follow to undergo such route until it is done.
+            \item The user finishes the route and evaluates it. 
+        \end{itemize}
+        
+    \noindent
+    This document describes the project's decisions and reasons behind them. It starts with
+    the description of the global system architecture where a general system view is described.
+    After that each component of the system is explained in greater detail. 
+    It finalizes with tests made to the system and the conclusion.

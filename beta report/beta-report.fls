@@ -1,238 +1,242 @@
-PWD c:/Users/Bernardo/Documents/P.S/social-routing/beta report
-INPUT e:/texlive/2018/texmf.cnf
-INPUT e:/texlive/2018/texmf-dist/web2c/texmf.cnf
-INPUT e:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.tex
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.log
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrreprt.cls
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrreprt.cls
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrkbase.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrkbase.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrbase.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrbase.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrlfile.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrlfile.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/tocbasic.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/tocbasic.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
-INPUT e:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/typearea.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/koma-script/typearea.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/blindtext/blindtext.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/blindtext/blindtext.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/tools/calc.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/tools/calc.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/atbegshi.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/atbegshi.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/pdfpages/pppdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/pdfpages/pppdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/float/float.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/float/float.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-INPUT e:/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/url/url.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/url/url.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-INPUT e:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.aux
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.aux
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.aux
-INPUT e:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-INPUT e:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/pdflscape.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/pdflscape.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/lscape.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/graphics/lscape.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-INPUT e:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.pdf
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/bookmark.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/bookmark.sty
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
-INPUT e:/texlive/2018/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.bcf
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.bbl
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.bbl
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.bbl
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmss10.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
-INPUT e:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.toc
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.toc
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.toc
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/introduction.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/introduction.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/system-architecture.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/system-architecture.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/system-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/system-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/system-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/social-routing-client.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/social-routing-client.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/social-routing-client-application-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/social-routing-client-application-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/social-routing-client-application-structure.PNG
-INPUT e:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
-INPUT e:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/social-routing-service.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/social-routing-service.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/service-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/service-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/service-structure.PNG
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/dbms-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/dbms-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/images/project-structure/dbms-structure.PNG
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/tests.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/tests.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/conclusion.tex
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/sections/conclusion.tex
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT e:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.aux
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.out
-INPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.run.xml
-OUTPUT c:/Users/Bernardo/Documents/P.S/social-routing/beta report/beta-report.run.xml
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
-INPUT e:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
+PWD c:/Users/user/Documents/isel/ps/social-routing/beta report
+INPUT c:/texlive/2018/texmf.cnf
+INPUT c:/texlive/2018/texmf-dist/web2c/texmf.cnf
+INPUT c:/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.tex
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.log
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrreprt.cls
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrreprt.cls
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrkbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrkbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrbase.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/keyval.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrlfile.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrlfile.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/tocbasic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/tocbasic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/scrsize11pt.clo
+INPUT c:/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/typearea.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/koma-script/typearea.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/blindtext/blindtext.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/blindtext/blindtext.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/tools/xspace.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/tools/calc.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/tools/calc.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/atbegshi.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/xcolor/xcolor.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/graphicx.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/graphics.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/trig.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pppdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/pdfpages/pppdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/float/float.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/float/float.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+INPUT c:/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/trimclip.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/collectbox/collectbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/adjustbox/tc-pdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/varwidth/varwidth.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/url/url.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/url/url.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-compat.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+INPUT c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux
+INPUT c:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+INPUT c:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/pdflscape.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/pdflscape.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/lscape.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/graphics/lscape.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+INPUT c:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bookmark.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bookmark.sty
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
+INPUT c:/texlive/2018/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bcf
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmss10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmssbx10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/./images/logo_ISEL_principal_Preto_RGB_300ppi.jpg
+INPUT ./images/logo_ISEL_principal_Preto_RGB_300ppi.jpg
+INPUT ./images/logo_ISEL_principal_Preto_RGB_300ppi.jpg
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
+INPUT c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/introduction.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/introduction.tex
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+INPUT c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/system-architecture.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/system-architecture.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/system-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/system-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/system-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/social-routing-client.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/social-routing-client.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/social-routing-client-application-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/social-routing-client-application-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/social-routing-client-application-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/social-routing-service.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/social-routing-service.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/service-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/service-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/service-structure.PNG
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi8.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmmi6.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT c:/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out
+INPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.run.xml
+OUTPUT c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.run.xml
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb
+INPUT c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb

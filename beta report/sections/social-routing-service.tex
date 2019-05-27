@@ -14,7 +14,7 @@ This logic is represented in the figure \ref{fig:socialroutingservice}.
 
     \subsection*{Schema}
         The Social Routing API uses the HTTP protocol as a medium to 
-        communicate and all the data sent or received must be in the JSON \cite{jsonwebsite} format.
+        communicate and all the data sent or received must be in the JSON format.
         The base endpoint of the API is : http://api.sr.\par
         Data obtained from the API is either a single resource or a collection of resources. For example, a request
         made to retrieve a route will have as a response a single resource which will contain the representation of that
@@ -26,7 +26,6 @@ This logic is represented in the figure \ref{fig:socialroutingservice}.
         With this idea in mind the resource representations were divided into two types, a detailed representation for when a user
         requests a single resource and summary representation for each element inside a requested collection, containing only the 
         information about that element that is necessary.
-
         Examples of both a detailed and summary representation can be found in the Schema Documentation \cite{schemadocs}.    
     
         \newpage
@@ -55,6 +54,7 @@ This logic is represented in the figure \ref{fig:socialroutingservice}.
     compared to the hashed version on the database, if no token with that hash is present then the authentication fails 
     and the user receives an error response.
 
+    \newpage
     \subsection*{Supported HTTP Methods}
         Due to the nature of the HTTP protocol, the API supports four different HTTP request methods \cite{apihttpverbsdocs}: GET, POST, PUT and DELETE.
         
@@ -75,7 +75,7 @@ This logic is represented in the figure \ref{fig:socialroutingservice}.
         \end{lstlisting}
 
         \subsubsection*{POST}
-        The POST HTTP method is used to create resources. It requires that the Content-Type\cite{contenttype} HTTP header is 
+        The POST HTTP method is used to create resources. It requires that the Content-Type\cite{contenttype}HTTP header is 
         defined and with the value application/json\cite{applicationjson}. An example of a post request can be found in the 
         API POST\cite{apipostdocs} documentation. A response to a POST request has an empty body and returns the 
         location of the created resource in it's Location header. If successful the status code of a POST request response is 201.  

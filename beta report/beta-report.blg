@@ -1,15 +1,15 @@
 [0] Config.pm:304> INFO - This is Biber 2.12
 [0] Config.pm:307> INFO - Logfile is 'beta-report.blg'
-[30] biber-MSWIN32:315> INFO - === 
-[60] Biber.pm:371> INFO - Reading 'beta-report.bcf'
-[154] Biber.pm:889> INFO - Found 22 citekeys in bib section 0
-[168] Biber.pm:4093> INFO - Processing section 0
-[183] Biber.pm:4254> INFO - Looking for bibtex format file 'references.bib' for section 0
-[186] bibtex.pm:1523> INFO - LaTeX decoding ...
-[203] bibtex.pm:1340> INFO - Found BibTeX data source 'references.bib'
-[267] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[267] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[267] Biber.pm:3921> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
-[267] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
-[286] bbl.pm:636> INFO - Writing 'beta-report.bbl' with encoding 'UTF-8'
-[290] bbl.pm:739> INFO - Output to beta-report.bbl
+[58] biber-MSWIN32:315> INFO - === 
+[149] Biber.pm:371> INFO - Reading 'beta-report.bcf'
+[279] Biber.pm:889> INFO - Found 30 citekeys in bib section 0
+[299] Biber.pm:4093> INFO - Processing section 0
+[331] Biber.pm:4254> INFO - Looking for bibtex format file 'references.bib' for section 0
+[343] bibtex.pm:1523> INFO - LaTeX decoding ...
+[372] bibtex.pm:1340> INFO - Found BibTeX data source 'references.bib'
+[467] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[467] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[468] Biber.pm:3921> INFO - Sorting list 'nty/global//global/global' of type 'entry' with template 'nty' and locale 'en-US'
+[468] Biber.pm:3927> INFO - No sort tailoring available for locale 'en-US'
+[530] bbl.pm:636> INFO - Writing 'beta-report.bbl' with encoding 'UTF-8'
+[537] bbl.pm:739> INFO - Output to beta-report.bbl
