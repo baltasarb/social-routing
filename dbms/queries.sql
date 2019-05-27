@@ -30,7 +30,6 @@ VALUES (
 -- SELECT WITH PAGINATION
 SELECT *,Count(*) OVER() AS full_count FROM Route WHERE Location = 'Lisbon' ORDER BY Rating DESC LIMIT 5 OFFSET 0;
 
-
 SELECT * FROM ROUTE JOIN RouteCategory ON RouteCategory.RouteIdentifier = Route.Identifier
 	
 SELECT Route.Identifier, 
@@ -40,10 +39,23 @@ SELECT Route.Identifier,
 	WHERE Route.Identifier= 5
 	GROUP BY Route.Identifier
 
-
+INSERT INTO Person (sub)
+VALUES
+ (
+ 'Microsoft',
+ 'hotline@microsoft.com'
+ ) 
+ON CONFLICT ON CONSTRAINT customers_name_key 
+DO NOTHING;
+	
+	
+SELECT PersonIdentifier, HashedToken
+FROM GoogleAuthentication
+WHERE Subject = ''
 
 SELECT * FROM Person;
-SELECT * FROM Route ORDER By Rating DESC LIMIT 6 OFFSET 0;
+SELECT * FROM Authentication;
+SELECT * FROM Route;
 SELECT * FROM Category;
 SELECT * FROM RouteCategory;
 

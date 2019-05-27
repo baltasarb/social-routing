@@ -23,8 +23,6 @@ class RequestBuilder {
 
         fun buildPersonDto(personInput: PersonInput, id: Int? = null): PersonRequest = PersonRequest(
                 identifier = id,
-                name = personInput.name,
-                email = personInput.email,
                 rating = personInput.rating
         )
 

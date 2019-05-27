@@ -12,8 +12,6 @@ class PersonOutputMapper : OutputMapper<Person, PersonOutput> {
         val id = from.identifier!!
         return PersonOutput(
                 identifier = id,
-                name = from.name,
-                email = from.email,
                 rating = from.rating!!,
                 routesUrl = OutputUtils.personRoutesUrl(id)
         )

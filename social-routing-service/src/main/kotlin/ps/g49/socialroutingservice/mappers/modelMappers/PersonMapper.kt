@@ -10,15 +10,11 @@ class PersonMapper : ModelMapper<PersonRequest, Person> {
 
     override fun map(from: PersonRequest): Person = Person(
             identifier = from.identifier,
-            name = from.name,
-            email = from.email,
             rating = from.rating
     )
 
     override fun mapFromResultSet(rs: ResultSet): Person = Person(
             identifier = rs.getInt("Identifier"),
-            name = rs.getString("Name"),
-            email = rs.getString("Email"),
             rating = rs.getDouble("Rating")
     )
 

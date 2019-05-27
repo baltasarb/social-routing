@@ -19,3 +19,9 @@ class UnsupportedMediaTypeException : Exception()
  * thrown when an SQL insert fails
  */
 class InsertException : Exception()
+
+class GoogleAuthenticationException : Exception()
+
+class AuthorizationHeaderException : Exception()
+
+class AuthorizationException() : Exception()

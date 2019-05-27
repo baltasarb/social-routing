@@ -1,9 +1,12 @@
 -- tables being inserted with ids for testing
+INSERT INTO Person (Identifier, Rating) 
+VALUES('100', 1.0),
+	  ('200', 2.0);
 
-INSERT INTO Person (Identifier, Name, Email) 
-VALUES('100', 'Baltasar', 'baltasar@gmail.com'),
-	  ('200', 'Bernardo', 'bernardo@gmail.com');
-
+INSERT INTO GoogleAuthentication(PersonIdentifier, HashedToken, Subject)
+VALUES('100', 'token1', 'subject1'),
+	  ('200', 'token2', 'subject2')
+		
 --INSERT INTO Route (Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier)
 --VALUES ('100', 'Lisbon', 'Route 1', 'Description 1', 0, 10, now(), '[]', 100),
 --	   ('200', 'Lisbon', 'Route 2', 'Description 2', 2.5, 20, now(), '[]', 200),
@@ -15,17 +18,15 @@ INSERT INTO Category (Name) VALUES ('Sports');
 INSERT INTO Category (Name) VALUES ('Nature');
 INSERT INTO Category (Name) VALUES ('Other');
 
-
-INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sea', 1);
-INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sports', 2);
-INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Nature', 1);
---INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Nature', 200);
---INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sports', 200);
+--INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sea', 2);
+--INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sports', 2);
+--INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Nature', 1);
 
 SELECT * FROM Category;
 SELECT * FROM RouteCategory;
 SELECT * FROM Person;
 SELECT * FROM Route;
+SELECT * FROM GoogleAuthentication;
 
 SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, RouteCategory.CategoryName 
 FROM Route 

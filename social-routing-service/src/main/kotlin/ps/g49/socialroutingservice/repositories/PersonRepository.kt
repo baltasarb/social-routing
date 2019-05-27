@@ -13,4 +13,5 @@ interface PersonRepository {
 
     fun update(connectionHandle: Handle, person: Person)
 
+    fun findBySub(sub : String) : Person?
 }

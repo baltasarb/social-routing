@@ -1,9 +1,18 @@
 CREATE TABLE Person(
 	Identifier serial PRIMARY KEY,
-	Name text NOT NULL,
-	Email text UNIQUE NOT NULL,
 	Rating real DEFAULT 0.0 NOT NULL
 );
+
+CREATE TABLE GoogleAuthentication(
+	HashedToken text NOT NULL,
+	Subject text PRIMARY KEY, 
+	PersonIdentifier integer REFERENCES Person(Identifier)
+);
+
+SELECT 1 as Result FROM GoogleAuthentication WHERE HashedToken = 'token1' AND Subject = 'subject1';
+SELECT 1 FROM GoogleAuthentication WHERE HashedToken = 'token1' AND Subject = 'subject5';
+
+SELECT * From GoogleAuthentication
 
 CREATE TABLE Route(
 	Identifier serial PRIMARY KEY,

@@ -16,8 +16,6 @@ class PersonRepositoryImplementation(
 
     override fun create(connectionHandle: Handle, person: Person): Int {
         return connectionHandle.createUpdate(PersonQueries.INSERT)
-                .bind("name", person.name)
-                .bind("email", person.email)
                 .executeAndReturnGeneratedKeys("identifier")
                 .mapTo(Int::class.java)
                 .findOnly()
@@ -33,11 +31,12 @@ class PersonRepositoryImplementation(
 
     override fun update(connectionHandle: Handle, person: Person) {
         connectionHandle.createUpdate(PersonQueries.UPDATE)
-                .bind("name", person.name)
-                .bind("email", person.email)
                 .bind("rating", person.rating)
                 .bind("identifier", person.identifier)
                 .execute()
     }
 
+    override fun findBySub(sub : String): Person? {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }
