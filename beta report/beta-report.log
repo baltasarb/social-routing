@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  22 MAY 2019 11:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  27 MAY 2019 15:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -243,58 +243,80 @@ Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 282.
 )
 \Hy@SectionHShift=\skip46
-) (c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
+) (c:/texlive/2018/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count106
+\lst@gtempboxa=\box33
+\lst@token=\toks21
+\lst@length=\count107
+\lst@currlwidth=\dimen127
+\lst@column=\count108
+\lst@pos=\count109
+\lst@lostspace=\dimen128
+\lst@width=\dimen129
+\lst@newlines=\count110
+\lst@lineno=\count111
+\lst@maxwidth=\dimen130
+ (c:/texlive/2018/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2018/09/02 1.7 (Carsten Heinz)
+\c@lstnumber=\count112
+\lst@skipnumbers=\count113
+\lst@framebox=\box34
+) (c:/texlive/2018/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2018/09/02 1.7 listings configuration
+))
+Package: listings 2018/09/02 1.7 (Carsten Heinz)
+ (c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.sty
 Package: biblatex 2018/11/02 v3.12 programmable bibliographies (PK/MW)
  (c:/texlive/2018/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2018/08/19 v2.5f e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count106
+\etb@tempcnta=\count114
 ) (c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count107
+\lrq@indent=\count115
  (c:/texlive/2018/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 ))
-\c@tabx@nest=\count108
-\c@listtotal=\count109
-\c@listcount=\count110
-\c@liststart=\count111
-\c@liststop=\count112
-\c@citecount=\count113
-\c@citetotal=\count114
-\c@multicitecount=\count115
-\c@multicitetotal=\count116
-\c@instcount=\count117
-\c@maxnames=\count118
-\c@minnames=\count119
-\c@maxitems=\count120
-\c@minitems=\count121
-\c@citecounter=\count122
-\c@maxcitecounter=\count123
-\c@savedcitecounter=\count124
-\c@uniquelist=\count125
-\c@uniquename=\count126
-\c@refsection=\count127
-\c@refsegment=\count128
-\c@maxextratitle=\count129
-\c@maxextratitleyear=\count130
-\c@maxextraname=\count131
-\c@maxextradate=\count132
-\c@maxextraalpha=\count133
-\c@abbrvpenalty=\count134
-\c@highnamepenalty=\count135
-\c@lownamepenalty=\count136
-\c@maxparens=\count137
-\c@parenlevel=\count138
-\blx@tempcnta=\count139
-\blx@tempcntb=\count140
-\blx@tempcntc=\count141
-\blx@maxsection=\count142
-\blx@maxsegment@0=\count143
-\blx@notetype=\count144
-\blx@parenlevel@text=\count145
-\blx@parenlevel@foot=\count146
-\blx@sectionciteorder@0=\count147
-\blx@entrysetcounter=\count148
+\c@tabx@nest=\count116
+\c@listtotal=\count117
+\c@listcount=\count118
+\c@liststart=\count119
+\c@liststop=\count120
+\c@citecount=\count121
+\c@citetotal=\count122
+\c@multicitecount=\count123
+\c@multicitetotal=\count124
+\c@instcount=\count125
+\c@maxnames=\count126
+\c@minnames=\count127
+\c@maxitems=\count128
+\c@minitems=\count129
+\c@citecounter=\count130
+\c@maxcitecounter=\count131
+\c@savedcitecounter=\count132
+\c@uniquelist=\count133
+\c@uniquename=\count134
+\c@refsection=\count135
+\c@refsegment=\count136
+\c@maxextratitle=\count137
+\c@maxextratitleyear=\count138
+\c@maxextraname=\count139
+\c@maxextradate=\count140
+\c@maxextraalpha=\count141
+\c@abbrvpenalty=\count142
+\c@highnamepenalty=\count143
+\c@lownamepenalty=\count144
+\c@maxparens=\count145
+\c@parenlevel=\count146
+\blx@tempcnta=\count147
+\blx@tempcntb=\count148
+\blx@tempcntc=\count149
+\blx@maxsection=\count150
+\blx@maxsegment@0=\count151
+\blx@notetype=\count152
+\blx@parenlevel@text=\count153
+\blx@parenlevel@foot=\count154
+\blx@sectionciteorder@0=\count155
+\blx@entrysetcounter=\count156
 \labelnumberwidth=\skip47
 \labelalphawidth=\skip48
 \biblabelsep=\skip49
@@ -305,9 +327,9 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 \bibhang=\skip54
 \blx@bcfin=\read1
 \blx@bcfout=\write3
-\c@mincomprange=\count149
-\c@maxcomprange=\count150
-\c@mincompwidth=\count151
+\c@mincomprange=\count157
+\c@maxcomprange=\count158
+\c@mincompwidth=\count159
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
  (c:/texlive/2018/texmf-dist/tex/latex/biblatex/blx-dm.def
@@ -315,74 +337,74 @@ File: blx-dm.def 2018/11/02 v3.12 biblatex localization (PK/MW)
 )
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count152
-\c@savedafterword=\count153
-\c@annotator=\count154
-\c@savedannotator=\count155
-\c@author=\count156
-\c@savedauthor=\count157
-\c@bookauthor=\count158
-\c@savedbookauthor=\count159
-\c@commentator=\count160
-\c@savedcommentator=\count161
-\c@editor=\count162
-\c@savededitor=\count163
-\c@editora=\count164
-\c@savededitora=\count165
-\c@editorb=\count166
-\c@savededitorb=\count167
-\c@editorc=\count168
-\c@savededitorc=\count169
-\c@foreword=\count170
-\c@savedforeword=\count171
-\c@holder=\count172
-\c@savedholder=\count173
-\c@introduction=\count174
-\c@savedintroduction=\count175
-\c@namea=\count176
-\c@savednamea=\count177
-\c@nameb=\count178
-\c@savednameb=\count179
-\c@namec=\count180
-\c@savednamec=\count181
-\c@translator=\count182
-\c@savedtranslator=\count183
-\c@shortauthor=\count184
-\c@savedshortauthor=\count185
-\c@shorteditor=\count186
-\c@savedshorteditor=\count187
-\c@labelname=\count188
-\c@savedlabelname=\count189
-\c@institution=\count190
-\c@savedinstitution=\count191
-\c@lista=\count192
-\c@savedlista=\count193
-\c@listb=\count194
-\c@savedlistb=\count195
-\c@listc=\count196
-\c@savedlistc=\count197
-\c@listd=\count198
-\c@savedlistd=\count199
-\c@liste=\count266
-\c@savedliste=\count267
-\c@listf=\count268
-\c@savedlistf=\count269
-\c@location=\count270
-\c@savedlocation=\count271
-\c@organization=\count272
-\c@savedorganization=\count273
-\c@origlocation=\count274
-\c@savedoriglocation=\count275
-\c@origpublisher=\count276
-\c@savedorigpublisher=\count277
-\c@publisher=\count278
-\c@savedpublisher=\count279
-\c@language=\count280
-\c@savedlanguage=\count281
-\c@origlanguage=\count282
-\c@savedoriglanguage=\count283
-\c@pageref=\count284
-\c@savedpageref=\count285
+\c@afterword=\count160
+\c@savedafterword=\count161
+\c@annotator=\count162
+\c@savedannotator=\count163
+\c@author=\count164
+\c@savedauthor=\count165
+\c@bookauthor=\count166
+\c@savedbookauthor=\count167
+\c@commentator=\count168
+\c@savedcommentator=\count169
+\c@editor=\count170
+\c@savededitor=\count171
+\c@editora=\count172
+\c@savededitora=\count173
+\c@editorb=\count174
+\c@savededitorb=\count175
+\c@editorc=\count176
+\c@savededitorc=\count177
+\c@foreword=\count178
+\c@savedforeword=\count179
+\c@holder=\count180
+\c@savedholder=\count181
+\c@introduction=\count182
+\c@savedintroduction=\count183
+\c@namea=\count184
+\c@savednamea=\count185
+\c@nameb=\count186
+\c@savednameb=\count187
+\c@namec=\count188
+\c@savednamec=\count189
+\c@translator=\count190
+\c@savedtranslator=\count191
+\c@shortauthor=\count192
+\c@savedshortauthor=\count193
+\c@shorteditor=\count194
+\c@savedshorteditor=\count195
+\c@labelname=\count196
+\c@savedlabelname=\count197
+\c@institution=\count198
+\c@savedinstitution=\count199
+\c@lista=\count266
+\c@savedlista=\count267
+\c@listb=\count268
+\c@savedlistb=\count269
+\c@listc=\count270
+\c@savedlistc=\count271
+\c@listd=\count272
+\c@savedlistd=\count273
+\c@liste=\count274
+\c@savedliste=\count275
+\c@listf=\count276
+\c@savedlistf=\count277
+\c@location=\count278
+\c@savedlocation=\count279
+\c@organization=\count280
+\c@savedorganization=\count281
+\c@origlocation=\count282
+\c@savedoriglocation=\count283
+\c@origpublisher=\count284
+\c@savedorigpublisher=\count285
+\c@publisher=\count286
+\c@savedpublisher=\count287
+\c@language=\count288
+\c@savedlanguage=\count289
+\c@origlanguage=\count290
+\c@savedoriglanguage=\count291
+\c@pageref=\count292
+\c@savedpageref=\count293
 \shorthandwidth=\skip55
 \shortjournalwidth=\skip56
 \shortserieswidth=\skip57
@@ -406,13 +428,13 @@ Package biblatex Info: Trying to load generic definitions...
 Package biblatex Info: ... file 'biblatex.def' found.
  (c:/texlive/2018/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 2018/11/02 v3.12 biblatex compatibility (PK/MW)
-\c@textcitecount=\count286
-\c@textcitetotal=\count287
-\c@textcitemaxnames=\count288
-\c@biburlnumpenalty=\count289
-\c@biburlucpenalty=\count290
-\c@biburllcpenalty=\count291
-\c@smartand=\count292
+\c@textcitecount=\count294
+\c@textcitetotal=\count295
+\c@textcitemaxnames=\count296
+\c@biburlnumpenalty=\count297
+\c@biburlucpenalty=\count298
+\c@biburllcpenalty=\count299
+\c@smartand=\count300
 )
 Package biblatex Info: Trying to load bibliography style 'numeric'...
 Package biblatex Info: ... file 'numeric.bbx' found.
@@ -422,8 +444,8 @@ Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
  (c:/texlive/2018/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 File: standard.bbx 2018/11/02 v3.12 biblatex bibliography style (PK/MW)
-\c@bbx:relatedcount=\count293
-\c@bbx:relatedtotal=\count294
+\c@bbx:relatedcount=\count301
+\c@bbx:relatedtotal=\count302
 ))
 Package biblatex Info: Trying to load citation style 'numeric'...
 Package biblatex Info: ... file 'numeric.cbx' found.
@@ -451,39 +473,39 @@ Package biblatex Info: ... file 'english.lbx' found.
  (c:/texlive/2018/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 File: english.lbx 2018/11/02 v3.12 biblatex localization (PK/MW)
 )
-\@quotelevel=\count295
-\@quotereset=\count296
+\@quotelevel=\count303
+\@quotereset=\count304
  (c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux)
 \openout1 = `beta-report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
-LaTeX Font Info:    ... okay on input line 47.
-\AtBeginShipoutBox=\box33
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 49.
+LaTeX Font Info:    ... okay on input line 49.
+\AtBeginShipoutBox=\box35
  (c:/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count297
-\scratchdimen=\dimen127
-\scratchbox=\box34
-\nofMPsegments=\count298
-\nofMParguments=\count299
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count300
-\MPscratchDim=\dimen128
-\MPnumerator=\count301
-\makeMPintoPDFobject=\count302
-\everyMPtoPDFconversion=\toks22
+\scratchcounter=\count305
+\scratchdimen=\dimen131
+\scratchbox=\box36
+\nofMPsegments=\count306
+\nofMParguments=\count307
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count308
+\MPscratchDim=\dimen132
+\MPnumerator=\count309
+\makeMPintoPDFobject=\count310
+\everyMPtoPDFconversion=\toks23
 ) (c:/texlive/2018/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
  (c:/texlive/2018/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -502,21 +524,22 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-Package hyperref Info: Link coloring OFF on input line 47.
+Package hyperref Info: Link coloring OFF on input line 49.
  (c:/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
  (c:/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count303
+\c@section@level=\count311
 )
-LaTeX Info: Redefining \ref on input line 47.
-LaTeX Info: Redefining \pageref on input line 47.
-LaTeX Info: Redefining \nameref on input line 47.
+LaTeX Info: Redefining \ref on input line 49.
+LaTeX Info: Redefining \pageref on input line 49.
+LaTeX Info: Redefining \nameref on input line 49.
  (c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out) (c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.out)
 \@outlinefile=\write4
 \openout4 = `beta-report.out'.
 
+\c@lstlisting=\count312
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
@@ -525,56 +548,153 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'beta-report.bbl' found.
  (c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.bbl)
-Package biblatex Info: Reference section=0 on input line 47.
-Package biblatex Info: Reference segment=0 on input line 47.
+Package biblatex Info: Reference section=0 on input line 49.
+Package biblatex Info: Reference segment=0 on input line 49.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 50.
+(Font)              <12> on input line 52.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 50.
+(Font)              <8> on input line 52.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 50.
+(Font)              <6> on input line 52.
  [1
 
 {c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.toc)
 \tf@toc=\write5
 \openout5 = `beta-report.toc'.
 
- [2]
-<images/project-structure/system-structure.PNG, id=62, 813.0375pt x 499.11469pt>
+ [2] (c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/introduction.tex) [3] (c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/system-architecture.tex
+<images/project-structure/system-structure.PNG, id=57, 813.0375pt x 499.11469pt>
 File: images/project-structure/system-structure.PNG Graphic file (type png)
 <use images/project-structure/system-structure.PNG>
-Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 71.
+Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 17.
 (pdftex.def)             Requested size: 345.0pt x 211.78963pt.
- [3 <c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/system-structure.PNG>]
+) [4 <c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/system-structure.PNG>] (c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/social-routing-client.tex) [5] (c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/social-routing-service.tex
+<images/project-structure/service-structure.PNG, id=69, 510.40688pt x 143.78719pt>
+File: images/project-structure/service-structure.PNG Graphic file (type png)
+<use images/project-structure/service-structure.PNG>
+Package pdftex.def Info: images/project-structure/service-structure.PNG  used on input line 8.
+(pdftex.def)             Requested size: 345.0pt x 97.19476pt.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 36.
+ (c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
+ [6 <c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/service-structure.PNG>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 43.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 43.
+ [7]
+Underfull \hbox (badness 10000) in paragraph at lines 107--108
 
-LaTeX Warning: Empty bibliography on input line 96.
+ []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 98.
-[4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 98.
- (c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 98.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 98.
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
+
+ []
+
+[9]
+Overfull \hbox (69.00421pt too wide) in paragraph at lines 200--201
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (15.00366pt too wide) in paragraph at lines 202--203
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (201.00555pt too wide) in paragraph at lines 203--204
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (297.00653pt too wide) in paragraph at lines 204--205
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 215--219
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 220--223
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 224--225
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 226--229
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 230--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 233--236
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 237--239
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 240--243
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 244--249
+
+ []
+
+[12]
+<images/project-structure/dbms-structure.PNG, id=211, 444.15938pt x 347.04657pt>
+File: images/project-structure/dbms-structure.PNG Graphic file (type png)
+<use images/project-structure/dbms-structure.PNG>
+Package pdftex.def Info: images/project-structure/dbms-structure.PNG  used on input line 273.
+(pdftex.def)             Requested size: 345.0pt x 269.56729pt.
+) [13 <c:/Users/user/Documents/isel/ps/social-routing/beta report/images/project-structure/dbms-structure.PNG>] (c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/tests.tex) [14] (c:/Users/user/Documents/isel/ps/social-routing/beta report/sections/conclusion.tex) [15]
+
+LaTeX Warning: Empty bibliography on input line 77.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 79.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 79.
+(c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 79.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 79.
 Package rerunfilecheck Info: File `beta-report.out' has not changed.
-(rerunfilecheck)             Checksum: 07FE60917DAD5F14BDE37804869F7227;381.
+(rerunfilecheck)             Checksum: 2645D54D5C5FF710830ADE438A34CE73;311.
 Package logreq Info: Writing requests to 'beta-report.run.xml'.
 \openout1 = `beta-report.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 98.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 79.
  ) 
 Here is how much of TeX's memory you used:
- 13675 strings out of 492616
- 230499 string characters out of 6132768
- 687059 words of memory out of 5000000
- 17422 multiletter control sequences out of 15000+600000
- 9743 words of font info for 34 fonts, out of 8000000 for 9000
+ 15425 strings out of 492616
+ 254757 string characters out of 6132768
+ 720556 words of memory out of 5000000
+ 19016 multiletter control sequences out of 15000+600000
+ 10089 words of font info for 35 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,9n,46p,1008b,792s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on "c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf" (4 pages, 131606 bytes).
+ 40i,9n,46p,1008b,1738s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on "c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf" (15 pages, 216932 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 91 compressed objects within 1 object stream
- 17 named destinations out of 1000 (max. 500000)
- 70 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 292 PDF objects out of 1000 (max. 8388607)
+ 256 compressed objects within 3 object streams
+ 135 named destinations out of 1000 (max. 500000)
+ 64 words of extra memory for PDF output out of 10000 (max. 10000000)
 
