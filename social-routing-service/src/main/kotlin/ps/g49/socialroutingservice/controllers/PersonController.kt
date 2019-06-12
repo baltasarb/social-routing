@@ -41,8 +41,7 @@ class PersonController(
     @PostMapping
     fun createPerson(@RequestBody personInput: PersonInput): ResponseEntity<Void> {
         val handle = connectionManager.generateHandle()
-        val personDto = RequestBuilder.buildPersonDto(personInput)
-        val id = personService.createPerson(handle, personDto)
+        val id = personService.createPerson(handle)
         handle.close()
 
         val headers = HttpHeaders()

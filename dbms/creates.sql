@@ -3,16 +3,30 @@ CREATE TABLE Person(
 	Rating real DEFAULT 0.0 NOT NULL
 );
 
-CREATE TABLE GoogleAuthentication(
-	HashedToken text NOT NULL,
-	Subject text PRIMARY KEY, 
-	PersonIdentifier integer REFERENCES Person(Identifier)
+CREATE TABLE Authentication(
+	CreationDate bigint NOT NULL,
+	ExpirationDate bigint NOT NULL,
+	AccessToken text NOT NULL,
+	RefreshToken text NOT NULL,
+	PersonIdentifier integer REFERENCES Person(Identifier) PRIMARY KEY
 );
 
-SELECT 1 as Result FROM GoogleAuthentication WHERE HashedToken = 'token1' AND Subject = 'subject1';
-SELECT 1 FROM GoogleAuthentication WHERE HashedToken = 'token1' AND Subject = 'subject5';
+CREATE TABLE GoogleAuthentication(
+	Subject text NOT NULL UNIQUE,
+	AuthenticationPersonIdentifier integer REFERENCES Authentication(PersonIdentifier) PRIMARY KEY
+)
 
-SELECT * From GoogleAuthentication
+INSERT INTO Person (Identifier, Rating) values (100, 1.0)
+ON CONFLICT (Identifier)
+DO UPDATE
+	SET Rating = 5.0
+
+insert into GoogleAuthentication (DateCreated, ExpiresIn, AccessToken, RefreshToken, Subject, PersonIdentifier)
+values(1, 1, 'at1', 'rt1','sub1', 100),
+(2, 2, 'at2', 'rt2','sub2', 100)
+
+select * from Person
+select * from GoogleAuthentication
 
 CREATE TABLE Route(
 	Identifier serial PRIMARY KEY,

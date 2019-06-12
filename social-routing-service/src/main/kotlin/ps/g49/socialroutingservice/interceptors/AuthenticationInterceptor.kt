@@ -14,13 +14,13 @@ class AuthenticationInterceptor (
 ): HandlerInterceptorAdapter(){
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        if(request.requestURI.contains("sign-in"))
+        if(request.requestURI.contains("authentication"))
             return true
 
-        val token = request.getHeader("Authorization") ?: throw AuthorizationHeaderException()//todo error message
-        val subject = request.getHeader("Subject") ?: throw AuthorizationHeaderException()
+        //val token = request.getHeader("Authorization") ?: throw AuthorizationHeaderException()//todo error message
+        //val subject = request.getHeader("Subject") ?: throw AuthorizationHeaderException()
 
-        if(authenticationService.googleAuthenticationIsValid(token, subject))
+        //if(authenticationService.googleAuthenticationIsValid(token, subject))
             return true
 
         throw AuthorizationException()

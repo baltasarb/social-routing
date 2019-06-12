@@ -1,14 +1,14 @@
 package ps.g49.socialroutingservice.repositories
 
-import ps.g49.socialroutingservice.models.domainModel.GooglePersonInfo
+import org.jdbi.v3.core.Handle
+import ps.g49.socialroutingservice.models.AuthenticationData
 
 interface AuthenticationRepository {
 
-    fun findGooglePersonInfoAndCreateIfNotExists(
-            subject: String,
-            hashToken: (String) -> String
-    ): GooglePersonInfo
-
     fun validateServerGeneratedTokenAndSubject(hashedToken : String, subject: String) : Boolean
+
+    fun findAuthenticationDataById(connectionHandler: Handle,personIdentifier: Int): AuthenticationData?
+
+    fun createOrUpdateAuthenticationData(connectionHandler: Handle, authenticationData: AuthenticationData)
 
 }

@@ -14,7 +14,7 @@ class PersonRepositoryImplementation(
         private val mapper: PersonMapper
 ) : PersonRepository {
 
-    override fun create(connectionHandle: Handle, person: Person): Int {
+    override fun create(connectionHandle: Handle): Int {
         return connectionHandle.createUpdate(PersonQueries.INSERT)
                 .executeAndReturnGeneratedKeys("identifier")
                 .mapTo(Int::class.java)

@@ -160,7 +160,7 @@ are several ways to handle exceptions, but the choice to make is to either handl
 handler implementation groups all the exceptions thrown by the system in a single class and produces their respective error 
 messages. It allows for an easier work flow when treating exceptions. The global handling was chosen because most of the 
 exceptions happen in more than one endpoint and would produce a lot of repeated code if handled locally.      
-
+\newpage
 As an example, the flow of a correct HTTP POST request to the routes resource that arrives on the server is the following:
     \begin{itemize}
         \item The request is intercepted by the Logging Interceptor and logs the request information.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  27 MAY 2019 23:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  27 MAY 2019 23:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -815,13 +815,13 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 88.
 Here is how much of TeX's memory you used:
  18359 strings out of 492616
  315875 string characters out of 6132768
- 882225 words of memory out of 5000000
+ 883225 words of memory out of 5000000
  21942 multiletter control sequences out of 15000+600000
  11186 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,9n,66p,9151b,1308s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on "c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf" (21 pages, 452944 bytes).
+Output written on "c:/Users/user/Documents/isel/ps/social-routing/beta report/beta-report.pdf" (21 pages, 452908 bytes).
 PDF statistics:
  366 PDF objects out of 1000 (max. 8388607)
  321 compressed objects within 4 object streams

@@ -1,54 +1,19 @@
 package ps.g49.socialroutingservice.repositories.implementations
 
-import org.apache.logging.log4j.core.util.UuidUtil.*
+import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
-import ps.g49.socialroutingservice.mappers.modelMappers.GooglePersonInfoMapper
-import ps.g49.socialroutingservice.models.domainModel.GooglePersonInfo
+import ps.g49.socialroutingservice.mappers.modelMappers.AuthenticationDataMapper
+import ps.g49.socialroutingservice.models.AuthenticationData
 import ps.g49.socialroutingservice.repositories.AuthenticationRepository
+import ps.g49.socialroutingservice.utils.sqlQueries.AuthenticationQueries
 import ps.g49.socialroutingservice.utils.sqlQueries.GoogleAuthenticationQueries
-import java.sql.SQLException
 
 @Component
 class AuthenticationRepositoryImplementation(
         private val connectionManager: ConnectionManager,
-        private val googlePersonInfoMapper: GooglePersonInfoMapper
+        private val authenticationDataMapper: AuthenticationDataMapper
 ) : AuthenticationRepository {
-
-    override fun findGooglePersonInfoAndCreateIfNotExists(
-            subject: String,
-            hashToken: (String) -> String
-    ): GooglePersonInfo {
-        val connection = connectionManager.generateHandle()
-        return connection.inTransaction<GooglePersonInfo, SQLException> { handle ->
-            getPersonIdentifierAndTokenIfExists(handle, subject)
-                    ?: createAndGetPersonAndAuth(handle, hashToken, subject)
-        }
-    }
-
-    private fun getPersonIdentifierAndTokenIfExists(handle: org.jdbi.v3.core.Handle, subject: String): GooglePersonInfo? {
-        try {
-            return handle.createQuery(GoogleAuthenticationQueries.SELECT_BY_SUB)
-                    .bind("subject", subject)
-                    .map(googlePersonInfoMapper)
-                    .findOnly()
-        } catch (e: IllegalStateException) {
-            return null
-        }
-    }
-
-    private fun createAndGetPersonAndAuth(handle: org.jdbi.v3.core.Handle, hashToken: (String) -> String, subject: String): GooglePersonInfo {
-        val token = getTimeBasedUuid().toString()
-        val hashedToken = hashToken(token)
-        val personIdentifier = handle.createUpdate(GoogleAuthenticationQueries.INSERT_PERSON_AND_AUTH)
-                .bind("hashedToken", hashedToken)
-                .bind("subject", subject)
-                .executeAndReturnGeneratedKeys("person_identifier")
-                .mapTo(Int::class.java)
-                .findOnly()//todo exception
-
-        return GooglePersonInfo(personIdentifier, token)
-    }
 
     override fun validateServerGeneratedTokenAndSubject(hashedToken: String, subject: String): Boolean {
         val handle = connectionManager.generateHandle()
@@ -64,4 +29,31 @@ class AuthenticationRepositoryImplementation(
             false
         }
     }
+
+    override fun findAuthenticationDataById(connectionHandler: Handle, personIdentifier: Int): AuthenticationData? {
+        var authenticationData : AuthenticationData?
+
+        try{
+            authenticationData = connectionHandler.select(AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_PERSON_IDENTIFIER)
+                    .bind("personIdentifier", personIdentifier)
+                    .map(authenticationDataMapper)
+                    .findOnly()
+        }catch (e :Exception){
+            //if no value is found
+            authenticationData = null
+        }
+
+        return authenticationData
+    }
+
+    override fun createOrUpdateAuthenticationData(connectionHandler: Handle, authenticationData: AuthenticationData) {
+        connectionHandler.createUpdate(AuthenticationQueries.UPSERT_AUTHENTICATION_DATA)
+                .bind("creationDate", authenticationData.creationDate)
+                .bind("expirationDate", authenticationData.expirationDate)
+                .bind("accessToken", authenticationData.accessToken)
+                .bind("refreshToken", authenticationData.refreshToken)
+                .bind("personIdentifier", authenticationData.personIdentifier)
+                .execute()
+    }
+
 }

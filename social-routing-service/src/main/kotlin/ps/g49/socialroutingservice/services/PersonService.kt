@@ -16,9 +16,8 @@ class PersonService(private val personRepository: PersonRepository, private val 
 
     fun findUserCreatedRoutes(userRoutesRequest: UserRoutesRequest): List<SimplifiedRoute> = routeRepository.findPersonCreatedRoutes(userRoutesRequest.identifier, userRoutesRequest.page)
 
-    fun createPerson(connectionHandle: Handle, personRequest: PersonRequest): Int {
-        val person = personMapper.map(personRequest)
-        return personRepository.create(connectionHandle, person)
+    fun createPerson(connectionHandle: Handle): Int {
+        return personRepository.create(connectionHandle)
     }
 
     fun deletePerson(identifier: Int) = personRepository.delete(identifier)

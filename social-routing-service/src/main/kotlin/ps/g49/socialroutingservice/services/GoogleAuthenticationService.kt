@@ -4,22 +4,19 @@ import com.google.api.client.extensions.appengine.http.UrlFetchTransport
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier
 import com.google.api.client.json.jackson2.JacksonFactory
+import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
-import ps.g49.socialroutingservice.models.domainModel.GooglePersonInfo
-import ps.g49.socialroutingservice.repositories.AuthenticationRepository
+import ps.g49.socialroutingservice.repositories.GoogleAuthenticationRepository
+import ps.g49.socialroutingservice.repositories.PersonRepository
 import java.util.Collections.*
 
 
 @Service
 class GoogleAuthenticationService(
-        private val authenticationRepository: AuthenticationRepository
+        private val googleAuthenticationRepository : GoogleAuthenticationRepository
 ) {
 
     val CLIENT_ID = "989313558568-hqdfgtllk76149mgf6t627504bojucfg.apps.googleusercontent.com"
-
-    fun validateServerGeneratedTokenAndSubject(hashedToken : String, subject : String) : Boolean {
-        return authenticationRepository.validateServerGeneratedTokenAndSubject(hashedToken, subject)
-    }
 
     fun validateAndGetIdToken(idTokenString: String): GoogleIdToken? {
         val jacksonFactory = JacksonFactory()
@@ -31,6 +28,14 @@ class GoogleAuthenticationService(
                 .build()
 
         return verifier.verify(idTokenString)
+    }
+
+    fun getPersonIdIfExists (connectionHandle: Handle, subject : String) : Int?{
+        return googleAuthenticationRepository.findPersonIdBySub(connectionHandle, subject)
+    }
+
+    fun storeGoogleAuthenticationData(connectionHandle: Handle, subject: String, personIdentifier: Int) {
+        googleAuthenticationRepository.create(connectionHandle, subject, personIdentifier)
     }
 
 }
