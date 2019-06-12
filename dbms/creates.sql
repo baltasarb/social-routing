@@ -14,19 +14,7 @@ CREATE TABLE Authentication(
 CREATE TABLE GoogleAuthentication(
 	Subject text NOT NULL UNIQUE,
 	AuthenticationPersonIdentifier integer REFERENCES Authentication(PersonIdentifier) PRIMARY KEY
-)
-
-INSERT INTO Person (Identifier, Rating) values (100, 1.0)
-ON CONFLICT (Identifier)
-DO UPDATE
-	SET Rating = 5.0
-
-insert into GoogleAuthentication (DateCreated, ExpiresIn, AccessToken, RefreshToken, Subject, PersonIdentifier)
-values(1, 1, 'at1', 'rt1','sub1', 100),
-(2, 2, 'at2', 'rt2','sub2', 100)
-
-select * from Person
-select * from GoogleAuthentication
+);
 
 CREATE TABLE Route(
 	Identifier serial PRIMARY KEY,

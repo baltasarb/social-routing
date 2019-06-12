@@ -3,6 +3,9 @@ INSERT INTO Person (Identifier, Rating)
 VALUES('100', 1.0),
 	  ('200', 2.0);
 
+INSERT INTO Authentication(CreationDate, ExpirationDate, AccessToken, RefreshToken, PersonIdentifier)
+VALUES(1, 1, 'token 1', 'refresh token 1', 100);
+
 INSERT INTO GoogleAuthentication(PersonIdentifier, HashedToken, Subject)
 VALUES('100', 'token1', 'subject1'),
 	  ('200', 'token2', 'subject2')
@@ -27,6 +30,7 @@ SELECT * FROM RouteCategory;
 SELECT * FROM Person;
 SELECT * FROM Route;
 SELECT * FROM GoogleAuthentication;
+SELECT * FROM Authentication;
 
 SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, RouteCategory.CategoryName 
 FROM Route 
