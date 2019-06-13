@@ -24,4 +24,12 @@ class GoogleAuthenticationException : Exception()
 
 class AuthorizationHeaderException : Exception()
 
-class AuthorizationException() : Exception()
+class AuthorizationException : Exception()
+
+class InvalidAuthenticationDataException : Exception()
+
+class RefreshNotAllowedException : Exception()
+
+class TokenExpiredException : Exception()
+
+class AccessForbiddenException() : Exception()

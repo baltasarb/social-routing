@@ -3,11 +3,13 @@ package ps.g49.socialroutingservice.repositories.implementations
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
+import ps.g49.socialroutingservice.exceptions.AccessForbiddenException
 import ps.g49.socialroutingservice.mappers.modelMappers.AuthenticationDataMapper
-import ps.g49.socialroutingservice.models.AuthenticationData
+import ps.g49.socialroutingservice.models.domainModel.AuthenticationData
 import ps.g49.socialroutingservice.repositories.AuthenticationRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.AuthenticationQueries
 import ps.g49.socialroutingservice.utils.sqlQueries.GoogleAuthenticationQueries
+import java.sql.SQLException
 
 @Component
 class AuthenticationRepositoryImplementation(
@@ -31,14 +33,14 @@ class AuthenticationRepositoryImplementation(
     }
 
     override fun findAuthenticationDataById(connectionHandler: Handle, personIdentifier: Int): AuthenticationData? {
-        var authenticationData : AuthenticationData?
+        var authenticationData: AuthenticationData?
 
-        try{
+        try {
             authenticationData = connectionHandler.select(AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_PERSON_IDENTIFIER)
                     .bind("personIdentifier", personIdentifier)
                     .map(authenticationDataMapper)
                     .findOnly()
-        }catch (e :Exception){
+        } catch (e: Exception) {
             //if no value is found
             authenticationData = null
         }
@@ -54,6 +56,15 @@ class AuthenticationRepositoryImplementation(
                 .bind("refreshToken", authenticationData.refreshToken)
                 .bind("personIdentifier", authenticationData.personIdentifier)
                 .execute()
+    }
+
+    override fun findAuthenticationDataByAccessToken(accessToken: String): AuthenticationData {
+        try {
+            return connectionManager.findOnly(AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_ACCESS_TOKEN, authenticationDataMapper, accessToken)
+        } catch (e: SQLException) {
+            //if no access token matching was foun then acces to the api should not be granted
+            throw AccessForbiddenException()
+        }
     }
 
 }

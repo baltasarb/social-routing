@@ -4,6 +4,7 @@ import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.repositories.GoogleAuthenticationRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.GoogleAuthenticationQueries
+import java.sql.SQLException
 
 @Component
 class GoogleAuthenticationRepositoryImplementation : GoogleAuthenticationRepository {
@@ -16,14 +17,14 @@ class GoogleAuthenticationRepositoryImplementation : GoogleAuthenticationReposit
     }
 
     override fun findPersonIdBySub(connectionHandle: Handle, subject: String): Int? {
-        var personIdentifier : Int?
+        var personIdentifier: Int?
 
-        try{
+        try {
             personIdentifier = connectionHandle.select(GoogleAuthenticationQueries.FIND_BY_SUB)
                     .bind("subject", subject)
                     .mapTo(Int::class.java)
                     .findOnly()
-        }catch (e : Exception){
+        } catch (e: Exception) {
             //if no value is found
             personIdentifier = null
         }

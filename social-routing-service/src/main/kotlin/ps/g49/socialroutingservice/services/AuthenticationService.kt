@@ -1,39 +1,33 @@
 package ps.g49.socialroutingservice.services
 
-import org.apache.commons.codec.binary.Hex.encodeHexString
 import org.apache.commons.codec.digest.MessageDigestAlgorithms
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Service
-import ps.g49.socialroutingservice.models.domainModel.GoogleAuthenticationData
-import ps.g49.socialroutingservice.models.AuthenticationData
+import ps.g49.socialroutingservice.exceptions.TokenExpiredException
+import ps.g49.socialroutingservice.models.domainModel.AuthenticationData
 import ps.g49.socialroutingservice.repositories.AuthenticationRepository
-import java.lang.StringBuilder
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.SecureRandom
-import java.util.*
-import kotlin.experimental.and
 
 @Service
 class AuthenticationService(
         private val authenticationRepository: AuthenticationRepository
 ) {
 
-    private val secureRandomAlgorithmName = "SHA1PRNG"
+    fun getPersonAuthenticationData(connectionHandle: Handle, personIdentifier: Int): AuthenticationData? {
+        return authenticationRepository.findAuthenticationDataById(connectionHandle, personIdentifier)
+    }
 
-    /*fun googleSignIn(idTokenString : String) : GoogleAuthenticationData{
-        *//*val idToken = googleAuthenticationService.validateAndGetIdToken(idTokenString) ?: throw GoogleAuthenticationException()
-        val payload = idToken.payload
-        val subject = payload.subject*//*
-        val subject = "subject8"
-        return authenticationRepository.findGooglePersonInfoAndCreateIfNotExists(subject, ::hashTokenToSHA256)
-    }*/
+    fun storeHashedAuthenticationData(connectionHandle: Handle, authenticationData: AuthenticationData) {
+        authenticationRepository.createOrUpdateAuthenticationData(connectionHandle, authenticationData)
+    }
 
     fun generateAuthenticationData(personIdentifier: Int): AuthenticationData {
         val accessToken = generateToken()
         val refreshToken = generateToken()
         val creationDate = System.currentTimeMillis()
-        val expirationDate = creationDate + 9999999999
+        val expirationDate = creationDate + 9999999999 //TODO CHANGE
         return AuthenticationData(creationDate, expirationDate, accessToken, refreshToken, personIdentifier)
     }
 
@@ -43,13 +37,6 @@ class AuthenticationService(
         val values = ByteArray(55)
         sha1Random.nextBytes(values) // SHA1PRNG , seeded properly
         return bytesToHex(values)
-    }
-
-    private fun hashTokenToSHA256(token: String): String {
-        val digest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256)//todo : try sha3
-        val stringBytes = token.toByteArray(StandardCharsets.UTF_8)
-        val hashBytes = digest.digest(stringBytes)
-        return bytesToHex(hashBytes)
     }
 
     private fun bytesToHex(bytes: ByteArray): String {
@@ -67,14 +54,6 @@ class AuthenticationService(
         return String(hexDigits)
     }
 
-    fun getPersonAuthenticationData(connectionHandle: Handle, personIdentifier: Int): AuthenticationData? {
-        return authenticationRepository.findAuthenticationDataById(connectionHandle, personIdentifier)
-    }
-
-    fun storeHashedAuthenticationData(connectionHandle: Handle, authenticationData: AuthenticationData) {
-        authenticationRepository.createOrUpdateAuthenticationData(connectionHandle, authenticationData)
-    }
-
     fun hashAuthenticationDataAndGet(authenticationData: AuthenticationData): AuthenticationData {
         return AuthenticationData(
                 authenticationData.creationDate,
@@ -83,6 +62,23 @@ class AuthenticationService(
                 hashTokenToSHA256(authenticationData.refreshToken),
                 authenticationData.personIdentifier
         )
+    }
+
+    private fun hashTokenToSHA256(token: String): String {
+        val digest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256)//todo : try sha3
+        val stringBytes = token.toByteArray(StandardCharsets.UTF_8)
+        val hashBytes = digest.digest(stringBytes)
+        return bytesToHex(hashBytes)
+    }
+
+    fun validateAccessToken(accessToken: String): Boolean {
+        val hashedAccessToken = hashTokenToSHA256(accessToken)
+        val authenticationData = authenticationRepository.findAuthenticationDataByAccessToken(hashedAccessToken)
+
+        if (authenticationData.accessTokenIsExpired())
+            throw TokenExpiredException()
+
+        return true
     }
 
 }

@@ -9,20 +9,16 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AuthenticationInterceptor (
+class AuthenticationInterceptor(
         private val authenticationService: AuthenticationService
-): HandlerInterceptorAdapter(){
+) : HandlerInterceptorAdapter() {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        if(request.requestURI.contains("authentication"))
+        if (request.requestURI.contains("/google"))
             return true
 
-        //val token = request.getHeader("Authorization") ?: throw AuthorizationHeaderException()//todo error message
-        //val subject = request.getHeader("Subject") ?: throw AuthorizationHeaderException()
+        val token = request.getHeader("Authorization") ?: throw AuthorizationHeaderException()//todo error message
 
-        //if(authenticationService.googleAuthenticationIsValid(token, subject))
-            return true
-
-        throw AuthorizationException()
+        return authenticationService.validateAccessToken(token)
     }
 }

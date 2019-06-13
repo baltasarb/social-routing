@@ -12,6 +12,11 @@ class AuthenticationQueries {
         const val FIND_AUTHENTICATION_DATA_BY_PERSON_IDENTIFIER = "SELECT CreationDate, ExpirationDate, AccessToken, RefreshToken, PersonIdentifier " +
                 "FROM AuthenticationData " +
                 "WHERE personIdentifier = :personIdentifier;"
+
+        const val FIND_AUTHENTICATION_DATA_BY_ACCESS_TOKEN = "SELECT CreationDate, ExpirationDate, AccessToken, RefreshToken, PersonIdentifier " +
+                "FROM Authentication " +
+                "WHERE AccessToken = ?;"
     }
+
 
 }
