@@ -7,8 +7,8 @@ CREATE TABLE Authentication(
 	CreationDate bigint NOT NULL,
 	ExpirationDate bigint NOT NULL,
 	AccessToken text NOT NULL,
-	RefreshToken text NOT NULL,
-	PersonIdentifier integer REFERENCES Person(Identifier) PRIMARY KEY
+	RefreshToken text NOT NULL PRIMARY KEY,
+	PersonIdentifier integer REFERENCES Person(Identifier)
 );
 
 CREATE TABLE GoogleAuthentication(

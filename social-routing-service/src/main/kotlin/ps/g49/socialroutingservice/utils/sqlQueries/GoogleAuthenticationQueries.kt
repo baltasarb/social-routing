@@ -4,9 +4,7 @@ class GoogleAuthenticationQueries {
 
     companion object{
         const val INSERT: String = "INSERT INTO GoogleAuthentication (Subject, AuthenticationPersonIdentifier) " +
-                "VALUES (:subject, :authenticationPersonIdentifier) " +
-                "ON CONFLICT" +
-                "DO NOTHING;"
+                "VALUES (:subject, :authenticationPersonIdentifier);"
 
         const val FIND_BY_SUB = "SELECT PersonIdentifier, HashedToken " +
                 "FROM GoogleAuthenticationData " +

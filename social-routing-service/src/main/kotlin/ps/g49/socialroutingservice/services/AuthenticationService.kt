@@ -15,8 +15,8 @@ class AuthenticationService(
         private val authenticationRepository: AuthenticationRepository
 ) {
 
-    fun getPersonAuthenticationData(connectionHandle: Handle, personIdentifier: Int): AuthenticationData? {
-        return authenticationRepository.findAuthenticationDataById(connectionHandle, personIdentifier)
+    fun getPersonAuthenticationDataByRefreshToken(connectionHandle: Handle, refreshToken: String): AuthenticationData? {
+        return authenticationRepository.findAuthenticationDataByRefreshToken(connectionHandle, refreshToken)
     }
 
     fun storeHashedAuthenticationData(connectionHandle: Handle, authenticationData: AuthenticationData) {
@@ -64,7 +64,7 @@ class AuthenticationService(
         )
     }
 
-    private fun hashTokenToSHA256(token: String): String {
+    fun hashTokenToSHA256(token: String): String {
         val digest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256)//todo : try sha3
         val stringBytes = token.toByteArray(StandardCharsets.UTF_8)
         val hashBytes = digest.digest(stringBytes)

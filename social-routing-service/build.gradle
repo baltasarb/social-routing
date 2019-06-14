@@ -31,11 +31,7 @@ dependencies {
 	compile group: 'org.jdbi', name: 'jdbi3-kotlin', version: '3.6.0'
 	
 	// api client library used for token id verification and extensions for it (url fetch)
-	compile group: 'com.google.api-client', name: 'google-api-client-appengine', version: '1.29.0'
-
-	// used for time based uuid
-	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
-
+	compile group: 'com.google.api-client', name: 'google-api-client-appengine', version: '1.29.2'
 }
 
 configurations {

@@ -16,7 +16,7 @@ class GoogleAuthenticationService(
         private val googleAuthenticationRepository : GoogleAuthenticationRepository
 ) {
 
-    val CLIENT_ID = "989313558568-hqdfgtllk76149mgf6t627504bojucfg.apps.googleusercontent.com"
+    val CLIENT_ID = "989313558568-hh544t4t551d4dd04amadvj3sft9hj0t.apps.googleusercontent.com"
 
     fun validateAndGetIdToken(idTokenString: String): GoogleIdToken? {
         val jacksonFactory = JacksonFactory()
@@ -30,7 +30,7 @@ class GoogleAuthenticationService(
         return verifier.verify(idTokenString)
     }
 
-    fun getPersonIdIfExists (connectionHandle: Handle, subject : String) : Int?{
+    fun getPersonIdWithSub (connectionHandle: Handle, subject : String) : Int?{
         return googleAuthenticationRepository.findPersonIdBySub(connectionHandle, subject)
     }
 

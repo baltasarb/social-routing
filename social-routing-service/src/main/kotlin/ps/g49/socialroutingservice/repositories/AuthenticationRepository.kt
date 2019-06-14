@@ -7,7 +7,7 @@ interface AuthenticationRepository {
 
     fun validateServerGeneratedTokenAndSubject(hashedToken: String, subject: String): Boolean
 
-    fun findAuthenticationDataById(connectionHandler: Handle, personIdentifier: Int): AuthenticationData?
+    fun findAuthenticationDataByRefreshToken(connectionHandler: Handle, refreshToken: String): AuthenticationData?
 
     fun createOrUpdateAuthenticationData(connectionHandler: Handle, authenticationData: AuthenticationData)
 

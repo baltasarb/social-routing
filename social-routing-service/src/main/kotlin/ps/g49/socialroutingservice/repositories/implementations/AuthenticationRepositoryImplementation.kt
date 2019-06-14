@@ -32,12 +32,12 @@ class AuthenticationRepositoryImplementation(
         }
     }
 
-    override fun findAuthenticationDataById(connectionHandler: Handle, personIdentifier: Int): AuthenticationData? {
+    override fun findAuthenticationDataByRefreshToken(connectionHandler: Handle, refreshToken: String): AuthenticationData? {
         var authenticationData: AuthenticationData?
 
         try {
-            authenticationData = connectionHandler.select(AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_PERSON_IDENTIFIER)
-                    .bind("personIdentifier", personIdentifier)
+            authenticationData = connectionHandler.select(AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_REFRESH_TOKEN)
+                    .bind("refreshToken", refreshToken)
                     .map(authenticationDataMapper)
                     .findOnly()
         } catch (e: Exception) {
@@ -49,7 +49,7 @@ class AuthenticationRepositoryImplementation(
     }
 
     override fun createOrUpdateAuthenticationData(connectionHandler: Handle, authenticationData: AuthenticationData) {
-        connectionHandler.createUpdate(AuthenticationQueries.UPSERT_AUTHENTICATION_DATA)
+        connectionHandler.createUpdate(AuthenticationQueries.INSERT_AUTHENTICATION_DATA)
                 .bind("creationDate", authenticationData.creationDate)
                 .bind("expirationDate", authenticationData.expirationDate)
                 .bind("accessToken", authenticationData.accessToken)

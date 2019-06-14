@@ -26,7 +26,7 @@ class AuthorizationHeaderException : Exception()
 
 class AuthorizationException : Exception()
 
-class InvalidAuthenticationDataException : Exception()
+class InvalidRefreshTokenException : Exception()
 
 class RefreshNotAllowedException : Exception()
 
