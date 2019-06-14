@@ -9,11 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.activity_route_representation.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.Point
@@ -75,6 +75,16 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
         val liveData = socialRoutingViewModel.getRoute(routeId)
         handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
+
+        val locationCallback: LocationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for (location in locationResult.locations){
+                    // Update UI with location data
+                }
+            }
+        }
+        fusedLocationProviderClient.requestLocationUpdates(LocationRequest(), locationCallback, null)
     }
 
     private fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {
@@ -84,7 +94,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     fun liveTrackingOnClick(view: View) {
-        showInitialForm()
+        //showInitialForm()
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             val locationTask = fusedLocationProviderClient.lastLocation
             locationTask.addOnSuccessListener {
@@ -99,12 +109,11 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
                 )
             }
         }
-
-
+        liveTrackingButton.visibility = View.INVISIBLE
     }
 
     private fun successRequestHandlerGoogleDirection(list: List<Point>) {
-        googleMapsManager.drawLinesSet(list)
+        googleMapsManager.drawLineSetToFollow(list)
     }
 
     private fun showInitialForm() {

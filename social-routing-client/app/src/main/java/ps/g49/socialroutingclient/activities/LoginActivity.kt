@@ -1,6 +1,7 @@
 package ps.g49.socialroutingclient.activities
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -12,6 +13,7 @@ import com.google.android.gms.common.api.ApiException
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import ps.g49.socialroutingclient.kotlinx.getViewModel
+import ps.g49.socialroutingclient.model.UserAccount
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 
 
@@ -43,11 +45,18 @@ class LoginActivity : BaseActivity() {
         socialRoutingViewModel = getViewModel()
 
         sign_in_google_account_button.setOnClickListener {
-            /*val signInIntent = mGoogleSignInClient.signInIntent
+            val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
-            */
-            requestSuccessHandlerSignIn()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        val account = GoogleSignIn.getLastSignedInAccount(this);
+        //updateUI(account);
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -65,6 +74,10 @@ class LoginActivity : BaseActivity() {
         try {
             val account = completedTask.getResult(ApiException::class.java)!!
             val idToken = account.idToken!!
+            val accountName = account.displayName ?: "No name"
+            val accountEmail = account.email ?: "No email"
+            val accountPhotoUrl = account.photoUrl ?: Uri.EMPTY
+            val userAccount = UserAccount(accountName, accountEmail, accountPhotoUrl)
 
             val liveData = socialRoutingViewModel.signIn(idToken)
             handleRequestedData(liveData, ::requestSuccessHandlerSignIn)

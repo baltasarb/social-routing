@@ -7,6 +7,7 @@ import ps.g49.socialroutingclient.webService.RetrofitClient
 import ps.g49.socialroutingclient.webService.SocialRoutingWebService
 import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.model.inputModel.*
+import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,7 +26,7 @@ class SocialRoutingRepository {
         resource.value = Resource.loading()
 
         socialRoutingWebService
-            .signIn(idTokenString)
+            .signIn(AuthorizationOutput(idTokenString))
             .enqueue(object : Callback<Void> {
                 override fun onFailure(call: Call<Void>, t: Throwable) {
                     resource.value = Resource.error(t.message.toString(), null)

@@ -5,10 +5,10 @@ import ps.g49.socialroutingclient.model.inputModel.geocoding.Bound
 data class RouteDirections(
     val summary: String,
     val overview_polyline: Overview_Polyline,
-    val warnings: List<String>,
-    val waypoint_order: List<String>,
+    val warnings: List<String>?,
+    val waypoint_order: List<String>?,
     val bounds: Bound,
     val copyrights: String,
-    val fare: Fare,
-    val legs: List<Leg>
+    val fare: Fare?,
+    val legs: List<Leg>?
 )

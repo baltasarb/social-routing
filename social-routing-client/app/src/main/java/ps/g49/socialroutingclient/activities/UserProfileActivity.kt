@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.content_user_profile.*
 import ps.g49.socialroutingclient.R
-import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.RouteInput
@@ -38,9 +37,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun setView(personInput: PersonInput) {
-        toolbar_layout.title = personInput.name
         userRatingBar.rating = personInput.rating.toFloat()
-        userEmailTextView.text = personInput.email
     }
 
     private fun requestUserRoutes(personInput: PersonInput?) {

@@ -83,6 +83,8 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
             alertDialog.create()
             alertDialog.show()
         }
+        else
+            finish()
     }
 
     private fun getLocationFromViewInput() {
@@ -97,7 +99,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
         // Set Dialog Message
         alertDialog
-            .setCancelable(false)
+            .setCancelable(true)
             .setView(editText)
 
         // Set up the buttons

@@ -3,6 +3,7 @@ package ps.g49.socialroutingclient.webService
 import ps.g49.socialroutingclient.model.outputModel.PersonOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.model.inputModel.*
+import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -13,8 +14,8 @@ interface SocialRoutingWebService {
     }
 
     @Headers(HEADER_CONTENT_TYPE)
-    @POST("signin")
-    fun signIn(@Query("idTokenString") idTokenString: String): Call<Void>
+    @POST("authentication/google")
+    fun signIn(@Body authorizationOutput: AuthorizationOutput): Call<Void>
 
     // Person Requests
     @GET("persons/{personIdentifier}")
