@@ -14,7 +14,7 @@ class AuthenticationInterceptor(
 ) : HandlerInterceptorAdapter() {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
-        if (request.requestURI.contains("/google"))
+        if (request.requestURI.contains("/google")/* or request.requestURI.contains("/error")*/)
             return true
 
         val token = request.getHeader("Authorization") ?: throw AuthorizationHeaderException()//todo error message

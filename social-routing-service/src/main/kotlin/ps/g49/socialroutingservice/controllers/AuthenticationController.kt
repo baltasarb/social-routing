@@ -7,7 +7,6 @@ import ps.g49.socialroutingservice.exceptions.GoogleAuthenticationException
 import ps.g49.socialroutingservice.exceptions.InvalidRefreshTokenException
 import ps.g49.socialroutingservice.exceptions.RefreshNotAllowedException
 import ps.g49.socialroutingservice.mappers.outputMappers.AuthenticationDataOutputMapper
-import ps.g49.socialroutingservice.models.domainModel.AuthenticationData
 import ps.g49.socialroutingservice.models.inputModel.GoogleRegistrationInput
 import ps.g49.socialroutingservice.models.inputModel.RefreshAuthenticationDataInput
 import ps.g49.socialroutingservice.models.outputModel.AuthenticationDataOutput
