@@ -12,10 +12,14 @@ class RetrofitClient(private val baseUrl: String) {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
-    fun getClient(): Retrofit = Retrofit
-        .Builder()
-        .baseUrl(baseUrl)
-        .addConverterFactory(JacksonConverterFactory.create(getMapper()))
-        .build()
+    fun getClient(): Retrofit {
+        // TODO add later interceptor for header authorization
+        return Retrofit
+            .Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(JacksonConverterFactory.create(getMapper()))
+            .build()
+
+    }
 
 }

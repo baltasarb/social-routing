@@ -15,27 +15,28 @@ import retrofit2.Response
 class SocialRoutingRepository {
 
     companion object {
-        const val baseUrl = "http://10.0.2.2:8080/api.sr/"
+        //const val baseUrl = "http://10.0.2.2:8080/api.sr/"
+        const val baseUrl = "http://10.10.67.135:8080/api.sr/"
     }
 
     private val retrofitSocialRouting = RetrofitClient(baseUrl).getClient()
     private val socialRoutingWebService = retrofitSocialRouting.create(SocialRoutingWebService::class.java)
 
-    fun signIn(idTokenString: String): LiveData<Resource<Void>> {
-        val resource = MutableLiveData<Resource<Void>>()
+    fun signIn(idTokenString: String): LiveData<Resource<AuthenticationDataInput>> {
+        val resource = MutableLiveData<Resource<AuthenticationDataInput>>()
         resource.value = Resource.loading()
 
         socialRoutingWebService
             .signIn(AuthorizationOutput(idTokenString))
-            .enqueue(object : Callback<Void> {
-                override fun onFailure(call: Call<Void>, t: Throwable) {
+            .enqueue(object : Callback<AuthenticationDataInput> {
+                override fun onFailure(call: Call<AuthenticationDataInput>, t: Throwable) {
                     resource.value = Resource.error(t.message.toString(), null)
                 }
 
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                override fun onResponse(call: Call<AuthenticationDataInput>, response: Response<AuthenticationDataInput>) {
                     val code = response.code()
                     if (code == 200)
-                        resource.value = Resource.success()
+                        resource.value = Resource.success(response.body()!!)
                     else
                         resource.value = Resource.error(response.message(), null)
                 }

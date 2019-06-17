@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.content_user_profile.*
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.RouteInput
@@ -28,7 +29,8 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
         viewModel = getViewModel()
 
-        getUserProfileInfo(200)
+        val application = this@UserProfileActivity.application as SocialRoutingApplication
+        getUserProfileInfo(application.getUser().id)
     }
 
     private fun getUserProfileInfo(userId: Int) {

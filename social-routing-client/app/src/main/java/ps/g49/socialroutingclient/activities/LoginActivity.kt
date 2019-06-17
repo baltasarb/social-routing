@@ -10,12 +10,12 @@ import ps.g49.socialroutingclient.R
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.common.api.ApiException
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.UserAccount
+import ps.g49.socialroutingclient.model.inputModel.AuthenticationDataInput
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
-
 
 class LoginActivity : BaseActivity() {
 
@@ -55,8 +55,12 @@ class LoginActivity : BaseActivity() {
 
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
-        val account = GoogleSignIn.getLastSignedInAccount(this);
-        //updateUI(account);
+        /*val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account != null) {
+            saveAccount(account)
+            successHandlerSignIn()
+        }*/
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -74,13 +78,10 @@ class LoginActivity : BaseActivity() {
         try {
             val account = completedTask.getResult(ApiException::class.java)!!
             val idToken = account.idToken!!
-            val accountName = account.displayName ?: "No name"
-            val accountEmail = account.email ?: "No email"
-            val accountPhotoUrl = account.photoUrl ?: Uri.EMPTY
-            val userAccount = UserAccount(accountName, accountEmail, accountPhotoUrl)
+            saveAccount(account)
 
             val liveData = socialRoutingViewModel.signIn(idToken)
-            handleRequestedData(liveData, ::requestSuccessHandlerSignIn)
+            handleRequestedData(liveData, ::successHandlerSignIn)
 
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
@@ -89,10 +90,23 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    private fun requestSuccessHandlerSignIn() {
+    private fun successHandlerSignIn(authenticationData: AuthenticationDataInput?) {
         showToast(SUCCESS_LOGIN_MESSAGE)
+        val application = this.application as SocialRoutingApplication
+        application.getUser().id = authenticationData!!.personIdentifier
+        application.getUser().accessToken = authenticationData.accessToken
+        application.getUser().refreshToken = authenticationData.refreshToken
+
         val intent = Intent(this, NavigationActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun saveAccount(account: GoogleSignInAccount) {
+        val accountName = account.displayName ?: "No name"
+        val accountEmail = account.email ?: "No email"
+        val accountPhotoUrl = account.photoUrl ?: Uri.EMPTY
+        val userAccount = UserAccount(accountName, accountEmail, accountPhotoUrl)
+        (this.application as SocialRoutingApplication).setUser(userAccount)
     }
 
 }

@@ -12,7 +12,7 @@ class GoogleAuthenticationRepositoryImplementation : GoogleAuthenticationReposit
     override fun create(connectionHandle: Handle, subject: String, personIdentifier: Int) {
         connectionHandle.createUpdate(GoogleAuthenticationQueries.INSERT)
                 .bind("subject", subject)
-                .bind("authenticationPersonIdentifier", personIdentifier)
+                .bind("personIdentifier", personIdentifier)
                 .execute()
     }
 

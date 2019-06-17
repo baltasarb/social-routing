@@ -15,7 +15,7 @@ interface SocialRoutingWebService {
 
     @Headers(HEADER_CONTENT_TYPE)
     @POST("authentication/google")
-    fun signIn(@Body authorizationOutput: AuthorizationOutput): Call<Void>
+    fun signIn(@Body authorizationOutput: AuthorizationOutput): Call<AuthenticationDataInput>
 
     // Person Requests
     @GET("persons/{personIdentifier}")

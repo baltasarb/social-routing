@@ -2,6 +2,7 @@ package ps.g49.socialroutingclient.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import ps.g49.socialroutingclient.model.inputModel.AuthenticationDataInput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource
@@ -25,7 +26,7 @@ class SocialRoutingViewModel: ViewModel() {
     fun getRouteCategories(): LiveData<Resource<CategoryCollectionInput>> =
             routeRepository.getCategories()
 
-    fun signIn(idTokenString: String): LiveData<Resource<Void>> =
+    fun signIn(idTokenString: String): LiveData<Resource<AuthenticationDataInput>> =
             routeRepository.signIn(idTokenString)
 
 }

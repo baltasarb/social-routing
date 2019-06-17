@@ -13,7 +13,7 @@ CREATE TABLE Authentication(
 
 CREATE TABLE GoogleAuthentication(
 	Subject text NOT NULL UNIQUE,
-	AuthenticationPersonIdentifier integer REFERENCES Authentication(PersonIdentifier) PRIMARY KEY
+	PersonIdentifier integer REFERENCES Person(Identifier) PRIMARY KEY
 );
 
 CREATE TABLE Route(
