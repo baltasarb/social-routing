@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
+import ps.g49.socialroutingservice.exceptions.MediaTypeNotPresentException
 import ps.g49.socialroutingservice.exceptions.UnsupportedMediaTypeException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -17,7 +18,7 @@ class MediaTypeInterceptor : HandlerInterceptorAdapter() {
         val method = request.method
 
         if (method == HttpMethod.POST.name || method == HttpMethod.PUT.name) {
-            val contentType = request.getHeader(HttpHeaders.CONTENT_TYPE).toLowerCase()
+            val contentType = request.getHeader(HttpHeaders.CONTENT_TYPE) ?: throw MediaTypeNotPresentException()
 
             if (contentType.isEmpty() || !contentType.contains(jsonContentType))
                 throw UnsupportedMediaTypeException()

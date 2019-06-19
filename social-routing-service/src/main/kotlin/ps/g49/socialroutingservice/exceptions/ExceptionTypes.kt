@@ -33,3 +33,5 @@ class RefreshNotAllowedException : Exception()
 class TokenExpiredException : Exception()
 
 class AccessForbiddenException() : Exception()
+
+class MediaTypeNotPresentException() : Exception()

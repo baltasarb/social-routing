@@ -44,6 +44,28 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(error, HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     }
 
+    @ExceptionHandler(value = [MediaTypeNotPresentException::class])
+    fun handleMediaTypeNotPresentException(exception: Exception): ResponseEntity<ProblemJson> {
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#media-type-header-not-present",
+                HttpStatus.BAD_REQUEST.reasonPhrase,
+                HttpStatus.BAD_REQUEST.value(),
+                "Media type header missing"
+        )
+        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(value = [AuthorizationHeaderException::class])
+    fun handleAuthorizationHeaderNotPresentException(exception: Exception): ResponseEntity<ProblemJson> {
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#authorization-header-not-present",
+                HttpStatus.BAD_REQUEST.reasonPhrase,
+                HttpStatus.BAD_REQUEST.value(),
+                "Authorization header missing"
+        )
+        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    }
+
     fun handleInvalidGoogleTokenException(exception: Exception): ResponseEntity<ProblemJson> {
         val error = ProblemJson(
                 "",
