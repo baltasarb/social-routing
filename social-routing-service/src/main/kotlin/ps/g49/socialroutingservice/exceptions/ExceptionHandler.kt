@@ -66,24 +66,35 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
 
+    @ExceptionHandler(value = [GoogleTokenInvalidException::class])
     fun handleInvalidGoogleTokenException(exception: Exception): ResponseEntity<ProblemJson> {
         val error = ProblemJson(
-                "",
-                "Unauthorized",
-                401,
-                "Invalid google credentials. The access token you're using is either expired or invalid",
-                ""
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#google-idTokenString-invalid",
+                HttpStatus.UNAUTHORIZED.reasonPhrase,
+                HttpStatus.UNAUTHORIZED.value(),
+                "Invalid google credentials. The access token you're using is either expired or invalid"
         )
         return ResponseEntity(error, HttpStatus.UNAUTHORIZED)
     }
 
-    fun handleAuthenticationException(exception: Exception): ResponseEntity<ProblemJson> {
+    @ExceptionHandler(value = [InvalidAccessTokenException::class])
+    fun handleInvalidAccessTokenException(exception: Exception): ResponseEntity<ProblemJson> {
         val error = ProblemJson(
-                "",
-                "Unauthorized",
-                401,
-                "Invalid authorization header. The access token you're using is either expired or invalid",
-                ""
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#accessToken-invalid",
+                HttpStatus.UNAUTHORIZED.reasonPhrase,
+                HttpStatus.UNAUTHORIZED.value(),
+                "Invalid access token. The access token you're using is either expired or invalid"
+        )
+        return ResponseEntity(error, HttpStatus.UNAUTHORIZED)
+    }
+
+    @ExceptionHandler(value = [InvalidRefreshTokenException::class])
+    fun handleInvalidRefreshTokenException(exception: Exception): ResponseEntity<ProblemJson> {
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#refreshToken-invalid",
+                HttpStatus.UNAUTHORIZED.reasonPhrase,
+                HttpStatus.UNAUTHORIZED.value(),
+                "Invalid refresh token. The refresh token you're using is either expired or invalid"
         )
         return ResponseEntity(error, HttpStatus.UNAUTHORIZED)
     }

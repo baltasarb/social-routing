@@ -3,13 +3,12 @@ package ps.g49.socialroutingservice.repositories.implementations
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
-import ps.g49.socialroutingservice.exceptions.AccessForbiddenException
+import ps.g49.socialroutingservice.exceptions.InvalidAccessTokenException
 import ps.g49.socialroutingservice.mappers.modelMappers.AuthenticationDataMapper
 import ps.g49.socialroutingservice.models.domainModel.AuthenticationData
 import ps.g49.socialroutingservice.repositories.AuthenticationRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.AuthenticationQueries
 import ps.g49.socialroutingservice.utils.sqlQueries.GoogleAuthenticationQueries
-import java.sql.SQLException
 
 @Component
 class AuthenticationRepositoryImplementation(
@@ -61,9 +60,9 @@ class AuthenticationRepositoryImplementation(
     override fun findAuthenticationDataByAccessToken(accessToken: String): AuthenticationData {
         try {
             return connectionManager.findOnly(AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_ACCESS_TOKEN, authenticationDataMapper, accessToken)
-        } catch (e: SQLException) {
+        } catch (e: java.lang.IllegalStateException) {
             //if no access token matching was foun then acces to the api should not be granted
-            throw AccessForbiddenException()
+            throw InvalidAccessTokenException()
         }
     }
 
