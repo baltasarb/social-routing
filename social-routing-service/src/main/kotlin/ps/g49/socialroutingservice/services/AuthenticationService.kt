@@ -15,6 +15,8 @@ class AuthenticationService(
         private val authenticationRepository: AuthenticationRepository
 ) {
 
+    private val tokenDuration : Int = 86400000 // 1 day in milliseconds
+
     fun getPersonAuthenticationDataByRefreshToken(connectionHandle: Handle, refreshToken: String): AuthenticationData? {
         return authenticationRepository.findAuthenticationDataByRefreshToken(connectionHandle, refreshToken)
     }
@@ -27,7 +29,7 @@ class AuthenticationService(
         val accessToken = generateToken()
         val refreshToken = generateToken()
         val creationDate = System.currentTimeMillis()
-        val expirationDate = creationDate + 9999999999 //TODO CHANGE
+        val expirationDate = creationDate + tokenDuration
         return AuthenticationData(creationDate, expirationDate, accessToken, refreshToken, personIdentifier)
     }
 

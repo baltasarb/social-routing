@@ -7,6 +7,6 @@ import ps.g49.socialroutingservice.models.outputModel.AuthenticationDataOutput
 @Component
 class AuthenticationDataOutputMapper : OutputMapper<AuthenticationData, AuthenticationDataOutput>{
     override fun map(from: AuthenticationData): AuthenticationDataOutput {
-        return AuthenticationDataOutput(from.accessToken, from.refreshToken, from.personIdentifier)
+        return AuthenticationDataOutput(from.accessToken, from.refreshToken)
     }
 }

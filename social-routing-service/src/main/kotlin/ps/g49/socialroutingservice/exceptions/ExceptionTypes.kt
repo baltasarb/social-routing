@@ -20,7 +20,7 @@ class UnsupportedMediaTypeException : Exception()
  */
 class InsertException : Exception()
 
-class GoogleAuthenticationException : Exception()
+class GoogleTokenInvalidException : Exception()
 
 class AuthorizationHeaderException : Exception()
 

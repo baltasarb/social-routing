@@ -1,5 +1,6 @@
 package ps.g49.socialroutingservice.models.outputModel
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import ps.g49.socialroutingservice.models.domainModel.Point
 import java.util.*
 
@@ -13,6 +14,7 @@ data class RouteOutput(
         val dateCreated : Date,
         val points : List<Point>,
         val categories : List<CategoryOutput>,
+        @JsonProperty("owner_url")
         val ownerUrl : String
 
 )

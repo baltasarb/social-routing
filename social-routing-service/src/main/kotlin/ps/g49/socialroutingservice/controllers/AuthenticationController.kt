@@ -1,9 +1,10 @@
 package ps.g49.socialroutingservice.controllers
 
+import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
-import ps.g49.socialroutingservice.exceptions.GoogleAuthenticationException
+import ps.g49.socialroutingservice.exceptions.GoogleTokenInvalidException
 import ps.g49.socialroutingservice.exceptions.InvalidRefreshTokenException
 import ps.g49.socialroutingservice.exceptions.RefreshNotAllowedException
 import ps.g49.socialroutingservice.mappers.outputMappers.AuthenticationDataOutputMapper
@@ -28,7 +29,7 @@ class AuthenticationController(
     @PostMapping("/google")
     fun googleRegistration(@RequestBody googleRegistrationInput: GoogleRegistrationInput): ResponseEntity<AuthenticationDataOutput> {
         val googleIdToken = googleAuthenticationService.validateAndGetIdToken(googleRegistrationInput.idTokenString)
-                ?: throw GoogleAuthenticationException()
+                ?: throw GoogleTokenInvalidException()
 
         val subject = googleIdToken.payload.subject
 
@@ -52,7 +53,9 @@ class AuthenticationController(
         connectionHandle.close()
 
         val output = authenticationDataOutputMapper.map(authenticationData)
-        return OutputUtils.ok(output)
+        val headers = HttpHeaders()
+        headers.set("Location", OutputUtils.personUrl(personIdentifier))
+        return OutputUtils.ok(headers,output)
     }
 
     @PostMapping("/refresh")

@@ -5,6 +5,7 @@ import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.exceptions.InsertException
+import ps.g49.socialroutingservice.exceptions.ResourceNotFoundException
 import ps.g49.socialroutingservice.mappers.sqlArrayTypeMappers.CategoryArrayType
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
@@ -12,6 +13,7 @@ import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.repositories.RouteRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.RouteQueries
+import java.sql.SQLException
 
 @Component
 class RouteRepositoryImplementation(
@@ -31,12 +33,12 @@ class RouteRepositoryImplementation(
         return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
     }
 
-    override fun findAllByParameter(parameter: String,page : Int): List<SimplifiedRoute> {
+    override fun findAllByParameter(parameter: String, page: Int): List<SimplifiedRoute> {
         val params = hashMapOf<String, Any>("location" to parameter)
         return connectionManager.findManyWithPagination(RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION, simplifiedRouteMapper, page, params)
     }
 
-    override fun findPersonCreatedRoutes(identifier: Int, page : Int): List<SimplifiedRoute> {
+    override fun findPersonCreatedRoutes(identifier: Int, page: Int): List<SimplifiedRoute> {
         val params = hashMapOf<String, Any>("personIdentifier" to identifier)
         return connectionManager.findManyWithPagination(RouteQueries.SELECT_MANY_BY_OWNER_WITH_PAGINATION, simplifiedRouteMapper, page, params)
     }

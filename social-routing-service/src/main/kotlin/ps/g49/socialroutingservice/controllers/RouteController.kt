@@ -28,10 +28,11 @@ class RouteController(
     @GetMapping("/{identifier}")
     fun findRouteById(@PathVariable identifier: Int): ResponseEntity<RouteOutput> {
         val connectionHandle = connectionManager.generateHandle()
-        val route = routeService.findRouteById(connectionHandle, identifier)
-        connectionHandle.close()
-        val output = routeOutputMapper.map(route)
-        return ResponseEntity.ok(output)
+        connectionHandle.use { handle ->
+            val route = routeService.findRouteById(handle, identifier)
+            val output = routeOutputMapper.map(route)
+            return ResponseEntity.ok(output)
+        }
     }
 
     @GetMapping("/search")
@@ -43,7 +44,7 @@ class RouteController(
     }
 
     @PostMapping
-    fun createRoute(@RequestBody route: RouteInput) : ResponseEntity<Void>{
+    fun createRoute(@RequestBody route: RouteInput): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
         val routeDto = RequestBuilder.buildRouteRequest(route)
@@ -58,7 +59,7 @@ class RouteController(
     }
 
     @PutMapping("/{identifier}")
-    fun updateRoute(@PathVariable identifier : Int, @RequestBody route: RouteInput) : ResponseEntity<Void>{
+    fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
         val routeDto = RequestBuilder.buildRouteRequest(route, identifier)
@@ -71,7 +72,7 @@ class RouteController(
     }
 
     @DeleteMapping("/{identifier}")
-    fun deleteRoute(@PathVariable identifier: Int) : ResponseEntity<Void>{
+    fun deleteRoute(@PathVariable identifier: Int): ResponseEntity<Void> {
         routeService.deleteRoute(identifier)
         return OutputUtils.ok()
     }

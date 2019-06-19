@@ -1,6 +1,7 @@
 package ps.g49.socialroutingservice.utils
 
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 class OutputUtils {
@@ -36,6 +37,9 @@ class OutputUtils {
                     .build()
         }
 
+        fun <T> ok (headers: HttpHeaders, body :T) : ResponseEntity<T>{
+            return ResponseEntity(body, headers, HttpStatus.OK)
+        }
     }
 
 }

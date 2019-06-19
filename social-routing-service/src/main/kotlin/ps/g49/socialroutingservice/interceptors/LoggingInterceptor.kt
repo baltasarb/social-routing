@@ -17,7 +17,7 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
         super.preHandle(request, response, handler)
 
         logger.info("\n")
-
+        logger.info("Pre request:\n")
         logger.info(request.method + " " + request.requestURI)
 
         val headerNames = request.headerNames
@@ -31,7 +31,7 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
     }
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
-        logger.info("Post Handle:\n")
+        logger.info("Post request:\n")
         logger.info("Status Code" + " : ${response.status}.")
         val headerNames = response.headerNames
         headerNames.stream().forEach { headerName ->
@@ -41,8 +41,4 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
         super.postHandle(request, response, handler, modelAndView)
     }
 
-    override fun afterCompletion(request: HttpServletRequest, response: HttpServletResponse, handler: Any, ex: Exception?) {
-        println()
-        super.afterCompletion(request, response, handler, ex)
-    }
 }
