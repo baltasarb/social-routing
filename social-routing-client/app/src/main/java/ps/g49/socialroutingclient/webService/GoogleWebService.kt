@@ -10,8 +10,7 @@ interface GoogleWebService {
     @GET("geocode/json")
     fun getGeocode(
         @Query("address") address: String,
-        @Query("key") key: String,
-        @Query("sensor") sensor: Boolean = false
+        @Query("key") key: String
     ): Call<GeoCodingResponse>
 
     @GET("directions/json")
