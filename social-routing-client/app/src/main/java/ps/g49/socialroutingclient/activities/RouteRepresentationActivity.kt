@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,12 +14,15 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_route_representation.*
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.SocialRoutingApplication
+import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.Point
 import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
 import ps.g49.socialroutingclient.repositories.GoogleRepository
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
+import javax.inject.Inject
 
 class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
@@ -32,6 +34,13 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     private var routeId: Int = -1
     val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
     val LOCATION_PERMISSION_REQUEST = 1234
+
+    private lateinit var socialRoutingApplication: SocialRoutingApplication
+
+    @Inject
+    lateinit var googleRepository: GoogleRepository
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     companion object{
         const val ROUTE_ID_MESSAGE = "ROUTE_ID_MESSAGE"
@@ -52,6 +61,8 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         routeId = intent.getIntExtra(ROUTE_ID_MESSAGE, -1)
+        socialRoutingApplication = application as SocialRoutingApplication
+        socialRoutingViewModel = getViewModel(viewModelFactory)
     }
 
     /*
@@ -63,15 +74,13 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        googleMapsManager = GoogleMapsManager(mMap)
-        socialRoutingViewModel = getViewModel()
+        googleMapsManager = GoogleMapsManager(mMap, googleRepository)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             mMap.isMyLocationEnabled = true
         else
             // Show rationale and request permission.
             ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
-
 
         val liveData = socialRoutingViewModel.getRoute(routeId)
         handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
@@ -100,7 +109,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             locationTask.addOnSuccessListener {
                 val initialPoint = Point(it.latitude, it.longitude)
 
-                GoogleRepository().getDirections(
+                googleRepository.getDirections(
                     initialPoint,
                     route.points.first(),
                     "walking",

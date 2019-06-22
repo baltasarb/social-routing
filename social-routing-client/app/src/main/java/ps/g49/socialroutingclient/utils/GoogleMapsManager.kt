@@ -8,12 +8,14 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import java.util.*
 
-class GoogleMapsManager(val googleMap: GoogleMap) {
+class GoogleMapsManager(
+    val googleMap: GoogleMap,
+    val geocodingRepository: GoogleRepository
+) {
 
     private val markerOptions = LinkedList<Marker>()
     private val polylines = LinkedList<Polyline>()
     private val polylineToFollow = LinkedList<Polyline>()
-    private val geocodingRepository = GoogleRepository()
 
     companion object {
         private const val START = "Start"

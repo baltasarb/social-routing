@@ -9,11 +9,6 @@ import retrofit2.http.*
 
 interface SocialRoutingWebService {
 
-    companion object {
-        const val HEADER_CONTENT_TYPE = "Content-type: application/json"
-    }
-
-    @Headers(HEADER_CONTENT_TYPE)
     @POST("authentication/google")
     fun signIn(@Body authorizationOutput: AuthorizationOutput): Call<AuthenticationDataInput>
 
@@ -21,7 +16,6 @@ interface SocialRoutingWebService {
     @GET("persons/{personIdentifier}")
     fun getPerson(@Path("personIdentifier") personIdentifier: String): Call<PersonInput>
 
-    @Headers(HEADER_CONTENT_TYPE)
     @POST("persons")
     fun createPerson(@Body personOutput: PersonOutput): Call<PersonInput>
 
@@ -38,7 +32,6 @@ interface SocialRoutingWebService {
     @GET("routes/{routeIdentifier}")
     fun getRoute(@Path("routeIdentifier") routeIdentifier: Int): Call<RouteDetailedInput>
 
-    @Headers(HEADER_CONTENT_TYPE)
     @POST("routes")
     fun createRoute(@Body routeOutput: RouteOutput): Call<Void>
 

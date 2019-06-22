@@ -9,10 +9,13 @@ import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
 import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
 import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class SocialRoutingViewModel: ViewModel() {
-
-    private val routeRepository = SocialRoutingRepository()
+@Singleton
+class SocialRoutingViewModel @Inject constructor (
+    val routeRepository : SocialRoutingRepository
+): ViewModel() {
 
     fun createRoute(routeOutput: RouteOutput): LiveData<Resource<String>> =
             routeRepository.createRoute(routeOutput)

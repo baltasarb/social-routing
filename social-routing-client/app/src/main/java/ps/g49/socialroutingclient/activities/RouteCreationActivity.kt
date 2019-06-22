@@ -1,5 +1,8 @@
 package ps.g49.socialroutingclient.activities
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
@@ -8,16 +11,22 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.SocialRoutingApplication
+import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
 import ps.g49.socialroutingclient.model.outputModel.CategoryOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
+import ps.g49.socialroutingclient.repositories.GoogleRepository
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
+import javax.inject.Inject
 
 class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
@@ -26,6 +35,14 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private var location: String = ""
     private lateinit var categoriesLinearLayout: LinearLayout
+    val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    val LOCATION_PERMISSION_REQUEST = 1234
+
+    private lateinit var socialRoutingApplication: SocialRoutingApplication
+    @Inject
+    lateinit var googleRepository: GoogleRepository
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     companion object {
         private const val SEARCH = "Search"
@@ -49,12 +66,13 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_route_creation)
+        socialRoutingApplication = application as SocialRoutingApplication
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         // Initialize the Route Repository.
-        socialRoutingViewModel = getViewModel()
+        socialRoutingViewModel = getViewModel(viewModelFactory)
     }
 
     /*
@@ -64,12 +82,16 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMapManager = GoogleMapsManager(googleMap)
+        mMapManager = GoogleMapsManager(googleMap, googleRepository)
 
         mMap.setOnMapClickListener(mMapManager.onMapClickListener())
-
         getLocationFromViewInput()
-        socialRoutingViewModel = getViewModel()
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            mMap.isMyLocationEnabled = true
+        else
+        // Show rationale and request permission.
+            ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
     }
 
     override fun onBackPressed() {
@@ -95,7 +117,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
         // Create the edit text for location.
         val editText = EditText(this)
-        editText.inputType = InputType.TYPE_TEXT_VARIATION_NORMAL
+        editText.inputType = InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
 
         // Set Dialog Message
         alertDialog
@@ -170,6 +192,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                         mMapManager.getMarkerPoints(),
                         categories
                     )
+                    val accessToken = socialRoutingApplication.getUser().accessToken
                     val liveData = socialRoutingViewModel.createRoute(route)
                     handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
                 }
@@ -181,12 +204,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun setChipGroupView() {
+        val accessToken = socialRoutingApplication.getUser().accessToken
         val liveData = socialRoutingViewModel.getRouteCategories()
         handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories)
     }
 
-    private fun requestSuccessHandlerRouteCreation() {
+    private fun requestSuccessHandlerRouteCreation(identifier: String?) {
         showToast(ROUTE_CREATED_SUCCESS)
+        val intent = Intent(this, RouteRepresentationActivity::class.java)
+        intent.putExtra(RouteRepresentationActivity.ROUTE_ID_MESSAGE, identifier!!.toInt())
+        startActivity(intent)
+        finish()
     }
 
     private fun requestSuccessHandlerRouteCategories(categoriesCollection: CategoryCollectionInput?) {

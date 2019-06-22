@@ -6,10 +6,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import dagger.android.support.DaggerAppCompatActivity
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.utils.Resource
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : DaggerAppCompatActivity() {
 
     private val spinnerId: Int = R.id.spinnerProgressBar
 

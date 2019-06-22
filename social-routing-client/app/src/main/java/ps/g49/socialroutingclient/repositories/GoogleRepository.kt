@@ -9,15 +9,20 @@ import ps.g49.socialroutingclient.webService.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GoogleRepository {
+@Singleton
+class GoogleRepository @Inject constructor(
+    val webService: GoogleWebService
+) {
 
     companion object {
         const val baseUrl = "https://maps.googleapis.com/maps/api/"
         const val googleMapsKey = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
     }
 
-    private val retrofitClient = RetrofitClient(baseUrl).getClient()
+    val retrofitClient = RetrofitClient(baseUrl).getBasicClient()
     val googleWebService = retrofitClient.create(GoogleWebService::class.java)
 
     fun getGeoCoordinatesFromLocation(

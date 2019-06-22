@@ -7,10 +7,13 @@ import ps.g49.socialroutingclient.model.inputModel.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class UserProfileViewModel : ViewModel() {
-
-    private val routeRepository = SocialRoutingRepository()
+@Singleton
+class UserProfileViewModel @Inject constructor(
+    val routeRepository: SocialRoutingRepository
+) : ViewModel() {
 
     fun getUser(id: Int): LiveData<Resource<PersonInput>> = routeRepository.getPerson(id.toString())
 

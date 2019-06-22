@@ -12,14 +12,15 @@ import android.view.Menu
 import android.view.View
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.content_navigation.*
+import kotlinx.android.synthetic.main.nav_header_navigation.*
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.SocialRoutingApplication
 
 class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         const val INCORRECT_TEXT_INPUT = "Fill the Location first"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +61,12 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.navigation, menu)
+
+        val application = this@NavigationActivity.application as SocialRoutingApplication
+        val user = application.getUser()
+        name_account_textview.text = user.name
+        email_account_textview.text = user.email
+
         return true
     }
 

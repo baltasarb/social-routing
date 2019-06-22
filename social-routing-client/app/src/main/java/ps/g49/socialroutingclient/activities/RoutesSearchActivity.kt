@@ -11,23 +11,30 @@ import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
 import ps.g49.socialroutingclient.utils.OnRouteListener
-import ps.g49.socialroutingclient.utils.SearchRoutesAdapter
+import ps.g49.socialroutingclient.adapters.SearchRoutesAdapter
+import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
+import javax.inject.Inject
 
 class RoutesSearchActivity : BaseActivity(), OnRouteListener {
 
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var routesSearched: List<RouteSearchInput>
+    private lateinit var socialRoutingApplication: SocialRoutingApplication
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_routes)
 
-        socialRoutingViewModel = getViewModel()
+        socialRoutingViewModel = getViewModel(viewModelFactory)
+        socialRoutingApplication = application as SocialRoutingApplication
         searchRoutes()
     }
 
     private fun searchRoutes() {
+        val accessToken = socialRoutingApplication.getUser().accessToken
         val liveData = socialRoutingViewModel.searchRoutes()
         handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch, ::requestErrorHandlerSearch)
     }

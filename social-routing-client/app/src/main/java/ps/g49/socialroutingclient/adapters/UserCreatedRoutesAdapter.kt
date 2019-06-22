@@ -1,16 +1,20 @@
-package ps.g49.socialroutingclient.utils
+package ps.g49.socialroutingclient.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import ps.g49.socialroutingclient.model.inputModel.RouteInput
+import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
-import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
+import ps.g49.socialroutingclient.utils.OnRouteListener
 
-class SearchRoutesAdapter(val routes: List<RouteSearchInput>, val onRouteListener: OnRouteListener)
-    : RecyclerView.Adapter<SearchRoutesAdapter.ViewHolder>() {
+class UserCreatedRoutesAdapter(
+    val routes: List<RouteInput>,
+    val onRouteListener: OnRouteListener
+)
+    : RecyclerView.Adapter<UserCreatedRoutesAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -21,6 +25,7 @@ class SearchRoutesAdapter(val routes: List<RouteSearchInput>, val onRouteListene
 
         val textView: TextView = view.findViewById(R.id.routeTitleTextView)
         val ratingBar: RatingBar = view.findViewById(R.id.routeRatingBar)
+
         private val listener: OnRouteListener = onRouteListener
 
         init {
@@ -34,12 +39,15 @@ class SearchRoutesAdapter(val routes: List<RouteSearchInput>, val onRouteListene
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
+        // create a new view
         val constraintLayout = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.created_routes_list_item_layout, parent, false)
 
-        return ViewHolder(constraintLayout, onRouteListener)
+        return ViewHolder(
+            constraintLayout,
+            onRouteListener
+        )
     }
 
     override fun getItemCount(): Int = routes.size
@@ -50,5 +58,8 @@ class SearchRoutesAdapter(val routes: List<RouteSearchInput>, val onRouteListene
         holder.textView.text = route.name
         holder.ratingBar.rating = route.rating.toFloat()
     }
+
+
+
 
 }

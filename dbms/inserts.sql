@@ -19,6 +19,7 @@ VALUES('100', 'token1', 'subject1'),
 INSERT INTO Category (Name) VALUES ('Sea');
 INSERT INTO Category (Name) VALUES ('Sports');
 INSERT INTO Category (Name) VALUES ('Nature');
+INSERT INTO Category (Name) VALUES ('City');
 INSERT INTO Category (Name) VALUES ('Other');
 
 --INSERT INTO RouteCategory(CategoryName, RouteIdentifier) VALUES ('Sea', 2);

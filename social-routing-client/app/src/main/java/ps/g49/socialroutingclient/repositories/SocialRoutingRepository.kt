@@ -11,16 +11,21 @@ import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import javax.inject.Inject
+import javax.inject.Named
+import javax.inject.Singleton
 
-class SocialRoutingRepository {
+@Singleton
+class SocialRoutingRepository @Inject constructor(
+    var socialRoutingWebService: SocialRoutingWebService
+){
 
-    companion object {
-        //const val baseUrl = "http://10.0.2.2:8080/api.sr/"
-        const val baseUrl = "http://10.10.67.135:8080/api.sr/"
+    private fun updateAccessToken(accessToken: String) {
+        socialRoutingWebService = RetrofitClient("http://10.0.2.2:8080/api.sr/")
+            .getAuthenticatedClient(accessToken)
+            .create(SocialRoutingWebService::class.java)
     }
-
-    private val retrofitSocialRouting = RetrofitClient(baseUrl).getClient()
-    private val socialRoutingWebService = retrofitSocialRouting.create(SocialRoutingWebService::class.java)
 
     fun signIn(idTokenString: String): LiveData<Resource<AuthenticationDataInput>> {
         val resource = MutableLiveData<Resource<AuthenticationDataInput>>()
@@ -35,8 +40,11 @@ class SocialRoutingRepository {
 
                 override fun onResponse(call: Call<AuthenticationDataInput>, response: Response<AuthenticationDataInput>) {
                     val code = response.code()
-                    if (code == 200)
-                        resource.value = Resource.success(response.body()!!)
+                    if (code == 200) {
+                        val authenticationData = response.body()!!
+                        resource.value = Resource.success(authenticationData)
+                        updateAccessToken(authenticationData.accessToken)
+                    }
                     else
                         resource.value = Resource.error(response.message(), null)
                 }
@@ -138,8 +146,11 @@ class SocialRoutingRepository {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     val code = response.code()
                     val url = response.headers().get("Location")
-                    if (code == 200)
-                        resource.value = Resource.success(url!!)
+                    if (code == 200) {
+                        val list = url!!.split("/")
+                        val id = list[list.size - 1]
+                        resource.value = Resource.success(id)
+                    }
                     else
                         resource.value = Resource.error(response.message(), null)
                 }
