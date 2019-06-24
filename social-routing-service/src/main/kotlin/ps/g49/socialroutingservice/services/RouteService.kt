@@ -6,6 +6,7 @@ import ps.g49.socialroutingservice.models.requests.RouteRequest
 import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
+import ps.g49.socialroutingservice.models.domainModel.SimplifiedRouteCollection
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Service
@@ -27,7 +28,7 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
         routeRepository.update(connectionHandle, route)
     }
 
-    fun search(searchRequest: SearchRequest): List<SimplifiedRoute> {
+    fun search(searchRequest: SearchRequest): SimplifiedRouteCollection {
         return routeRepository.findAllByParameter(searchRequest.location!!, searchRequest.page)
     }
 

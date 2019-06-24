@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.models.inputModel.PersonInput
 import ps.g49.socialroutingservice.mappers.outputMappers.PersonOutputMapper
-import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
+import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.PersonOutput
-import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutputCollection
+import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionOutput
 import ps.g49.socialroutingservice.services.PersonService
 import ps.g49.socialroutingservice.utils.RequestBuilder
 import ps.g49.socialroutingservice.utils.OutputUtils
@@ -19,7 +19,7 @@ class PersonController(
         private val personService: PersonService,
         private val connectionManager: ConnectionManager,
         private val personOutputMapper: PersonOutputMapper,
-        private val simplifiedRouteOutputMapper: SimplifiedRouteOutputMapper
+        private val simplifiedRouteCollectionOutputMapper: SimplifiedRouteCollectionOutputMapper
 ) {
 
     @GetMapping("/{identifier}")
@@ -30,10 +30,10 @@ class PersonController(
     }
 
     @GetMapping("/{identifier}/routes")
-    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteOutputCollection> {
+    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteCollectionOutput> {
         val userRoutesRequest = RequestBuilder.buildUserRoutesRequest(identifier, params)
-        val routes = personService.findUserCreatedRoutes(userRoutesRequest)
-        val output = simplifiedRouteOutputMapper.mapCollection(routes)
+        val simplifiedRouteCollection = personService.findUserCreatedRoutes(userRoutesRequest)
+        val output = simplifiedRouteCollectionOutputMapper.map(simplifiedRouteCollection)
         return OutputUtils.ok(output)
     }
 

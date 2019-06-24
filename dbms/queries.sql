@@ -47,15 +47,33 @@ VALUES
  ) 
 ON CONFLICT ON CONSTRAINT customers_name_key 
 DO NOTHING;
-	
-	
-SELECT PersonIdentifier, HashedToken
-FROM GoogleAuthentication
-WHERE Subject = ''
 
 SELECT * FROM Person;
 SELECT * FROM Authentication;
 SELECT * FROM Route;
 SELECT * FROM Category;
 SELECT * FROM RouteCategory;
+SELECT * FROM GoogleAuthentication;
 
+SELECT  (
+	SELECT COUNT(*) FROM Route WHERE PersonIdentifier = 100
+) as count, Identifier, Name, Rating, PersonIdentifier 
+FROM Route 
+WHERE PersonIdentifier = 100
+ORDER BY Rating DESC 
+LIMIT 3
+OFFSET 0;
+
+SELECT Count(*) as count, Identifier, Name, Rating, PersonIdentifier 
+	FROM Route 
+	WHERE PersonIdentifier = 100 
+GROUP BY(Route.Identifier)
+ORDER BY Rating DESC 
+LIMIT 3
+OFFSET 0;
+	
+		
+	
+	
+	
+	

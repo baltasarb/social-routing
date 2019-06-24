@@ -7,9 +7,9 @@ import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.utils.RequestBuilder
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
-import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteOutputMapper
+import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
-import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutputCollection
+import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionOutput
 import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
@@ -19,7 +19,7 @@ class RouteController(
         private val connectionManager: ConnectionManager,
         private val routeService: RouteService,
         private val routeOutputMapper: RouteOutputMapper,
-        private val simplifiedRouteOutputMapper: SimplifiedRouteOutputMapper
+        private val simplifiedRouteCollectionOutputMapper: SimplifiedRouteCollectionOutputMapper
 ) {
 
     @GetMapping
@@ -36,10 +36,10 @@ class RouteController(
     }
 
     @GetMapping("/search")
-    fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteOutputCollection> {
+    fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteCollectionOutput> {
         val searchRequest = RequestBuilder.buildSearchRequest(params)
         val routes = routeService.search(searchRequest)
-        val output = simplifiedRouteOutputMapper.mapCollection(routes)
+        val output = simplifiedRouteCollectionOutputMapper.map(routes)
         return OutputUtils.ok(output)
     }
 

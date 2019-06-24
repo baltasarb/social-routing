@@ -4,7 +4,7 @@ class RouteQueries {
 
     companion object {
         // Select Queries
-        const val SELECT_WITH_CATEGORIES = "" +
+        const val SELECT_BY_ID_WITH_CATEGORIES = "" +
                 "SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, array_agg(RouteCategory.CategoryName) AS Categories " +
                 "FROM Route " +
                 "JOIN RouteCategory " +
@@ -14,15 +14,17 @@ class RouteQueries {
 
         const val SELECT_MANY = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
 
-        const val SELECT_MANY_BY_LOCATION_WITH_PAGINATION = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
+        const val SELECT_MANY_BY_LOCATION_WITH_PAGINATION = "" +
+                "SELECT COUNT(*) OVER() as count, Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
                 "FROM Route " +
                 "WHERE Location = :location " +
                 "ORDER BY Rating DESC " +
                 "LIMIT :limit " +
                 "OFFSET :offset;"
 
-        const val SELECT_MANY_BY_OWNER_WITH_PAGINATION = "" +
-                "SELECT Identifier, Name, Rating, PersonIdentifier " +
+        const val SELECT_MANY_BY_OWNER_WITH_PAGINATION_AND_COUNT = "" +
+                "SELECT " +
+                "COUNT(*) OVER() as count, Identifier, Name, Rating, PersonIdentifier " +
                 "FROM Route " +
                 "WHERE PersonIdentifier = :personIdentifier " +
                 "ORDER BY Rating DESC " +

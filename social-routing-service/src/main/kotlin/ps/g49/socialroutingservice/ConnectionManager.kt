@@ -66,8 +66,7 @@ class ConnectionManager {
         }
     }
 
-    fun <R> findManyWithPagination(stringQuery: String, mapper: RowMapper<R>, page: Int, params: HashMap<String, Any>): List<R> {
-        val limit = 5
+    fun <R> findManyWithPagination(limit : Int, stringQuery: String, mapper: RowMapper<R>, page: Int, params: HashMap<String, Any>): List<R> {
         val offset = page * limit - limit
         return jdbi.withHandle<List<R>, SQLException> { handle ->
             val query = handle.select(stringQuery)

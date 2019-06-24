@@ -9,21 +9,25 @@ import ps.g49.socialroutingservice.exceptions.ResourceNotFoundException
 import ps.g49.socialroutingservice.mappers.sqlArrayTypeMappers.CategoryArrayType
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
+import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteWithCountMapper
 import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
+import ps.g49.socialroutingservice.models.domainModel.SimplifiedRouteCollection
 import ps.g49.socialroutingservice.repositories.RouteRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.RouteQueries
-import java.sql.SQLException
 
 @Component
 class RouteRepositoryImplementation(
         private val connectionManager: ConnectionManager,
         private val mapper: RouteMapper,
-        private val simplifiedRouteMapper: SimplifiedRouteMapper
+        private val simplifiedRouteMapper: SimplifiedRouteMapper,
+        private val simplifiedRouteWithCountMapper: SimplifiedRouteWithCountMapper
 ) : RouteRepository {
 
+    private val routesPerResult = 2
+
     override fun findById(connectionHandle: Handle, id: Int): Route {
-        return connectionHandle.select(RouteQueries.SELECT_WITH_CATEGORIES)
+        return connectionHandle.select(RouteQueries.SELECT_BY_ID_WITH_CATEGORIES)
                 .bind("routeIdentifier", id)
                 .map(mapper)
                 .findOnly()
@@ -33,14 +37,48 @@ class RouteRepositoryImplementation(
         return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
     }
 
-    override fun findAllByParameter(parameter: String, page: Int): List<SimplifiedRoute> {
+    override fun findAllByParameter(parameter: String, page: Int): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>("location" to parameter)
-        return connectionManager.findManyWithPagination(RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION, simplifiedRouteMapper, page, params)
+
+        val result = connectionManager.findManyWithPagination(
+                routesPerResult,
+                RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION                ,
+                simplifiedRouteWithCountMapper,
+                page,
+                params
+        )
+
+        if(result.isEmpty())
+            throw ResourceNotFoundException()
+
+        val totalCount = result.first().count
+
+        return SimplifiedRouteCollection(
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
+                if(nextPageExists(totalCount, page)) page + 1 else null
+        )
     }
 
-    override fun findPersonCreatedRoutes(identifier: Int, page: Int): List<SimplifiedRoute> {
+    override fun findPersonCreatedRoutes(identifier: Int, page: Int): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>("personIdentifier" to identifier)
-        return connectionManager.findManyWithPagination(RouteQueries.SELECT_MANY_BY_OWNER_WITH_PAGINATION, simplifiedRouteMapper, page, params)
+
+        val result = connectionManager.findManyWithPagination(
+                routesPerResult,
+                RouteQueries.SELECT_MANY_BY_OWNER_WITH_PAGINATION_AND_COUNT,
+                simplifiedRouteWithCountMapper,
+                page,
+                params
+        )
+
+        if(result.isEmpty())
+            throw ResourceNotFoundException()
+
+        val totalCount = result.first().count
+
+        return SimplifiedRouteCollection(
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
+                if(nextPageExists(totalCount, page)) page + 1 else null
+        )
     }
 
     override fun create(connectionHandle: Handle, route: Route): Int {
@@ -94,4 +132,7 @@ class RouteRepositoryImplementation(
         return connectionManager.deleteByIntId(RouteQueries.DELETE, identifier)
     }
 
+    private fun nextPageExists(totalCount: Int, currentPage: Int): Boolean {
+        return totalCount != 0 && totalCount > routesPerResult * currentPage
+    }
 }

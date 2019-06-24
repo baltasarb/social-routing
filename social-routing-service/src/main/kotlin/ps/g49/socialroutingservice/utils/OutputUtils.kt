@@ -16,6 +16,7 @@ class OutputUtils {
         fun personUrl(personIdentifier: Int): String = "$PERSONS_URL/$personIdentifier"
         fun personRoutesUrl(personIdentifier: Int) = "$PERSONS_URL/$personIdentifier/routes"
         fun routeUrl(routeIdentifier: Int): String = "$ROUTES_URL/$routeIdentifier"
+        fun personRoutesUrlWithPage(personIdentifier: Int, page : Int) : String = personRoutesUrl(personIdentifier) + "?page=$page"
 
         //used for get responses
         fun <T> ok(body: T): ResponseEntity<T> {
