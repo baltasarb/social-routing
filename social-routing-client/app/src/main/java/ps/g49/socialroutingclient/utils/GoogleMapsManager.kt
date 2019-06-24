@@ -1,16 +1,22 @@
 package ps.g49.socialroutingclient.utils
 
 import android.graphics.Color
+import androidx.lifecycle.LiveData
 import ps.g49.socialroutingclient.model.Point
-import ps.g49.socialroutingclient.repositories.GoogleRepository
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import ps.g49.socialroutingclient.model.inputModel.geocoding.PointGeocoding
+import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import java.util.*
 
 class GoogleMapsManager(
     val googleMap: GoogleMap,
-    val geocodingRepository: GoogleRepository
+    val googleViewModel: GoogleViewModel,
+    val handlerRequest: (
+        liveData: LiveData<Resource<PointGeocoding>>,
+        requestSuccessHandler: (result: PointGeocoding?) -> Unit
+    ) -> Unit
 ) {
 
     private val markerOptions = LinkedList<Marker>()
@@ -95,10 +101,11 @@ class GoogleMapsManager(
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, cameraZoom))
     }
 
-    fun zoomInLocation(location: String, errorResponse: (str: String) -> Unit) {
-        geocodingRepository.getGeoCoordinatesFromLocation(location, { lat, long ->
-            moveCameraToCoordinates(lat, long, CITY_ZOOM)
-        }, errorResponse)
+    fun zoomInLocation(location: String) {
+        val liveData = googleViewModel.getGeoCoordinatesFromLocation(location)
+        handlerRequest(liveData) {
+            moveCameraToCoordinates(it!!.lat, it.lng, CITY_ZOOM)
+        }
     }
 
     fun getMarkerPoints(): List<Point> = markerOptions.map {

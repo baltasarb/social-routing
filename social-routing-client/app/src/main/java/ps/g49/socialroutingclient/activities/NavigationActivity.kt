@@ -18,10 +18,6 @@ import ps.g49.socialroutingclient.SocialRoutingApplication
 
 class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    companion object {
-        const val INCORRECT_TEXT_INPUT = "Fill the Location first"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -103,7 +99,8 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
 
     fun searchRoutesOnClick(view: View) {
         if (location_editText.text.isEmpty()) {
-            showToast(INCORRECT_TEXT_INPUT)
+            val missingLocationMessage = getString(R.string.fill_location_form)
+            showToast(missingLocationMessage)
             return
         }
 

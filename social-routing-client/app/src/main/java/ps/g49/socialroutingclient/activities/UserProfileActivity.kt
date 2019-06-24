@@ -22,11 +22,11 @@ import javax.inject.Inject
 
 class UserProfileActivity : BaseActivity(), OnRouteListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var viewModel: UserProfileViewModel
     private lateinit var routesInputs: List<RouteInput>
     private lateinit var socialRoutingApplication: SocialRoutingApplication
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,6 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun getUserProfileInfo(userId: Int) {
-        val accessToken = socialRoutingApplication.getUser().accessToken
         val liveData = viewModel.getUser(userId)
         handleRequestedData(liveData, ::requestSuccessHandlerUserProfile)
     }
@@ -52,7 +51,6 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun requestUserRoutes(personInput: PersonInput?) {
-        val accessToken = socialRoutingApplication.getUser().accessToken
         val liveDataRoutes = viewModel.getUserRoutesFromUrl(personInput!!.routesUrl)
         handleRequestedData(liveDataRoutes, ::requestSuccessHandlerUserRoutes)
     }
@@ -67,9 +65,10 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
     override fun onRouteClick(position: Int) {
         if (routesInputs.isNotEmpty()) {
+            val routeIdIntentMessage = getString(R.string.route_id_intent_message)
             val routeInput = routesInputs[position]
             val intent = Intent(this, RouteRepresentationActivity::class.java)
-            intent.putExtra(RouteRepresentationActivity.ROUTE_ID_MESSAGE, routeInput.identifier)
+            intent.putExtra(routeIdIntentMessage, routeInput.identifier)
             startActivity(intent)
         }
     }

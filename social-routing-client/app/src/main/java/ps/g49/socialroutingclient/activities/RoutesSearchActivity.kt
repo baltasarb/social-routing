@@ -18,11 +18,11 @@ import javax.inject.Inject
 
 class RoutesSearchActivity : BaseActivity(), OnRouteListener {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var routesSearched: List<RouteSearchInput>
     private lateinit var socialRoutingApplication: SocialRoutingApplication
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +34,6 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun searchRoutes() {
-        val accessToken = socialRoutingApplication.getUser().accessToken
         val liveData = socialRoutingViewModel.searchRoutes()
         handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch, ::requestErrorHandlerSearch)
     }
@@ -61,9 +60,10 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
 
     override fun onRouteClick(position: Int) {
         if (routesSearched.isNotEmpty()) {
+            val routeIdIntentMessage = getString(R.string.route_id_intent_message)
             val routeInput = routesSearched.get(position)
             val intent = Intent(this, RouteRepresentationActivity::class.java)
-            intent.putExtra(RouteRepresentationActivity.ROUTE_ID_MESSAGE, routeInput.identifier)
+            intent.putExtra(routeIdIntentMessage, routeInput.identifier)
             startActivity(intent)
         }
     }

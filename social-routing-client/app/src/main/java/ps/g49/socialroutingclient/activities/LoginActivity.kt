@@ -22,17 +22,14 @@ import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
 
-    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
-    lateinit var socialRoutingApplication: SocialRoutingApplication
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
+    private lateinit var socialRoutingApplication: SocialRoutingApplication
 
     companion object {
-        private const val RC_SIGN_IN = 1
-        private const val SUCCESS_LOGIN_MESSAGE = "Welcome %s"
-        private const val ERROR_LOGIN_MESSAGE = "Something went wrong try again"
+        const val RC_SIGN_IN = 1
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +90,8 @@ class LoginActivity : BaseActivity() {
 
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
-            showToast(ERROR_LOGIN_MESSAGE)
+            val errorLoginMessage = getString(R.string.google_login_error)
+            showToast(errorLoginMessage)
             stopSpinner()
         }
     }
@@ -103,7 +101,8 @@ class LoginActivity : BaseActivity() {
         user.accessToken = authenticationData!!.accessToken
         user.refreshToken = authenticationData.refreshToken
 
-        showToast(String.format(SUCCESS_LOGIN_MESSAGE, user.name))
+        val welcomeMessage = getString(R.string.welcome_message)
+        showToast(String.format(welcomeMessage, user.name))
         val intent = Intent(this, NavigationActivity::class.java)
         startActivity(intent)
         finish()

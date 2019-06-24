@@ -1,5 +1,6 @@
 package ps.g49.socialroutingclient.activities
 
+import android.Manifest
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -11,6 +12,11 @@ import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.utils.Resource
 
 abstract class BaseActivity : DaggerAppCompatActivity() {
+
+    companion object {
+        const val LOCATION_PERMISSION_REQUEST = 1234
+        val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+    }
 
     private val spinnerId: Int = R.id.spinnerProgressBar
 

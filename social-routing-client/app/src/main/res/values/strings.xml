@@ -25,7 +25,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
-    <string name="server_client_id">989313558568-hh544t4t551d4dd04amadvj3sft9hj0t.apps.googleusercontent.com </string>
+    <string name="server_client_id">989313558568-hh544t4t551d4dd04amadvj3sft9hj0t.apps.googleusercontent.com</string>
     <string name="routes_search">Routes Search</string>
     <string name="communicate">Communicate</string>
     <string name="route_creation">Route Creation</string>
@@ -37,4 +37,30 @@
     <string name="walking">walking</string>
     <string name="bicycling">bicycling</string>
     <string name="transit">transit</string>
+    <!-->
+        Login Activity
+    <!-->
+    <string name="welcome_message">Welcome %s</string>
+    <string name="google_login_error">Something went wrong try again</string>
+    <!-->
+        Navigation Activity
+    <!-->
+    <string name="fill_location_form">Fill the Location first</string>
+    <!-->
+        Navigation Activity
+    <!-->
+    <string name="search">Search</string>
+    <string name="route_location">Route location</string>
+    <string name="markers_required">First add markers to path, to save the Route.</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="success_route_creation">The Route was created Successfully!</string>
+    <string name="fill_name_categories_form">Need to fill at least the name and one category</string>
+    <string name="confirmation_to_delete">Are you sure you want to erase your creation ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <!-->
+        Navigation Activity
+    <!-->
+    <string name="route_id_intent_message">ROUTE_ID_MESSAGE</string>
 </resources>

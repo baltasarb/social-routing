@@ -21,30 +21,22 @@ import ps.g49.socialroutingclient.model.Point
 import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
 import ps.g49.socialroutingclient.repositories.GoogleRepository
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
+import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
 
 class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var socialRoutingApplication: SocialRoutingApplication
+    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
+    private lateinit var googleViewModel: GoogleViewModel
     private lateinit var googleMapsManager: GoogleMapsManager
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var route: RouteDetailedInput
     private var routeId: Int = -1
-    val PERMISSIONS = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-    val LOCATION_PERMISSION_REQUEST = 1234
-
-    private lateinit var socialRoutingApplication: SocialRoutingApplication
-
-    @Inject
-    lateinit var googleRepository: GoogleRepository
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-
-    companion object{
-        const val ROUTE_ID_MESSAGE = "ROUTE_ID_MESSAGE"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +52,11 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        routeId = intent.getIntExtra(ROUTE_ID_MESSAGE, -1)
+        val routeIdIntentMessage = getString(R.string.route_id_intent_message)
+        routeId = intent.getIntExtra(routeIdIntentMessage, -1)
         socialRoutingApplication = application as SocialRoutingApplication
         socialRoutingViewModel = getViewModel(viewModelFactory)
+        googleViewModel = getViewModel(viewModelFactory)
     }
 
     /*
@@ -74,7 +68,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        googleMapsManager = GoogleMapsManager(mMap, googleRepository)
+        googleMapsManager = GoogleMapsManager(mMap, googleViewModel, ::handleRequestedData)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             mMap.isMyLocationEnabled = true
@@ -109,20 +103,20 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             locationTask.addOnSuccessListener {
                 val initialPoint = Point(it.latitude, it.longitude)
 
-                googleRepository.getDirections(
+                // TODO( "Change mode of transport to be a user choice
+                val liveData = googleViewModel.getDirections(
                     initialPoint,
                     route.points.first(),
-                    "walking",
-                    ::successRequestHandlerGoogleDirection,
-                    ::showToast
+                    "walking"
                 )
+                handleRequestedData(liveData, ::successRequestHandlerGoogleDirection)
             }
         }
         liveTrackingButton.visibility = View.INVISIBLE
     }
 
-    private fun successRequestHandlerGoogleDirection(list: List<Point>) {
-        googleMapsManager.drawLineSetToFollow(list)
+    private fun successRequestHandlerGoogleDirection(list: List<Point>?) {
+        googleMapsManager.drawLineSetToFollow(list!!)
     }
 
     private fun showInitialForm() {
