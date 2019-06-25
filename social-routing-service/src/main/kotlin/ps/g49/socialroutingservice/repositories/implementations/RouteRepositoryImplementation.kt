@@ -132,6 +132,15 @@ class RouteRepositoryImplementation(
         return connectionManager.deleteByIntId(RouteQueries.DELETE, identifier)
     }
 
+    override fun updateElevation(identifier: Int, elevation: Double) {
+        val handle = connectionManager.generateHandle()
+
+        handle.createUpdate(RouteQueries.UPDATE_ELEVATION)
+                .bind("elevation", elevation)
+                .bind("identifier", identifier)
+                .execute()
+    }
+
     private fun nextPageExists(totalCount: Int, currentPage: Int): Boolean {
         return totalCount != 0 && totalCount > routesPerResult * currentPage
     }

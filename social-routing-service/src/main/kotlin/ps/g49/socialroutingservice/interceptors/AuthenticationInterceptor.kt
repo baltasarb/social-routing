@@ -3,7 +3,6 @@ package ps.g49.socialroutingservice.interceptors
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import ps.g49.socialroutingservice.exceptions.AuthorizationHeaderException
-import ps.g49.socialroutingservice.exceptions.AuthorizationException
 import ps.g49.socialroutingservice.services.AuthenticationService
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse

@@ -32,7 +32,8 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
                 dateCreated = rs.getDate("DateCreated"),
                 points = pointList,
                 personIdentifier = rs.getInt("PersonIdentifier"),
-                categories = categoriesStringArray.toList().map { Category(it) }
+                categories = categoriesStringArray.toList().map { Category(it) },
+                elevation = rs.getDouble("Elevation")
         )
     }
 

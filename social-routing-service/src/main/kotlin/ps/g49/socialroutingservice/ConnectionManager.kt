@@ -18,7 +18,7 @@ class ConnectionManager {
 
     private val url = "jdbc:postgresql://localhost:5432/SocialRouting"
 
-    val jdbi: Jdbi = Jdbi.create(url, username, password) // returns a Jdbi which uses DriverManager as a connection factory.
+    private val jdbi: Jdbi = Jdbi.create(url, username, password) // returns a Jdbi which uses DriverManager as a connection factory.
 
     /**
      * @param query an sql SELECT query

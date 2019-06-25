@@ -57,6 +57,10 @@ class RouteQueries {
                 "UNNEST(:categories)" +
                 ");"
 
+        const val UPDATE_ELEVATION: String = "UPDATE ROUTE " +
+                "SET elevation = :elevation " +
+                "WHERE Identifier = :identifier;"
+
         // Delete Queries
         const val DELETE = "DELETE FROM Route WHERE identifier = ?;"
     }

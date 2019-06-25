@@ -10,6 +10,7 @@ import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionOutput
+import ps.g49.socialroutingservice.services.RouteElevationAsyncService
 import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
@@ -18,6 +19,7 @@ import ps.g49.socialroutingservice.utils.OutputUtils
 class RouteController(
         private val connectionManager: ConnectionManager,
         private val routeService: RouteService,
+        private val routeElevationAsyncService: RouteElevationAsyncService,
         private val routeOutputMapper: RouteOutputMapper,
         private val simplifiedRouteCollectionOutputMapper: SimplifiedRouteCollectionOutputMapper
 ) {
@@ -48,12 +50,14 @@ class RouteController(
         val connectionHandle = connectionManager.generateHandle()
 
         val routeDto = RequestBuilder.buildRouteRequest(route)
-        val id = routeService.createRoute(connectionHandle, routeDto)
+        val routeIdentifier = routeService.createRoute(connectionHandle, routeDto)
 
         connectionHandle.close()
 
+        routeElevationAsyncService.findElevation(routeIdentifier,route.points)
+
         val headers = HttpHeaders()
-        headers.set("Location", OutputUtils.routeUrl(id))
+        headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
 
         return OutputUtils.ok(headers)
     }
@@ -62,9 +66,9 @@ class RouteController(
     fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = RequestBuilder.buildRouteRequest(route, identifier)
+        val routeRequest = RequestBuilder.buildRouteRequest(route, identifier)
 
-        routeService.updateRoute(connectionHandle, routeDto)
+        routeService.updateRoute(connectionHandle, routeRequest)
 
         connectionHandle.close()
 

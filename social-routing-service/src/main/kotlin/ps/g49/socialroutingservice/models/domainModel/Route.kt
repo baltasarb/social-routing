@@ -12,5 +12,6 @@ data class Route(
         var dateCreated: Date? = null, // created by db
         val points: List<Point>? = null,
         val personIdentifier: Int,
-        var categories : List<Category>? = null
+        var categories : List<Category>? = null,
+        val elevation : Double? = null
 )

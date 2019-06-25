@@ -25,6 +25,7 @@ CREATE TABLE Route(
 	Duration bigint NOT NULL, -- Duration in minutes (provided by google api)
 	DateCreated date NOT NULL,
 	Points json NOT NULL,
+	Elevation double precision DEFAULT NULL,
 	PersonIdentifier serial REFERENCES Person(Identifier) ON DELETE CASCADE
 );
 

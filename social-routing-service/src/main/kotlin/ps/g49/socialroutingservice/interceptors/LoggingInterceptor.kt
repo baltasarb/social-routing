@@ -31,7 +31,7 @@ class LoggingInterceptor : HandlerInterceptorAdapter() {
     }
 
     override fun postHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any, modelAndView: ModelAndView?) {
-        logger.info("Post request:\n")
+        logger.info("\nPost request:\n")
         logger.info("Status Code" + " : ${response.status}.")
         val headerNames = response.headerNames
         headerNames.stream().forEach { headerName ->

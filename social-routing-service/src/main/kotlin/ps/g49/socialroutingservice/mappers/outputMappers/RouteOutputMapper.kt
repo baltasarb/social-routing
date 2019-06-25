@@ -25,7 +25,8 @@ class RouteOutputMapper : OutputMapper<Route, RouteOutput>, OutputCollectionMapp
             dateCreated = from.dateCreated!!,
             points = from.points!!,
             ownerUrl = OutputUtils.personUrl(from.personIdentifier),
-            categories = from.categories!!.map { CategoryOutput(it.name) }
+            categories = from.categories!!.map { CategoryOutput(it.name) },
+            elevation = from.elevation
     )
 
 }
