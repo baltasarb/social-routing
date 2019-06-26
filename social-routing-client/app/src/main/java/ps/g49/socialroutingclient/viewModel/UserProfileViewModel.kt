@@ -15,9 +15,12 @@ class UserProfileViewModel @Inject constructor(
     val routeRepository: SocialRoutingRepository
 ) : ViewModel() {
 
-    fun getUser(id: Int): LiveData<Resource<PersonInput>> = routeRepository.getPerson(id.toString())
+    fun getUser(personUrl: String): LiveData<Resource<PersonInput>> =
+        routeRepository.getPerson(personUrl)
 
-    fun getUserRoutesFromUrl(routesUrl: String): LiveData<Resource<SimplifiedRouteInputCollection>> = routeRepository.getUserRoutes(routesUrl)
+    fun getUserRoutesFromUrl(routesUrl: String): LiveData<Resource<SimplifiedRouteInputCollection>> =
+        routeRepository.getUserRoutes(routesUrl)
 
-    fun deleteUserRoute(routeId: Int): LiveData<Resource<Void>> = routeRepository.deleteRoute(routeId)
+    fun deleteUserRoute(routesUrl: String): LiveData<Resource<Void>> =
+        routeRepository.deleteRoute(routesUrl)
 }

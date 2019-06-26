@@ -13,7 +13,6 @@ class GoogleViewModel @Inject constructor(
 ) : ViewModel() {
 
     companion object {
-        const val baseUrl = "https://maps.googleapis.com/maps/api/"
         const val googleMapsKey = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
     }
 

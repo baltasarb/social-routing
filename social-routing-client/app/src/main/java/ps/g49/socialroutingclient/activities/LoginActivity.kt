@@ -3,6 +3,7 @@ package ps.g49.socialroutingclient.activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,6 +19,7 @@ import ps.g49.socialroutingclient.model.UserAccount
 import ps.g49.socialroutingclient.model.inputModel.AuthenticationDataInput
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
+import ps.g49.socialroutingclient.model.inputModel.SocialRoutingRootResource
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
@@ -54,18 +56,31 @@ class LoginActivity : BaseActivity() {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
+
+        obtainSocialRoutingAPIRootResources()
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun obtainSocialRoutingAPIRootResources() {
+        val liveData = socialRoutingViewModel.getRootResource()
+        handleRequestedData(liveData, ::successHandlerRootResources, ::errorHandlerRootResource)
+    }
+
+    private fun successHandlerRootResources(socialRoutingRootResource: SocialRoutingRootResource?) {
+        socialRoutingApplication.setSocialRoutingRootResource(socialRoutingRootResource!!)
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account != null) {
             saveAccount(account)
-            val liveData = socialRoutingViewModel.signIn(account.idToken!!)
+            val authenticationUrl = socialRoutingRootResource.authenticationUrls["google"]!!
+            val liveData = socialRoutingViewModel.signIn(authenticationUrl, account.idToken!!)
             handleRequestedData(liveData, ::successHandlerSignIn)
         }
+    }
+
+    private fun errorHandlerRootResource(msg: String) {
+        showToast("The Server is currently down, sorry! Try later...")
+        sign_in_google_account_button.visibility = View.INVISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -85,7 +100,10 @@ class LoginActivity : BaseActivity() {
             val idToken = account.idToken!!
             saveAccount(account)
 
-            val liveData = socialRoutingViewModel.signIn(idToken)
+            val authenticationUrl = socialRoutingApplication
+                .getSocialRoutingRootResource()
+                .authenticationUrls["google"]!!
+            val liveData = socialRoutingViewModel.signIn(authenticationUrl, idToken)
             handleRequestedData(liveData, ::successHandlerSignIn)
 
         } catch (e: ApiException) {
@@ -96,10 +114,12 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+
     private fun successHandlerSignIn(authenticationData: AuthenticationDataInput?) {
         val user = socialRoutingApplication.getUser()
         user.accessToken = authenticationData!!.accessToken
         user.refreshToken = authenticationData.refreshToken
+        user.userUrl = authenticationData.userUrl!!
 
         val welcomeMessage = getString(R.string.welcome_message)
         showToast(String.format(welcomeMessage, user.name))

@@ -63,4 +63,9 @@
         Navigation Activity
     <!-->
     <string name="route_id_intent_message">ROUTE_ID_MESSAGE</string>
+    <string name="route_intent_message">ROUTE_MESSAGE</string>
+    <string name="location_intent_message">LOCATION_MESSAGE</string>
+
+    <string name="route_url">/route/{identifier}</string>
+    <string name="api_url">http://10.0.2.2:8080/api.sr/</string>
 </resources>

@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Interceptor.*
 import okhttp3.Response
 
-class HeaderInterceptor(val accessToken: String? = null) : Interceptor {
+class HeaderInterceptor(private val accessToken: String? = null) : Interceptor {
 
     override fun intercept(chain: Chain): Response {
         val initialRequest = chain.request()

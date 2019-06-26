@@ -99,7 +99,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     }
 
     protected open fun requestErrorHandler(errorMessage: String) {
-        // ToDo Error Handling
+        showToast(errorMessage)
     }
 
     protected open fun showToast(msg: String) {

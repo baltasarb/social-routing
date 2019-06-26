@@ -29,7 +29,10 @@ interface ApplicationComponent: AndroidInjector<SocialRoutingApplication> {
         fun application(application: Application): Builder
 
         @BindsInstance
-        fun baseUrl(@Named("baseUrl") baseUrl: String): Builder
+        fun socialRoutingAPIBaseUrl(@Named("socialRoutingAPIBaseUrl") baseUrl: String): Builder
+
+        @BindsInstance
+        fun googleMapsAPIBaseUrl(@Named("googleMapsAPIBaseUrl") baseUrl: String): Builder
 
         @BindsInstance
         fun applicationModule(applicationModule: ApplicationModule): Builder

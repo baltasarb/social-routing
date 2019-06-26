@@ -35,13 +35,14 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
         viewModel = getViewModel(viewModelFactory)
 
+        // TODO("receive the correct user url")
         socialRoutingApplication = application as SocialRoutingApplication
-        getUserProfileInfo(socialRoutingApplication.getUser().id)
+        getUserProfileInfo(socialRoutingApplication.getUser().userUrl)
         setView(socialRoutingApplication.getUser())
     }
 
-    private fun getUserProfileInfo(userId: Int) {
-        val liveData = viewModel.getUser(userId)
+    private fun getUserProfileInfo(userUrl: String) {
+        val liveData = viewModel.getUser(userUrl)
         handleRequestedData(liveData, ::requestSuccessHandlerUserProfile)
     }
 
@@ -66,8 +67,10 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     override fun onRouteClick(position: Int) {
         if (routesInputs.isNotEmpty()) {
             val routeIdIntentMessage = getString(R.string.route_id_intent_message)
+            val routeIntentMessage = getString(R.string.route_intent_message)
             val routeInput = routesInputs[position]
             val intent = Intent(this, RouteRepresentationActivity::class.java)
+            intent.putExtra(routeIntentMessage, routeInput.routeUrl)
             intent.putExtra(routeIdIntentMessage, routeInput.identifier)
             startActivity(intent)
         }

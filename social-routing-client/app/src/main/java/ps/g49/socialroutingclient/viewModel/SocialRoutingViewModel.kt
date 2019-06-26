@@ -2,13 +2,10 @@ package ps.g49.socialroutingclient.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import ps.g49.socialroutingclient.model.inputModel.AuthenticationDataInput
+import ps.g49.socialroutingclient.model.inputModel.*
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource
-import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
-import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
-import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,19 +14,22 @@ class SocialRoutingViewModel @Inject constructor (
     val routeRepository : SocialRoutingRepository
 ): ViewModel() {
 
+    fun getRootResource(): LiveData<Resource<SocialRoutingRootResource>> =
+            routeRepository.getRootResource()
+
     fun createRoute(routeOutput: RouteOutput): LiveData<Resource<String>> =
             routeRepository.createRoute(routeOutput)
 
-    fun searchRoutes(): LiveData<Resource<List<RouteSearchInput>>> =
-            routeRepository.searchRoutes()
+    fun searchRoutes(searchRoutesUrl: String, location: String): LiveData<Resource<SimplifiedRouteInputCollection>> =
+            routeRepository.searchRoutes(searchRoutesUrl, location)
 
-    fun getRoute(routeId: Int): LiveData<Resource<RouteDetailedInput>>
-            = routeRepository.getRoute(routeId)
+    fun getRoute(routeUrl: String): LiveData<Resource<RouteDetailedInput>>
+            = routeRepository.getRoute(routeUrl)
 
-    fun getRouteCategories(): LiveData<Resource<CategoryCollectionInput>> =
-            routeRepository.getCategories()
+    fun getRouteCategories(categoriesUrl: String): LiveData<Resource<CategoryCollectionInput>> =
+            routeRepository.getCategories(categoriesUrl)
 
-    fun signIn(idTokenString: String): LiveData<Resource<AuthenticationDataInput>> =
-            routeRepository.signIn(idTokenString)
+    fun signIn(authenticationUrl: String, idTokenString: String): LiveData<Resource<AuthenticationDataInput>> =
+            routeRepository.signIn(authenticationUrl, idTokenString)
 
 }

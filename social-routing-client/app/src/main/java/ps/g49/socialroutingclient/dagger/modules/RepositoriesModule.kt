@@ -1,12 +1,16 @@
 package ps.g49.socialroutingclient.dagger.modules
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import ps.g49.socialroutingclient.repositories.GoogleRepository
 import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.webService.GoogleWebService
 import ps.g49.socialroutingclient.webService.SocialRoutingWebService
 import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -20,8 +24,18 @@ class RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideGoogleWebService(retrofit: Retrofit): GoogleWebService {
-        return retrofit.create(GoogleWebService::class.java)
+    fun provideGoogleWebService(
+        okHttpClient: OkHttpClient,
+        objectMapper: ObjectMapper,
+        @Named("googleMapsAPIBaseUrl") baseUrl: String
+    ): GoogleWebService {
+        return Retrofit
+            .Builder()
+            .client(okHttpClient)
+            .baseUrl(baseUrl)
+            .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+            .build()
+            .create(GoogleWebService::class.java)
     }
 
     @Provides

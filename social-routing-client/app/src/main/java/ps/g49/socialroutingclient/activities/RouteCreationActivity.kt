@@ -37,12 +37,9 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var googleViewModel: GoogleViewModel
     private var location: String = ""
     private lateinit var categoriesLinearLayout: LinearLayout
-
     private lateinit var socialRoutingApplication: SocialRoutingApplication
-    @Inject
-    lateinit var googleRepository: GoogleRepository
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    @Inject lateinit var googleRepository: GoogleRepository
+    @Inject lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,12 +70,6 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
 
         mMap.setOnMapClickListener(mMapManager.onMapClickListener())
         getLocationFromViewInput()
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-            mMap.isMyLocationEnabled = true
-        else
-        // Show rationale and request permission.
-            ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
     }
 
     override fun onBackPressed() {
@@ -123,8 +114,10 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
             .setPositiveButton(searchMessage) { dialog, which ->
 
                 location = editText.text.toString()
-                if (location.isEmpty())
+                if (location.isEmpty()) {
+                    finish()
                     getLocationFromViewInput()
+                }
                 else
                     mMapManager.zoomInLocation(location)
             }
@@ -181,11 +174,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
                 if (name.isEmpty() || categories.isEmpty())
                     showToast(nameAndCategoriesRequiredMessage)
                 else {
+                    val userId = socialRoutingApplication
+                        .getUser()
+                        .userUrl
+                        .split("/")
+                        .last()
+                        .toInt()
                     val route = RouteOutput(
                         location,
                         name,
                         description,
-                        100,
+                        userId,
                         mMapManager.getMarkerPoints(),
                         categories
                     )
@@ -200,15 +199,21 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     private fun setChipGroupView() {
-        val liveData = socialRoutingViewModel.getRouteCategories()
+        val categoriesUrl = socialRoutingApplication.getSocialRoutingRootResource().categoriesUrl
+        val liveData = socialRoutingViewModel.getRouteCategories(categoriesUrl)
         handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories)
     }
 
     private fun requestSuccessHandlerRouteCreation(identifier: String?) {
         val successRouteCreationMessage = getString(R.string.success_route_creation)
         val routeIdIntentMessage = getString(R.string.route_id_intent_message)
+        val routeIntentMessage = getString(R.string.route_intent_message)
+        val routeUrl = getString(R.string.route_url)
+
         showToast(successRouteCreationMessage)
+
         val intent = Intent(this, RouteRepresentationActivity::class.java)
+        intent.putExtra(routeIntentMessage, routeUrl)
         intent.putExtra(routeIdIntentMessage, identifier!!.toInt())
         startActivity(intent)
         finish()

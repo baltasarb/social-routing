@@ -45,7 +45,7 @@ class NetworkModule {
     fun provideRetrofitClient(
         okHttpClient: OkHttpClient,
         objectMapper: ObjectMapper,
-        @Named("baseUrl") baseUrl: String
+        @Named("socialRoutingAPIBaseUrl") baseUrl: String
     ): Retrofit {
         return Retrofit
             .Builder()

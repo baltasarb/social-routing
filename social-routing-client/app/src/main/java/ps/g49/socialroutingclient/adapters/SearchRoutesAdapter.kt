@@ -7,10 +7,11 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.model.inputModel.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
 import ps.g49.socialroutingclient.utils.OnRouteListener
 
-class SearchRoutesAdapter(val routes: List<RouteSearchInput>, val onRouteListener: OnRouteListener)
+class SearchRoutesAdapter(val routes: List<RouteInput>, val onRouteListener: OnRouteListener)
     : RecyclerView.Adapter<SearchRoutesAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item

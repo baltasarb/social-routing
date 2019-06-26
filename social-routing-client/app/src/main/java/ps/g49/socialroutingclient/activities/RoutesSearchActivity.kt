@@ -13,6 +13,8 @@ import ps.g49.socialroutingclient.model.inputModel.RouteSearchInput
 import ps.g49.socialroutingclient.utils.OnRouteListener
 import ps.g49.socialroutingclient.adapters.SearchRoutesAdapter
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
+import ps.g49.socialroutingclient.model.inputModel.RouteInput
+import ps.g49.socialroutingclient.model.inputModel.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
 
@@ -21,8 +23,9 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
-    private lateinit var routesSearched: List<RouteSearchInput>
+    private lateinit var routesSearched: List<RouteInput>
     private lateinit var socialRoutingApplication: SocialRoutingApplication
+    private lateinit var locationString: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +33,27 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
 
         socialRoutingViewModel = getViewModel(viewModelFactory)
         socialRoutingApplication = application as SocialRoutingApplication
-        searchRoutes()
+
+        locationString = intent.getStringExtra(getString(R.string.location_intent_message))
+        searchRoutes(locationString)
     }
 
-    private fun searchRoutes() {
-        val liveData = socialRoutingViewModel.searchRoutes()
-        handleRequestedData(liveData, ::requestSuccessHandlerRouteSearch, ::requestErrorHandlerSearch)
+    private fun searchRoutes(location: String) {
+        val searchRoutesUrl = socialRoutingApplication
+            .getSocialRoutingRootResource()
+            .routeSearchUrl
+            .split("?")[0]
+        val liveData = socialRoutingViewModel.searchRoutes(searchRoutesUrl, location)
+        handleRequestedData(
+            liveData,
+            ::requestSuccessHandlerRouteSearch,
+            ::requestErrorHandlerSearch
+        )
     }
 
-    private fun requestSuccessHandlerRouteSearch(routesSearched: List<RouteSearchInput>?) {
-        if (routesSearched!!.isEmpty())
+    private fun requestSuccessHandlerRouteSearch(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
+        val routesSearched = simplifiedRouteInputCollection!!.routes
+        if (routesSearched.isEmpty())
             emptySearchRoutesTextView.visibility = View.VISIBLE
         else
             setRecyclerView(routesSearched)
@@ -49,7 +63,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         emptySearchRoutesTextView.visibility = View.VISIBLE
     }
 
-    private fun setRecyclerView(list: List<RouteSearchInput>) {
+    private fun setRecyclerView(list: List<RouteInput>) {
         val adapter = SearchRoutesAdapter(list, this)
         val layoutManager = LinearLayoutManager(applicationContext)
         routesSearched = list
@@ -61,8 +75,12 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
     override fun onRouteClick(position: Int) {
         if (routesSearched.isNotEmpty()) {
             val routeIdIntentMessage = getString(R.string.route_id_intent_message)
+            val routeIntentMessage = getString(R.string.route_intent_message)
+            val routeUrl = getString(R.string.route_url)
+
             val routeInput = routesSearched.get(position)
             val intent = Intent(this, RouteRepresentationActivity::class.java)
+            intent.putExtra(routeIntentMessage, routeUrl)
             intent.putExtra(routeIdIntentMessage, routeInput.identifier)
             startActivity(intent)
         }

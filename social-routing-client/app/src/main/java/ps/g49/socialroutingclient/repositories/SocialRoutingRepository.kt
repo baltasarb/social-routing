@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class SocialRoutingRepository @Inject constructor(
     var socialRoutingWebService: SocialRoutingWebService
-){
+) : BaseRepository() {
 
     private fun updateAccessToken(accessToken: String) {
         socialRoutingWebService = RetrofitClient("http://10.0.2.2:8080/api.sr/")
@@ -27,25 +27,42 @@ class SocialRoutingRepository @Inject constructor(
             .create(SocialRoutingWebService::class.java)
     }
 
-    fun signIn(idTokenString: String): LiveData<Resource<AuthenticationDataInput>> {
+    fun getRootResource(): LiveData<Resource<SocialRoutingRootResource>> {
+        val resource = MutableLiveData<Resource<SocialRoutingRootResource>>()
+        resource.value = Resource.loading()
+
+        val call = socialRoutingWebService.getRootResource()
+        genericEnqueue(call, resource)
+
+        return resource
+    }
+
+    fun signIn(authenticationUrl: String, idTokenString: String): LiveData<Resource<AuthenticationDataInput>> {
         val resource = MutableLiveData<Resource<AuthenticationDataInput>>()
         resource.value = Resource.loading()
 
         socialRoutingWebService
-            .signIn(AuthorizationOutput(idTokenString))
+            .signIn(
+                authenticationUrl,
+                AuthorizationOutput(idTokenString)
+            )
             .enqueue(object : Callback<AuthenticationDataInput> {
                 override fun onFailure(call: Call<AuthenticationDataInput>, t: Throwable) {
                     resource.value = Resource.error(t.message.toString(), null)
                 }
 
-                override fun onResponse(call: Call<AuthenticationDataInput>, response: Response<AuthenticationDataInput>) {
+                override fun onResponse(
+                    call: Call<AuthenticationDataInput>,
+                    response: Response<AuthenticationDataInput>
+                ) {
                     val code = response.code()
                     if (code == 200) {
                         val authenticationData = response.body()!!
+                        val userUrl = response.headers().get("Location")
+                        authenticationData.userUrl = userUrl
                         resource.value = Resource.success(authenticationData)
                         updateAccessToken(authenticationData.accessToken)
-                    }
-                    else
+                    } else
                         resource.value = Resource.error(response.message(), null)
                 }
             })
@@ -54,27 +71,12 @@ class SocialRoutingRepository @Inject constructor(
     }
 
     // Person Request
-    fun getPerson(personIdentifier: String): LiveData<Resource<PersonInput>> {
+    fun getPerson(personUrl: String): LiveData<Resource<PersonInput>> {
         val resource = MutableLiveData<Resource<PersonInput>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .getPerson(personIdentifier)
-            .enqueue(object : Callback<PersonInput> {
-
-                override fun onFailure(call: Call<PersonInput>, t: Throwable) {
-                    resource.value = Resource.error(t.message.toString(), null)
-                }
-
-                override fun onResponse(call: Call<PersonInput>, response: Response<PersonInput>) {
-                    val personInput = response.body()
-                    if (personInput != null)
-                        resource.value = Resource.success(personInput)
-                    else
-                        resource.value = Resource.error(response.message(), null)
-                }
-
-            })
+        val call = socialRoutingWebService.getPerson(personUrl)
+        genericEnqueue(call, resource)
 
         return resource
     }
@@ -83,49 +85,19 @@ class SocialRoutingRepository @Inject constructor(
         val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .getPersonRoutes(routesUrl)
-            .enqueue(object : Callback<SimplifiedRouteInputCollection> {
-
-                override fun onFailure(call: Call<SimplifiedRouteInputCollection>, t: Throwable) {
-                    resource.value = Resource.error(t.message.toString(), null)
-                }
-
-                override fun onResponse(call: Call<SimplifiedRouteInputCollection>, response: Response<SimplifiedRouteInputCollection>) {
-                    val routesInput = response.body()
-                    if (routesInput != null)
-                        resource.value = Resource.success(routesInput)
-                    else
-                        resource.value = Resource.error(response.message(), null)
-                }
-
-            })
+        val call = socialRoutingWebService.getPersonRoutes(routesUrl)
+        genericEnqueue(call, resource)
 
         return resource
     }
 
     // Route Request
-    fun getRoute(routeIdentifier: Int): LiveData<Resource<RouteDetailedInput>> {
+    fun getRoute(routeUrl: String): LiveData<Resource<RouteDetailedInput>> {
         val resource = MutableLiveData<Resource<RouteDetailedInput>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .getRoute(routeIdentifier)
-            .enqueue(object : Callback<RouteDetailedInput> {
-
-                override fun onFailure(call: Call<RouteDetailedInput>, t: Throwable) {
-                    resource.value = Resource.error(t.message.toString(), null)
-                }
-
-                override fun onResponse(call: Call<RouteDetailedInput>, response: Response<RouteDetailedInput>) {
-                    val code = response.code()
-                    if (code == 200)
-                        resource.value = Resource.success(response.body()!!)
-                    else
-                        resource.value = Resource.error(response.message(), null)
-                }
-
-            })
+        val call = socialRoutingWebService.getRoute(routeUrl)
+        genericEnqueue(call, resource)
 
         return resource
     }
@@ -150,8 +122,7 @@ class SocialRoutingRepository @Inject constructor(
                         val list = url!!.split("/")
                         val id = list[list.size - 1]
                         resource.value = Resource.success(id)
-                    }
-                    else
+                    } else
                         resource.value = Resource.error(response.message(), null)
                 }
             })
@@ -159,58 +130,22 @@ class SocialRoutingRepository @Inject constructor(
         return resource
     }
 
-    fun searchRoutes(): LiveData<Resource<List<RouteSearchInput>>> {
-        val resource = MutableLiveData<Resource<List<RouteSearchInput>>>()
+    fun searchRoutes(searchRoutesUrl: String, location: String): LiveData<Resource<SimplifiedRouteInputCollection>> {
+        val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .searchRoutes()
-            .enqueue(object : Callback<List<RouteSearchInput>> {
-
-                override fun onFailure(call: Call<List<RouteSearchInput>>, t: Throwable) {
-                    resource.value = Resource.error(t.message.orEmpty(), null)
-                }
-
-                override fun onResponse(
-                    call: Call<List<RouteSearchInput>>,
-                    response: Response<List<RouteSearchInput>>
-                ) {
-                    val routesInput = response.body()
-                    if (routesInput != null)
-                        resource.value = Resource.success(routesInput)
-                    else
-                        resource.value = Resource.error(response.message(), null)
-                }
-
-            })
+        val call = socialRoutingWebService.searchRoutes(searchRoutesUrl, location)
+        genericEnqueue(call, resource)
 
         return resource
     }
 
-    fun getCategories(): LiveData<Resource<CategoryCollectionInput>> {
+    fun getCategories(categoriesUrl: String): LiveData<Resource<CategoryCollectionInput>> {
         val resource = MutableLiveData<Resource<CategoryCollectionInput>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .getCategories()
-            .enqueue(object : Callback<CategoryCollectionInput> {
-
-                override fun onFailure(call: Call<CategoryCollectionInput>, t: Throwable) {
-                    resource.value = Resource.error(t.message.orEmpty(), null)
-                }
-
-                override fun onResponse(
-                    call: Call<CategoryCollectionInput>,
-                    response: Response<CategoryCollectionInput>
-                ) {
-                    val categoryCollectionInput = response.body()
-                    if (categoryCollectionInput != null)
-                        resource.value = Resource.success(categoryCollectionInput)
-                    else
-                        resource.value = Resource.error(response.message(), null)
-                }
-
-            })
+        val call = socialRoutingWebService.getCategories(categoriesUrl)
+        genericEnqueue(call, resource)
 
         return resource
     }
@@ -220,27 +155,12 @@ class SocialRoutingRepository @Inject constructor(
         TODO("not implemented")
     }
 
-    fun deleteRoute (routeIdentifier: Int) : LiveData<Resource<Void>> {
+    fun deleteRoute(routeUrl: String): LiveData<Resource<Void>> {
         val resource = MutableLiveData<Resource<Void>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .deleteRoute(routeIdentifier)
-            .enqueue(object : Callback<Void> {
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    resource.value = Resource.error(t.message.orEmpty(), null)
-                }
-
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    val code = response.code()
-                    if (code == 200)
-                        resource.value = Resource.success()
-                    else
-                        resource.value = Resource.error(response.message(), null)
-                }
-
-            })
+        val call = socialRoutingWebService.deleteRoute(routeUrl)
+        genericEnqueue(call, resource)
 
         return resource
     }

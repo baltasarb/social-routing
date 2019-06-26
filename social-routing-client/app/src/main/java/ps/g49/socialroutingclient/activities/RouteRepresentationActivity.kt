@@ -36,6 +36,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var mMap: GoogleMap
     private lateinit var route: RouteDetailedInput
+    private lateinit var routeUrl: String
     private var routeId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +53,9 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        val routeIntentMessage = getString(R.string.route_intent_message)
         val routeIdIntentMessage = getString(R.string.route_id_intent_message)
+        routeUrl = intent.getStringExtra(routeIntentMessage)
         routeId = intent.getIntExtra(routeIdIntentMessage, -1)
         socialRoutingApplication = application as SocialRoutingApplication
         socialRoutingViewModel = getViewModel(viewModelFactory)
@@ -76,7 +79,9 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             // Show rationale and request permission.
             ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
 
-        val liveData = socialRoutingViewModel.getRoute(routeId)
+        val apiUrl = getString(R.string.api_url)
+        val correctRouteUrl = apiUrl + routeUrl.split("/")[1] + "s/" +  routeId
+        val liveData = socialRoutingViewModel.getRoute(correctRouteUrl)
         handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
 
         val locationCallback: LocationCallback = object : LocationCallback() {

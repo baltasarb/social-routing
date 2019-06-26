@@ -104,7 +104,9 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
             return
         }
 
+        val intentMessage = getString(R.string.location_intent_message)
         val intent = Intent(this, RoutesSearchActivity::class.java)
+        intent.putExtra(intentMessage, location_editText.text.toString())
         startActivity(intent)
     }
 

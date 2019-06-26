@@ -9,41 +9,70 @@ import retrofit2.http.*
 
 interface SocialRoutingWebService {
 
-    @POST("authentication/google")
-    fun signIn(@Body authorizationOutput: AuthorizationOutput): Call<AuthenticationDataInput>
+    // GET Methods
+    @GET(".")
+    fun getRootResource(): Call<SocialRoutingRootResource>
 
-    // Person Requests
-    @GET("persons/{personIdentifier}")
-    fun getPerson(@Path("personIdentifier") personIdentifier: String): Call<PersonInput>
+    @GET
+    fun searchRoutes(@Url searchRoutesUrl: String, @Query("location") location: String): Call<SimplifiedRouteInputCollection>
 
-    @POST("persons")
-    fun createPerson(@Body personOutput: PersonOutput): Call<PersonInput>
+    @GET
+    fun getCategories(@Url categoriesUrl: String): Call<CategoryCollectionInput>
 
-    @PUT("persons/{personIdentifier}")
-    fun updatePerson(@Path("personIdentifier") personIdentifier: String, @Body person: PersonInput): Call<PersonInput>
-
-    @DELETE("persons/{personIdentifier}")
-    fun deletePerson(@Path("personIdentifier") personIdentifier: String, @Body peron: PersonInput): Call<PersonInput>
+    @GET
+    fun getPerson(
+        @Url personUrl: String
+    ): Call<PersonInput>
 
     @GET
     fun getPersonRoutes(@Url routesUrl: String): Call<SimplifiedRouteInputCollection>
 
-    //  Route Requests
-    @GET("routes/{routeIdentifier}")
-    fun getRoute(@Path("routeIdentifier") routeIdentifier: Int): Call<RouteDetailedInput>
+    @GET
+    fun getRoute(
+        @Url routeUrl: String
+    ): Call<RouteDetailedInput>
+
+
+    // POST methods
+    @POST
+    fun signIn(
+        @Url authenticationUrl: String,
+        @Body authorizationOutput: AuthorizationOutput
+    ): Call<AuthenticationDataInput>
+
+    @POST
+    fun createPerson(
+        @Url personUrl: String, //Without {personIdentifier}
+        @Body personOutput: PersonOutput
+    ): Call<PersonInput>
 
     @POST("routes")
     fun createRoute(@Body routeOutput: RouteOutput): Call<Void>
 
-    @PUT("routes")
-    fun updateRoute(@Body routeOutput: RouteOutput): Call<RouteInput>
+    // PUT methods
+    @PUT
+    fun updatePerson(
+        @Url personUrl: String,
+        @Body person: PersonInput
+    ): Call<PersonInput>
 
-    @DELETE("routes/{routeIdentifier}")
-    fun deleteRoute(@Path("routeIdentifier") routeIdentifier: Int): Call<Void>
+    @PUT
+    fun updateRoute(
+        @Url routeUrl: String,
+        @Body routeOutput: RouteOutput
+    ): Call<RouteInput>
 
-    @GET("routes")
-    fun searchRoutes(): Call<List<RouteSearchInput>>
+    //DELETE methods
+    @DELETE
+    fun deletePerson(
+        @Url personUrl: String,
+        @Body peron: PersonInput
+    ): Call<PersonInput>
 
-    @GET("categories")
-    fun getCategories(): Call<CategoryCollectionInput>
+    @DELETE
+    fun deleteRoute(
+        @Url routeUrl: String
+    ): Call<Void>
+
+
 }
