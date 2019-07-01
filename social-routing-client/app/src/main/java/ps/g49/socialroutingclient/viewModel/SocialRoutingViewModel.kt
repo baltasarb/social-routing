@@ -2,7 +2,7 @@ package ps.g49.socialroutingclient.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import ps.g49.socialroutingclient.model.inputModel.*
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource

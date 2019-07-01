@@ -2,9 +2,8 @@ package ps.g49.socialroutingclient.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import ps.g49.socialroutingclient.model.inputModel.PersonInput
-import ps.g49.socialroutingclient.model.inputModel.RouteInput
-import ps.g49.socialroutingclient.model.inputModel.SimplifiedRouteInputCollection
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.PersonInput
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.repositories.SocialRoutingRepository
 import ps.g49.socialroutingclient.utils.Resource
 import javax.inject.Inject

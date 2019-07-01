@@ -1,6 +1,7 @@
 package ps.g49.socialroutingclient.activities
 
 import android.Manifest
+import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -84,6 +85,13 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         })
     }
 
+    protected fun <T> startNewActivity(cls: Class<T>, finish: Boolean) {
+        val intent = Intent(this, cls)
+        startActivity(intent)
+        if (finish)
+            finish()
+    }
+
     protected fun startSpinner() {
         val spinner = findViewById<ProgressBar>(spinnerId)
         spinner.visibility = View.VISIBLE
@@ -99,7 +107,8 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     }
 
     protected open fun requestErrorHandler(errorMessage: String) {
-        showToast(errorMessage)
+        if (errorMessage.isNotEmpty())
+            showToast(errorMessage)
     }
 
     protected open fun showToast(msg: String) {

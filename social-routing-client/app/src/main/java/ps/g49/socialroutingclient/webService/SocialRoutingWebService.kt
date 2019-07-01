@@ -2,7 +2,7 @@ package ps.g49.socialroutingclient.webService
 
 import ps.g49.socialroutingclient.model.outputModel.PersonOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
-import ps.g49.socialroutingclient.model.inputModel.*
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
 import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
 import retrofit2.Call
 import retrofit2.http.*
@@ -20,17 +20,13 @@ interface SocialRoutingWebService {
     fun getCategories(@Url categoriesUrl: String): Call<CategoryCollectionInput>
 
     @GET
-    fun getPerson(
-        @Url personUrl: String
-    ): Call<PersonInput>
+    fun getPerson(@Url personUrl: String): Call<PersonInput>
 
     @GET
     fun getPersonRoutes(@Url routesUrl: String): Call<SimplifiedRouteInputCollection>
 
     @GET
-    fun getRoute(
-        @Url routeUrl: String
-    ): Call<RouteDetailedInput>
+    fun getRoute(@Url routeUrl: String): Call<RouteDetailedInput>
 
 
     // POST methods

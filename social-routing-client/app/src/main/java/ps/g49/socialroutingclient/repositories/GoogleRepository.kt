@@ -1,17 +1,13 @@
 package ps.g49.socialroutingclient.repositories
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ps.g49.socialroutingclient.model.Point
-import ps.g49.socialroutingclient.model.inputModel.directions.DirectionsResponse
-import ps.g49.socialroutingclient.model.inputModel.geocoding.GeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.geocoding.PointGeocoding
 import ps.g49.socialroutingclient.utils.GoogleOverviewPolylineDecoder
 import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.webService.GoogleWebService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,7 +16,11 @@ class GoogleRepository @Inject constructor(
     val googleWebService: GoogleWebService
 ) : BaseRepository() {
 
-    fun getGeoCoordinatesFromLocation(location: String, googleMapsKey: String): LiveData<Resource<PointGeocoding>> {
+    companion object {
+        const val googleMapsKey = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
+    }
+
+    fun getGeocoding(location: String): LiveData<Resource<PointGeocoding>> {
         val resource = MutableLiveData<Resource<PointGeocoding>>()
         resource.value = Resource.loading()
 
@@ -28,43 +28,39 @@ class GoogleRepository @Inject constructor(
         genericEnqueue(call, resource) {
             it.results.first().geometry.location
         }
+
         return resource
+    }
 
-        /*googleWebService
-            .getGeocode(location, googleMapsKey)
-            .enqueue(object : Callback<GeoCodingResponse> {
+    fun getReverseGeocoding(location: Location): LiveData<Resource<String>> {
+        val resource = MutableLiveData<Resource<String>>()
+        resource.value = Resource.loading()
 
-                override fun onFailure(call: Call<GeoCodingResponse>, t: Throwable) {
-                    resource.value = Resource.error(t.message.toString(), null)
-                }
+        val locationsStr = location.latitude.toString() + "," + location.longitude
+        val call = googleWebService.getReverseGeocode(locationsStr, googleMapsKey)
+        genericEnqueue(call, resource) {
+            val results = it.results
+            val addressComponents = results.first().addressComponents
+            addressComponents.find {
+                it.types.contains("locality")
+            }!!.long_name
+        }
 
-                override fun onResponse(call: Call<GeoCodingResponse>, response: Response<GeoCodingResponse>) {
-                    if (response.isSuccessful) {
-                        val geoCodingResponse = response.body()
-                        if (geoCodingResponse!!.results.isNotEmpty()) {
-                            val point = geoCodingResponse.results.first().geometry.location
-                            resource.value = Resource.success(point)
-                        }
-                    }
-                    resource.value = Resource.error(response.errorBody().toString(), null)
-                }
-
-            })*/
-
+        return resource
     }
 
     fun getDirections(
         initialLocation: Point,
         destinationLocation: Point,
-        modeOfTransport: String,
-        googleMapsKey: String
+        modeOfTransport: String
     ): LiveData<Resource<List<Point>>> {
 
         val resource = MutableLiveData<Resource<List<Point>>>()
         resource.value = Resource.loading()
 
         val initialLocationString = initialLocation.latitude.toString() + "," + initialLocation.longitude.toString()
-        val destinationLocationString = destinationLocation.latitude.toString() + "," + destinationLocation.longitude.toString()
+        val destinationLocationString =
+            destinationLocation.latitude.toString() + "," + destinationLocation.longitude.toString()
 
         val call = googleWebService.getDirections(
             initialLocationString,
@@ -78,36 +74,6 @@ class GoogleRepository @Inject constructor(
         }
 
         return resource
-
-        /*googleWebService
-            .getDirections(
-                initialLocationString,
-                destinationLocationString,
-                modeOfTransport,
-                googleMapsKey
-            )
-            .enqueue(object : Callback<DirectionsResponse> {
-                override fun onFailure(call: Call<DirectionsResponse>, t: Throwable) {
-                    resource.value = Resource.error(t.message.toString(), null)
-                }
-
-                override fun onResponse(call: Call<DirectionsResponse>, response: Response<DirectionsResponse>) {
-                    if (response.isSuccessful) {
-                        val directionsResponse = response.body()!!
-                        if (directionsResponse.status == "REQUEST_DENIED") {
-                            resource.value =
-                                Resource.error("Could not find the directions to the route, sorry...", null)
-                            return
-                        }
-                        val encodedPoints = directionsResponse.routes!!.get(0).overview_polyline.points
-                        val points = GoogleOverviewPolylineDecoder.googleOverviewPolylineDecode(encodedPoints)
-                        resource.value = Resource.success(points)
-                        return
-                    }
-                    resource.value = Resource.error(response.errorBody().toString(), null)
-                }
-            })*/
-
     }
 
 }

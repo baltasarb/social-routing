@@ -11,9 +11,9 @@ import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.UserAccount
-import ps.g49.socialroutingclient.model.inputModel.PersonInput
-import ps.g49.socialroutingclient.model.inputModel.RouteInput
-import ps.g49.socialroutingclient.model.inputModel.SimplifiedRouteInputCollection
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.PersonInput
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.utils.OnRouteListener
 import ps.g49.socialroutingclient.adapters.UserCreatedRoutesAdapter
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory

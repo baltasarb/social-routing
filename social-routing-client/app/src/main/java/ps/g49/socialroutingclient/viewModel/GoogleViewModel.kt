@@ -1,5 +1,6 @@
 package ps.g49.socialroutingclient.viewModel
 
+import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ps.g49.socialroutingclient.model.Point
@@ -12,19 +13,17 @@ class GoogleViewModel @Inject constructor(
     val googleRepository: GoogleRepository
 ) : ViewModel() {
 
-    companion object {
-        const val googleMapsKey = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
-    }
-
     fun getGeoCoordinatesFromLocation(address: String): LiveData<Resource<PointGeocoding>> =
-        googleRepository.getGeoCoordinatesFromLocation(address, googleMapsKey)
+        googleRepository.getGeocoding(address)
+
+    fun getLocationFromGeoCoordinates(location: Location): LiveData<Resource<String>> =
+        googleRepository.getReverseGeocoding(location)
 
     fun getDirections(
         initialLocation: Point,
         destinationLocation: Point,
         modeOfTransport: String
     ): LiveData<Resource<List<Point>>> =
-        googleRepository.getDirections(initialLocation, destinationLocation, modeOfTransport, googleMapsKey)
-
+        googleRepository.getDirections(initialLocation, destinationLocation, modeOfTransport)
 
 }

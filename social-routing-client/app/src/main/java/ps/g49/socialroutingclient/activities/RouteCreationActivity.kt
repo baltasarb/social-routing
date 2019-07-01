@@ -1,18 +1,16 @@
 package ps.g49.socialroutingclient.activities
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
 import android.view.WindowManager
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -20,7 +18,7 @@ import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.model.inputModel.CategoryCollectionInput
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.CategoryCollectionInput
 import ps.g49.socialroutingclient.model.outputModel.CategoryOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.repositories.GoogleRepository
@@ -50,6 +48,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         )
         setContentView(R.layout.activity_route_creation)
         socialRoutingApplication = application as SocialRoutingApplication
+        stopSpinner()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -72,60 +71,30 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
         getLocationFromViewInput()
     }
 
-    override fun onBackPressed() {
-        if (mMapManager.mapIsMarked()) {
-            val deleteConfirmationMessage = getString(R.string.confirmation_to_delete)
-            val yesMessage = getString(R.string.yes)
-            val noMessage = getString(R.string.no)
-
-            val alertDialog = AlertDialog.Builder(this)
-            alertDialog.setMessage(deleteConfirmationMessage)
-            alertDialog
-                .setCancelable(true)
-                .setPositiveButton(yesMessage) { dialog, which -> finish() }
-                .setNegativeButton(noMessage) { dialog, which -> dialog.cancel() }
-            alertDialog.create()
-            alertDialog.show()
-        }
-        else
-            finish()
-    }
-
     private fun getLocationFromViewInput() {
-        val alertDialog = AlertDialog.Builder(this)
-        val titleDialog = getString(R.string.route_location)
-        val searchMessage = getString(R.string.search)
-        val cancelMessage = getString(R.string.cancel)
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
 
-        // Set Title.
-        alertDialog.setTitle(titleDialog)
+        val rowView: View = inflater.inflate(R.layout.form_location_dialog, null)
+        val locationEditText = rowView.findViewById<EditText>(R.id.route_location_editText)
+        val searchLocationButton = rowView.findViewById<ImageButton>(R.id.search_location_imageButton)
 
-        // Create the edit text for location.
-        val editText = EditText(this)
-        editText.inputType = InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS
+        val alertDialog = builder
+            .setView(rowView)
+            .create()
 
-        // Set Dialog Message
-        alertDialog
-            .setCancelable(true)
-            .setView(editText)
-
-        // Set up the buttons
-        alertDialog
-            .setPositiveButton(searchMessage) { dialog, which ->
-
-                location = editText.text.toString()
-                if (location.isEmpty()) {
-                    finish()
-                    getLocationFromViewInput()
-                }
-                else
-                    mMapManager.zoomInLocation(location)
-            }
-            .setNegativeButton(cancelMessage) { dialog, which ->
+        searchLocationButton.setOnClickListener{
+            location = locationEditText.text.toString()
+            if (location.isEmpty()) {
                 finish()
+                getLocationFromViewInput()
             }
+            else {
+                mMapManager.zoomInLocation(location)
+                alertDialog.cancel()
+            }
+        }
 
-        // Show in UI.
         alertDialog.show()
     }
 
@@ -226,6 +195,25 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback {
             checkBox.text = it.name
             categoriesLinearLayout.addView(checkBox)
         }
+    }
+
+    override fun onBackPressed() {
+        if (mMapManager.mapIsMarked()) {
+            val deleteConfirmationMessage = getString(R.string.confirmation_to_delete)
+            val yesMessage = getString(R.string.yes)
+            val noMessage = getString(R.string.no)
+
+            val alertDialog = AlertDialog.Builder(this)
+            alertDialog.setMessage(deleteConfirmationMessage)
+            alertDialog
+                .setCancelable(true)
+                .setPositiveButton(yesMessage) { dialog, which -> finish() }
+                .setNegativeButton(noMessage) { dialog, which -> dialog.cancel() }
+            alertDialog.create()
+            alertDialog.show()
+        }
+        else
+            finish()
     }
 
 }

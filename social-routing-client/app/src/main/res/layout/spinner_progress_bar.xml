@@ -7,6 +7,6 @@
 
              android:id="@+id/spinnerview"
              tools:layout_editor_absoluteX="149dp"
-             tools:layout_editor_absoluteY="249dp" android:visibility="gone">
+             tools:layout_editor_absoluteY="249dp" android:visibility="visible">
 
 </ProgressBar>

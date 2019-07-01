@@ -1,6 +1,6 @@
 package ps.g49.socialroutingclient.model
 
-import ps.g49.socialroutingclient.model.inputModel.PointCollection
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.PointCollection
 import java.util.*
 
 data class Route(

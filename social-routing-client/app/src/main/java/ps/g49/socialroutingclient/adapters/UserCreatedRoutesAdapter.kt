@@ -2,7 +2,7 @@ package ps.g49.socialroutingclient.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import ps.g49.socialroutingclient.model.inputModel.RouteInput
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import android.view.View
 import android.widget.RatingBar
 import android.widget.TextView

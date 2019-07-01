@@ -11,7 +11,9 @@
               android:layout_height="match_parent"
               android:id="@+id/map"
               tools:context=".activities.RouteCreationActivity"
-              android:name="com.google.android.gms.maps.SupportMapFragment"/>
+              android:name="com.google.android.gms.maps.SupportMapFragment" tools:layout_editor_absoluteY="39dp"
+              tools:layout_editor_absoluteX="0dp"/>
+
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="46dp"
@@ -21,6 +23,7 @@
             android:contentDescription="@string/back_image_button_description"
             android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"/>
+
     <Button
             android:text="@string/finish"
             android:layout_width="114dp"
@@ -35,6 +38,9 @@
 
     <include layout="@layout/spinner_progress_bar"
              android:id="@+id/spinnerProgressBar"
-             tools:layout_editor_absoluteY="249dp" tools:layout_editor_absoluteX="149dp"/>
+             android:layout_width="75dp" android:layout_height="75dp"
+             app:layout_constraintTop_toTopOf="@+id/map"
+             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="25dp"
+             android:layout_marginTop="25dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

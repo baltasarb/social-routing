@@ -18,8 +18,7 @@ import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.Point
-import ps.g49.socialroutingclient.model.inputModel.RouteDetailedInput
-import ps.g49.socialroutingclient.repositories.GoogleRepository
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteDetailedInput
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel

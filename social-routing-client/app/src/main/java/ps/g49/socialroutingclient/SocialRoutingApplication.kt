@@ -7,7 +7,7 @@ import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import ps.g49.socialroutingclient.dagger.components.DaggerApplicationComponent
 import ps.g49.socialroutingclient.dagger.modules.ApplicationModule
-import ps.g49.socialroutingclient.model.inputModel.SocialRoutingRootResource
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.SocialRoutingRootResource
 import javax.inject.Inject
 
 class SocialRoutingApplication : DaggerApplication() {

@@ -6,14 +6,12 @@ import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.webService.RetrofitClient
 import ps.g49.socialroutingclient.webService.SocialRoutingWebService
 import ps.g49.socialroutingclient.utils.Resource
-import ps.g49.socialroutingclient.model.inputModel.*
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
 import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 import javax.inject.Inject
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton

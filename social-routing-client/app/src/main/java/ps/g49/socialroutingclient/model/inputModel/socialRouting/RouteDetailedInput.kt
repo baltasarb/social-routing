@@ -1,4 +1,4 @@
-package ps.g49.socialroutingclient.model.inputModel
+package ps.g49.socialroutingclient.model.inputModel.socialRouting
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import ps.g49.socialroutingclient.model.Point

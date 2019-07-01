@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.UserAccount
-import ps.g49.socialroutingclient.model.inputModel.AuthenticationDataInput
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.AuthenticationDataInput
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
-import ps.g49.socialroutingclient.model.inputModel.SocialRoutingRootResource
+import ps.g49.socialroutingclient.model.inputModel.socialRouting.SocialRoutingRootResource
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {
@@ -32,6 +32,7 @@ class LoginActivity : BaseActivity() {
 
     companion object {
         const val RC_SIGN_IN = 1
+        const val GOOGLE = "google"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +40,7 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         socialRoutingApplication = application as SocialRoutingApplication
+        stopSpinner()
 
         // Configure sign-in to request the user's ID, email address, and basic profile.
         // ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -48,16 +50,19 @@ class LoginActivity : BaseActivity() {
             .requestEmail()
             .build()
 
-        socialRoutingViewModel = getViewModel(viewModelFactory)
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        socialRoutingViewModel = getViewModel(viewModelFactory)
 
+        defineOnClickListenerGoogleAccountButton()
+        obtainSocialRoutingAPIRootResources()
+    }
+
+    private fun defineOnClickListenerGoogleAccountButton() {
         sign_in_google_account_button.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
-
-        obtainSocialRoutingAPIRootResources()
     }
 
     private fun obtainSocialRoutingAPIRootResources() {
@@ -69,17 +74,19 @@ class LoginActivity : BaseActivity() {
         socialRoutingApplication.setSocialRoutingRootResource(socialRoutingRootResource!!)
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
+        sign_in_google_account_button.visibility = View.VISIBLE
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if (account != null) {
             saveAccount(account)
-            val authenticationUrl = socialRoutingRootResource.authenticationUrls["google"]!!
+            val authenticationUrl = socialRoutingRootResource.authenticationUrls[GOOGLE]!!
             val liveData = socialRoutingViewModel.signIn(authenticationUrl, account.idToken!!)
             handleRequestedData(liveData, ::successHandlerSignIn)
         }
     }
 
     private fun errorHandlerRootResource(msg: String) {
-        showToast("The Server is currently down, sorry! Try later...")
+        val serverDownMessage = getString(R.string.server_down_message)
+        showToast(serverDownMessage)
         sign_in_google_account_button.visibility = View.INVISIBLE
     }
 
@@ -102,7 +109,7 @@ class LoginActivity : BaseActivity() {
 
             val authenticationUrl = socialRoutingApplication
                 .getSocialRoutingRootResource()
-                .authenticationUrls["google"]!!
+                .authenticationUrls[GOOGLE]!!
             val liveData = socialRoutingViewModel.signIn(authenticationUrl, idToken)
             handleRequestedData(liveData, ::successHandlerSignIn)
 
@@ -123,9 +130,7 @@ class LoginActivity : BaseActivity() {
 
         val welcomeMessage = getString(R.string.welcome_message)
         showToast(String.format(welcomeMessage, user.name))
-        val intent = Intent(this, NavigationActivity::class.java)
-        startActivity(intent)
-        finish()
+        startNewActivity(NavigationActivity::class.java, true)
     }
 
     private fun saveAccount(account: GoogleSignInAccount) {
