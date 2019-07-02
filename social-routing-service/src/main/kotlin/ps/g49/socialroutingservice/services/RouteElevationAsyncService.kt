@@ -4,7 +4,7 @@ import com.google.maps.ElevationApi
 import com.google.maps.GeoApiContext
 import com.google.maps.model.LatLng
 import org.springframework.stereotype.Service
-import ps.g49.socialroutingservice.models.domainModel.Point
+import ps.g49.socialroutingservice.models.domainModel.GeographicPoint
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 
@@ -17,7 +17,7 @@ class RouteElevationAsyncService (
 ){
 
     companion object {
-        private const val API_KEY = "AIzaSyDT4mgRcDFGiwTdkrZ3tZWp4s-rgJ-xvoQ"
+        private const val API_KEY = "AIzaSyC84dzh3ZgMPDGonSOVfjx-hzAYau7J8aY"
 
         private val context = GeoApiContext
                 .Builder()
@@ -27,8 +27,8 @@ class RouteElevationAsyncService (
         private const val NUMBER_OF_SAMPLES = 256
     }
 
-    fun findElevation(routeIdentifier: Int, points: List<Point>) {
-        val latLngList: List<LatLng> = points.map { LatLng(it.latitude, it.longitude) }
+    fun findElevation(routeIdentifier: Int, geographicPoints: List<GeographicPoint>) {
+        val latLngList: List<LatLng> = geographicPoints.map { LatLng(it.latitude, it.longitude) }
         val samples = latLngList.size //todo test and change
         val elevationResultArray = ElevationApi.getByPath(context, samples , *latLngList.toTypedArray()).await()
         //todo improve the accumulated calculation

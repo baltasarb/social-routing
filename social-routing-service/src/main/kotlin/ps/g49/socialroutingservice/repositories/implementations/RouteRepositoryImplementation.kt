@@ -10,6 +10,7 @@ import ps.g49.socialroutingservice.mappers.sqlArrayTypeMappers.CategoryArrayType
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteWithCountMapper
+import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRouteCollection
@@ -37,25 +38,42 @@ class RouteRepositoryImplementation(
         return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
     }
 
-    override fun findAllByParameter(parameter: String, page: Int): SimplifiedRouteCollection {
-        val params = hashMapOf<String, Any>("location" to parameter)
+    override fun findByLocation(location: String, page: Int, categories: List<Category>?, duration: String?): SimplifiedRouteCollection {
+        val params = hashMapOf<String, Any>("location" to location)
+
+        var query = RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION
+
+        if (categories != null) {
+            val stringBuilder = StringBuilder()
+            stringBuilder.append("AND (")
+            categories.forEach{stringBuilder.append("AND RouteCategory = ${it.name} ")}
+            stringBuilder.append(") ")
+        }
+
+        //if categories is null && duration is not null
+
+        //if categories is null && duration is null
+
+        //if categories is not null && duration is null
+
+        //if categories is not null && duration is not null
 
         val result = connectionManager.findManyWithPagination(
                 routesPerResult,
-                RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION                ,
+                RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION,
                 simplifiedRouteWithCountMapper,
                 page,
                 params
         )
 
-        if(result.isEmpty())
+        if (result.isEmpty())
             throw ResourceNotFoundException()
 
         val totalCount = result.first().count
 
         return SimplifiedRouteCollection(
                 result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
-                if(nextPageExists(totalCount, page)) page + 1 else null
+                if (nextPageExists(totalCount, page)) page + 1 else null
         )
     }
 
@@ -70,21 +88,21 @@ class RouteRepositoryImplementation(
                 params
         )
 
-        if(result.isEmpty())
+        if (result.isEmpty())
             throw ResourceNotFoundException()
 
         val totalCount = result.first().count
 
         return SimplifiedRouteCollection(
                 result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
-                if(nextPageExists(totalCount, page)) page + 1 else null
+                if (nextPageExists(totalCount, page)) page + 1 else null
         )
     }
 
     override fun create(connectionHandle: Handle, route: Route): Int {
-        //convert list of points to json
+        //convert list of geographicPoints to json
         val jsonMapper = jacksonObjectMapper()
-        val points = jsonMapper.writeValueAsString(route.points)
+        val points = jsonMapper.writeValueAsString(route.geographicPoints)
         //todo exception in type conversion
 
         //register the type converter
@@ -96,7 +114,7 @@ class RouteRepositoryImplementation(
                 .bind("description", route.description)
                 .bind("duration", 0) //TODO (time needs to be calculated by the server)
                 .bind("personIdentifier", route.personIdentifier)
-                .bind("points", points)
+                .bind("geographicPoints", points)
                 .bind("categories", route.categories!!.toTypedArray())
                 .executeAndReturnGeneratedKeys("route_id")
                 .mapTo(Int::class.java)
@@ -109,9 +127,9 @@ class RouteRepositoryImplementation(
     }
 
     override fun update(connectionHandle: Handle, route: Route) {
-        //convert list of points to json
+        //convert list of geographicPoints to json
         val jsonMapper = jacksonObjectMapper()
-        val points = jsonMapper.writeValueAsString(route.points)
+        val points = jsonMapper.writeValueAsString(route.geographicPoints)
 
         //register the type converter
         connectionHandle.registerArrayType(CategoryArrayType())
@@ -122,7 +140,7 @@ class RouteRepositoryImplementation(
                 .bind("description", route.description)
                 .bind("rating", route.rating)
                 .bind("duration", 0) //TODO (time needs to be calculated by the server)
-                .bind("points", points)
+                .bind("geographicPoints", points)
                 .bind("routeIdentifier", route.identifier)
                 .bind("categories", route.categories!!.toTypedArray())
                 .execute()

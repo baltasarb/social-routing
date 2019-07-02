@@ -35,3 +35,5 @@ class TokenExpiredException : Exception()
 class InvalidAccessTokenException() : Exception()
 
 class MediaTypeNotPresentException() : Exception()
+
+class InvalidRouteSearchParameterException(override val message : String) : Exception()

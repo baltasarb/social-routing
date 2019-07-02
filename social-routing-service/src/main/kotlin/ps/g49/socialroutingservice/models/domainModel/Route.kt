@@ -10,7 +10,7 @@ data class Route(
         var rating: Double? = null, // created by db
         var duration: Int? = null,// TODO created by service
         var dateCreated: Date? = null, // created by db
-        val points: List<Point>? = null,
+        val geographicPoints: List<GeographicPoint>? = null,
         val personIdentifier: Int,
         var categories : List<Category>? = null,
         val elevation : Double? = null

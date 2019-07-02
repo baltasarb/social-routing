@@ -34,7 +34,7 @@ class RouteQueries {
         // Insert Queries
         const val INSERT_WITH_CATEGORIES = "WITH InsertedRoute AS (" +
                 "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) " +
-                "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier) " +
+                "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:geographicPoints), :personIdentifier) " +
                 "RETURNING Identifier AS route_id" +
                 ") " +
                 "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) " +
@@ -47,7 +47,7 @@ class RouteQueries {
         //Update Queries
         const val UPDATE_WITH_CATEGORIES = "" +
                 "WITH UpdatedRoute AS (" +
-                "UPDATE Route SET (Location, Name, Description, Rating, Duration, Points) = (:location, :name, :description, :rating, :duration, to_json(:points))" +
+                "UPDATE Route SET (Location, Name, Description, Rating, Duration, Points) = (:location, :name, :description, :rating, :duration, to_json(:geographicPoints))" +
                 "WHERE Identifier = :routeIdentifier " +
                 ")" +
                 "DELETE FROM RouteCategory WHERE RouteIdentifier = :routeIdentifier; " +

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service
 import ps.g49.socialroutingservice.models.requests.RouteRequest
 import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
-import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRouteCollection
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
@@ -25,11 +24,16 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
 
     fun updateRoute(connectionHandle: Handle, routeRequest: RouteRequest) {
         val route = routeMapper.map(routeRequest)
-        routeRepository.update(connectionHandle, route)
+        return routeRepository.update(connectionHandle, route)
     }
 
     fun search(searchRequest: SearchRequest): SimplifiedRouteCollection {
-        return routeRepository.findAllByParameter(searchRequest.location!!, searchRequest.page)
+
+        if(searchRequest.coordinates == null)
+            return routeRepository.findByLocation(searchRequest.location, searchRequest.page, searchRequest.categories, searchRequest.duration)
+
+        //todo return after algorithm has been applied using coordinates, new repo method required
+        return routeRepository.findByLocation(searchRequest.location, searchRequest.page, null, null)
     }
 
 }

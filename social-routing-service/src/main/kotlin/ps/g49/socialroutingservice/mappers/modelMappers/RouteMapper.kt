@@ -3,7 +3,7 @@ package ps.g49.socialroutingservice.mappers.modelMappers
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.models.domainModel.Category
-import ps.g49.socialroutingservice.models.domainModel.Point
+import ps.g49.socialroutingservice.models.domainModel.GeographicPoint
 import ps.g49.socialroutingservice.models.requests.RouteRequest
 import ps.g49.socialroutingservice.models.domainModel.Route
 import java.sql.ResultSet
@@ -16,7 +16,7 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
         val jsonString = buildValidJsonString(rs.getString("Points"))
 
         val mapper = jacksonObjectMapper()
-        val pointArray = mapper.readValue(jsonString, Array<Point>::class.java)
+        val pointArray = mapper.readValue(jsonString, Array<GeographicPoint>::class.java)
         val pointList = pointArray.toList()
 
         val categoriesSQLArray : java.sql.Array = rs.getArray("Categories")
@@ -30,7 +30,7 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
                 rating = rs.getDouble("Rating"),
                 duration = rs.getInt("Duration"),
                 dateCreated = rs.getDate("DateCreated"),
-                points = pointList,
+                geographicPoints = pointList,
                 personIdentifier = rs.getInt("PersonIdentifier"),
                 categories = categoriesStringArray.toList().map { Category(it) },
                 elevation = rs.getDouble("Elevation")
@@ -45,7 +45,7 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
                 location = from.location,
                 name = from.name,
                 description = from.description,
-                points = from.points,//TODO
+                geographicPoints = from.geographicPoints,//TODO
                 personIdentifier = from.personIdentifier,
                 rating = from.rating,
                 duration = from.duration,

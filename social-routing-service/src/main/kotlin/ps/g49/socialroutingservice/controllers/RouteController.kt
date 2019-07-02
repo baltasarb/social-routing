@@ -4,12 +4,13 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
-import ps.g49.socialroutingservice.utils.RequestBuilder
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionOutput
+import ps.g49.socialroutingservice.models.requests.RouteRequest
+import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.services.RouteElevationAsyncService
 import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
@@ -39,7 +40,7 @@ class RouteController(
 
     @GetMapping("/search")
     fun searchRoute(@RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteCollectionOutput> {
-        val searchRequest = RequestBuilder.buildSearchRequest(params)
+        val searchRequest = SearchRequest.build(params)
         val routes = routeService.search(searchRequest)
         val output = simplifiedRouteCollectionOutputMapper.map(routes)
         return OutputUtils.ok(output)
@@ -49,12 +50,12 @@ class RouteController(
     fun createRoute(@RequestBody route: RouteInput): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = RequestBuilder.buildRouteRequest(route)
+        val routeDto = RouteRequest.build(route)
         val routeIdentifier = routeService.createRoute(connectionHandle, routeDto)
 
         connectionHandle.close()
 
-        routeElevationAsyncService.findElevation(routeIdentifier,route.points)
+        routeElevationAsyncService.findElevation(routeIdentifier,route.geographicPoints)
 
         val headers = HttpHeaders()
         headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
@@ -66,11 +67,13 @@ class RouteController(
     fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeRequest = RequestBuilder.buildRouteRequest(route, identifier)
+        val routeRequest = RouteRequest.build(route, identifier)
 
         routeService.updateRoute(connectionHandle, routeRequest)
 
         connectionHandle.close()
+
+        routeElevationAsyncService.findElevation(routeRequest.identifier!!,route.geographicPoints)
 
         return OutputUtils.ok()
     }

@@ -5,7 +5,6 @@ import ps.g49.socialroutingservice.models.domainModel.Route
 import ps.g49.socialroutingservice.models.outputModel.CategoryOutput
 import ps.g49.socialroutingservice.models.outputModel.RouteOutput
 import ps.g49.socialroutingservice.models.outputModel.RouteOutputCollection
-import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteOutput
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @Component
@@ -23,7 +22,7 @@ class RouteOutputMapper : OutputMapper<Route, RouteOutput>, OutputCollectionMapp
             rating = from.rating!!,
             duration = from.duration!!,
             dateCreated = from.dateCreated!!,
-            points = from.points!!,
+            geographicPoints = from.geographicPoints!!,
             ownerUrl = OutputUtils.personUrl(from.personIdentifier),
             categories = from.categories!!.map { CategoryOutput(it.name) },
             elevation = from.elevation

@@ -9,8 +9,9 @@ import ps.g49.socialroutingservice.mappers.outputMappers.PersonOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
 import ps.g49.socialroutingservice.models.outputModel.PersonOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionOutput
+import ps.g49.socialroutingservice.models.requests.PersonRequest
+import ps.g49.socialroutingservice.models.requests.PersonRoutesRequest
 import ps.g49.socialroutingservice.services.PersonService
-import ps.g49.socialroutingservice.utils.RequestBuilder
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @RestController
@@ -31,7 +32,7 @@ class PersonController(
 
     @GetMapping("/{identifier}/routes")
     fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteCollectionOutput> {
-        val userRoutesRequest = RequestBuilder.buildUserRoutesRequest(identifier, params)
+        val userRoutesRequest = PersonRoutesRequest.build(identifier, params)
         val simplifiedRouteCollection = personService.findUserCreatedRoutes(userRoutesRequest)
         val output = simplifiedRouteCollectionOutputMapper.map(simplifiedRouteCollection)
         return OutputUtils.ok(output)
@@ -58,7 +59,7 @@ class PersonController(
 
     @PutMapping("/{identifier}")
     fun updatePerson(@PathVariable identifier: Int, @RequestBody personInput: PersonInput): ResponseEntity<Void> {
-        val personDto = RequestBuilder.buildPersonDto(personInput, identifier)
+        val personDto = PersonRequest.build(personInput, identifier)
         val connectionHandle = connectionManager.generateHandle()
         personService.updatePerson(connectionHandle, personDto)
         connectionHandle.close()
