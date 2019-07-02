@@ -41,14 +41,34 @@ class RouteRepositoryImplementation(
     override fun findByLocation(location: String, page: Int, categories: List<Category>?, duration: String?): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>("location" to location)
 
-        var query = RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION
+        val queryStringBuilder = StringBuilder()
+
+        queryStringBuilder.append(RouteQueries.SELECT_MANY_BY_LOCATION_WITH_PAGINATION)
 
         if (categories != null) {
-            val stringBuilder = StringBuilder()
-            stringBuilder.append("AND (")
-            categories.forEach{stringBuilder.append("AND RouteCategory = ${it.name} ")}
-            stringBuilder.append(") ")
+            queryStringBuilder.append("AND (")
+            for(i in categories.indices){
+                if(i != 0){
+                    queryStringBuilder.append(" OR ")
+                }
+                queryStringBuilder.append("RouteCategory.CategoryName = :category$i")
+                params["category$i"] = categories[i].name
+            }
+            queryStringBuilder.append(")")
         }
+
+        if(duration != null){
+            params["duration"] = duration
+            val durationQuery = "AND Route.Duration = :duration "
+            queryStringBuilder.append(durationQuery)
+        }
+
+        queryStringBuilder.append("" +
+                "GROUP BY Route.identifier " +
+               "ORDER BY Rating DESC " +
+                "LIMIT :limit " +
+                "OFFSET :offset;"
+        )
 
         //if categories is null && duration is not null
 

@@ -13,6 +13,7 @@ class AuthenticationInterceptor(
 ) : HandlerInterceptorAdapter() {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+        return true
         if ((request.requestURI == "/api.sr/") or request.requestURI.contains("/google")/* or request.requestURI.contains("/error")*/)
             return true
 

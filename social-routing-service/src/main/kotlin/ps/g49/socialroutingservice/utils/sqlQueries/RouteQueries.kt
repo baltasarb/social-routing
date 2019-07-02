@@ -3,9 +3,17 @@ package ps.g49.socialroutingservice.utils.sqlQueries
 class RouteQueries {
 
     companion object {
+        const val SEARCH_BY_LOCATION = "" +
+                "SELECT COUNT(*) OVER() as count, Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
+                "FROM Route " +
+                "JOIN RouteCategory " +
+                "ON RouteCategory.RouteIdentifier = Route.Identifier " +
+                "WHERE Location = :location "
+
+
         // Select Queries
         const val SELECT_BY_ID_WITH_CATEGORIES = "" +
-                "SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, array_agg(RouteCategory.CategoryName) AS Categories " +
+                "SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, array_agg(RouteCategory.CategoryName) AS Categories " +
                 "FROM Route " +
                 "JOIN RouteCategory " +
                 "ON RouteCategory.RouteIdentifier = Route.Identifier " +
