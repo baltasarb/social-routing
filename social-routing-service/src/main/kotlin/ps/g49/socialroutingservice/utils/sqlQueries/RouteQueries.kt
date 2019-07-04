@@ -5,14 +5,16 @@ import ps.g49.socialroutingservice.models.domainModel.Category
 class RouteQueries {
 
     companion object {
-        private const val SEARCH_BY_LOCATION = "" +
-                "SELECT COUNT(*) OVER() as count, Identifier, LocationIdentifier, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
-                "FROM Route " +
-                "JOIN RouteCategory " +
-                "ON RouteCategory.RouteIdentifier = Route.Identifier " +
-                "WHERE LocationIdentifier = :locationIdentifier "
+        const val INSERT = "INSERT INTO Route (LocationIdentifier, Name, Description, Duration, DateCreated, Points, PersonIdentifier, ImageReference, Circular, Ordered) " +
+                "VALUES (:locationIdentifier, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier, :imageReference, :circular, :ordered) " +
+                "RETURNING Identifier AS route_id;"
 
-        // Select Queries
+        const val UPDATE = "UPDATE Route " +
+                "SET (LocationIdentifier, Name, Description, Rating, Duration, Circular, Ordered, ImageReference, Points) = " +
+                "(:locationIdentifier, :name, :description, :rating, :duration, :circular, :ordered, :imageReference, to_json(:points));"
+
+        const val DELETE = "DELETE FROM Route WHERE identifier = ?;"
+
         const val SELECT_BY_ID = "SELECT Route.Identifier, Route.LocationIdentifier, Route.Name, Route.Description, Route.Rating, Route.Duration," +
                 "Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, Route.Circular, Route.Ordered, Route.ImageReference, RouteCategory.CategoryName, PointOfInterest.Identifier as PointOfInterestIdentifier," +
                 "PointOfInterest.Latitude, PointOfInterest.Longitude " +
@@ -34,35 +36,26 @@ class RouteQueries {
                 "LIMIT :limit " +
                 "OFFSET :offset;"
 
-        //Update Queries
-        const val UPDATE_WITH_CATEGORIES = "" +
-                "WITH UpdatedRoute AS (" +
-                "UPDATE Route SET (LocationIdentifier, Name, Description, Rating, Duration, Points) = (:locationIdentifier, :name, :description, :rating, :duration, to_json(:points))" +
-                "WHERE Identifier = :routeIdentifier " +
-                ")" +
-                "DELETE FROM RouteCategory WHERE RouteIdentifier = :routeIdentifier; " +
-                "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) " +
-                "VALUES (" +
-                ":routeIdentifier, " +
-                "UNNEST(:categories)" +
-                ");"
-
         const val UPDATE_ELEVATION: String = "UPDATE ROUTE " +
                 "SET elevation = :elevation " +
                 "WHERE Identifier = :identifier;"
 
-        // Delete Queries
-        const val DELETE = "DELETE FROM Route WHERE identifier = ?;"
+        private const val SEARCH_BY_LOCATION = "" +
+                "SELECT COUNT(*) OVER() as count, Identifier, LocationIdentifier, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
+                "FROM Route " +
+                "JOIN RouteCategory " +
+                "ON RouteCategory.RouteIdentifier = Route.Identifier " +
+                "WHERE LocationIdentifier = :locationIdentifier "
 
-        fun getSearchByLocationQuery(categories: List<Category>?, duration: String?) : String{
+        fun getSearchByLocationQuery(categories: List<Category>?, duration: String?): String {
             val queryStringBuilder = StringBuilder()
 
             queryStringBuilder.append(SEARCH_BY_LOCATION)
 
             if (categories != null) {
                 queryStringBuilder.append("AND (")
-                for(i in categories.indices){
-                    if(i != 0){
+                for (i in categories.indices) {
+                    if (i != 0) {
                         queryStringBuilder.append(" OR ")
                     }
                     queryStringBuilder.append("RouteCategory.CategoryName = :category$i")
@@ -70,7 +63,7 @@ class RouteQueries {
                 queryStringBuilder.append(")")
             }
 
-            if(duration != null){
+            if (duration != null) {
                 val durationQuery = "AND Route.Duration = :duration "
                 queryStringBuilder.append(durationQuery)
             }

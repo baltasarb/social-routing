@@ -85,6 +85,19 @@ class ConnectionManager {
         handle.close()
     }
 
+    fun executeBatch(connectionHandle: Handle,query : String, list : List<HashMap<String, Any>>) : Int{
+        val batch = connectionHandle.prepareBatch(query)
+
+        for(map in list){
+            map.forEach{
+                batch.bind(it.key, it.value)
+            }
+            batch.add()
+        }
+
+        return batch.execute().size
+    }
+
     fun generateHandle(): Handle = jdbi.open()
 
 }

@@ -11,13 +11,11 @@ import ps.g49.socialroutingservice.mappers.sqlArrayTypeMappers.CategoryArrayType
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteWithCountMapper
-import ps.g49.socialroutingservice.models.domainModel.Category
-import ps.g49.socialroutingservice.models.domainModel.Route
-import ps.g49.socialroutingservice.models.domainModel.SimplifiedRoute
-import ps.g49.socialroutingservice.models.domainModel.SimplifiedRouteCollection
+import ps.g49.socialroutingservice.models.domainModel.*
 import ps.g49.socialroutingservice.repositories.RouteRepository
-import ps.g49.socialroutingservice.utils.sqlQueries.RouteQueries
+import ps.g49.socialroutingservice.utils.sqlQueries.*
 import java.lang.Exception
+import java.util.*
 
 
 @Component
@@ -104,103 +102,62 @@ class RouteRepositoryImplementation(
 
     override fun create(connectionHandle: Handle, route: Route): Int {
         //insert into points of interest
-        val insertPointOfInterestQuery = "INSERT INTO PointOfInterest(Identifier, Latitude, Longitude) VALUES(:name, :latitude, :longitude)" +
-                "ON CONFLICT (Identifier) " +
-                "DO NOTHING;"
-        val pointOfInterestInsertBatch = connectionHandle.prepareBatch(insertPointOfInterestQuery)
-        for (pointOfInterest in route.pointsOfInterest) {
-            pointOfInterestInsertBatch
-                    .bind("name", pointOfInterest.identifier)
-                    .bind("latitude", pointOfInterest.latitude)
-                    .bind("longitude", pointOfInterest.longitude)
-                    .add()
-        }
-        val pointOfInterestBatchCount = pointOfInterestInsertBatch.execute().sum()//todo use value?
+        executeInsertPointOfInterestBatch(connectionHandle, route.pointsOfInterest)
 
         //insert into image
-        val insertImageQuery = "INSERT INTO Image (Reference) VALUES(:reference)" +
-                "ON CONFLICT (Reference)" +
-                "DO NOTHING;"
-        connectionHandle.createUpdate(insertImageQuery)
+        connectionHandle.createUpdate(ImageQueries.INSERT)
                 .bind("reference", route.imageReference)
                 .execute()
 
-        //Insert into route
-        //convert list of points to json
-        val jsonMapper = jacksonObjectMapper()
-        val points = jsonMapper.writeValueAsString(route.points)
-        //todo exception in type conversion
-
-        val insertRouteQuery = "INSERT INTO Route (LocationIdentifier, Name, Description, Duration, DateCreated, Points, PersonIdentifier, ImageReference, Circular, Ordered) " +
-                "VALUES (:locationIdentifier, :name, :description, :duration, CURRENT_DATE, to_json(:points), :personIdentifier, :imageReference, :circular, :ordered) " +
-                "RETURNING Identifier AS route_id;"
-
-        val insertedRouteIdentifier = connectionHandle.createUpdate(insertRouteQuery)
-                .bind("locationIdentifier", route.location)
-                .bind("name", route.name)
-                .bind("description", route.description)
-                .bind("duration", route.duration)
-                .bind("personIdentifier", route.personIdentifier)
-                .bind("points", points)
-                .bind("imageReference", route.imageReference)
-                .bind("circular", route.isCircular)
-                .bind("ordered", route.isOrdered)
-                .executeAndReturnGeneratedKeys("route_id")
-                .mapTo(Int::class.java)
-                .findFirst()
-
-        if (!insertedRouteIdentifier.isPresent)
-            throw InsertException()
+        //insert route
+        val insertedRouteIdentifier = insertRoute(route, connectionHandle)
 
         //insert route points of interest
-        val insertRoutePointOfInterestQuery = "INSERT INTO RoutePointOfInterest(RouteIdentifier, PointOfInterestIdentifier) VALUES(:routeIdentifier, :pointOfInterestIdentifier);"
-        val routePointOfInterestInsertBatch = connectionHandle.prepareBatch(insertRoutePointOfInterestQuery)
-        for (pointOfInterest in route.pointsOfInterest) {
-            routePointOfInterestInsertBatch
-                    .bind("routeIdentifier", insertedRouteIdentifier)
-                    .bind("pointOfInterestIdentifier", pointOfInterest.identifier)
-                    .add()
-        }
-        val routePointOfInterestBatchCount = routePointOfInterestInsertBatch.execute().sum()
-
-        if (routePointOfInterestBatchCount != route.pointsOfInterest.size)//TODO CHANGE
-            throw Exception("Route points of interest error inserting on route creation")
+        executeRoutePointsOfInterestInsertBatch(connectionHandle, route, insertedRouteIdentifier)
 
         //insert route categories
-        val insertRouteCategoryQuery = "INSERT INTO RouteCategory(RouteIdentifier, CategoryName) VALUES(:routeIdentifier, :categoryName);"
-        val routeCategoryBatch = connectionHandle.prepareBatch(insertRouteCategoryQuery)
-        for (category in route.categories!!) {
-            routeCategoryBatch
-                    .bind("routeIdentifier", insertedRouteIdentifier)
-                    .bind("categoryName", category.name)
-                    .add()
-        }
+        executeRouteCategoriesInsertBatch(connectionHandle, route, insertedRouteIdentifier)
 
-        val routeCategoryBatchInsertCount = routeCategoryBatch.execute().sum()
-
-        if (routeCategoryBatchInsertCount != route.categories!!.size) //TODO CHANGE
-            throw Exception("Categories insert error on route creation")
-
-        return insertedRouteIdentifier.get()
+        return insertedRouteIdentifier
     }
 
     override fun update(connectionHandle: Handle, route: Route) {
+        val routeIdentifier = route.identifier!!
+
+        updateRoute(route, connectionHandle)
+
+        //delete route categories
+        connectionHandle.createUpdate(RouteCategoryQueries.DELETE)
+                .bind("routeIdentifier", routeIdentifier)
+                .execute()
+
+        //update route categories
+        executeRouteCategoriesInsertBatch(connectionHandle, route, routeIdentifier)
+
+        //delete points of interest
+        connectionHandle.createUpdate(RoutePointOfInterestQueries.DELETE)
+                .bind("routeIdentifier", routeIdentifier)
+                .execute()
+
+        //update points of interest
+        executeInsertPointOfInterestBatch(connectionHandle, route.pointsOfInterest)
+    }
+
+    private fun updateRoute(route: Route, connectionHandle: Handle) {
         //convert list of points to json
         val jsonMapper = jacksonObjectMapper()
         val points = jsonMapper.writeValueAsString(route.points)
 
-        //register the type converter
-        connectionHandle.registerArrayType(CategoryArrayType())
-
-        connectionHandle.createUpdate(RouteQueries.UPDATE_WITH_CATEGORIES)
-                .bind("location", route.location)
+        connectionHandle.createUpdate(RouteQueries.UPDATE)
+                .bind("locationIdentifier", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
                 .bind("rating", route.rating)
-                .bind("duration", 0) //TODO (time needs to be calculated by the server)
+                .bind("duration", route.duration)
+                .bind("circular", route.isCircular)
+                .bind("ordered", route.isOrdered)
+                .bind("imageReference", route.imageReference)
                 .bind("points", points)
-                .bind("routeIdentifier", route.identifier)
-                .bind("categories", route.categories!!.toTypedArray())
                 .execute()
     }
 
@@ -220,4 +177,74 @@ class RouteRepositoryImplementation(
     private fun nextPageExists(totalCount: Int, currentPage: Int): Boolean {
         return totalCount != 0 && totalCount > routesPerResult * currentPage
     }
+
+    private fun executeInsertPointOfInterestBatch(connectionHandle: Handle, pointsOfInterest : List<PointOfInterest>) : Int{
+        //insert into points of interest
+        val pointOfInterestInsertBatch = connectionHandle.prepareBatch(PointOfInterestQueries.INSERT)
+        for (pointOfInterest in pointsOfInterest) {
+            pointOfInterestInsertBatch
+                    .bind("identifier", pointOfInterest.identifier)
+                    .bind("latitude", pointOfInterest.latitude)
+                    .bind("longitude", pointOfInterest.longitude)
+                    .add()
+        }
+        return pointOfInterestInsertBatch.execute().size
+    }
+
+    private fun executeRouteCategoriesInsertBatch(connectionHandle: Handle, route: Route, insertedRouteIdentifier: Int) {
+        val routeCategoryBatch = connectionHandle.prepareBatch(RouteCategoryQueries.INSERT)
+        for (category in route.categories!!) {
+            routeCategoryBatch
+                    .bind("routeIdentifier", insertedRouteIdentifier)
+                    .bind("categoryName", category.name)
+                    .add()
+        }
+
+        val routeCategoryBatchInsertCount = routeCategoryBatch.execute().size
+
+        if (routeCategoryBatchInsertCount != route.categories!!.size) //TODO CHANGE
+            throw Exception("Categories insert error on route creation")
+    }
+
+    private fun executeRoutePointsOfInterestInsertBatch(connectionHandle: Handle, route: Route, insertedRouteIdentifier: Int) {
+        val routePointOfInterestInsertBatch = connectionHandle.prepareBatch(RoutePointOfInterestQueries.INSERT)
+        for (pointOfInterest in route.pointsOfInterest) {
+            routePointOfInterestInsertBatch
+                    .bind("routeIdentifier", insertedRouteIdentifier)
+                    .bind("pointOfInterestIdentifier", pointOfInterest.identifier)
+                    .add()
+        }
+        val routePointOfInterestBatchCount = routePointOfInterestInsertBatch.execute().size
+
+        if (routePointOfInterestBatchCount != route.pointsOfInterest.size)//TODO CHANGE
+            throw Exception("Route points of interest error inserting on route creation")
+    }
+
+    private fun insertRoute(route: Route, connectionHandle: Handle): Int {
+        //Insert into route
+        //convert list of points to json
+        val jsonMapper = jacksonObjectMapper()
+        val points = jsonMapper.writeValueAsString(route.points)
+        //todo exception in type conversion
+
+        val insertedRouteIdentifier = connectionHandle.createUpdate(RouteQueries.INSERT)
+                .bind("locationIdentifier", route.location)
+                .bind("name", route.name)
+                .bind("description", route.description)
+                .bind("duration", route.duration)
+                .bind("personIdentifier", route.personIdentifier)
+                .bind("points", points)
+                .bind("imageReference", route.imageReference)
+                .bind("circular", route.isCircular)
+                .bind("ordered", route.isOrdered)
+                .executeAndReturnGeneratedKeys("route_id")
+                .mapTo(Int::class.java)
+                .findFirst()
+
+        if (!insertedRouteIdentifier.isPresent)
+            throw InsertException()
+
+        return insertedRouteIdentifier.get()
+    }
+
 }
