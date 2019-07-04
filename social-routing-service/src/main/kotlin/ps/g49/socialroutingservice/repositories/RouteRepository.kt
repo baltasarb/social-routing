@@ -9,6 +9,8 @@ interface RouteRepository {
 
     fun findByLocation(location: String, page : Int, categories : List<Category>?, duration : String?): SimplifiedRouteCollection
 
+    fun findByCoordinates(location: String, page : Int, categories : List<Category>?, duration : String?) : SimplifiedRouteCollection
+
     fun findById(connectionHandle: Handle, id: Int): Route
 
     fun findPersonCreatedRoutes(identifier: Int, page : Int): SimplifiedRouteCollection

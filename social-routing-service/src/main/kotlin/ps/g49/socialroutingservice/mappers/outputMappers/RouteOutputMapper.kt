@@ -20,11 +20,15 @@ class RouteOutputMapper : OutputMapper<Route, RouteOutput>, OutputCollectionMapp
             name = from.name,
             description = from.description!!,
             rating = from.rating!!,
-            duration = from.duration!!,
+            duration = from.duration,
             dateCreated = from.dateCreated!!,
-            geographicPoints = from.geographicPoints!!,
+            points = from.points!!,
             ownerUrl = OutputUtils.personUrl(from.personIdentifier),
             categories = from.categories!!.map { CategoryOutput(it.name) },
+            pointsOfInterest = from.pointsOfInterest,
+            circular = from.isCircular,
+            ordered = from.isOrdered,
+            imageReference = from.imageReference,
             elevation = from.elevation
     )
 

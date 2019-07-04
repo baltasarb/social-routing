@@ -50,12 +50,12 @@ class RouteController(
     fun createRoute(@RequestBody route: RouteInput): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeDto = RouteRequest.build(route)
-        val routeIdentifier = routeService.createRoute(connectionHandle, routeDto)
+        val routeRequest = RouteRequest.build(route)
+        val routeIdentifier = routeService.createRoute(connectionHandle, routeRequest)
 
         connectionHandle.close()
 
-        routeElevationAsyncService.findElevation(routeIdentifier,route.geographicPoints)
+        //routeElevationAsyncService.findElevation(routeIdentifier,route.points)
 
         val headers = HttpHeaders()
         headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
@@ -73,7 +73,7 @@ class RouteController(
 
         connectionHandle.close()
 
-        routeElevationAsyncService.findElevation(routeRequest.identifier!!,route.geographicPoints)
+        routeElevationAsyncService.findElevation(routeRequest.identifier!!,route.points)
 
         return OutputUtils.ok()
     }

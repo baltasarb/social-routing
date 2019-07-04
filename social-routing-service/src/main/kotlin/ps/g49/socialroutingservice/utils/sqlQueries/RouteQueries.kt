@@ -1,34 +1,29 @@
 package ps.g49.socialroutingservice.utils.sqlQueries
 
+import ps.g49.socialroutingservice.models.domainModel.Category
+
 class RouteQueries {
 
     companion object {
-        const val SEARCH_BY_LOCATION = "" +
-                "SELECT COUNT(*) OVER() as count, Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
+        private const val SEARCH_BY_LOCATION = "" +
+                "SELECT COUNT(*) OVER() as count, Identifier, LocationIdentifier, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
                 "FROM Route " +
                 "JOIN RouteCategory " +
                 "ON RouteCategory.RouteIdentifier = Route.Identifier " +
-                "WHERE Location = :location "
-
+                "WHERE LocationIdentifier = :locationIdentifier "
 
         // Select Queries
-        const val SELECT_BY_ID_WITH_CATEGORIES = "" +
-                "SELECT Route.Identifier, Route.Location, Route.Name, Route.Description, Route.Rating, Route.Duration, Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, array_agg(RouteCategory.CategoryName) AS Categories " +
+        const val SELECT_BY_ID = "SELECT Route.Identifier, Route.LocationIdentifier, Route.Name, Route.Description, Route.Rating, Route.Duration," +
+                "Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, Route.Circular, Route.Ordered, Route.ImageReference, RouteCategory.CategoryName, PointOfInterest.Identifier as PointOfInterestIdentifier," +
+                "PointOfInterest.Latitude, PointOfInterest.Longitude " +
                 "FROM Route " +
-                "JOIN RouteCategory " +
-                "ON RouteCategory.RouteIdentifier = Route.Identifier " +
-                "WHERE Identifier = :routeIdentifier " +
-                "GROUP BY Route.Identifier;"
+                "JOIN RouteCategory ON RouteCategory.RouteIdentifier = Route.Identifier " +
+                "JOIN RoutePointOfInterest ON RoutePointOfInterest.RouteIdentifier = Route.Identifier " +
+                "JOIN PointOfInterest ON PointOfInterest.Identifier = RoutePointOfInterest.PointOfInterestIdentifier " +
+                "WHERE Route.Identifier = :routeIdentifier " +
+                "GROUP BY Route.Identifier, RouteCategory.CategoryName, PointOfInterest.Identifier;"
 
-        const val SELECT_MANY = "SELECT Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
-
-        const val SELECT_MANY_BY_LOCATION_WITH_PAGINATION = "" +
-                "SELECT COUNT(*) OVER() as count, Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
-                "FROM Route " +
-                "WHERE Location = :location " +
-                "ORDER BY Rating DESC " +
-                "LIMIT :limit " +
-                "OFFSET :offset;"
+        const val SELECT_MANY = "SELECT Identifier, LocationIdentifier, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
 
         const val SELECT_MANY_BY_OWNER_WITH_PAGINATION_AND_COUNT = "" +
                 "SELECT " +
@@ -39,23 +34,10 @@ class RouteQueries {
                 "LIMIT :limit " +
                 "OFFSET :offset;"
 
-        // Insert Queries
-        const val INSERT_WITH_CATEGORIES = "WITH InsertedRoute AS (" +
-                "INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) " +
-                "VALUES (:location, :name, :description, :duration, CURRENT_DATE, to_json(:geographicPoints), :personIdentifier) " +
-                "RETURNING Identifier AS route_id" +
-                ") " +
-                "INSERT INTO RouteCategory (RouteIdentifier, CategoryName) " +
-                "VALUES (" +
-                "(SELECT route_id FROM InsertedRoute), " +
-                "UNNEST(:categories)" +
-                ") " +
-                "RETURNING (SELECT route_id FROM InsertedRoute);"
-
         //Update Queries
         const val UPDATE_WITH_CATEGORIES = "" +
                 "WITH UpdatedRoute AS (" +
-                "UPDATE Route SET (Location, Name, Description, Rating, Duration, Points) = (:location, :name, :description, :rating, :duration, to_json(:geographicPoints))" +
+                "UPDATE Route SET (LocationIdentifier, Name, Description, Rating, Duration, Points) = (:locationIdentifier, :name, :description, :rating, :duration, to_json(:points))" +
                 "WHERE Identifier = :routeIdentifier " +
                 ")" +
                 "DELETE FROM RouteCategory WHERE RouteIdentifier = :routeIdentifier; " +
@@ -71,6 +53,36 @@ class RouteQueries {
 
         // Delete Queries
         const val DELETE = "DELETE FROM Route WHERE identifier = ?;"
+
+        fun getSearchByLocationQuery(categories: List<Category>?, duration: String?) : String{
+            val queryStringBuilder = StringBuilder()
+
+            queryStringBuilder.append(SEARCH_BY_LOCATION)
+
+            if (categories != null) {
+                queryStringBuilder.append("AND (")
+                for(i in categories.indices){
+                    if(i != 0){
+                        queryStringBuilder.append(" OR ")
+                    }
+                    queryStringBuilder.append("RouteCategory.CategoryName = :category$i")
+                }
+                queryStringBuilder.append(")")
+            }
+
+            if(duration != null){
+                val durationQuery = "AND Route.Duration = :duration "
+                queryStringBuilder.append(durationQuery)
+            }
+
+            queryStringBuilder.append("" +
+                    "GROUP BY Route.identifier " +
+                    "ORDER BY Rating DESC " +
+                    "LIMIT :limit " +
+                    "OFFSET :offset;"
+            )
+            return queryStringBuilder.toString()
+        }
     }
 
 }

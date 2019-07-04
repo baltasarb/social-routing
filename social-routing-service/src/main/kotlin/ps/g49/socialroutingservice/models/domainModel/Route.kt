@@ -8,10 +8,14 @@ data class Route(
         val name: String,
         val description: String? = null,
         var rating: Double? = null, // created by db
-        var duration: Int? = null,// TODO created by service
+        var duration: String,// short, medium, long
         var dateCreated: Date? = null, // created by db
-        val geographicPoints: List<GeographicPoint>? = null,
+        val points: List<GeographicPoint>? = null,
         val personIdentifier: Int,
         var categories : List<Category>? = null,
-        val elevation : Double? = null
+        val elevation : Double? = null,
+        val isCircular: Boolean,
+        val isOrdered: Boolean,
+        val pointsOfInterest: List<PointOfInterest>,
+        val imageReference: String
 )
