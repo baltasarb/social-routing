@@ -1,3 +1,14 @@
+SELECT * FROM Person;
+SELECT * FROM Authentication;
+SELECT * FROM Route;
+SELECT * FROM Category;
+SELECT * FROM RouteCategory;
+SELECT * FROM GoogleAuthentication;
+SELECT * FROM PointOfInterest;
+SELECT * FROM RoutePointOfInterest;
+
+CREATE EXTENSION postgis;
+
 -- Insert a Route as well as its categories returning the inserted route identifier
 WITH InsertedRoute AS (
 	INSERT INTO Route (Location, Name, Description, Duration, DateCreated, Points, PersonIdentifier) 
@@ -48,12 +59,7 @@ VALUES
 ON CONFLICT ON CONSTRAINT customers_name_key 
 DO NOTHING;
 
-SELECT * FROM Person;
-SELECT * FROM Authentication;
-SELECT * FROM Route;
-SELECT * FROM Category;
-SELECT * FROM RouteCategory;
-SELECT * FROM GoogleAuthentication;
+
 
 SELECT  (
 	SELECT COUNT(*) FROM Route WHERE PersonIdentifier = 100
@@ -71,9 +77,63 @@ GROUP BY(Route.Identifier)
 ORDER BY Rating DESC 
 LIMIT 3
 OFFSET 0;
+
+-- search by location
+SELECT COUNT(*) OVER() as count, Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier
+FROM Route
+JOIN RouteCategory
+ON RouteCategory.RouteIdentifier = Route.Identifier
+WHERE Location = 'location 1'
+AND (RouteCategory.CategoryName = 'Sea' OR RouteCategory.CategoryName = 'Sports')
+AND Route.Duration = 0
+GROUP BY Route.identifier
+ORDER BY Rating DESC
+LIMIT 3
+OFFSET 0;
 	
-		
+-- 38.73528903 lat
+-- -9.15510356 lon
 	
-	
-	
-	
+-- 38.73582778
+-- -9.15783674
+
+																			
+select ST_Distance(ST_GeographyFromText('Point(-9.15510356 38.73528903)'), ST_GeographyFromText('Point(-9.15783674 38.73582778)'));	
+																		
+SELECT Route.Identifier, Route.LocationIdentifier, Route.Name, Route.Description, Route.Rating, Route.Duration, 
+Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, RouteCategory.CategoryName
+FROM Route
+JOIN RouteCategory ON RouteCategory.RouteIdentifier = Route.Identifier
+JOIN (
+	SELECT PointOfInterest.Identifier, PointOfInterest.Latitude, PointOfInterest.Longitude FROM PointOfInterest 
+	WHERE PointOfInterest.Identifier IN ( 
+		SELECT RoutePointOfInterest.PointOfInterestIdentifier
+		FROM RoutePointOfInterest 																								
+		WHERE RoutePointOfInterest.RouteIdentifier = 4
+	)
+) ON PointOfRoute.Identifier = 4
+WHERE Route.Identifier = 4
+GROUP BY Route.Identifier, RouteCategory.CategoryName
+																								
+SELECT PointOfInterest.Identifier, PointOfInterest.Latitude, PointOfInterest.Longitude FROM PointOfInterest 
+WHERE PointOfInterest.Identifier IN ( 
+	SELECT RoutePointOfInterest.PointOfInterestIdentifier
+	FROM RoutePointOfInterest 																								
+	WHERE RoutePointOfInterest.RouteIdentifier = 4
+) 
+																						
+
+-- SELECT FULL ROUTE
+SELECT Route.Identifier, Route.LocationIdentifier, Route.Name, Route.Description, Route.Rating, Route.Duration, 
+Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, Route.Circular, Route.Ordered, Route.ImageReference, RouteCategory.CategoryName, PointOfInterest.Identifier as PointOfInterestIdentifier, 
+PointOfInterest.Latitude, PointOfInterest.Longitude
+FROM Route
+JOIN RouteCategory ON RouteCategory.RouteIdentifier = Route.Identifier
+JOIN RoutePointOfInterest ON RoutePointOfInterest.RouteIdentifier = Route.Identifier
+JOIN PointOfInterest ON PointOfInterest.Identifier = RoutePointOfInterest.PointOfInterestIdentifier
+WHERE Route.Identifier = 4
+GROUP BY Route.Identifier, RouteCategory.CategoryName, PointOfInterest.Identifier;
+																							 
+																							 
+																							 
+																							 

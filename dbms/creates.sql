@@ -16,16 +16,24 @@ CREATE TABLE GoogleAuthentication(
 	PersonIdentifier integer REFERENCES Person(Identifier) PRIMARY KEY
 );
 
+CREATE TABLE Image(
+	Reference text NOT NULL,
+	PRIMARY KEY(Reference)
+);
+
 CREATE TABLE Route(
 	Identifier serial PRIMARY KEY,
-	Location text NOT NULL,
+	LocationIdentifier text NOT NULL,
 	Name text NOT NULL, 
 	Description text,
 	Rating double precision DEFAULT 0.0, -- different no classified with zero classification
-	Duration bigint NOT NULL, -- Duration in minutes (provided by google api)
+	Duration text NOT NULL, -- short, medium, long
 	DateCreated date NOT NULL,
 	Points json NOT NULL,
 	Elevation double precision DEFAULT NULL,
+	Circular boolean NOT NULL,
+	Ordered boolean NOT NULL,
+	ImageReference text REFERENCES Image(Reference) NOT NULL,
 	PersonIdentifier serial REFERENCES Person(Identifier) ON DELETE CASCADE
 );
 
@@ -37,4 +45,17 @@ CREATE TABLE RouteCategory(
 	CategoryName text REFERENCES Category(Name),
 	RouteIdentifier integer REFERENCES Route(Identifier) ON DELETE CASCADE,
 	PRIMARY KEY (CategoryName, RouteIdentifier)
+);
+
+CREATE TABLE PointOfInterest(
+	Identifier text UNIQUE,
+	latitude real NOT NULL,
+	longitude real NOT NULL,
+	PRIMARY KEY(Identifier)
+);
+
+CREATE TABLE RoutePointOfInterest(
+	RouteIdentifier integer REFERENCES Route(Identifier) ON DELETE CASCADE,
+	PointOfInterestIdentifier text REFERENCES PointOfInterest(Identifier) ON DELETE CASCADE,
+	PRIMARY KEY(RouteIdentifier, PointOfInterestIdentifier)
 );
