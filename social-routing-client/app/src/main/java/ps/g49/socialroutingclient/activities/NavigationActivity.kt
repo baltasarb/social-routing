@@ -1,11 +1,7 @@
 package ps.g49.socialroutingclient.activities
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -16,10 +12,8 @@ import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.View
 import android.view.WindowManager
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.location.FusedLocationProviderClient
 import kotlinx.android.synthetic.main.activity_search_routes.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import kotlinx.android.synthetic.main.nav_header_navigation.*
@@ -30,13 +24,12 @@ import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
-import ps.g49.socialroutingclient.services.LocationService
-import ps.g49.socialroutingclient.utils.OnRouteListener
+import ps.g49.socialroutingclient.adapters.OnRouteListener
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
 
-class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, OnRouteListener{
+class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, OnRouteListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -44,7 +37,6 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var socialRoutingApplication: SocialRoutingApplication
     private lateinit var routesSearched: List<RouteInput>
-    private lateinit var currentLocation: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,33 +67,31 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         socialRoutingApplication = application as SocialRoutingApplication
         googleViewModel = getViewModel(viewModelFactory)
         socialRoutingViewModel = getViewModel(viewModelFactory)
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, IntentFilter(LocationService.INTENT_FILTER))
-        startService(Intent(this, LocationService::class.java))
     }
 
-    /*override fun onStart() {
+    override fun onStart() {
         super.onStart()
-        requestSuccessHandlerLocationRequest(currentLocation)
-    }*/
-
-    private val mMessageReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent != null) {
-                val location = intent.getParcelableExtra<Location>(LocationService.INTENT_MESSAGE)
-                val resource = googleViewModel.getLocationFromGeoCoordinates(location)
-                handleRequestedData(resource, ::requestSuccessHandlerLocationRequest)
-            }
+        if (socialRoutingApplication.isLocationFound())
+            getUserLocationName(socialRoutingApplication.getUserCurrentLocation())
+        else {
+            requestUserToTurnOnGPS()
         }
+    }
+
+    private fun requestUserToTurnOnGPS() {
+        // TODO ( REQUEST PERMISSION TO ON THE GPS)
+    }
+
+    private fun getUserLocationName(location: Location) {
+        val resource = googleViewModel.getLocationFromGeoCoordinates(location)
+        handleRequestedData(resource, ::requestSuccessHandlerLocationRequest)
     }
 
     private fun requestSuccessHandlerLocationRequest(locationName: String?) {
         val searchRoutesUrl = socialRoutingApplication
             .getSocialRoutingRootResource()
             .routeSearchUrl
-            .split("?")[0]
-        currentLocation = locationName!!.split(",")[0]
-        val resource = socialRoutingViewModel.searchRoutes(searchRoutesUrl, currentLocation)
+        val resource = socialRoutingViewModel.searchRoutes(searchRoutesUrl, locationName!!)
         handleRequestedData(resource, ::requestSuccessHandlerRouteSearch)
     }
 

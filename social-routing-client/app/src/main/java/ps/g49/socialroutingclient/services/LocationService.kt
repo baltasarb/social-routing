@@ -29,12 +29,11 @@ class LocationService : Service(), LocationListener {
     private lateinit var locationManager: LocationManager
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val LOCATION_INTERVAL: Long = 1000
-    private val LOCATION_DISTANCE: Float = 10f
-
     companion object {
         const val INTENT_FILTER = "GPSLocationUpdate"
         const val INTENT_MESSAGE = "Location"
+        private const val LOCATION_INTERVAL: Long = 1000
+        private const val LOCATION_DISTANCE: Float = 10f
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}

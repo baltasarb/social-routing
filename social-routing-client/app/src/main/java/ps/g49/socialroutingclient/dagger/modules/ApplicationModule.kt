@@ -6,6 +6,4 @@ import ps.g49.socialroutingclient.SocialRoutingApplication
 import javax.inject.Singleton
 
 @Module
-class ApplicationModule (val application: SocialRoutingApplication) {
-
-}
+class ApplicationModule (val application: SocialRoutingApplication)

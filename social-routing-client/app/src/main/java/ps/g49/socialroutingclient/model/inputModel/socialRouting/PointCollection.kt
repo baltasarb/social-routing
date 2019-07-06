@@ -1,6 +1,6 @@
 package ps.g49.socialroutingclient.model.inputModel.socialRouting
 
-import ps.g49.socialroutingclient.model.Point
+import ps.g49.socialroutingclient.model.domainModel.Point
 
 data class PointCollection(
     val points: List<Point>

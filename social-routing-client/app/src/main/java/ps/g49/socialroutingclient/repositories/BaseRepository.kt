@@ -55,6 +55,7 @@ abstract class BaseRepository {
         when (code) {
             400 -> errorMessage = "You stupid ?"
             401 -> errorMessage = ""
+            500 -> errorMessage = "Server Problem. Sorry, try again later."
             else -> errorMessage = "Unknown Error"
         }
         return errorMessage

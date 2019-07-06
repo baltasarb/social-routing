@@ -10,7 +10,7 @@
               android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <include layout="@layout/spinner_progress_bar" android:id="@+id/spinnerProgressBar"
-             tools:layout_editor_absoluteY="249dp" tools:layout_editor_absoluteX="149dp"/>
+             tools:layout_editor_absoluteY="248dp" tools:layout_editor_absoluteX="178dp"/>
     <Button
             android:text="@string/start_live_tracking"
             android:layout_width="129dp"

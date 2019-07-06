@@ -73,4 +73,9 @@
     <string name="server_down_message">The Server is currently down, sorry! Try later…</string>
     <string name="where_do_you_want_to_go">Where do you want to go ?</string>
     <string name="where_do_you_want_to_create">Where do you want to create?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="points_of_interest">Points Of Interest</string>
+    <string name="continue_metadata">Continue</string>
 </resources>

@@ -2,11 +2,11 @@ package ps.g49.socialroutingclient.utils
 
 import android.graphics.Color
 import androidx.lifecycle.LiveData
-import ps.g49.socialroutingclient.model.Point
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
-import ps.g49.socialroutingclient.model.inputModel.geocoding.PointGeocoding
+import ps.g49.socialroutingclient.model.domainModel.Point
+import ps.g49.socialroutingclient.model.inputModel.google.geocoding.PointGeocoding
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import java.util.*
 
@@ -22,6 +22,7 @@ class GoogleMapsManager(
     private val markerOptions = LinkedList<Marker>()
     private val polylines = LinkedList<Polyline>()
     private val polylineToFollow = LinkedList<Polyline>()
+    private var representativeMarker: Marker? = null
 
     companion object {
         private const val START = "Start"
@@ -32,31 +33,32 @@ class GoogleMapsManager(
         private const val POLYLINE_FOLLOW_WIDTH = 12F
     }
 
-    fun onMapClickListener(): GoogleMap.OnMapClickListener {
-        return GoogleMap.OnMapClickListener {
-            addMarkerOptions(it)
-        }
-    }
+    fun addMarker(position: LatLng) {
+        val markerTitle = (markerOptions.size + 1).toString()
 
-    private fun addMarkerOptions(position: LatLng) {
-        val markerOption: MarkerOptions
+        val markerOption = MarkerOptions()
+            .position(position)
+            .title(markerTitle)
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
-        if (markerOptions.isEmpty())
-            markerOption = MarkerOptions()
-                .position(position)
-                .title(START)
-        else {
-            markerOption = MarkerOptions()
-                .position(position)
-                .title(String.format("Sub-path %d", markerOptions.size))
-
+        if (markerOptions.isNotEmpty())
             drawLine(markerOptions.last.position, position)
-        }
 
         val marker = googleMap.addMarker(markerOption)
         markerOptions.addLast(marker)
 
         centerCameraInFinalMarker()
+    }
+
+    fun addRepresentativeMarker(position: LatLng, title: String) {
+        val markerOptionResentative = MarkerOptions()
+            .position(position)
+            .title(title)
+
+        if (representativeMarker != null)
+            representativeMarker!!.remove()
+
+        representativeMarker = googleMap.addMarker(markerOptionResentative)
     }
 
     private fun drawLine(position1: LatLng, position2: LatLng) {
@@ -101,8 +103,8 @@ class GoogleMapsManager(
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, cameraZoom))
     }
 
-    fun zoomInLocation(location: String) {
-        val liveData = googleViewModel.getGeoCoordinatesFromLocation(location)
+    fun zoomInLocation(locationId: String) {
+        val liveData = googleViewModel.getGeoCoordinatesFromLocation(locationId)
         handlerRequest(liveData) {
             moveCameraToCoordinates(it!!.lat, it.lng, CITY_ZOOM)
         }
@@ -170,4 +172,5 @@ class GoogleMapsManager(
         val latLng = LatLng(latitude, longitude)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, LOCATION_CLOSE_ZOOM))
     }
+
 }

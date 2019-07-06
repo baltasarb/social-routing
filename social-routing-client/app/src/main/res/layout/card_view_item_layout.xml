@@ -26,17 +26,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/rating_textView"
                 app:layout_constraintEnd_toStartOf="@+id/star_imageView"
-                app:layout_constraintBottom_toTopOf="@+id/description_textView"/>
+                app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"/>
         <ImageView
                 android:layout_width="28dp"
                 android:layout_height="19dp" app:srcCompat="@android:drawable/star_big_on"
                 android:id="@+id/star_imageView"
                 app:layout_constraintEnd_toEndOf="@+id/principal_imageView"
-                app:layout_constraintBottom_toTopOf="@+id/description_textView"/>
+                app:layout_constraintBottom_toTopOf="@+id/descriptionTextView"/>
         <TextView
                 android:text="Description"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/description_textView"
+                android:layout_height="wrap_content" android:id="@+id/descriptionTextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/principal_imageView"/>

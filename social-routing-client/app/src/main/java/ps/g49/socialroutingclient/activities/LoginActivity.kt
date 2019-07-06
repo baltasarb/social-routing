@@ -15,7 +15,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_main.*
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.model.UserAccount
+import ps.g49.socialroutingclient.model.domainModel.UserAccount
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.AuthenticationDataInput
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
@@ -137,7 +137,8 @@ class LoginActivity : BaseActivity() {
         val accountName = account.displayName ?: "No name"
         val accountEmail = account.email ?: "No email"
         val accountPhotoUrl = account.photoUrl ?: Uri.EMPTY
-        val userAccount = UserAccount(accountName, accountEmail, accountPhotoUrl)
+        val userAccount =
+            UserAccount(accountName, accountEmail, accountPhotoUrl)
         socialRoutingApplication.setUser(userAccount)
     }
 

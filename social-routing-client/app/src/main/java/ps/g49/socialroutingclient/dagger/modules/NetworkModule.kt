@@ -7,10 +7,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import ps.g49.socialroutingclient.webService.interceptors.HeaderInterceptor
+import ps.g49.socialroutingclient.services.webService.interceptors.HeaderInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 

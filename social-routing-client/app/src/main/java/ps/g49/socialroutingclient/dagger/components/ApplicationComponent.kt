@@ -1,10 +1,12 @@
 package ps.g49.socialroutingclient.dagger.components
 
 import android.app.Application
+import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
+import okhttp3.OkHttpClient
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.activities.LoginActivity
 import ps.g49.socialroutingclient.dagger.modules.*
@@ -36,6 +38,9 @@ interface ApplicationComponent: AndroidInjector<SocialRoutingApplication> {
 
         @BindsInstance
         fun applicationModule(applicationModule: ApplicationModule): Builder
+
+        @BindsInstance
+        fun networkModule(networkModule: NetworkModule): Builder
 
         fun build(): ApplicationComponent
     }

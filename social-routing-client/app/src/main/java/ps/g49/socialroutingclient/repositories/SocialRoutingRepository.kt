@@ -2,28 +2,31 @@ package ps.g49.socialroutingclient.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fasterxml.jackson.databind.ObjectMapper
+import okhttp3.OkHttpClient
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
-import ps.g49.socialroutingclient.webService.RetrofitClient
-import ps.g49.socialroutingclient.webService.SocialRoutingWebService
+import ps.g49.socialroutingclient.services.webService.SocialRoutingWebService
 import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
 import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
+import ps.g49.socialroutingclient.services.webService.interceptors.HeaderInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Singleton
 class SocialRoutingRepository @Inject constructor(
-    var socialRoutingWebService: SocialRoutingWebService
+    var socialRoutingWebService: SocialRoutingWebService,
+    var okHttpClient: OkHttpClient,
+    var objectMapper: ObjectMapper,
+    @Named("socialRoutingAPIBaseUrl")
+    var baseUrl: String
 ) : BaseRepository() {
-
-    private fun updateAccessToken(accessToken: String) {
-        socialRoutingWebService = RetrofitClient("http://10.0.2.2:8080/api.sr/")
-            .getAuthenticatedClient(accessToken)
-            .create(SocialRoutingWebService::class.java)
-    }
 
     fun getRootResource(): LiveData<Resource<SocialRoutingRootResource>> {
         val resource = MutableLiveData<Resource<SocialRoutingRootResource>>()
@@ -38,11 +41,12 @@ class SocialRoutingRepository @Inject constructor(
     fun signIn(authenticationUrl: String, idTokenString: String): LiveData<Resource<AuthenticationDataInput>> {
         val resource = MutableLiveData<Resource<AuthenticationDataInput>>()
         resource.value = Resource.loading()
+        val authorizationOutput = AuthorizationOutput(idTokenString)
 
         socialRoutingWebService
             .signIn(
                 authenticationUrl,
-                AuthorizationOutput(idTokenString)
+                authorizationOutput
             )
             .enqueue(object : Callback<AuthenticationDataInput> {
                 override fun onFailure(call: Call<AuthenticationDataInput>, t: Throwable) {
@@ -66,6 +70,10 @@ class SocialRoutingRepository @Inject constructor(
             })
 
         return resource
+    }
+
+    private fun updateAccessToken(accessToken: String) {
+        socialRoutingWebService = getAuthenticatedClient(accessToken).create(SocialRoutingWebService::class.java)
     }
 
     // Person Request
@@ -100,7 +108,6 @@ class SocialRoutingRepository @Inject constructor(
         return resource
     }
 
-
     fun createRoute(routeOutput: RouteOutput): LiveData<Resource<String>> {
         val resource = MutableLiveData<Resource<String>>()
         resource.value = Resource.loading()
@@ -114,11 +121,9 @@ class SocialRoutingRepository @Inject constructor(
                 }
 
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    val code = response.code()
-                    val url = response.headers().get("Location")
-                    if (code == 200) {
-                        val list = url!!.split("/")
-                        val id = list[list.size - 1]
+                    if (response.isSuccessful) {
+                        val url = response.headers().get("Location")
+                        val id = url!!.split("/").last()
                         resource.value = Resource.success(id)
                     } else
                         resource.value = Resource.error(response.message(), null)
@@ -127,6 +132,7 @@ class SocialRoutingRepository @Inject constructor(
 
         return resource
     }
+
 
     fun searchRoutes(searchRoutesUrl: String, location: String): LiveData<Resource<SimplifiedRouteInputCollection>> {
         val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
@@ -148,10 +154,10 @@ class SocialRoutingRepository @Inject constructor(
         return resource
     }
 
-
     fun updateRoute(routeOutput: RouteOutput): LiveData<RouteInput> {
         TODO("not implemented")
     }
+
 
     fun deleteRoute(routeUrl: String): LiveData<Resource<Void>> {
         val resource = MutableLiveData<Resource<Void>>()
@@ -161,6 +167,20 @@ class SocialRoutingRepository @Inject constructor(
         genericEnqueue(call, resource)
 
         return resource
+    }
+
+    private fun getAuthenticatedClient(accessToken: String): Retrofit {
+        val client = okHttpClient
+            .newBuilder()
+            .addInterceptor(HeaderInterceptor(accessToken))
+            .build()
+
+        return Retrofit
+            .Builder()
+            .client(client)
+            .baseUrl(baseUrl)
+            .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+            .build()
     }
 
 }

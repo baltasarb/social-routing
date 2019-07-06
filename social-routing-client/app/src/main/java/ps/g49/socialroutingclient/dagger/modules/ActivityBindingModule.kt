@@ -27,4 +27,7 @@ abstract class ActivityBindingModule {
     @ContributesAndroidInjector
     abstract fun contributeRouteUserProfileActivity(): UserProfileActivity
 
+    @ContributesAndroidInjector
+    abstract fun contributeRouteCreationMetadataActivity(): RouteCreationMetadataActivity
+
 }

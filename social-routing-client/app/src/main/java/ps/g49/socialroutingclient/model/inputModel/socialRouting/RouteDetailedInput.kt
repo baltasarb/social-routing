@@ -1,7 +1,7 @@
 package ps.g49.socialroutingclient.model.inputModel.socialRouting
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import ps.g49.socialroutingclient.model.Point
+import ps.g49.socialroutingclient.model.domainModel.Point
 import java.util.*
 
 data class RouteDetailedInput(
@@ -14,6 +14,8 @@ data class RouteDetailedInput(
     val dateCreated : Date,
     val points : List<Point>,
     val categories : List<CategoryInput>,
+    @JsonProperty("route_accumulated_elevation")
+    val elevation : Double? = null,
     @JsonProperty("owner_url")
     val ownerUrl : String
 )

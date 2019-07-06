@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_search_routes.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.utils.OnRouteListener
+import ps.g49.socialroutingclient.adapters.OnRouteListener
 import ps.g49.socialroutingclient.adapters.SearchRoutesAdapter
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
@@ -41,7 +41,6 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         val searchRoutesUrl = socialRoutingApplication
             .getSocialRoutingRootResource()
             .routeSearchUrl
-            .split("?")[0]
         val liveData = socialRoutingViewModel.searchRoutes(searchRoutesUrl, location)
         handleRequestedData(
             liveData,

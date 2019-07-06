@@ -1,6 +1,6 @@
 package ps.g49.socialroutingclient.utils
 
-import ps.g49.socialroutingclient.model.Point
+import ps.g49.socialroutingclient.model.domainModel.Point
 import java.util.ArrayList
 
 class GoogleOverviewPolylineDecoder {

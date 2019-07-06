@@ -9,7 +9,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
-import ps.g49.socialroutingclient.utils.OnRouteListener
 
 class SearchRoutesAdapter(
     val routes: List<RouteInput>,
@@ -28,7 +27,7 @@ class SearchRoutesAdapter(
         val principalImage: ImageView = view.findViewById(R.id.principal_imageView)
         val nameTextView: TextView = view.findViewById(R.id.name_textView)
         val ratingTextView: TextView = view.findViewById(R.id.rating_textView)
-        val descriptionTextView: TextView = view.findViewById(R.id.description_textView)
+        val descriptionTextView: TextView = view.findViewById(R.id.descriptionTextView)
 
         private val listener: OnRouteListener = onRouteListener
 
@@ -50,7 +49,6 @@ class SearchRoutesAdapter(
 
         cardView.radius = 12F
         cardView.useCompatPadding = true
-
 
         return ViewHolder(cardView, onRouteListener)
     }

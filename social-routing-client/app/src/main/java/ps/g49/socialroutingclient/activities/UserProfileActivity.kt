@@ -9,13 +9,13 @@ import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.content_user_profile.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
+import ps.g49.socialroutingclient.adapters.SearchRoutesAdapter
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.model.UserAccount
+import ps.g49.socialroutingclient.model.domainModel.UserAccount
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
-import ps.g49.socialroutingclient.utils.OnRouteListener
-import ps.g49.socialroutingclient.adapters.UserCreatedRoutesAdapter
+import ps.g49.socialroutingclient.adapters.OnRouteListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.viewModel.UserProfileViewModel
 import javax.inject.Inject
@@ -37,7 +37,9 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
         // TODO("receive the correct user url")
         socialRoutingApplication = application as SocialRoutingApplication
-        getUserProfileInfo(socialRoutingApplication.getUser().userUrl)
+        val personUrl = socialRoutingApplication.getUser().userUrl.split("/")
+        val correctUrl = getString(R.string.api_url) + "persons/" + personUrl[5]
+        getUserProfileInfo(correctUrl)
         setView(socialRoutingApplication.getUser())
     }
 
@@ -52,12 +54,14 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun requestUserRoutes(personInput: PersonInput?) {
-        val liveDataRoutes = viewModel.getUserRoutesFromUrl(personInput!!.routesUrl)
+        val personUrl = socialRoutingApplication.getUser().userUrl.split("/")
+        val correctUrl = getString(R.string.api_url) + "persons/" + personUrl[5] + "/routes"
+        val liveDataRoutes = viewModel.getUserRoutesFromUrl(/*personInput!!.routesUrl*/correctUrl)
         handleRequestedData(liveDataRoutes, ::requestSuccessHandlerUserRoutes)
     }
 
     private fun setRecyclerView(routesList: List<RouteInput>) {
-        val adapter = UserCreatedRoutesAdapter(routesList, this)
+        val adapter = SearchRoutesAdapter(routesList, this)
         val layoutManager = LinearLayoutManager(applicationContext)
         userRoutesRecyclerView.layoutManager = layoutManager
         userRoutesRecyclerView.itemAnimator = DefaultItemAnimator()

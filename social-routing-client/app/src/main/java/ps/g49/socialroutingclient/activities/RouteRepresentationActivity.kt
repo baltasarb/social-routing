@@ -17,7 +17,7 @@ import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.model.Point
+import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteDetailedInput
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
@@ -81,7 +81,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         val apiUrl = getString(R.string.api_url)
         val correctRouteUrl = apiUrl + routeUrl.split("/")[1] + "s/" +  routeId
         val liveData = socialRoutingViewModel.getRoute(correctRouteUrl)
-        handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation)
+        handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation, ::requestErrorHandlerRouteRepresentation)
 
         val locationCallback: LocationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
@@ -92,6 +92,11 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             }
         }
         fusedLocationProviderClient.requestLocationUpdates(LocationRequest(), locationCallback, null)
+    }
+
+    private fun requestErrorHandlerRouteRepresentation(errorMessage: String?) {
+        showToast(errorMessage!!)
+        liveTrackingButton.visibility = View.INVISIBLE
     }
 
     private fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {

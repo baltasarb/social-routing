@@ -1,13 +1,17 @@
 package ps.g49.socialroutingclient.repositories
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ps.g49.socialroutingclient.model.Point
-import ps.g49.socialroutingclient.model.inputModel.geocoding.PointGeocoding
+import okhttp3.ResponseBody
+import ps.g49.socialroutingclient.model.domainModel.Point
+import ps.g49.socialroutingclient.model.inputModel.google.geocoding.PointGeocoding
+import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.utils.GoogleOverviewPolylineDecoder
 import ps.g49.socialroutingclient.utils.Resource
-import ps.g49.socialroutingclient.webService.GoogleWebService
+import ps.g49.socialroutingclient.services.webService.GoogleWebService
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -71,6 +75,51 @@ class GoogleRepository @Inject constructor(
         genericEnqueue(call, resource) {
             val encodedPoints = it.routes!!.get(0).overview_polyline.points
             GoogleOverviewPolylineDecoder.googleOverviewPolylineDecode(encodedPoints)
+        }
+
+        return resource
+    }
+
+    fun findPlacesOfInterest(
+        location: String,
+        radius: Int
+    ): LiveData<Resource<PlacesResponse>> {
+
+        val resource = MutableLiveData<Resource<PlacesResponse>>()
+        resource.value = Resource.loading()
+
+        val call = googleWebService.findPlacesofInterest(location, radius, googleMapsKey)
+        genericEnqueue(call, resource)
+
+        return resource
+    }
+
+    fun findPlacesOfInterestNextPage(
+        pageToken: String
+    ): LiveData<Resource<PlacesResponse>> {
+
+        val resource = MutableLiveData<Resource<PlacesResponse>>()
+        resource.value = Resource.loading()
+
+        val call = googleWebService.findPlacesOfInterestNextPage(pageToken, googleMapsKey)
+        genericEnqueue(call, resource)
+
+        return resource
+    }
+
+    fun getPhotoFromReference(
+        photoReference: String,
+        maxHeight: Int,
+        maxWidth: Int
+    ): LiveData<Resource<Bitmap>> {
+
+        val resource = MutableLiveData<Resource<Bitmap>>()
+        resource.value = Resource.loading()
+
+        val call = googleWebService.getPhotoFromReference(photoReference, maxHeight, maxWidth, googleMapsKey)
+        genericEnqueue(call, resource) {
+            val body = it.byteStream()
+            BitmapFactory.decodeStream(body)
         }
 
         return resource
