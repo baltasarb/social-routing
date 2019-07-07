@@ -7,16 +7,14 @@ import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.exceptions.InsertException
 import ps.g49.socialroutingservice.exceptions.ResourceNotFoundException
 import ps.g49.socialroutingservice.mappers.modelMappers.RedundantRouteMapper
-import ps.g49.socialroutingservice.mappers.sqlArrayTypeMappers.CategoryArrayType
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteWithCountMapper
 import ps.g49.socialroutingservice.models.domainModel.*
+import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.repositories.RouteRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.*
 import java.lang.Exception
-import java.util.*
-
 
 @Component
 class RouteRepositoryImplementation(
@@ -27,8 +25,12 @@ class RouteRepositoryImplementation(
         private val simplifiedRouteWithCountMapper: SimplifiedRouteWithCountMapper
 ) : RouteRepository {
 
-    private val routesPerResult = 2//TODO CHANGE TO 10
 
+    companion object{
+        private const val ROUTES_PER_RESULT = 2//TODO CHANGE TO 10
+        private const val LOWER_BOUND_RADIUS = 0.toDouble()
+        private const val UPPER_BOUND_RADIUS = 999999999.toDouble()
+    }
     override fun findById(connectionHandle: Handle, id: Int): Route {
         val redundantRouteList = connectionHandle.select(RouteQueries.SELECT_BY_ID)
                 .bind("routeIdentifier", id)
@@ -42,22 +44,21 @@ class RouteRepositoryImplementation(
         return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
     }
 
-    override fun findByLocation(location: String, page: Int, categories: List<Category>?, duration: String?): SimplifiedRouteCollection {
-        val params = hashMapOf<String, Any>("locationIdentifier" to location)
+    override fun findByLocation(searchRequest: SearchRequest): SimplifiedRouteCollection {
+        val params = hashMapOf<String, Any>("locationIdentifier" to searchRequest.location)
+        val categories = searchRequest.categories
+        val duration = searchRequest.duration
+        val page = searchRequest.page
 
-        if (categories != null) {
-            for (i in categories.indices) {
+        for (i in categories.indices) {
                 params["category$i"] = categories[i].name
-            }
         }
 
-        if (duration != null) {
-            params["duration"] = duration
-        }
+        params["duration"] = duration
 
         val result = connectionManager.findManyWithPagination(
-                routesPerResult,
-                RouteQueries.getSearchByLocationQuery(categories, duration),
+                ROUTES_PER_RESULT,
+                RouteQueries.getSearchByLocationQuery(categories),
                 simplifiedRouteWithCountMapper,
                 page,
                 params
@@ -74,15 +75,48 @@ class RouteRepositoryImplementation(
         )
     }
 
-    override fun findByCoordinates(location: String, page: Int, categories: List<Category>?, duration: String?): SimplifiedRouteCollection {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun findByCoordinates(searchRequest: SearchRequest): SimplifiedRouteCollection {
+        val params = hashMapOf<String, Any>(
+                "userLatitude" to searchRequest.coordinates!!.latitude,
+                "userLongitude" to searchRequest.coordinates.longitude,
+                "upperBoundRadius" to UPPER_BOUND_RADIUS,
+                "lowerBoundRadius" to LOWER_BOUND_RADIUS
+        )
+        val categories = searchRequest.categories
+        val duration = searchRequest.duration
+        val page = searchRequest.page
+
+        for (i in categories.indices) {
+            params["category$i"] = categories[i].name
+        }
+
+        params["duration"] = duration
+
+        val query = RouteQueries.getSearchByCoordinatesQuery(categories)
+        val result = connectionManager.findManyWithPagination(
+                ROUTES_PER_RESULT,
+                query,
+                simplifiedRouteWithCountMapper,
+                page,
+                params
+        )
+
+        if (result.isEmpty())
+            throw ResourceNotFoundException()
+
+        val totalCount = result.first().count
+
+        return SimplifiedRouteCollection(
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
+                if (nextPageExists(totalCount, page)) page + 1 else null
+        )
     }
 
     override fun findPersonCreatedRoutes(identifier: Int, page: Int): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>("personIdentifier" to identifier)
 
         val result = connectionManager.findManyWithPagination(
-                routesPerResult,
+                ROUTES_PER_RESULT,
                 RouteQueries.SELECT_MANY_BY_OWNER_WITH_PAGINATION_AND_COUNT,
                 simplifiedRouteWithCountMapper,
                 page,
@@ -175,7 +209,7 @@ class RouteRepositoryImplementation(
     }
 
     private fun nextPageExists(totalCount: Int, currentPage: Int): Boolean {
-        return totalCount != 0 && totalCount > routesPerResult * currentPage
+        return totalCount != 0 && totalCount > ROUTES_PER_RESULT * currentPage
     }
 
     private fun executeInsertPointOfInterestBatch(connectionHandle: Handle, pointsOfInterest : List<PointOfInterest>) : Int{

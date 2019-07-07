@@ -7,8 +7,8 @@ import ps.g49.socialroutingservice.models.domainModel.GeographicPoint
 data class SearchRequest(
         val location: String,// id da localizacao onde user se encontra
         val page: Int,
-        val categories: List<Category>? = null,// if null = all
-        val duration: String? = null, //1hora / meio dia / 1 dia
+        val categories: List<Category>,
+        val duration: String, //1hora / meio dia / 1 dia
         val coordinates: GeographicPoint? = null
 ) {
 
@@ -18,9 +18,9 @@ data class SearchRequest(
             return SearchRequest(
                     location = verifyAndGetLocation(params["location"]),
                     page = page ?: 1,
-                    categories = verifyAndGetCategories(params["categories"]),
+                    categories = verifyAndGetCategories(params["categories"]!!),
                     coordinates = verifyAndGetPoint(params["latitude"], params["longitude"]),
-                    duration = params["duration"]
+                    duration = params["duration"]!!
             )
         }
 
@@ -30,10 +30,10 @@ data class SearchRequest(
             return location
         }
 
-        private fun verifyAndGetCategories(categoriesString: String?): List<Category>? {
-            if (categoriesString == null) {
+        private fun verifyAndGetCategories(categoriesString: String): List<Category> {
+           /* if (categoriesString == null) {
                 return null
-            }
+            }*/
             return categoriesString.split(',').map { Category(it) }
         }
 

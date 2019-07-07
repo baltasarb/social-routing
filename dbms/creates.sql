@@ -29,7 +29,7 @@ CREATE TABLE Route(
 	Rating double precision DEFAULT 0.0, -- different no classified with zero classification
 	Duration text NOT NULL, -- short, medium, long
 	DateCreated date NOT NULL,
-	Points json NOT NULL,
+	Points jsonb NOT NULL,
 	Elevation double precision DEFAULT NULL,
 	Circular boolean NOT NULL,
 	Ordered boolean NOT NULL,
@@ -59,3 +59,4 @@ CREATE TABLE RoutePointOfInterest(
 	PointOfInterestIdentifier text REFERENCES PointOfInterest(Identifier) ON DELETE CASCADE,
 	PRIMARY KEY(RouteIdentifier, PointOfInterestIdentifier)
 );
+

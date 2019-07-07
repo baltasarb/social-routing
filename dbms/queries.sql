@@ -133,6 +133,32 @@ JOIN RoutePointOfInterest ON RoutePointOfInterest.RouteIdentifier = Route.Identi
 JOIN PointOfInterest ON PointOfInterest.Identifier = RoutePointOfInterest.PointOfInterestIdentifier
 WHERE Route.Identifier = 4
 GROUP BY Route.Identifier, RouteCategory.CategoryName, PointOfInterest.Identifier;
+																								
+-- search by coordinates
+SELECT DISTINCT ON(Identifier) * 
+FROM (
+	SELECT COUNT(*) as Count,  RouteCategory.RouteIdentifier as Identifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered FROM RouteCategory 
+	JOIN Route ON RouteCategory.RouteIdentifier = Route.Identifier
+	WHERE (CategoryName = 'Sea' OR CategoryName = 'Sports')	AND Route.Duration = 'Short'
+	GROUP BY RouteCategory.RouteIdentifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered
+) results
+WHERE routeBelongsToUserArea(0,99999999, 0,0, results.points, results.circular, results.ordered) = TRUE
+LIMIT 5
+OFFSET 0
+																								
+																								
+SELECT * FROM (SELECT DISTINCT COUNT(*) as Count,  RouteCategory.RouteIdentifier, Route.Name, Route.Rating, Route.PersonIdentifier FROM RouteCategory 
+JOIN Route ON RouteCategory.RouteIdentifier = Route.Identifier
+WHERE (CategoryName = 'Sea' OR CategoryName = 'Sports')	AND Route.Duration = 'Short'
+GROUP BY RouteCategory.RouteIdentifier, Route.Name, Route.Rating, Route.PersonIdentifier) results
+WHERE results.RouteIdentifier > 1
+
+																								
+																								
+ORDER BY fun(lat real, long real, Route.Points)
+				
+																								
+
 																							 
 																							 
 																							 

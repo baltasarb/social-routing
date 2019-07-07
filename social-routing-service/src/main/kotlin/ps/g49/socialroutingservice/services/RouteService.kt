@@ -28,12 +28,10 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
     }
 
     fun search(searchRequest: SearchRequest): SimplifiedRouteCollection {
-
         if(searchRequest.coordinates == null)
-            return routeRepository.findByLocation(searchRequest.location, searchRequest.page, searchRequest.categories, searchRequest.duration)
+            return routeRepository.findByLocation(searchRequest)
 
-        //todo return after algorithm has been applied using coordinates, new repo method required
-        return routeRepository.findByLocation(searchRequest.location, searchRequest.page, null, null)
+        return routeRepository.findByCoordinates(searchRequest)
     }
 
 }

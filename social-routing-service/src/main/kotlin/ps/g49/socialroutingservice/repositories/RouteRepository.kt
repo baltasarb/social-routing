@@ -2,14 +2,15 @@ package ps.g49.socialroutingservice.repositories
 
 import org.jdbi.v3.core.Handle
 import ps.g49.socialroutingservice.models.domainModel.*
+import ps.g49.socialroutingservice.models.requests.SearchRequest
 
 interface RouteRepository {
 
     fun findAll(): List<SimplifiedRoute>
 
-    fun findByLocation(location: String, page : Int, categories : List<Category>?, duration : String?): SimplifiedRouteCollection
+    fun findByLocation(searchRequest: SearchRequest): SimplifiedRouteCollection
 
-    fun findByCoordinates(location: String, page : Int, categories : List<Category>?, duration : String?) : SimplifiedRouteCollection
+    fun findByCoordinates(searchRequest: SearchRequest) : SimplifiedRouteCollection
 
     fun findById(connectionHandle: Handle, id: Int): Route
 

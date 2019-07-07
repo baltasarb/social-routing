@@ -40,42 +40,62 @@ class RouteQueries {
                 "SET elevation = :elevation " +
                 "WHERE Identifier = :identifier;"
 
-        private const val SEARCH_BY_LOCATION = "" +
-                "SELECT COUNT(*) OVER() as count, Identifier, LocationIdentifier, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier " +
+        private const val SEARCH_BY_LOCATION_FIRST = "" +
+                "SELECT COUNT(*) OVER() as count, Identifier, Name, Rating, PersonIdentifier " +
                 "FROM Route " +
                 "JOIN RouteCategory " +
-                "ON RouteCategory.RouteIdentifier = Route.Identifier " +
+                "ON RouteCategory.RouteIdentifier = Route.Identifier AND Route.Duration = :duration " +
                 "WHERE LocationIdentifier = :locationIdentifier "
 
-        fun getSearchByLocationQuery(categories: List<Category>?, duration: String?): String {
+        private const val SEARCH_BY_LOCATION_LAST ="GROUP BY Route.identifier " +
+                "ORDER BY Rating DESC " +
+                "LIMIT :limit " +
+                "OFFSET :offset;"
+
+        private const val SEARCH_BY_COORDINATES_FIRST = "SELECT DISTINCT ON(Identifier) * " +
+                "FROM (" +
+                "SELECT COUNT(*) as Count,  RouteCategory.RouteIdentifier as Identifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered FROM RouteCategory " +
+                "JOIN Route ON RouteCategory.RouteIdentifier = Route.Identifier " +
+                "WHERE Route.Duration = 'Short' "
+
+        private const val SEARCH_BY_COORDINATES_LAST = "" +
+                "GROUP BY RouteCategory.RouteIdentifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered) " +
+                "results " +
+                "WHERE routeBelongsToUserArea(:lowerBoundRadius, :upperBoundRadius, :userLatitude, :userLongitude, results.points, results.circular, results.ordered) = TRUE " +
+                "LIMIT :limit " +
+                "OFFSET :offset;"
+
+        fun getSearchByLocationQuery(categories: List<Category>): String {
             val queryStringBuilder = StringBuilder()
-
-            queryStringBuilder.append(SEARCH_BY_LOCATION)
-
-            if (categories != null) {
-                queryStringBuilder.append("AND (")
-                for (i in categories.indices) {
-                    if (i != 0) {
-                        queryStringBuilder.append(" OR ")
-                    }
-                    queryStringBuilder.append("RouteCategory.CategoryName = :category$i")
-                }
-                queryStringBuilder.append(")")
-            }
-
-            if (duration != null) {
-                val durationQuery = "AND Route.Duration = :duration "
-                queryStringBuilder.append(durationQuery)
-            }
-
-            queryStringBuilder.append("" +
-                    "GROUP BY Route.identifier " +
-                    "ORDER BY Rating DESC " +
-                    "LIMIT :limit " +
-                    "OFFSET :offset;"
-            )
+            queryStringBuilder.append(SEARCH_BY_LOCATION_FIRST)
+            queryStringBuilder.append(dynamicallyBuildCategoryConditionalQueryParts(categories))
+            queryStringBuilder.append(SEARCH_BY_LOCATION_LAST)
             return queryStringBuilder.toString()
         }
+
+        fun getSearchByCoordinatesQuery(categories: List<Category>) : String{
+            val stringBuilder = StringBuilder()
+            stringBuilder.append(SEARCH_BY_COORDINATES_FIRST)
+            stringBuilder.append(dynamicallyBuildCategoryConditionalQueryParts(categories))
+            stringBuilder.append(SEARCH_BY_COORDINATES_LAST)
+            return stringBuilder.toString()
+        }
+
+        private fun dynamicallyBuildCategoryConditionalQueryParts(categories: List<Category>) : String{
+            val stringBuilder = StringBuilder()
+
+            stringBuilder.append("AND (")
+            for (i in categories.indices) {
+                if (i != 0) {
+                    stringBuilder.append(" OR ")
+                }
+                stringBuilder.append("RouteCategory.CategoryName = :category$i")
+            }
+            stringBuilder.append(")")
+
+            return stringBuilder.toString()
+        }
+
     }
 
 }
