@@ -37,3 +37,8 @@ class InvalidAccessTokenException() : Exception()
 class MediaTypeNotPresentException() : Exception()
 
 class InvalidRouteSearchParameterException(override val message : String) : Exception()
+
+class InternalServerErrorException() : Exception()
+
+//thrown when a user requests to change other user data
+class ForbiddenRequestException : Exception()

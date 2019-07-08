@@ -25,7 +25,6 @@ class RouteRepositoryImplementation(
         private val simplifiedRouteWithCountMapper: SimplifiedRouteWithCountMapper
 ) : RouteRepository {
 
-
     companion object{
         private const val ROUTES_PER_RESULT = 2//TODO CHANGE TO 10
         private const val LOWER_BOUND_RADIUS = 0.toDouble()

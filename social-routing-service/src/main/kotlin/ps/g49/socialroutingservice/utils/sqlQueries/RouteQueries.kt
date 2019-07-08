@@ -52,9 +52,9 @@ class RouteQueries {
                 "LIMIT :limit " +
                 "OFFSET :offset;"
 
-        private const val SEARCH_BY_COORDINATES_FIRST = "SELECT DISTINCT ON(Identifier) * " +
+        private const val SEARCH_BY_COORDINATES_FIRST = "SELECT DISTINCT ON(Identifier) COUNT(*) OVER() as count, * " +
                 "FROM (" +
-                "SELECT COUNT(*) as Count,  RouteCategory.RouteIdentifier as Identifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered FROM RouteCategory " +
+                "SELECT RouteCategory.RouteIdentifier as Identifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered FROM RouteCategory " +
                 "JOIN Route ON RouteCategory.RouteIdentifier = Route.Identifier " +
                 "WHERE Route.Duration = 'Short' "
 

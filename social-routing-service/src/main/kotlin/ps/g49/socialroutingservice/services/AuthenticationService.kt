@@ -73,7 +73,7 @@ class AuthenticationService(
         return bytesToHex(hashBytes)
     }
 
-    fun validateAccessToken(accessToken: String): Boolean {
+    fun accessTokenIsValid(accessToken: String): Boolean {
         val hashedAccessToken = hashTokenToSHA256(accessToken)
         val authenticationData = authenticationRepository.findAuthenticationDataByAccessToken(hashedAccessToken)
 
@@ -81,6 +81,12 @@ class AuthenticationService(
             throw TokenExpiredException()
 
         return true
+    }
+
+    fun userRequestIsAuthorized(personIdentifier: Int, accessToken : String): Boolean {
+        val hashedAccessToken = hashTokenToSHA256(accessToken)
+
+        return authenticationRepository.validateUserRequest(hashedAccessToken, personIdentifier)
     }
 
 }

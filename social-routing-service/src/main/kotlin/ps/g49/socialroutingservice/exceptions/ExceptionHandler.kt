@@ -4,18 +4,16 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
-import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
-import org.springframework.web.servlet.NoHandlerFoundException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import ps.g49.socialroutingservice.models.outputModel.ProblemJson
 import java.lang.Exception
 import java.lang.IllegalStateException
-import java.sql.SQLException
+import java.lang.NumberFormatException
 
 @ControllerAdvice
 class ExceptionHandler : ResponseEntityExceptionHandler() {
@@ -121,6 +119,19 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
                 "link to full description"
         )
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = [InternalServerErrorException::class, NumberFormatException::class])
+    fun handleInternalServerErrorException(exception: Exception):ResponseEntity<ProblemJson>{
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#internal-server-error",
+                HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase,
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "brief description of instance problem",
+                "link to full description"
+        )
+        return ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 
 }

@@ -12,7 +12,7 @@ class AuthenticationQueries {
 
         const val FIND_AUTHENTICATION_DATA_BY_ACCESS_TOKEN = "SELECT CreationDate, ExpirationDate, AccessToken, RefreshToken, PersonIdentifier " +
                 "FROM Authentication " +
-                "WHERE AccessToken = ?;"
+                "WHERE AccessToken = :accessToken;"
     }
 
 

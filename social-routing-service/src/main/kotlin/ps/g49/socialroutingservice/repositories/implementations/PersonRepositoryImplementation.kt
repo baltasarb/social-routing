@@ -26,7 +26,8 @@ class PersonRepositoryImplementation(
     }
 
     override fun findById(identifier: Int): Person {
-        return connectionManager.findOnlyByIntId(PersonQueries.SELECT, mapper, identifier)
+        val params = hashMapOf<String, Any>("identifier" to identifier)
+        return connectionManager.findOnlyByParams(PersonQueries.SELECT, mapper, params)
     }
 
     override fun update(connectionHandle: Handle, person: Person) {

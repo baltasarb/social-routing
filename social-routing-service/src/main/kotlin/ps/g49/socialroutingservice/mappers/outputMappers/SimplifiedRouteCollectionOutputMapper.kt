@@ -16,5 +16,19 @@ class SimplifiedRouteCollectionOutputMapper (private val mapper : SimplifiedRout
         )
     }
 
+    fun mapSearch(from : SimplifiedRouteCollection, params : HashMap<String, String>) : SimplifiedRouteCollectionOutput{
+        val page = from.nextPage
+        var next : String? = null
+
+        if(page != null){
+            next = OutputUtils.searchRoutesUrlWithParams(params, page)
+        }
+
+        return SimplifiedRouteCollectionOutput(
+                next,
+                mapper.mapCollection(from.routes)
+        )
+    }
+
 
 }

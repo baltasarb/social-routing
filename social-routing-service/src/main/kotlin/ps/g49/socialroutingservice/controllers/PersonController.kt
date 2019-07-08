@@ -38,7 +38,6 @@ class PersonController(
         return OutputUtils.ok(output)
     }
 
-    //change to request attribute if anything comes from an interceptor eg auth token
     @PostMapping
     fun createPerson(@RequestBody personInput: PersonInput): ResponseEntity<Void> {
         val handle = connectionManager.generateHandle()

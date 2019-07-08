@@ -13,4 +13,6 @@ interface AuthenticationRepository {
 
     fun findAuthenticationDataByAccessToken(accessToken: String): AuthenticationData
 
+    fun validateUserRequest(hashedAccessToken: String, personIdentifier: Int): Boolean
+
 }

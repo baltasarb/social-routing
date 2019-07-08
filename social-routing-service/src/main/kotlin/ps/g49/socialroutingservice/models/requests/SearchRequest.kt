@@ -8,7 +8,7 @@ data class SearchRequest(
         val location: String,// id da localizacao onde user se encontra
         val page: Int,
         val categories: List<Category>,
-        val duration: String, //1hora / meio dia / 1 dia
+        val duration: String, //1hora / meio dia / 1 dia -- short/medium/long
         val coordinates: GeographicPoint? = null
 ) {
 
@@ -18,22 +18,22 @@ data class SearchRequest(
             return SearchRequest(
                     location = verifyAndGetLocation(params["location"]),
                     page = page ?: 1,
-                    categories = verifyAndGetCategories(params["categories"]!!),
+                    categories = verifyAndGetCategories(params["categories"]),
                     coordinates = verifyAndGetPoint(params["latitude"], params["longitude"]),
-                    duration = params["duration"]!!
+                    duration = params["duration"]?: throw InvalidRouteSearchParameterException("Missing parameter, Duration is required when performing a search.")
             )
         }
 
         private fun verifyAndGetLocation(location: String?): String {
             if (location == null)
-                throw InvalidRouteSearchParameterException("Missing parameter, Location is required.")
+                throw InvalidRouteSearchParameterException("Missing parameter, Location is required when performing a search.")
             return location
         }
 
-        private fun verifyAndGetCategories(categoriesString: String): List<Category> {
-           /* if (categoriesString == null) {
-                return null
-            }*/
+        private fun verifyAndGetCategories(categoriesString: String?): List<Category> {
+            if (categoriesString == null) {
+                throw InvalidRouteSearchParameterException("Missing parameter, at least one category is required when performing a search.")
+            }
             return categoriesString.split(',').map { Category(it) }
         }
 

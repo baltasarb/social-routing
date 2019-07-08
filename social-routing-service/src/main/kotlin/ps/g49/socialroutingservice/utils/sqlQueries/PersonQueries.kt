@@ -4,7 +4,7 @@ class PersonQueries {
 
     companion object {
         // Select Queries
-        const val SELECT = "SELECT Identifier, Rating FROM Person WHERE Identifier = ?;"
+        const val SELECT = "SELECT Identifier, Rating FROM Person WHERE Identifier = :identifier;"
 
         // Insert Queries
         const val INSERT = "INSERT INTO Person (Rating) VALUES (DEFAULT);"
