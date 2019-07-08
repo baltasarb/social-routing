@@ -1,0 +1,47 @@
+\chapter{Authentication}
+
+The nature of the project requires that user information such as user made routes is stored and
+because of this user authentication is required. 
+
+To enable authentication the Google Sign In API was the chosen technology. Mainly because the client side 
+application is being built for the Android Operating System, and any user who has an Android based device 
+will already have his credentials stored in the device, guaranteeing a very easy way both to register and 
+login into the Social Routing Application.
+
+From a technical point of view, user authentication is handled in two major components, the Social Routing 
+Client Application and the Social Routing Service. 
+
+\section{Social Routing Client Application}
+    The client application is responsible for two stages of authentication, the user registration and the continuous
+    validation of its requests to the Social Routing Service.
+    \subsection{Registration}
+        When a user first logs in into the Social Routing Client Application, it is required that he inputs his google
+        login credentials in an activity provided by google that is used to help with the Google Sign In API communication.
+        After the credentials are inserted a request is made for the user google account's corresponding id token.
+        This token is then sent to the Social Routing Service that will in turn register the new user and return an
+        access token used to authenticate that user from then on with the service. 
+    \subsection{Request Validation}
+        After being registered the user in question will have an access token that allows requests to be made to 
+        the Social Routing Service. This token is sent in each request made to the Social Routing Service, which validates
+        it and allows the request to go through if it is valid.  
+
+\section{Social Routing Service}
+    Like the client application the Social Routing Service contains two stages of authentication, but in the request validation
+    it also handles a particular case, access token refreshing. 
+    \subsection{Registration}
+    The first step is the validation of the google id token, made with an API call. This call returns an object containing
+    relevant user information such as the user name or email. The only information stored of the id token is however the field
+    subject which is a unique user identifier on the google platform.   
+
+    When this subject is retrieved, confirming the token's validity, it is then paired with both an access token and refresh 
+    token, and together they form the user authentication information. Both the access token and refresh token are generated
+    by the Social Routing Service, using the Secure Random java class. Upon generation both of them are hashed and stored 
+    in the database along with the subject, being that on a registration request, they are also return in the body of an HTTP
+    response, in their original form, to the registration request maker. 
+    
+    \subsection{Request Validation}
+    When any request is made to the Social Routing Service the access token must be added to the headers of the HTTP request,
+    specifically, the Authorization header. This information is retrieved by the server in each request and checked against 
+    the database. If present then the request is valid, if not, forbidden. Both the refresh and access token have the expiration
+    time of one day. Because of this, when a request is made with an expired access token, a response that is is invalid
+    is sent and the request maker must then ask for an access token renewal with his refresh token. 

@@ -1,0 +1,94 @@
+\documentclass{scrreprt}
+
+\usepackage{blindtext}
+
+\addtokomafont{disposition}{\rmfamily}
+
+\sloppy
+
+\usepackage{pdfpages}
+\usepackage{graphicx}
+
+\usepackage{float}
+
+\usepackage{adjustbox}
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+\usepackage{biblatex}
+\addbibresource{references.bib} 
+
+\graphicspath{ {./images/} }
+
+\title{
+    \vspace{-4.0cm}
+    {\Huge Social Routing}\\[0.5cm] 
+    \textsc{\Large Final Report - Project and Seminar}\\[0.5cm]
+    \begin{figure}[ht]            
+        \includegraphics[width=\textwidth]{logo_ISEL_principal_Preto_RGB_300ppi.jpg}
+    \end{figure}  
+    \textsc{\large ISEL - Instituto Superior de Engenharia de Lisboa}\\[0.5cm]
+    \textsc{\large Licenciatura em Engenharia Informática e de Computadores}\\[0.5cm]
+}
+
+\date{\today}
+\author{   
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+        \emph{Authors:}\\
+        Baltasar Brito\\
+        {\small email: baltasar.brito@gmail.com}\\
+        {\small phone: 915953552}\\
+        Bernardo Costa\\
+        {\small email: bjmcosta97@gmail.com}\\
+        {\small phone: 913897555}\\
+        \end{flushleft}
+    \end{minipage}
+    ~
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushright} \large
+        \emph{Supervisor:} \\ 
+        Pedro Félix\\
+        {\small email: pedrofelix@cc.isel.ipl.pt}\\  
+        \end{flushright}
+    \end{minipage}\\[2cm]  
+}
+
+\begin{document}     
+    
+    \maketitle
+
+    \newpage
+
+    \tableofcontents
+
+    \newpage
+
+    \input{sections/authentication.tex}
+    \newpage
+
+    \input{sections/search.tex}
+    \newpage
+
+    \input{sections/introduction.tex}
+    \newpage
+
+    \input{sections/system-architecture.tex}
+    \newpage
+
+    \input{sections/social-routing-client.tex}
+    \newpage
+
+    \input{sections/social-routing-service.tex}
+    \newpage
+
+    \input{sections/tests.tex}
+    \newpage
+
+    \input{sections/conclusion.tex}
+    \newpage
+
+    \printbibliography
+
+\end{document}

@@ -1,0 +1,18 @@
+\chapter{Search}
+When searching for a route, there are two type of requests that can be made,
+search by a location (city) or search by the user area (user geographic coordinates). 
+
+\section{Search by location}
+When planning a trip, a person might not be in the place where it wants to perform the route and
+this functionality explores that idea. 
+
+The chosen location filters routes that are in a specific area, which the user can then filter even more
+using the route metadata available such as route categories or duration.
+
+\section{Search by user location}
+When a user wants routes close to his current location this is the request to make. 
+The routes considered are the ones that are close up to 1km. If no route is found then the distance is increased
+to try and find routes that are relevant to the user. Of course further filtering is also possible, for instance
+one can ask for routes in the 1km radius, but only if they are close to the sea (category). 
+
+
