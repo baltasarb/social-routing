@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import okhttp3.ResponseBody
 import ps.g49.socialroutingclient.model.domainModel.Point
+import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.PointGeocoding
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.utils.GoogleOverviewPolylineDecoder
@@ -24,14 +25,12 @@ class GoogleRepository @Inject constructor(
         const val googleMapsKey = "AIzaSyCpwLrcZPuDfuuDBRDKasrPAzviHiyc4N8"
     }
 
-    fun getGeocoding(location: String): LiveData<Resource<PointGeocoding>> {
-        val resource = MutableLiveData<Resource<PointGeocoding>>()
+    fun getGeocoding(location: String): LiveData<Resource<GeoCodingResponse>> {
+        val resource = MutableLiveData<Resource<GeoCodingResponse>>()
         resource.value = Resource.loading()
 
         val call = googleWebService.getGeocode(location, googleMapsKey)
-        genericEnqueue(call, resource) {
-            it.results.first().geometry.location
-        }
+        genericEnqueue(call, resource)
 
         return resource
     }

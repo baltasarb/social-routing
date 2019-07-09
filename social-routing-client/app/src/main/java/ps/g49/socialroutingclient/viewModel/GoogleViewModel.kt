@@ -5,7 +5,7 @@ import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ps.g49.socialroutingclient.model.domainModel.Point
-import ps.g49.socialroutingclient.model.inputModel.google.geocoding.PointGeocoding
+import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.repositories.GoogleRepository
 import ps.g49.socialroutingclient.utils.Resource
@@ -15,8 +15,8 @@ class GoogleViewModel @Inject constructor(
     val googleRepository: GoogleRepository
 ) : ViewModel() {
 
-    fun getGeoCoordinatesFromLocation(locationID: String): LiveData<Resource<PointGeocoding>> =
-        googleRepository.getGeocoding(locationID)
+    fun getGeoCoordinatesFromLocation(locationString: String): LiveData<Resource<GeoCodingResponse>> =
+        googleRepository.getGeocoding(locationString)
 
     fun getLocationFromGeoCoordinates(location: Location): LiveData<Resource<String>> =
         googleRepository.getReverseGeocoding(location)

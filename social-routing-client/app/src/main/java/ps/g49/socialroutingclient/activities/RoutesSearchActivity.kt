@@ -62,7 +62,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun setRecyclerView(list: List<RouteInput>) {
-        val adapter = SearchRoutesAdapter(list, this)
+        val adapter = SearchRoutesAdapter(this, list, this, false)
         val layoutManager = LinearLayoutManager(applicationContext)
         routesSearched = list
         routesRecyclerView.layoutManager = layoutManager

@@ -65,7 +65,6 @@ class PlacesOfInterestAdapter(
         cardView.radius = 12F
         cardView.useCompatPadding = true
 
-
         return ViewHolder(cardView, onPointClickListener)
     }
 

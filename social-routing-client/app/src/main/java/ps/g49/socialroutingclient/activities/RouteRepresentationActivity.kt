@@ -70,7 +70,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        googleMapsManager = GoogleMapsManager(mMap, googleViewModel, ::handleRequestedData)
+        googleMapsManager = GoogleMapsManager(mMap)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             mMap.isMyLocationEnabled = true

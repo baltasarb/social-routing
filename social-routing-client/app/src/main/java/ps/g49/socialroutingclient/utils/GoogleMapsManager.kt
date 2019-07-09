@@ -11,12 +11,7 @@ import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import java.util.*
 
 class GoogleMapsManager(
-    val googleMap: GoogleMap,
-    val googleViewModel: GoogleViewModel,
-    val handlerRequest: (
-        liveData: LiveData<Resource<PointGeocoding>>,
-        requestSuccessHandler: (result: PointGeocoding?) -> Unit
-    ) -> Unit
+    private val googleMap: GoogleMap
 ) {
 
     private val markerOptions = LinkedList<Marker>()
@@ -103,11 +98,8 @@ class GoogleMapsManager(
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, cameraZoom))
     }
 
-    fun zoomInLocation(locationId: String) {
-        val liveData = googleViewModel.getGeoCoordinatesFromLocation(locationId)
-        handlerRequest(liveData) {
-            moveCameraToCoordinates(it!!.lat, it.lng, CITY_ZOOM)
-        }
+    fun zoomInGeoCoordinates(latitude: Double, longitude: Double) {
+        moveCameraToCoordinates(latitude, longitude, CITY_ZOOM)
     }
 
     fun getMarkerPoints(): List<Point> = markerOptions.map {

@@ -53,7 +53,7 @@ abstract class BaseRepository {
     private fun getErrorMessage(code: Int) : String {
         val errorMessage: String
         when (code) {
-            400 -> errorMessage = "You stupid ?"
+            400 -> errorMessage = ""
             401 -> errorMessage = ""
             500 -> errorMessage = "Server Problem. Sorry, try again later."
             else -> errorMessage = "Unknown Error"

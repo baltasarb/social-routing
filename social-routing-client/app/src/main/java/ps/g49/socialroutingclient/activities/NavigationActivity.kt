@@ -45,25 +45,9 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
-
         setContentView(R.layout.activity_navigation)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        stopSpinner()
+        initView()
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val toggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        navView.setNavigationItemSelectedListener(this)
         socialRoutingApplication = application as SocialRoutingApplication
         googleViewModel = getViewModel(viewModelFactory)
         socialRoutingViewModel = getViewModel(viewModelFactory)
@@ -75,54 +59,6 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
             getUserLocationName(socialRoutingApplication.getUserCurrentLocation())
         else {
             requestUserToTurnOnGPS()
-        }
-    }
-
-    private fun requestUserToTurnOnGPS() {
-        // TODO ( REQUEST PERMISSION TO ON THE GPS)
-    }
-
-    private fun getUserLocationName(location: Location) {
-        val resource = googleViewModel.getLocationFromGeoCoordinates(location)
-        handleRequestedData(resource, ::requestSuccessHandlerLocationRequest)
-    }
-
-    private fun requestSuccessHandlerLocationRequest(locationName: String?) {
-        val searchRoutesUrl = socialRoutingApplication
-            .getSocialRoutingRootResource()
-            .routeSearchUrl
-        val resource = socialRoutingViewModel.searchRoutes(searchRoutesUrl, locationName!!)
-        handleRequestedData(resource, ::requestSuccessHandlerRouteSearch)
-    }
-
-    private fun requestSuccessHandlerRouteSearch(routeCollection: SimplifiedRouteInputCollection?) {
-        val routesSearched = routeCollection!!.routes
-        if (routesSearched.isEmpty())
-            emptySearchRoutesTextView.visibility = View.VISIBLE
-        else
-            setRecyclerView(routesSearched)
-    }
-
-    private fun setRecyclerView(list: List<RouteInput>) {
-        val adapter = SearchRoutesAdapter(list, this)
-        val layoutManager = LinearLayoutManager(applicationContext)
-        routesSearched = list
-        cards_recyclerview.layoutManager = layoutManager
-        cards_recyclerview.itemAnimator = DefaultItemAnimator()
-        cards_recyclerview.adapter = adapter
-    }
-
-    override fun onRouteClick(position: Int) {
-        if (routesSearched.isNotEmpty()) {
-            val routeIdIntentMessage = getString(R.string.route_id_intent_message)
-            val routeIntentMessage = getString(R.string.route_intent_message)
-            val routeUrl = getString(R.string.route_url)
-
-            val routeInput = routesSearched.get(position)
-            val intent = Intent(this, RouteRepresentationActivity::class.java)
-            intent.putExtra(routeIntentMessage, routeUrl)
-            intent.putExtra(routeIdIntentMessage, routeInput.identifier)
-            startActivity(intent)
         }
     }
 
@@ -176,6 +112,74 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun initView() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        stopSpinner()
+
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navView.setNavigationItemSelectedListener(this)
+    }
+
+    private fun requestUserToTurnOnGPS() {
+        // TODO ( REQUEST PERMISSION TO ON THE GPS)
+    }
+
+    private fun getUserLocationName(location: Location) {
+        val resource = googleViewModel.getLocationFromGeoCoordinates(location)
+        handleRequestedData(resource, ::requestSuccessHandlerLocationRequest)
+    }
+
+    private fun requestSuccessHandlerLocationRequest(locationName: String?) {
+        val searchRoutesUrl = socialRoutingApplication
+            .getSocialRoutingRootResource()
+            .routeSearchUrl
+        val resource = socialRoutingViewModel.searchRoutes(searchRoutesUrl, locationName!!)
+        handleRequestedData(resource, ::requestSuccessHandlerRouteSearch)
+    }
+
+    private fun requestSuccessHandlerRouteSearch(routeCollection: SimplifiedRouteInputCollection?) {
+        val routesSearched = routeCollection!!.routes
+        if (routesSearched.isEmpty())
+            emptySearchRoutesTextView.visibility = View.VISIBLE
+        else
+            setRecyclerView(routesSearched)
+    }
+
+    private fun setRecyclerView(list: List<RouteInput>) {
+        val adapter = SearchRoutesAdapter(this, list, this, false)
+        val layoutManager = LinearLayoutManager(applicationContext)
+        routesSearched = list
+        cards_recyclerview.layoutManager = layoutManager
+        cards_recyclerview.itemAnimator = DefaultItemAnimator()
+        cards_recyclerview.adapter = adapter
+    }
+
+    override fun onRouteClick(position: Int) {
+        if (routesSearched.isNotEmpty()) {
+            val routeIdIntentMessage = getString(R.string.route_id_intent_message)
+            val routeIntentMessage = getString(R.string.route_intent_message)
+            val routeUrl = getString(R.string.route_url)
+
+            val routeInput = routesSearched.get(position)
+            val intent = Intent(this, RouteRepresentationActivity::class.java)
+            intent.putExtra(routeIntentMessage, routeUrl)
+            intent.putExtra(routeIdIntentMessage, routeInput.identifier)
+            startActivity(intent)
+        }
     }
 
     fun searchRoutesOnClick(view: View) {

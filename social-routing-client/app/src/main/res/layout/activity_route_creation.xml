@@ -8,6 +8,7 @@
         android:layout_height="match_parent"
         app:umanoDragView="@id/dragView_linearLayout"
         app:umanoScrollableView="@+id/dragView_recyclerView"
+        app:umanoInitialState="collapsed"
         android:layout_gravity="bottom"
         android:gravity="bottom">
 
@@ -77,7 +78,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/dragView_linearLayout">
+            android:layout_weight="0.333"
+            android:id="@+id/dragView_linearLayout" tools:visibility="visible">
 
         <TextView
                 android:layout_width="match_parent"

@@ -1,5 +1,7 @@
 package ps.g49.socialroutingclient.adapters
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +10,14 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.activities.RouteCreationActivity
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 
 class SearchRoutesAdapter(
+    val context: Context,
     val routes: List<RouteInput>,
-    val onRouteListener: OnRouteListener
+    val onRouteListener: OnRouteListener,
+    val isEditable: Boolean
 ) : RecyclerView.Adapter<SearchRoutesAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
@@ -27,7 +32,7 @@ class SearchRoutesAdapter(
         val principalImage: ImageView = view.findViewById(R.id.principal_imageView)
         val nameTextView: TextView = view.findViewById(R.id.name_textView)
         val ratingTextView: TextView = view.findViewById(R.id.rating_textView)
-        val descriptionTextView: TextView = view.findViewById(R.id.descriptionTextView)
+        val editImageView: ImageView = view.findViewById(R.id.editImageView)
 
         private val listener: OnRouteListener = onRouteListener
 
@@ -60,7 +65,14 @@ class SearchRoutesAdapter(
         val route = routes.get(position)
         holder.nameTextView.text = route.name
         holder.ratingTextView.text = route.rating.toString()
-        //holder.descriptionTextView.text = "a\na\na\na\na\na\na\na\na\na\na\na\na\na\na\na\n"
+        if (isEditable) {
+            holder.editImageView.visibility = View.VISIBLE
+            holder.editImageView.setOnClickListener {
+                val intent = Intent(context, RouteCreationActivity::class.java)
+                //intent.putExtra(RouteCreationActivity.ROUTE_CREATION_MESSAGE, route.routeUrl)
+                context.startActivity(intent)
+            }
+        }
         //holder.principalImage.setImageBitmap()
     }
 

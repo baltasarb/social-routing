@@ -14,6 +14,9 @@ class SocialRoutingViewModel @Inject constructor (
     val routeRepository : SocialRoutingRepository
 ): ViewModel() {
 
+    val root = getRootResource()
+    //val search = searchRoutes(root.value.data.routeSearchUrl)
+
     fun getRootResource(): LiveData<Resource<SocialRoutingRootResource>> =
             routeRepository.getRootResource()
 

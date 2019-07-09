@@ -50,7 +50,6 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
     private fun setView(user: UserAccount) {
         toolbar_layout.title = user.name
-        userEmailTextView.text = user.email
     }
 
     private fun requestUserRoutes(personInput: PersonInput?) {
@@ -61,7 +60,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     }
 
     private fun setRecyclerView(routesList: List<RouteInput>) {
-        val adapter = SearchRoutesAdapter(routesList, this)
+        val adapter = SearchRoutesAdapter(this, routesList, this, true)
         val layoutManager = LinearLayoutManager(applicationContext)
         userRoutesRecyclerView.layoutManager = layoutManager
         userRoutesRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -74,7 +73,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
             val routeIntentMessage = getString(R.string.route_intent_message)
             val routeInput = routesInputs[position]
             val intent = Intent(this, RouteRepresentationActivity::class.java)
-            intent.putExtra(routeIntentMessage, routeInput.routeUrl)
+            //intent.putExtra(routeIntentMessage, routeInput.routeUrl)
             intent.putExtra(routeIdIntentMessage, routeInput.identifier)
             startActivity(intent)
         }

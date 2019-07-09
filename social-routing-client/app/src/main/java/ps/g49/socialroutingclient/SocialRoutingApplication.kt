@@ -14,6 +14,7 @@ import dagger.android.DispatchingAndroidInjector
 import ps.g49.socialroutingclient.dagger.components.DaggerApplicationComponent
 import ps.g49.socialroutingclient.dagger.modules.ApplicationModule
 import ps.g49.socialroutingclient.dagger.modules.NetworkModule
+import ps.g49.socialroutingclient.model.domainModel.Route
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SocialRoutingRootResource
 import ps.g49.socialroutingclient.services.LocationService
 import javax.inject.Inject
@@ -24,6 +25,7 @@ class SocialRoutingApplication : DaggerApplication() {
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
     private lateinit var user: UserAccount
     private lateinit var socialRoutingRootResource: SocialRoutingRootResource
+    lateinit var routeCreated: Route
     private lateinit var userCurrentLocation: Location
     private var isLocationFound: Boolean = false
 
