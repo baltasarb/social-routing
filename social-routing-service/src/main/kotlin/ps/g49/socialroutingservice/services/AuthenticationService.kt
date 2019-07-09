@@ -73,20 +73,18 @@ class AuthenticationService(
         return bytesToHex(hashBytes)
     }
 
-    fun accessTokenIsValid(accessToken: String): Boolean {
+    /**
+     * @return the identifier of the user that haves the corresponding access token
+     * @throws TokenExpiredException if the access token is expired
+     */
+    fun verifyTokenAndGetPersonIdentifier(accessToken: String): Int {
         val hashedAccessToken = hashTokenToSHA256(accessToken)
         val authenticationData = authenticationRepository.findAuthenticationDataByAccessToken(hashedAccessToken)
 
         if (authenticationData.accessTokenIsExpired())
             throw TokenExpiredException()
 
-        return true
-    }
-
-    fun userRequestIsAuthorized(personIdentifier: Int, accessToken : String): Boolean {
-        val hashedAccessToken = hashTokenToSHA256(accessToken)
-
-        return authenticationRepository.validateUserRequest(hashedAccessToken, personIdentifier)
+        return authenticationData.personIdentifier
     }
 
 }

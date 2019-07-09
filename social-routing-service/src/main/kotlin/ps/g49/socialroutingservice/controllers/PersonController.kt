@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
+import ps.g49.socialroutingservice.exceptions.ForbiddenRequestException
 import ps.g49.socialroutingservice.models.inputModel.PersonInput
 import ps.g49.socialroutingservice.mappers.outputMappers.PersonOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
@@ -51,14 +52,20 @@ class PersonController(
     }
 
     @DeleteMapping("/{identifier}")
-    fun deletePerson(@PathVariable identifier: Int): ResponseEntity<Void> {
-        personService.deletePerson(identifier)
+    fun deletePerson(@PathVariable identifier: Int, @RequestAttribute personIdentifier : Int): ResponseEntity<Void> {
+        if(identifier != personIdentifier){
+            throw ForbiddenRequestException()
+        }
+        personService.deletePerson(personIdentifier)
         return OutputUtils.ok()
     }
 
     @PutMapping("/{identifier}")
-    fun updatePerson(@PathVariable identifier: Int, @RequestBody personInput: PersonInput): ResponseEntity<Void> {
-        val personDto = PersonRequest.build(personInput, identifier)
+    fun updatePerson(@PathVariable identifier: Int, @RequestBody personInput: PersonInput, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
+        if(identifier != personIdentifier){
+            throw ForbiddenRequestException()
+        }
+        val personDto = PersonRequest.build(personInput, personIdentifier)
         val connectionHandle = connectionManager.generateHandle()
         personService.updatePerson(connectionHandle, personDto)
         connectionHandle.close()

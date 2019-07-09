@@ -22,5 +22,4 @@ interface RouteRepository {
 
     fun update(connectionHandle: Handle, route: Route)
 
-    fun updateElevation(identifier : Int, elevation : Double)
 }

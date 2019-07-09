@@ -28,8 +28,7 @@ class RouteOutputMapper : OutputMapper<Route, RouteOutput>, OutputCollectionMapp
             pointsOfInterest = from.pointsOfInterest,
             circular = from.isCircular,
             ordered = from.isOrdered,
-            imageReference = from.imageReference,
-            elevation = from.elevation
+            imageReference = from.imageReference
     )
 
 }

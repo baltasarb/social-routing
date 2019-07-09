@@ -30,6 +30,7 @@ class RouteRepositoryImplementation(
         private const val LOWER_BOUND_RADIUS = 0.toDouble()
         private const val UPPER_BOUND_RADIUS = 999999999.toDouble()
     }
+
     override fun findById(connectionHandle: Handle, id: Int): Route {
         val redundantRouteList = connectionHandle.select(RouteQueries.SELECT_BY_ID)
                 .bind("routeIdentifier", id)
@@ -196,15 +197,6 @@ class RouteRepositoryImplementation(
 
     override fun delete(identifier: Int) {
         return connectionManager.deleteByIntId(RouteQueries.DELETE, identifier)
-    }
-
-    override fun updateElevation(identifier: Int, elevation: Double) {
-        val handle = connectionManager.generateHandle()
-
-        handle.createUpdate(RouteQueries.UPDATE_ELEVATION)
-                .bind("elevation", elevation)
-                .bind("identifier", identifier)
-                .execute()
     }
 
     private fun nextPageExists(totalCount: Int, currentPage: Int): Boolean {

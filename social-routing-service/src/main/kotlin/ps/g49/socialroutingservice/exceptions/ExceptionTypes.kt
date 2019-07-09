@@ -41,4 +41,4 @@ class InvalidRouteSearchParameterException(override val message : String) : Exce
 class InternalServerErrorException() : Exception()
 
 //thrown when a user requests to change other user data
-class ForbiddenRequestException : Exception()
+class ForbiddenRequestException() : Exception()

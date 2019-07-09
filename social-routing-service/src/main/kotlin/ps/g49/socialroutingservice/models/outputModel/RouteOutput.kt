@@ -18,8 +18,6 @@ data class RouteOutput(
         val points : List<GeographicPoint>,
         val categories : List<CategoryOutput>,
         val pointsOfInterest : List<PointOfInterest>,
-        @JsonProperty("route_accumulated_elevation")
-        val elevation : Double? = null,
         val ordered : Boolean,
         val circular : Boolean,
         val imageReference : String,

@@ -8,7 +8,6 @@ data class RouteInput (
         val location : String,
         val name : String,
         val description : String,
-        val personIdentifier: Int,
         val points: List<GeographicPoint>,
         val categories : List<CategoryInput>,
         val isCircular : Boolean,

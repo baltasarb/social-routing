@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ps.g49.socialroutingservice.ConnectionManager
+import ps.g49.socialroutingservice.exceptions.ForbiddenRequestException
 import ps.g49.socialroutingservice.models.inputModel.RouteInput
 import ps.g49.socialroutingservice.mappers.outputMappers.RouteOutputMapper
 import ps.g49.socialroutingservice.mappers.outputMappers.SimplifiedRouteCollectionOutputMapper
@@ -11,7 +12,6 @@ import ps.g49.socialroutingservice.models.outputModel.RouteOutput
 import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionOutput
 import ps.g49.socialroutingservice.models.requests.RouteRequest
 import ps.g49.socialroutingservice.models.requests.SearchRequest
-import ps.g49.socialroutingservice.services.RouteElevationAsyncService
 import ps.g49.socialroutingservice.services.RouteService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
@@ -20,7 +20,6 @@ import ps.g49.socialroutingservice.utils.OutputUtils
 class RouteController(
         private val connectionManager: ConnectionManager,
         private val routeService: RouteService,
-        private val routeElevationAsyncService: RouteElevationAsyncService,
         private val routeOutputMapper: RouteOutputMapper,
         private val simplifiedRouteCollectionOutputMapper: SimplifiedRouteCollectionOutputMapper
 ) {
@@ -47,15 +46,13 @@ class RouteController(
     }
 
     @PostMapping
-    fun createRoute(@RequestBody route: RouteInput): ResponseEntity<Void> {
+    fun createRoute(@RequestBody route: RouteInput, @RequestAttribute personIdentifier : Int): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeRequest = RouteRequest.build(route)
+        val routeRequest = RouteRequest.build(route, personIdentifier)
         val routeIdentifier = routeService.createRoute(connectionHandle, routeRequest)
 
         connectionHandle.close()
-
-        //routeElevationAsyncService.findElevation(routeIdentifier,route.points)
 
         val headers = HttpHeaders()
         headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
@@ -64,22 +61,22 @@ class RouteController(
     }
 
     @PutMapping("/{identifier}")
-    fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput): ResponseEntity<Void> {
+    fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeRequest = RouteRequest.build(route, identifier)
+        val routeRequest = RouteRequest.build(route, personIdentifier, identifier)
 
         routeService.updateRoute(connectionHandle, routeRequest)
 
         connectionHandle.close()
-
-        routeElevationAsyncService.findElevation(routeRequest.identifier!!,route.points)
-
+        
         return OutputUtils.ok()
     }
 
     @DeleteMapping("/{identifier}")
-    fun deleteRoute(@PathVariable identifier: Int): ResponseEntity<Void> {
+    fun deleteRoute(@PathVariable identifier: Int, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
+        if (identifier != personIdentifier)
+            throw ForbiddenRequestException()
         routeService.deleteRoute(identifier)
         return OutputUtils.ok()
     }
