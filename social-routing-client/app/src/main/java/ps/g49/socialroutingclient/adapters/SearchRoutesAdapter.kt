@@ -69,7 +69,9 @@ class SearchRoutesAdapter(
             holder.editImageView.visibility = View.VISIBLE
             holder.editImageView.setOnClickListener {
                 val intent = Intent(context, RouteCreationActivity::class.java)
-                //intent.putExtra(RouteCreationActivity.ROUTE_CREATION_MESSAGE, route.routeUrl)
+                val routeUrl = route.routeUrl.split("/")
+                val url = "http://10.0.2.2:8080/api.sr/" + routeUrl[routeUrl.size - 2] + "/" + routeUrl[routeUrl.size - 1]
+                intent.putExtra(RouteCreationActivity.ROUTE_CREATION_MESSAGE, url)
                 context.startActivity(intent)
             }
         }

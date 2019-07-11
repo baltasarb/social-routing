@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/sliding_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:umanoInitialState="hidden"
+        app:umanoPanelHeight="0dp"
+        android:layout_gravity="bottom"
+        android:gravity="bottom">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/mainConstraintLayout">
+
+        <EditText
+                android:layout_width="380dp"
+                android:layout_height="51dp"
+                android:inputType="textPostalAddress"
+                android:ems="10"
+                android:hint="@string/where_do_you_want_to_go"
+                android:id="@+id/location_editText"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="15dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:text="@string/current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/place_types_textView"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="#8D9393" app:layout_constraintTop_toBottomOf="@+id/searchFilterButton"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="382dp"
+                android:layout_height="598dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/place_types_textView"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:id="@+id/cards_recyclerview"/>
+
+        <include layout="@layout/spinner_progress_bar"
+                 android:id="@+id/spinnerProgressBar"
+                 android:layout_width="75dp"
+                 android:layout_height="75dp"
+                 android:layout_marginTop="12dp"
+                 app:layout_constraintTop_toBottomOf="@+id/place_types_textView"
+                 app:layout_constraintStart_toStartOf="parent"
+                 android:layout_marginStart="168dp"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchFilterButton" android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/location_editText"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="163dp"
+                app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="163dp"
+                android:onClick="addSearchFilters"
+                android:text="Continue" style="@android:style/Widget.Material.Light.Button.Toggle"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dragViewLinearLayout">
+
+        <TextView
+                android:text="Categories"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/categoriesTextView"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/categoriesLinearLayout">
+        </LinearLayout>
+
+        <TextView
+                android:text="Duration"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/durationTextView"/>
+        <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/durationRadioGroup">
+            <RadioButton
+                    android:text="low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/lowRadioButton" android:layout_weight="1"
+                    android:checked="true"/>
+            <RadioButton
+                    android:text="medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/mediumRadioButton" android:layout_weight="1"/>
+            <RadioButton
+                    android:text="long"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/longRadioButton" android:layout_weight="1"/>
+        </RadioGroup>
+        <ImageButton
+                android:layout_height="50dp" app:srcCompat="@android:drawable/ic_menu_search"
+                android:id="@+id/searchImageButton" android:layout_gravity="center"
+                android:onClick="searchRoutesOnClick" android:layout_width="75dp"/>
+
+
+    </LinearLayout>
+
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

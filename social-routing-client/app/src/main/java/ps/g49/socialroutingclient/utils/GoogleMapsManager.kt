@@ -1,13 +1,12 @@
 package ps.g49.socialroutingclient.utils
 
 import android.graphics.Color
-import androidx.lifecycle.LiveData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
+import ps.g49.socialroutingclient.model.domainModel.BasicPointOfInterest
 import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.PointGeocoding
-import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import java.util.*
 
 class GoogleMapsManager(
@@ -46,14 +45,22 @@ class GoogleMapsManager(
     }
 
     fun addRepresentativeMarker(position: LatLng, title: String) {
-        val markerOptionResentative = MarkerOptions()
+        val markerOptionsRepresentative = MarkerOptions()
             .position(position)
             .title(title)
 
         if (representativeMarker != null)
             representativeMarker!!.remove()
 
-        representativeMarker = googleMap.addMarker(markerOptionResentative)
+        representativeMarker = googleMap.addMarker(markerOptionsRepresentative)
+    }
+
+    fun addRepresentativeMarkerForPlaces(location: PointGeocoding, name: String) {
+        val markerOptionsRepresentative = MarkerOptions()
+            .position(LatLng(location.lat, location.lng))
+            .title(name)
+
+        googleMap.addMarker(markerOptionsRepresentative)
     }
 
     private fun drawLine(position1: LatLng, position2: LatLng) {
@@ -98,8 +105,12 @@ class GoogleMapsManager(
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, cameraZoom))
     }
 
-    fun zoomInGeoCoordinates(latitude: Double, longitude: Double) {
+    fun zoomInGeoCoordinatesCity(latitude: Double, longitude: Double) {
         moveCameraToCoordinates(latitude, longitude, CITY_ZOOM)
+    }
+
+    fun zoomInGeoCoordinates(latitude: Double, longitude: Double) {
+        moveCameraToCoordinates(latitude, longitude, googleMap.cameraPosition.zoom)
     }
 
     fun getMarkerPoints(): List<Point> = markerOptions.map {

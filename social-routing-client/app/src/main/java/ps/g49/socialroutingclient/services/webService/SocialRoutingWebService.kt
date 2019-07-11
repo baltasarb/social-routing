@@ -1,5 +1,7 @@
 package ps.g49.socialroutingclient.services.webService
 
+import ps.g49.socialroutingclient.model.domainModel.Category
+import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.outputModel.PersonOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
@@ -14,7 +16,21 @@ interface SocialRoutingWebService {
     fun getRootResource(): Call<SocialRoutingRootResource>
 
     @GET
-    fun searchRoutes(@Url searchRoutesUrl: String, @Query("location") location: String): Call<SimplifiedRouteInputCollection>
+    fun searchRoutes(
+        @Url searchRoutesUrl: String,
+        @Query("location") location: String,
+        @Query("categories") categories: List<Category>,
+        @Query("duration") duration: String
+    ): Call<SimplifiedRouteInputCollection>
+
+    @GET
+    fun searchRoutes(
+        @Url searchRoutesUrl: String,
+        @Query("location") location: String,
+        @Query("categories") categories: List<Category>,
+        @Query("duration") duration: String,
+        @Query("coordinates") coordinates: Point
+    ): Call<SimplifiedRouteInputCollection>
 
     @GET
     fun getCategories(@Url categoriesUrl: String): Call<CategoryCollectionInput>
@@ -41,28 +57,16 @@ interface SocialRoutingWebService {
 
     // PUT methods
     @PUT
-    fun updatePerson(
-        @Url personUrl: String,
-        @Body person: PersonInput
-    ): Call<PersonInput>
-
-    @PUT
     fun updateRoute(
         @Url routeUrl: String,
         @Body routeOutput: RouteOutput
-    ): Call<RouteInput>
+    ): Call<Unit>
 
     //DELETE methods
     @DELETE
-    fun deletePerson(
-        @Url personUrl: String,
-        @Body peron: PersonInput
-    ): Call<PersonInput>
-
-    @DELETE
     fun deleteRoute(
         @Url routeUrl: String
-    ): Call<Void>
+    ): Call<Unit>
 
 
 }

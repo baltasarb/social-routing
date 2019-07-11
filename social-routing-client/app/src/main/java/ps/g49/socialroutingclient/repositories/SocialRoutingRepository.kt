@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.OkHttpClient
+import ps.g49.socialroutingclient.model.domainModel.Category
+import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.services.webService.SocialRoutingWebService
 import ps.g49.socialroutingclient.utils.Resource
@@ -123,10 +125,11 @@ class SocialRoutingRepository @Inject constructor(
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     if (response.isSuccessful) {
                         val url = response.headers().get("Location")
-                        val id = url!!.split("/").last()
-                        resource.value = Resource.success(id)
-                    } else
+                        resource.value = Resource.success(url!!)
+                    } else {
+                        val code = response.code()
                         resource.value = Resource.error(response.message(), null)
+                    }
                 }
             })
 
@@ -134,11 +137,43 @@ class SocialRoutingRepository @Inject constructor(
     }
 
 
-    fun searchRoutes(searchRoutesUrl: String, location: String): LiveData<Resource<SimplifiedRouteInputCollection>> {
+    fun searchRoutes(
+        searchRoutesUrl: String,
+        locationId: String,
+        categories: List<Category>,
+        duration: String
+    ): LiveData<Resource<SimplifiedRouteInputCollection>> {
         val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
         resource.value = Resource.loading()
 
-        val call = socialRoutingWebService.searchRoutes(searchRoutesUrl, location)
+        val call = socialRoutingWebService.searchRoutes(
+            searchRoutesUrl,
+            locationId,
+            categories,
+            duration
+        )
+        genericEnqueue(call, resource)
+
+        return resource
+    }
+
+    fun searchRoutes(
+        searchRoutesUrl: String,
+        locationId: String,
+        categories: List<Category>,
+        duration: String,
+        coordinates: Point
+    ): LiveData<Resource<SimplifiedRouteInputCollection>> {
+        val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
+        resource.value = Resource.loading()
+
+        val call = socialRoutingWebService.searchRoutes(
+            searchRoutesUrl,
+            locationId,
+            categories,
+            duration,
+            coordinates
+        )
         genericEnqueue(call, resource)
 
         return resource
@@ -154,13 +189,19 @@ class SocialRoutingRepository @Inject constructor(
         return resource
     }
 
-    fun updateRoute(routeOutput: RouteOutput): LiveData<RouteInput> {
-        TODO("not implemented")
+    fun updateRoute(routeUrl: String, routeOutput: RouteOutput): LiveData<Resource<Unit>> {
+        val resource = MutableLiveData<Resource<Unit>>()
+        resource.value = Resource.loading()
+
+        val call = socialRoutingWebService.updateRoute(routeUrl, routeOutput)
+        genericEnqueue(call, resource)
+
+        return resource
     }
 
 
-    fun deleteRoute(routeUrl: String): LiveData<Resource<Void>> {
-        val resource = MutableLiveData<Resource<Void>>()
+    fun deleteRoute(routeUrl: String): LiveData<Resource<Unit>> {
+        val resource = MutableLiveData<Resource<Unit>>()
         resource.value = Resource.loading()
 
         val call = socialRoutingWebService.deleteRoute(routeUrl)

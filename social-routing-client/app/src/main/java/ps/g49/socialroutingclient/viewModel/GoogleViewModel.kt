@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingResponse
+import ps.g49.socialroutingclient.model.inputModel.google.geocoding.reverse.ReverseGeoCodingResponse
+import ps.g49.socialroutingclient.model.inputModel.google.places.PlaceDetailsResponse
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.repositories.GoogleRepository
 import ps.g49.socialroutingclient.utils.Resource
@@ -18,7 +20,7 @@ class GoogleViewModel @Inject constructor(
     fun getGeoCoordinatesFromLocation(locationString: String): LiveData<Resource<GeoCodingResponse>> =
         googleRepository.getGeocoding(locationString)
 
-    fun getLocationFromGeoCoordinates(location: Location): LiveData<Resource<String>> =
+    fun getLocationFromGeoCoordinates(location: Location): LiveData<Resource<ReverseGeoCodingResponse>> =
         googleRepository.getReverseGeocoding(location)
 
     fun getDirections(
@@ -45,4 +47,7 @@ class GoogleViewModel @Inject constructor(
         maxWidth: Int
     ): LiveData<Resource<Bitmap>> =
         googleRepository.getPhotoFromReference(photoReference, maxHeight, maxWidth)
+
+    fun getPlaceDetails(placeId: String): LiveData<Resource<PlaceDetailsResponse>> =
+        googleRepository.getPlaceDetails(placeId)
 }

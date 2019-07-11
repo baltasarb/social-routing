@@ -50,15 +50,14 @@ abstract class BaseRepository {
         })
     }
 
-    private fun getErrorMessage(code: Int) : String {
-        val errorMessage: String
-        when (code) {
-            400 -> errorMessage = ""
-            401 -> errorMessage = ""
-            500 -> errorMessage = "Server Problem. Sorry, try again later."
-            else -> errorMessage = "Unknown Error"
+    protected fun getErrorMessage(code: Int) : String {
+        return when (code) {
+            400 -> ""
+            401 -> ""
+            404 -> "Nothing Found"
+            500 -> "Server Problem. Sorry, try again later."
+            else -> "Unknown Error"
         }
-        return errorMessage
     }
 
 }

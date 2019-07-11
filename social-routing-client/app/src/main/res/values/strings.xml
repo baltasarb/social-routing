@@ -64,7 +64,7 @@
     <!-->
     <string name="route_id_intent_message">ROUTE_ID_MESSAGE</string>
     <string name="route_intent_message">ROUTE_MESSAGE</string>
-    <string name="location_intent_message">LOCATION_MESSAGE</string>
+    <string name="location_intent_message">SEARCH_INFO_MESSAGE</string>
 
     <string name="route_url">/route/{identifier}</string>
     <string name="api_url">http://10.0.2.2:8080/api.sr/</string>
@@ -74,8 +74,6 @@
     <string name="where_do_you_want_to_go">Where do you want to go ?</string>
     <string name="where_do_you_want_to_create">Where do you want to create?</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="points_of_interest">Points Of Interest</string>
     <string name="continue_metadata">Continue</string>
 </resources>

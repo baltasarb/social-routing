@@ -6,10 +6,10 @@
         android:layout_width="match_parent"
         android:id="@+id/sliding_layout"
         android:layout_height="match_parent"
-        app:umanoDragView="@id/dragView_linearLayout"
+        app:umanoDragView="@id/dragViewLinearLayout"
         app:umanoScrollableView="@+id/dragView_recyclerView"
         app:umanoInitialState="collapsed"
-        android:layout_gravity="bottom"
+        app:umanoPanelHeight="0dp"
         android:gravity="bottom">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,10 +76,9 @@
 
     <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.333"
-            android:id="@+id/dragView_linearLayout" tools:visibility="visible">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dragViewLinearLayout">
 
         <TextView
                 android:layout_width="match_parent"

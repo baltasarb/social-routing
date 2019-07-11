@@ -20,6 +20,6 @@ class UserProfileViewModel @Inject constructor(
     fun getUserRoutesFromUrl(routesUrl: String): LiveData<Resource<SimplifiedRouteInputCollection>> =
         routeRepository.getUserRoutes(routesUrl)
 
-    fun deleteUserRoute(routesUrl: String): LiveData<Resource<Void>> =
+    fun deleteUserRoute(routesUrl: String): LiveData<Resource<Unit>> =
         routeRepository.deleteRoute(routesUrl)
 }

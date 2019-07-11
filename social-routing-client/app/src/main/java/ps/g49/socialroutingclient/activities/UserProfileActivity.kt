@@ -17,6 +17,7 @@ import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.adapters.OnRouteListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
+import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.UserProfileViewModel
 import javax.inject.Inject
 
@@ -65,16 +66,17 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         userRoutesRecyclerView.layoutManager = layoutManager
         userRoutesRecyclerView.itemAnimator = DefaultItemAnimator()
         userRoutesRecyclerView.adapter = adapter
+        userRoutesRecyclerView.addOnScrollListener(ScrollListener {
+            TODO()
+        })
     }
 
     override fun onRouteClick(position: Int) {
         if (routesInputs.isNotEmpty()) {
-            val routeIdIntentMessage = getString(R.string.route_id_intent_message)
             val routeIntentMessage = getString(R.string.route_intent_message)
             val routeInput = routesInputs[position]
             val intent = Intent(this, RouteRepresentationActivity::class.java)
-            //intent.putExtra(routeIntentMessage, routeInput.routeUrl)
-            intent.putExtra(routeIdIntentMessage, routeInput.identifier)
+            intent.putExtra(routeIntentMessage, routeInput.routeUrl)
             startActivity(intent)
         }
     }

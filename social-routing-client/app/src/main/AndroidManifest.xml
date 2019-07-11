@@ -19,6 +19,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activities.RouteDetailsActivity">
+        </activity>
         <activity
                 android:name=".activities.RouteCreationMetadataActivity"
                 android:theme="@style/AppTheme.NoActionBar">

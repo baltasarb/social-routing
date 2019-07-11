@@ -4,6 +4,7 @@ import okhttp3.ResponseBody
 import ps.g49.socialroutingclient.model.inputModel.google.directions.DirectionsResponse
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.reverse.ReverseGeoCodingResponse
+import ps.g49.socialroutingclient.model.inputModel.google.places.PlaceDetailsResponse
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -43,6 +44,11 @@ interface GoogleWebService {
         @Query("key") key: String
     ): Call<PlacesResponse>
 
+    @GET("place/details/json?fields=geometry,name")
+    fun getPlaceDetails(
+        @Query("placeId") placeId: String,
+        @Query("key") key: String
+    ): Call<PlaceDetailsResponse>
 
     @GET("place/photo")
     fun getPhotoFromReference(

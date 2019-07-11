@@ -3,6 +3,7 @@ package ps.g49.socialroutingclient.activities
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -10,6 +11,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -27,6 +29,7 @@ import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingRes
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteDetailedInput
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
+import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import java.lang.Math.pow
@@ -42,7 +45,9 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
     private lateinit var socialRoutingApplication: SocialRoutingApplication
     private lateinit var placeResults: MutableList<PlacesOfInterest>
     private lateinit var locationIdentifier: String
+    private lateinit var nextPageTokens: MutableList<String>
     private var routeUrl: String? = null
+    private var isEditMode: Boolean = false
     private var termination: Boolean = false
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -65,11 +70,12 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         setContentView(R.layout.activity_route_creation)
         socialRoutingApplication = application as SocialRoutingApplication
         routeUrl = intent.getStringExtra(ROUTE_CREATION_MESSAGE)
+        if (routeUrl != null)
+            isEditMode = true
 
         stopSpinner()
         routeMetadataButton.visibility = View.GONE
         finishButton.visibility = View.VISIBLE
-        sliding_layout.panelState = SlidingUpPanelLayout.PanelState.HIDDEN
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -80,6 +86,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         googleViewModel = getViewModel(viewModelFactory)
 
         placeResults = mutableListOf()
+        nextPageTokens = mutableListOf()
     }
 
     /*
@@ -96,7 +103,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
                 mMapManager.addMarker(it)
         }
 
-        showRouteFromIntent(routeUrl)
+        showRouteFromIntent()
     }
 
     override fun onBackPressed() {
@@ -117,9 +124,9 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
             finish()
     }
 
-    private fun showRouteFromIntent(routeUrl: String?) {
-        if (routeUrl != null) {
-            val liveData = socialRoutingViewModel.getRoute(routeUrl)
+    private fun showRouteFromIntent() {
+        if (isEditMode) {
+            val liveData = socialRoutingViewModel.getRoute(routeUrl!!)
             handleRequestedData(liveData, ::requestRouteFromIntent)
         } else
             getLocationFromViewInput()
@@ -129,6 +136,9 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         routeDetailedInput!!.points.forEach {
             mMapManager.addMarker(LatLng(it.latitude, it.longitude))
         }
+        val firstPoint = routeDetailedInput.points.first()
+        locationIdentifier = routeDetailedInput.location
+        mMapManager.zoomInGeoCoordinatesCity(firstPoint.latitude, firstPoint.longitude)
     }
 
     private fun requestPlacesOfInterest(location: String) {
@@ -152,8 +162,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
     }
 
     private fun requestSuccessHandlerPlacesOfInterest(placesResponse: PlacesResponse?) {
-        if (placesResponse!!.nextPageToken != null)
-            requestNextPageOfPlacesOfInterest(placesResponse.nextPageToken!!)
+        placesResponse!!.nextPageToken?.let { nextPageTokens.add(it) }
 
         val placesOfInterest = mapPlacesOfPlaceResponseToPlacesOfInterest(placesResponse)
         placeResults.addAll(placesOfInterest)
@@ -168,12 +177,19 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         dragView_recyclerView.layoutManager = layoutManager
         dragView_recyclerView.itemAnimator = DefaultItemAnimator()
         dragView_recyclerView.adapter = adapter
+        dragView_recyclerView.addOnScrollListener(
+            ScrollListener{
+                if (nextPageTokens.isNotEmpty())
+                    requestNextPageOfPlacesOfInterest(nextPageTokens.removeAt(0))
+            }
+        )
 
         finishButton.visibility = View.GONE
         routeMetadataButton.visibility = View.VISIBLE
         backImageButton.visibility = View.GONE
         termination = true
     }
+
 
     private fun filterPlacesOfInterest(placesOfInterest: List<PlacesOfInterest>) {
         placeResults = placesOfInterest
@@ -222,14 +238,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
     }
 
     override fun onPointClick(position: Int, isButtonClick: Boolean, isSaved: Boolean) {
-        val placesOfInterest = placeResults.get(position)
-        if (!isButtonClick)
+        val placesOfInterest = placeResults[position]
+        if (!isButtonClick) {
             mMapManager.addRepresentativeMarker(
                 LatLng(
                     placesOfInterest.location.latitude,
                     placesOfInterest.location.longitude
                 ), placesOfInterest.name
             )
+            mMapManager.zoomInGeoCoordinates(placesOfInterest.location.latitude, placesOfInterest.location.longitude)
+            sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
+        }
         else
             placesOfInterest.isSaved = isSaved
     }
@@ -243,6 +262,8 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
             }
 
         socialRoutingApplication.routeCreated = Route(
+            isEditMode,
+            routeUrl,
             locationIdentifier,
             mMapManager.getMarkerPoints(),
             pointsOfInterest,
@@ -263,6 +284,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
 
         val alertDialog = builder
             .setView(rowView)
+            .setCancelable(false)
             .create()
 
         searchLocationButton.setOnClickListener {
@@ -281,14 +303,19 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
 
     private fun requestLocationGeoCoordinatesRequest(locationStr: String) {
         val liveData = googleViewModel.getGeoCoordinatesFromLocation(locationStr)
-        handleRequestedData(liveData, ::handleLocationInformationSuccessHanlder)
+        handleRequestedData(liveData, ::handleLocationInformationSuccessHandler)
     }
 
-    private fun handleLocationInformationSuccessHanlder(geoCodingResponse: GeoCodingResponse?) {
-        val firstLocation = geoCodingResponse!!.results.first()
+    private fun handleLocationInformationSuccessHandler(geoCodingResponse: GeoCodingResponse?) {
+        if (geoCodingResponse!!.results.isEmpty()) {
+            showToast("Results Not Found.")
+            getLocationFromViewInput()
+            return
+        }
+        val firstLocation = geoCodingResponse.results.first()
         locationIdentifier = firstLocation.place_id
         val point = firstLocation.geometry.location
-        mMapManager.zoomInGeoCoordinates(point.lat, point.lng)
+        mMapManager.zoomInGeoCoordinatesCity(point.lat, point.lng)
     }
 
     fun back(view: View) {
@@ -300,8 +327,10 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
             val markersRequiredMessage = getString(R.string.markers_required)
             showToast(markersRequiredMessage)
         } else {
+            val displayMetrics = DisplayMetrics()
+            windowManager.defaultDisplay.getMetrics(displayMetrics)
+            sliding_layout.panelHeight = displayMetrics.heightPixels / 3
             sliding_layout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
-            sliding_layout.panelState = SlidingUpPanelLayout.PanelState.ANCHORED
 
             val markerPoints = mMapManager.getMarkerPoints()
             for (markerPoint in markerPoints) {
@@ -310,6 +339,4 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
             }
         }
     }
-
-
 }

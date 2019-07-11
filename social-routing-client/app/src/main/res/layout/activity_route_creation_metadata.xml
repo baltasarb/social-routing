@@ -138,7 +138,8 @@
             <RadioButton
                     android:text="short"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/shortRadioButton" android:layout_weight="1"/>
+                    android:layout_height="wrap_content" android:id="@+id/shortRadioButton" android:layout_weight="1"
+                    android:checked="true"/>
             <RadioButton
                     android:text="medium"
                     android:layout_width="wrap_content"

@@ -15,10 +15,10 @@ import ps.g49.socialroutingclient.adapters.ImageToRouteAdapter
 import ps.g49.socialroutingclient.adapters.OnImageClickListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
+import ps.g49.socialroutingclient.model.domainModel.Category
 import ps.g49.socialroutingclient.model.domainModel.ImageReferenceToAdapter
 import ps.g49.socialroutingclient.model.domainModel.Route
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.CategoryCollectionInput
-import ps.g49.socialroutingclient.model.outputModel.CategoryOutput
 import ps.g49.socialroutingclient.model.outputModel.PointOfInterestOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
@@ -51,12 +51,17 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
         route = socialRoutingApplication.routeCreated
 
         requestCategories()
+        initView()
+
+        setPlacesOfInterestImages()
+    }
+    private fun initView() {
+        noCategoriesFoundTextView.visibility = View.GONE
+        noImagesTextView.visibility = View.GONE
         circularCheckBox.isChecked = route.isCircular
         if (route.isCircular)
             orderedCheckBox.isClickable = false
         else circularCheckBox.visibility = View.GONE
-
-        setPlacesOfInterestImages()
     }
 
     private fun setPlacesOfInterestImages() {
@@ -110,6 +115,10 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
     fun createRoute(view: View) {
         val routeName = nameEditText.text.toString()
         val routeDescription = descriptionEditText.text.toString()
+        if (routeName.isEmpty() || routeDescription.isEmpty()) {
+            showToast("Fill the name and description first...")
+            return
+        }
         val categories = mutableListOf<String>()
         val isRouteOrdered = orderedCheckBox.isChecked
         for (idx in 0 until categoriesLinearLayout.childCount) {
@@ -117,7 +126,7 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
             if (checkBox.isSelected)
                 categories.add(checkBox.text.toString())
         }
-        if (imageReferenceClicked == null && imageList.size > 0)
+        if (imageReferenceClicked == null && imageList.isNotEmpty())
             imageReferenceClicked = imageList.first().photo.photoReference
 
         val routeOutput = RouteOutput(
@@ -125,17 +134,26 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
             routeName,
             routeDescription,
             route.points,
-            categories.map { CategoryOutput(it) },
+            categories.map { Category(it) },
             route.isCircular,
             isRouteOrdered,
             route.pointsOfInterest.map { PointOfInterestOutput(it.identifier, it.latitude, it.longitude) },
             imageReferenceClicked.orEmpty()
         )
-        val liveData = socialRoutingViewModel.createRoute(routeOutput)
-        handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
+        if (!route.existingRoute) {
+            // Creating Route
+            val liveData = socialRoutingViewModel.createRoute(routeOutput)
+            handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
+        } else {
+            // updating Route
+            val liveData = socialRoutingViewModel.updateRoute(route.routeUrl!!, routeOutput)
+            handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
+        }
+
     }
 
     private fun requestSuccessHandlerRouteCreation() {
+        showToast("Done!")
         val intent = Intent(this, RouteRepresentationActivity::class.java)
         startActivity(intent)
     }

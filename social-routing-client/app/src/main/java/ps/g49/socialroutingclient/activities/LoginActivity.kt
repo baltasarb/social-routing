@@ -82,6 +82,10 @@ class LoginActivity : BaseActivity() {
             val liveData = socialRoutingViewModel.signIn(authenticationUrl, account.idToken!!)
             handleRequestedData(liveData, ::successHandlerSignIn)
         }
+        else {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
     }
 
     private fun errorHandlerRootResource(msg: String) {

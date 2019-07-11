@@ -9,6 +9,8 @@ import okhttp3.ResponseBody
 import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.PointGeocoding
+import ps.g49.socialroutingclient.model.inputModel.google.geocoding.reverse.ReverseGeoCodingResponse
+import ps.g49.socialroutingclient.model.inputModel.google.places.PlaceDetailsResponse
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.utils.GoogleOverviewPolylineDecoder
 import ps.g49.socialroutingclient.utils.Resource
@@ -35,19 +37,13 @@ class GoogleRepository @Inject constructor(
         return resource
     }
 
-    fun getReverseGeocoding(location: Location): LiveData<Resource<String>> {
-        val resource = MutableLiveData<Resource<String>>()
+    fun getReverseGeocoding(location: Location): LiveData<Resource<ReverseGeoCodingResponse>> {
+        val resource = MutableLiveData<Resource<ReverseGeoCodingResponse>>()
         resource.value = Resource.loading()
 
         val locationsStr = location.latitude.toString() + "," + location.longitude
         val call = googleWebService.getReverseGeocode(locationsStr, googleMapsKey)
-        genericEnqueue(call, resource) {
-            val results = it.results
-            val addressComponents = results.first().addressComponents
-            addressComponents.find {
-                it.types.contains("locality")
-            }!!.long_name
-        }
+        genericEnqueue(call, resource)
 
         return resource
     }
@@ -120,6 +116,16 @@ class GoogleRepository @Inject constructor(
             val body = it.byteStream()
             BitmapFactory.decodeStream(body)
         }
+
+        return resource
+    }
+
+    fun getPlaceDetails(placeid: String): LiveData<Resource<PlaceDetailsResponse>> {
+        val resource = MutableLiveData<Resource<PlaceDetailsResponse>>()
+        resource.value = Resource.loading()
+
+        val call = googleWebService.getPlaceDetails(placeid, googleMapsKey)
+        genericEnqueue(call, resource)
 
         return resource
     }
