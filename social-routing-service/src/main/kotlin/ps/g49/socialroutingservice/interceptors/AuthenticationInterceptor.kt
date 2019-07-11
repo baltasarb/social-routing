@@ -14,6 +14,7 @@ class AuthenticationInterceptor(
 ) : HandlerInterceptorAdapter() {
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+        return true
         val uri = request.requestURI
 
         if ((uri == "/api.sr/") or uri.contains("/google")/* or request.requestURI.contains("/error")*/)

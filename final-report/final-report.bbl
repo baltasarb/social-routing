@@ -31,6 +31,19 @@
       \verb https://developer.android.com/guide/components/activities.html
       \endverb
     \endentry
+    \entry{androiddocs}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{addendum}{(accessed: 29.04.2019)}
+      \field{title}{Android Documentation}
+      \verb{urlraw}
+      \verb https://developer.android.com/guide/
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/guide/
+      \endverb
+    \endentry
     \entry{fragments}{online}{}
       \field{sortinit}{A}
       \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
@@ -204,6 +217,18 @@
       \endverb
       \verb{url}
       \verb https://developers.google.com/maps/documentation/
+      \endverb
+    \endentry
+    \entry{googlemapsplatform}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Maps platform}
+      \verb{urlraw}
+      \verb https://cloud.google.com/maps-platform/?utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_267331616281-ADGP_Hybrid+%7C+AW+SEM+%7C+BKWS+~+EXA_%5BM:1%5D_EMEAOt_EN_Google+Maps+Brand-KWID_43700020520504203-kwd-298247230465-userloc_1011742&utm_term=KW_google%20maps%20api-ST_google+maps+api&gclid=CLHvqYu4reMCFQ5zGwodPiEHBA
+      \endverb
+      \verb{url}
+      \verb https://cloud.google.com/maps-platform/?utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_267331616281-ADGP_Hybrid+%7C+AW+SEM+%7C+BKWS+~+EXA_%5BM:1%5D_EMEAOt_EN_Google+Maps+Brand-KWID_43700020520504203-kwd-298247230465-userloc_1011742&utm_term=KW_google%20maps%20api-ST_google+maps+api&gclid=CLHvqYu4reMCFQ5zGwodPiEHBA
       \endverb
     \endentry
     \entry{googlesignindocs}{online}{}
@@ -480,6 +505,7 @@
       \keyw{spring,mvc}
     \endentry
   \enddatalist
+  \missing{api}
 \endrefsection
 \endinput
 

@@ -36,7 +36,7 @@ data class RouteRequest(
                     categories = routeInput.categories.map { CategoryRequest(it.name) },
                     isCircular = routeInput.isCircular,
                     isOrdered = routeInput.isOrdered,
-                    pointsOfInterest = routeInput.pointsOfInterest,
+                    pointsOfInterest = routeInput.pointsOfInterest?: listOf(),
                     imageReference = routeInput.imageReference
             )
         }
@@ -55,7 +55,7 @@ data class RouteRequest(
                     categories = routeInput.categories.map { CategoryRequest(it.name) },
                     isCircular = routeInput.isCircular,
                     isOrdered = routeInput.isOrdered,
-                    pointsOfInterest = routeInput.pointsOfInterest,
+                    pointsOfInterest = routeInput.pointsOfInterest?: listOf(),
                     imageReference = routeInput.imageReference
             )
         }

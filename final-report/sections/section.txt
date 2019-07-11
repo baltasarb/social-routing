@@ -1,0 +1,23 @@
+social routing service
+    * Image with structure and brief introduction
+    * Database Management System
+         * Image with structure and brief introduction
+    * Server
+        * Image with structure and brief introduction
+    * API
+    * Authentication
+    * Features
+        * Search
+social routing client
+    * Image with structure and brief introduction
+    * Remote Data Source
+    * Repository
+    * View Model
+    * Activities
+    * Internal Services
+    * External Apis/services
+    * Authentication
+    * Features  
+        * Edition
+        * Creation
+        * Live tracking

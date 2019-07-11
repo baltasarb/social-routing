@@ -12,7 +12,7 @@ data class RouteInput (
         val categories : List<CategoryInput>,
         val isCircular : Boolean,
         val isOrdered : Boolean,
-        val pointsOfInterest : List<PointOfInterest>,
+        val pointsOfInterest : List<PointOfInterest>?,
         val imageReference : String,
         var rating: Double? = null, //might be used on an UPDATE but not on a create
         var duration: Int, // short, medium , long

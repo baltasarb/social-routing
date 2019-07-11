@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  8 JUL 2019 18:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  11 JUL 2019 19:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -668,7 +668,15 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'final-report.bbl' found.
- (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.bbl)
+ (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.bbl
+
+Package biblatex Warning: The following entry could not be found
+(biblatex)                in the database:
+(biblatex)                api
+(biblatex)                Please verify the spelling and rerun
+(biblatex)                LaTeX afterwards.
+
+)
 Package biblatex Info: Reference section=0 on input line 58.
 Package biblatex Info: Reference segment=0 on input line 58.
 
@@ -689,20 +697,13 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 
-{c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images/logo_ISEL_principal_Preto_RGB_300ppi.jpg>] [2] (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.toc
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 5.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 5.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 5.
-)
+{c:/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./images/logo_ISEL_principal_Preto_RGB_300ppi.jpg>] [2] (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.toc)
 \tf@toc=\write5
 \openout5 = `final-report.toc'.
 
  [3
 
-] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/authentication.tex
+] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/introduction.tex
 chapter 1.
 
 Class scrreprt Warning: \float@addtolists detected!
@@ -719,46 +720,65 @@ Class scrreprt Warning: \float@addtolists detected!
 (scrreprt)              a package that still implements the
 (scrreprt)              deprecated \float@addtolist interface .
 
-[4
-
-]) [5] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/search.tex
-chapter 2.
-) [6
-
-] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/introduction.tex
-chapter 3.
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 7.
 (c:/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 7.
-) [7
+) [4
 
 ] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/system-architecture.tex
-chapter 4.
-<images/project-structure/system-structure.PNG, id=79, 813.0375pt x 499.11469pt>
+chapter 2.
+<images/project-structure/system-structure.PNG, id=42, 797.98125pt x 736.7525pt>
 File: images/project-structure/system-structure.PNG Graphic file (type png)
 <use images/project-structure/system-structure.PNG>
-Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 16.
-(pdftex.def)             Requested size: 418.25555pt x 256.76132pt.
-) [8
+Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 7.
+(pdftex.def)             Requested size: 418.25555pt x 386.16006pt.
+[5
 
- <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/system-structure.PNG>] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-client.tex
-chapter 5.
-<images/project-structure/social-routing-client-application-structure.PNG, id=95, 625.73775pt x 319.79475pt>
+ <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/system-structure.PNG>]) [6] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-service.tex
+chapter 3.
+<images/project-structure/service-structure.PNG, id=66, 510.40688pt x 143.78719pt>
+File: images/project-structure/service-structure.PNG Graphic file (type png)
+<use images/project-structure/service-structure.PNG>
+Package pdftex.def Info: images/project-structure/service-structure.PNG  used on input line 8.
+(pdftex.def)             Requested size: 418.25555pt x 117.83385pt.
+[7
+
+ <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/service-structure.PNG>]
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <10.95> on input line 40.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 40.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 40.
+ [8] [9]
+Overfull \hbox (113.91998pt too wide) in paragraph at lines 114--115
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[10] [11] [12]
+<images/project-structure/dbms-structure.PNG, id=157, 444.15938pt x 347.04657pt>
+File: images/project-structure/dbms-structure.PNG Graphic file (type png)
+<use images/project-structure/dbms-structure.PNG>
+Package pdftex.def Info: images/project-structure/dbms-structure.PNG  used on input line 195.
+(pdftex.def)             Requested size: 418.25555pt x 326.80632pt.
+ [13 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/dbms-structure.PNG>]) [14] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-client.tex
+chapter 4.
+<images/project-structure/social-routing-client-application-structure.PNG, id=186, 625.73775pt x 319.79475pt>
 File: images/project-structure/social-routing-client-application-structure.PNG Graphic file (type png)
 <use images/project-structure/social-routing-client-application-structure.PNG>
 Package pdftex.def Info: images/project-structure/social-routing-client-application-structure.PNG  used on input line 10.
 (pdftex.def)             Requested size: 418.25555pt x 213.75876pt.
-[9
+[15
 
  <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/social-routing-client-application-structure.PNG>]
 Underfull \hbox (badness 10000) in paragraph at lines 16--18
 
  []
 
-[10]
+[16]
 Underfull \hbox (badness 10000) in paragraph at lines 51--55
 
  []
@@ -768,47 +788,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--64
 
  []
 
-[11]) [12] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-service.tex
-chapter 6.
-<images/project-structure/service-structure.PNG, id=134, 510.40688pt x 143.78719pt>
-File: images/project-structure/service-structure.PNG Graphic file (type png)
-<use images/project-structure/service-structure.PNG>
-Package pdftex.def Info: images/project-structure/service-structure.PNG  used on input line 8.
-(pdftex.def)             Requested size: 418.25555pt x 117.83385pt.
-[13
+[17]) [18] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/conclusion.tex
+chapter 5.
+) [19
 
- <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/service-structure.PNG>] [14] [15]
-Overfull \hbox (113.91998pt too wide) in paragraph at lines 114--115
-[][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-[16] [17] [18]
-<images/project-structure/dbms-structure.PNG, id=225, 444.15938pt x 347.04657pt>
-File: images/project-structure/dbms-structure.PNG Graphic file (type png)
-<use images/project-structure/dbms-structure.PNG>
-Package pdftex.def Info: images/project-structure/dbms-structure.PNG  used on input line 195.
-(pdftex.def)             Requested size: 418.25555pt x 326.80632pt.
- [19 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/dbms-structure.PNG>]) [20] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/tests.tex
-chapter 7.
-) [21
-
-] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/conclusion.tex
-chapter 8.
-) [22
-
-] [23
+] [20
 
 ]
-Underfull \hbox (badness 1163) in paragraph at lines 93--93
+Underfull \hbox (badness 1163) in paragraph at lines 86--86
 \OT1/cmtt/m/n/10.95 docs / current / javadoc -[] api / org / springframework / web / servlet /
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 94.
-[24]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 94.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 87.
+[21]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
  (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 94.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 94.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 87.
 Package rerunfilecheck Info: File `final-report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -818,21 +814,21 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package logreq Info: Writing requests to 'final-report.run.xml'.
 \openout1 = `final-report.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 94.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 87.
  ) 
 Here is how much of TeX's memory you used:
- 18394 strings out of 492616
- 316642 string characters out of 6132768
- 882266 words of memory out of 5000000
- 21958 multiletter control sequences out of 15000+600000
+ 18358 strings out of 492616
+ 315941 string characters out of 6132768
+ 885384 words of memory out of 5000000
+ 21945 multiletter control sequences out of 15000+600000
  11186 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,9n,66p,9151b,1306s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,9n,66p,9151b,1308s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.pdf (24 pages, 459271 bytes).
+Output written on c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.pdf (21 pages, 461929 bytes).
 PDF statistics:
- 432 PDF objects out of 1000 (max. 8388607)
- 384 compressed objects within 4 object streams
- 121 named destinations out of 1000 (max. 500000)
- 154 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 373 PDF objects out of 1000 (max. 8388607)
+ 328 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
