@@ -56,6 +56,18 @@
       \verb https://developer.android.com/guide/components/fragments
       \endverb
     \endentry
+    \entry{intent}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Intent Documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+    \endentry
     \entry{livedata}{online}{}
       \field{sortinit}{A}
       \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
@@ -66,6 +78,30 @@
       \endverb
       \verb{url}
       \verb https://developer.android.com/topic/libraries/architecture/livedata
+      \endverb
+    \endentry
+    \entry{progressBar}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android ProgressBar documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/widget/ProgressBar
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/widget/ProgressBar
+      \endverb
+    \endentry
+    \entry{toasts}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Toasts documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/view/View
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/view/View
       \endverb
     \endentry
     \entry{viewmodel}{online}{}
@@ -219,6 +255,18 @@
       \endverb
       \keyw{http}
     \endentry
+    \entry{geocode}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Geocode definition.}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+    \endentry
     \entry{geographicobject}{online}{}
       \field{sortinit}{G}
       \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
@@ -229,6 +277,18 @@
       \endverb
       \verb{url}
       \verb http://www.gitta.info/DiscrSpatVar/en/html/NaturOfVaria_learningObject1.html
+      \endverb
+    \endentry
+    \entry{geocodingapi}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Geocoding API.}
+      \verb{urlraw}
+      \verb https://developers.google.com/maps/documentation/geocoding/intro
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/maps/documentation/geocoding/intro
       \endverb
     \endentry
     \entry{googlemaps}{online}{}
@@ -253,6 +313,30 @@
       \endverb
       \verb{url}
       \verb https://cloud.google.com/maps-platform/?utm_source=google&utm_medium=cpc&utm_campaign=FY18-Q2-global-demandgen-paidsearchonnetworkhouseads-cs-maps_contactsal_saf&utm_content=text-ad-none-none-DEV_c-CRE_267331616281-ADGP_Hybrid+%7C+AW+SEM+%7C+BKWS+~+EXA_%5BM:1%5D_EMEAOt_EN_Google+Maps+Brand-KWID_43700020520504203-kwd-298247230465-userloc_1011742&utm_term=KW_google%20maps%20api-ST_google+maps+api&gclid=CLHvqYu4reMCFQ5zGwodPiEHBA
+      \endverb
+    \endentry
+    \entry{googleplacesapi}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Places API.}
+      \verb{urlraw}
+      \verb https://developers.google.com/places/web-service/intro
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/places/web-service/intro
+      \endverb
+    \endentry
+    \entry{googleplayservices}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Play Services.}
+      \verb{urlraw}
+      \verb https://developers.google.com/android/guides/overview
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/android/guides/overview
       \endverb
     \endentry
     \entry{googlesignindocs}{online}{}
@@ -367,6 +451,30 @@
       \verb https://logging.apache.org/log4j/2.x/
       \endverb
     \endentry
+    \entry{loginactivitylayout}{online}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labeltitlesource}{title}
+      \field{title}{Login Activity Layout documentation.}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+    \endentry
+    \entry{navigationactivitylayout}{online}{}
+      \field{sortinit}{N}
+      \field{sortinithash}{f7242c3ed3dc50029fca1be76c497c7c}
+      \field{labeltitlesource}{title}
+      \field{title}{Navigation Activity Layout documentation}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+    \endentry
     \entry{jsonproblemonlinedocs}{online}{}
       \name{author}{3}{}{%
         {{hash=55ac868e62f6d4ea8f9f143c4c584739}{%
@@ -440,6 +548,66 @@
       \verb http://square.github.io/retrofit/
       \endverb
       \keyw{retrofit}
+    \endentry
+    \entry{routecreationactivitylayout}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labeltitlesource}{title}
+      \field{title}{Route Creation Activity Layout documentation}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+    \endentry
+    \entry{routecreationametadatactivitylayout}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labeltitlesource}{title}
+      \field{title}{Route Creation Metadata Layout.}
+      \verb{urlraw}
+      \verb https://developers.google.com/places/web-service/intro
+      \endverb
+      \verb{url}
+      \verb https://developers.google.com/places/web-service/intro
+      \endverb
+    \endentry
+    \entry{routedetailsactivitylayout}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labeltitlesource}{title}
+      \field{title}{Route Details Activity Layout documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+    \endentry
+    \entry{routerepresentationactivitylayout}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labeltitlesource}{title}
+      \field{title}{Route Representation Activity Layout documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+    \endentry
+    \entry{routesearchactivitylayout}{online}{}
+      \field{sortinit}{R}
+      \field{sortinithash}{da6b42bd3ab22fee61abed031ee405f7}
+      \field{labeltitlesource}{title}
+      \field{title}{Route Search Activity Layout documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
     \endentry
     \entry{apihttpverbsdocs}{online}{}
       \field{sortinit}{S}
@@ -564,7 +732,44 @@
       \verb https://postgis.net/docs/ST_Distance.html
       \endverb
     \endentry
+    \entry{url}{online}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{36a2444f5238e0dcf4bb59704df6624d}
+      \field{labeltitlesource}{title}
+      \field{title}{URL definition.}
+      \verb{urlraw}
+      \verb https://pt.wikipedia.org/wiki/URL
+      \endverb
+      \verb{url}
+      \verb https://pt.wikipedia.org/wiki/URL
+      \endverb
+    \endentry
+    \entry{userprofilectivitylayout}{online}{}
+      \field{sortinit}{U}
+      \field{sortinithash}{36a2444f5238e0dcf4bb59704df6624d}
+      \field{labeltitlesource}{title}
+      \field{title}{User Profile Activity Layout documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+    \endentry
+    \entry{webserver}{online}{}
+      \field{sortinit}{W}
+      \field{sortinithash}{ecb89ff85896a47dc313960773ac311d}
+      \field{labeltitlesource}{title}
+      \field{title}{Web Server definition.}
+      \verb{urlraw}
+      \verb https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_web_server
+      \endverb
+      \verb{url}
+      \verb https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_web_server
+      \endverb
+    \endentry
   \enddatalist
+  \missing{endpoint TODO}
 \endrefsection
 \endinput
 

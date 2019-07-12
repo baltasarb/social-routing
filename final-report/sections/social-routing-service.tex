@@ -107,6 +107,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     of the PostGIS extension STDistance \cite{stdistance}, the distance between points is retrieved, if it's contained in the initially 
     chosen radius, it's selected, otherwise it is not.
 
+\newpage
 \section*{Social Routing API}    
     \subsection*{Schema}
         The Social Routing API uses the HTTP protocol as a medium to 
@@ -123,8 +124,6 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
         requests a single resource and summary representation for each element inside a requested collection, containing only the 
         information about that element that is necessary.
         Examples of both a detailed and summary representation can be found in the Schema Documentation \cite{schemadocs}.    
-    
-        \newpage
     
     \subsection*{Authentication}
     The API's authentication is made with the support of the Google Sign-In API. 
@@ -150,7 +149,6 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     compared to the hashed version on the database, if no token with that hash is present then the authentication fails 
     and the user receives an error response.
 
-    \newpage
     \subsection*{Supported HTTP Methods}
         Due to the nature of the HTTP protocol, the API supports four different HTTP request methods \cite{apihttpverbsdocs}: GET, POST, PUT and DELETE.
         
