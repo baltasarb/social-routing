@@ -80,6 +80,18 @@
       \verb https://developer.android.com/topic/libraries/architecture/viewmodel
       \endverb
     \endentry
+    \entry{api}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{API definition}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Application_programming_interface
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Application_programming_interface
+      \endverb
+    \endentry
     \entry{applicationjson}{online}{}
       \field{sortinit}{a}
       \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
@@ -207,6 +219,18 @@
       \endverb
       \keyw{http}
     \endentry
+    \entry{geographicobject}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Geographic Object Documentation}
+      \verb{urlraw}
+      \verb http://www.gitta.info/DiscrSpatVar/en/html/NaturOfVaria_learningObject1.html
+      \endverb
+      \verb{url}
+      \verb http://www.gitta.info/DiscrSpatVar/en/html/NaturOfVaria_learningObject1.html
+      \endverb
+    \endentry
     \entry{googlemaps}{online}{}
       \field{sortinit}{G}
       \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
@@ -253,6 +277,18 @@
       \endverb
       \verb{url}
       \verb https://tools.ietf.org/html/rfc2616#section-9.5
+      \endverb
+    \endentry
+    \entry{https}{online}{}
+      \field{sortinit}{H}
+      \field{sortinithash}{5f15a7bc777ad49ff15aa4d2831b1681}
+      \field{labeltitlesource}{title}
+      \field{title}{HTTPS RFC}
+      \verb{urlraw}
+      \verb https://tools.ietf.org/html/rfc2660
+      \endverb
+      \verb{url}
+      \verb https://tools.ietf.org/html/rfc2660
       \endverb
     \endentry
     \entry{jackson}{online}{}
@@ -364,6 +400,18 @@
       \endverb
       \verb{url}
       \verb https://tools.ietf.org/html/rfc7807
+      \endverb
+    \endentry
+    \entry{postgis}{online}{}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labeltitlesource}{title}
+      \field{title}{PostGIS Extension}
+      \verb{urlraw}
+      \verb http://postgis.net/
+      \endverb
+      \verb{url}
+      \verb http://postgis.net/
       \endverb
     \endentry
     \entry{postgresql}{online}{}
@@ -504,8 +552,19 @@
       \endverb
       \keyw{spring,mvc}
     \endentry
+    \entry{stdistance}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{STDistance function documentation}
+      \verb{urlraw}
+      \verb https://postgis.net/docs/ST_Distance.html
+      \endverb
+      \verb{url}
+      \verb https://postgis.net/docs/ST_Distance.html
+      \endverb
+    \endentry
   \enddatalist
-  \missing{api}
 \endrefsection
 \endinput
 

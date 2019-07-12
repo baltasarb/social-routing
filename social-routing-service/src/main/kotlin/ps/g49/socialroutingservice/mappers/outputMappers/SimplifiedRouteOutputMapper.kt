@@ -12,6 +12,6 @@ class SimplifiedRouteOutputMapper : OutputMapper<SimplifiedRoute, SimplifiedRout
     }
 
     override fun map(from: SimplifiedRoute): SimplifiedRouteOutput {
-        return SimplifiedRouteOutput(from.identifier, from.name, from.rating, OutputUtils.routeUrl(from.identifier))
+        return SimplifiedRouteOutput(from.identifier, from.name, from.rating, from.imageReference, OutputUtils.routeUrl(from.identifier))
     }
 }

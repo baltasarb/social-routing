@@ -1,5 +1,5 @@
 DROP TABLE RouteCategory;
-DROP TABLE Category;
+DROP TABLE Category CASCADE;
 DROP TABLE Route CASCADE;
 DROP TABLE  GoogleAuthentication;
 DROP TABLE Authentication;

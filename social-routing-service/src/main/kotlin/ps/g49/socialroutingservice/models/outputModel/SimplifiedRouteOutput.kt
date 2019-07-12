@@ -6,6 +6,7 @@ data class SimplifiedRouteOutput(
         var identifier: Int,
         val name: String,
         var rating: Double,
+        var imageReference : String,
         @JsonProperty("route_url")
         val routeUrl: String
 )

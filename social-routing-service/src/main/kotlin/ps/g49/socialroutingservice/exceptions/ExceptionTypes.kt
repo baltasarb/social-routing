@@ -42,3 +42,5 @@ class InternalServerErrorException() : Exception()
 
 //thrown when a user requests to change other user data
 class ForbiddenRequestException() : Exception()
+
+class RouteCategoriesRequiredException : Exception()

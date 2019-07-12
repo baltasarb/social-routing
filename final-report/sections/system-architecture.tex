@@ -7,9 +7,9 @@
             \includegraphics[width=\textwidth]{images/project-structure/system-structure.PNG}
             \caption{System structure.}
             \label{fig:systemstructure}
-        \end{figure}  
+        \end{figure} 
 
-        The Social Routing Service is subdivided into two components, the Server and the Database Management System. The Server exposes its
+        The Social Routing Service is subdivided into two components, the Server and the Database Management System\cite{dbmsdefinition}. The Server exposes its
         functionality through an HTTP\cite{httponlinedocs} API\cite{api} (Social Routing API \cite{apidocs}) and as such, receives requests from a client, processes the received request and responds accordingly.
         The Database Management System is used to store the server's data, over which the necessary calculations are made.\par The Social 
         Routing Service uses only one external API, Google Sign In\cite{googlesignindocs}, which is used to help with user authentication. Although the Social Routing

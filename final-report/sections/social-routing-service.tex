@@ -1,17 +1,113 @@
 \chapter{Social Routing Service}
 
-The Social Routing Service is comprised of three major components, each with it's own purpose. 
-A database to store user related information, a server to process data and an API to expose it's functionality.
-This logic is represented in the figure \ref{fig:socialroutingservice}.
+The Social Routing Service (SRS) is comprised of three major components, 
+A Database Management System (DBMS) to store user related information, a server to process data and an API to expose it's functionality.
+This logic is represented in the figure \ref{fig:socialroutingservice}. Beyond the mentioned
+components it also uses the external API Google Sign In to aid with the user authentication process.
 
 \begin{figure}[ht]            
-    \includegraphics[width=\textwidth]{images/project-structure/service-structure.PNG}
+    \includegraphics[width=\textwidth]{images/project-structure/service-structure2.PNG}
     \caption{Social Routing Service architecture.}
     \label{fig:socialroutingservice}
 \end{figure}  
 
-\section*{Social Routing API}
+The components, although separated, must communicate with each other in order for the SRS
+to function properly. The API is exposed by the server using the HTTP protocol. The 
+communication with external APIs made by the server is done through the HTTPS\cite{https} 
+protocol.
 
+The communication with the DBMS is made using JDBI\cite{jdbidocs}, a library built on top
+of the JDBC\cite{jdbcdocs} driver. The main idea when building the communication with the DBMS
+was to guarantee that a single request made to the service would use a single connection 
+to the DBMS. For that reason, the connection is both created and closed in the controller
+element of the system. This way it allows that the DBMS connection is used multiple times
+by the same request if required.
+\newpage
+
+\section*{Database Management System}
+The DBMS chosen was PostgreSQL\cite{postgresql}, using the hybrid functionality 
+of storing valid JSON\cite{postgresqljson} directly in a table field. The decision of choosing JSON as a type to 
+store data comes with the need of storing large sets of coordinates belonging to a single entity and this 
+allows us to make faster and easier calculations of times and distances between routes and points rather than if a 
+point was it's own database entity. 
+The main concept of the project is the creation of routes in a map and their retrieval according to certain parameters.
+To consider distance between a user and a route a possible search parameter, the PostGIS\cite{postgis} 
+PostgreSQL extension was used as it allows both cartesian and geodesic distance calculations.
+
+    \subsection*{Conceptual Model}
+    The database entity diagram is shown in figure \ref{fig:erdiagram}.
+
+    \begin{figure}[ht]            
+        \includegraphics[width=\textwidth]{images/project-structure/dbms-structure.PNG}
+        \caption{Entity Relationship Diagram.}
+        \label{fig:erdiagram}
+    \end{figure}   
+
+        \subsubsection*{Person}
+        The entity Person represents a single user in the database. To allow new forms of authentication to be introduced at a later time,
+        the Google Authentication table is separated from the Authentication one. A user can have multiple entries
+        on the Authentication table to enable multiple device registration, but only a single Google Authentication 
+        entry as the google account is unique.
+
+        \subsubsection*{Route}
+        Entity that stores every information required to hold a Route. Special consideration was taken into the making
+        of this entity as a Route must have large sets of coordinates, representing the path that it undergoes. The 
+        use of JSON as a table field Points provided more customization and a more efficient way to make calculations 
+        of distances between routes and points. 
+
+        \subsubsection*{GoogleAuthentication}
+        Google Authentication is the entity that stores the user unique identifier in the Google platform, the subject, as such,
+        a user can only have one entry in the GoogleAuthentication table.
+        In the future there will be multiple tables with different forms of authentication, hence the name GoogleAuthentication 
+        of the entity. It provides scalability to further augment the authentication process, which can be done
+        with a new table FacebookAuthentication for example.
+
+        \subsubsection*{Authentication}
+        This entity is used to store authentication metadata regarding each database user. The tokens have an expiration time,
+        and because of it their creation date is required as well as their expiration date.
+
+        \subsubsection*{Category}
+        The category entity defines a route in a broader sense. It is used to filter the amount of routes being 
+        searched by a user. It can be one of the several: Sea, Sports, Cultural, amongst others.
+        Each route must be assigned at least one category.
+
+        \subsubsection*{PointOfInterest}
+        A route might contain geographic points of interest along its path, this is the entity that represents them. 
+
+        \subsubsection*{Image}
+        When a route is created it must be associated with a cover image. 
+
+    \subsection*{Physical Model}
+    The physical model can be seen in a detailed form in the DBMS documentation.\cite{servicedbms}
+
+    \subsection*{Search Route}
+    The SRS allows that a client searches routes that are nearby to a set of geographic coordinates (latitude and longitude). 
+    This functionality could be implemented in either the server or the DBMS, but with the PostGIS capabilities already mentioned, the later was chosen.
+    
+    The search by proximity algorithm is built on two phases, the initial filtering by data received as parameter, to reduce the amount of 
+    calculations required, and the calculations on the resulting set of routes to check if they belong to a user area or not.
+    
+    More specifically, when searching for routes close to a user's coordinates, the initial parameters must be the lower bound radius
+    and the upper bound radius. These parameters build a circumference around the user's coordinates that goes from the lower radius to the 
+    upper one. With these parameters, if no routes are found in the specified radius, the radius can be increased or decreased in repeated
+    searches without incurring in the overhead of filtering the already discarded routes. 
+
+    The following example illustrates the data required to make such search:
+    A user has the coordinates 38.755833, -9.116667 and is searching for short routes, that are sports related.
+    With this data, first the city where the coordinates belong is found. After that, a query is made to the database
+    to find which routes in the given coordinates city are short and sports related. This is the first phase of filtering.
+    The second phase is to filter the retrieved routes by distance to the original coordinates. If they are inside the 
+    given radius, they are selected, if not, discarded.
+
+    To be able to calculate if a route belongs to a user given area, the user coordinates are transformed into a Geographic Object\cite{geographicobject},
+    then, each of the already filtered and retrieved routes is checked for distance to that geographic object. To be noted that the construction of a geographic
+    object is necessary because the calculations being made are not made on the cartesian plane but on the spatial one. They must be made considering a spherical 
+    object to provide accurate results (in case a long distance between route points exists). Of course each route contains every geographic point in its field points,
+    which is of type JSON. Of of each of the routes the points must be extracted and converted into the same Geographic Object type. From here, using the built in function
+    of the PostGIS extension STDistance \cite{stdistance}, the distance between points is retrieved, if it's contained in the initially 
+    chosen radius, it's selected, otherwise it is not.
+
+\section*{Social Routing API}    
     \subsection*{Schema}
         The Social Routing API uses the HTTP protocol as a medium to 
         communicate and all the data sent or received must be in the JSON format.
@@ -32,7 +128,7 @@ This logic is represented in the figure \ref{fig:socialroutingservice}.
     
     \subsection*{Authentication}
     The API's authentication is made with the support of the Google Sign-In API. 
-    The authentication with the is done in two phases. The first phase is the registration of a new user. 
+    The authentication is done in two phases. The first phase is the registration of a new user. 
     On this phase a POST \cite{httppostdocs} request must be made to the endpoint: http://api.sr/sign-in/google, 
     with the Google Sign-In token in the body of the request:
     \begin{lstlisting}
@@ -92,7 +188,7 @@ This logic is represented in the figure \ref{fig:socialroutingservice}.
         \begin{verbatim}
             DELETE http://api.sr/routes/1
         \end{verbatim}
-        \vspace{-\baselineskip}
+        \vspace{-\baselineskip} 
         deletes the route with 1 as identifier. A successful response will have the 200 OK status and an empty body.
     
     \subsection*{Pagination}
@@ -180,42 +276,3 @@ As an example, the flow of a correct HTTP POST request to the routes resource th
         and maps it to the header Location of the response and returns.
     \end{itemize}
     \newpage
-
-\section*{Database Management System}
-The database management system \cite{dbmsdefinition} (DBMS) chosen was PostgreSQL\cite{postgresql}, using the hybrid functionality of storing valid JSON\cite{postgresqljson} directly in a table
-field. The database is used to store all entities required for the service to function and to deliver them to repositories in need. 
-The decision of choosing JSON as a type to store data comes with the need of storing large sets of coordinates 
-belonging to a single entity, this will allow us to make faster and easier calculations of times and distances 
-between routes and points rather than if a point was it's own database entity. 
-
-    \subsection*{Conceptual Model}
-    The database entity diagram is shown in figure \ref{fig:erdiagram}.
-
-    \begin{figure}[ht]            
-        \includegraphics[width=\textwidth]{images/project-structure/dbms-structure.PNG}
-        \caption{Entity Relationship Diagram.}
-        \label{fig:erdiagram}
-    \end{figure}   
-
-        \subsubsection*{Person}
-        The entity Person represents a single user in the database. A Person can create multiple Routes and have a
-        single form of Google Authentication.
-
-        \subsubsection*{Route}
-        Entity that stores every information required to hold a Route. Special consideration was taken into the making
-        of this entity as a Route must have large sets of coordinates, representing the path that it undergoes. The 
-        use of json as a table field Points provided more customization and a more efficient way to make calculations 
-        of distances between routes and points.
-
-        \subsubsection*{Category}
-        Each route must be assigned at least one category, and considering a single category can have multiple routes
-        the relation between a Route and a Category must be N to N.
-
-        \subsubsection*{GoogleAuthentication}
-        This entity is used to store authentication metadata regarding each database user. In the future there
-        will be multiple tables with different forms of authentication, hence the name GoogleAuthentication 
-        of the entity. It provides scalability to further augment the authentication process, which can be done
-        with a new table FacebookAuthentication for example.
-
-    \subsection*{Physical Model}
-    The physical model can be seen in a detailed form in the DBMS documentation.\cite{servicedbms}

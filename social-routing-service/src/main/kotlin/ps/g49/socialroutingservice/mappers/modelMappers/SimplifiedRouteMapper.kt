@@ -13,6 +13,7 @@ class SimplifiedRouteMapper : ModelMapper<RouteRequest, SimplifiedRoute> {
                 identifier = rs.getInt("Identifier"),
                 name = rs.getString("Name"),
                 rating = rs.getDouble("Rating"),
+                imageReference = rs.getString("ImageReference"),
                 personIdentifier = rs.getInt("PersonIdentifier")
         )
     }

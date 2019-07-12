@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
 import ps.g49.socialroutingservice.exceptions.InsertException
 import ps.g49.socialroutingservice.exceptions.ResourceNotFoundException
+import ps.g49.socialroutingservice.exceptions.RouteCategoriesRequiredException
 import ps.g49.socialroutingservice.mappers.modelMappers.RedundantRouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
@@ -70,7 +71,7 @@ class RouteRepositoryImplementation(
         val totalCount = result.first().count
 
         return SimplifiedRouteCollection(
-                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.imageReference,it.personIdentifier) },
                 if (nextPageExists(totalCount, page)) page + 1 else null
         )
     }
@@ -107,7 +108,7 @@ class RouteRepositoryImplementation(
         val totalCount = result.first().count
 
         return SimplifiedRouteCollection(
-                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.imageReference, it.personIdentifier) },
                 if (nextPageExists(totalCount, page)) page + 1 else null
         )
     }
@@ -129,7 +130,7 @@ class RouteRepositoryImplementation(
         val totalCount = result.first().count
 
         return SimplifiedRouteCollection(
-                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.personIdentifier) },
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.imageReference, it.personIdentifier) },
                 if (nextPageExists(totalCount, page)) page + 1 else null
         )
     }
@@ -203,8 +204,9 @@ class RouteRepositoryImplementation(
         return totalCount != 0 && totalCount > ROUTES_PER_RESULT * currentPage
     }
 
-    private fun executeInsertPointOfInterestBatch(connectionHandle: Handle, pointsOfInterest : List<PointOfInterest>) : Int{
+    private fun executeInsertPointOfInterestBatch(connectionHandle: Handle, pointsOfInterest : List<PointOfInterest>){
         //insert into points of interest
+        if(pointsOfInterest.isEmpty()) return
         val pointOfInterestInsertBatch = connectionHandle.prepareBatch(PointOfInterestQueries.INSERT)
         for (pointOfInterest in pointsOfInterest) {
             pointOfInterestInsertBatch
@@ -213,10 +215,13 @@ class RouteRepositoryImplementation(
                     .bind("longitude", pointOfInterest.longitude)
                     .add()
         }
-        return pointOfInterestInsertBatch.execute().size
+        pointOfInterestInsertBatch.execute()
     }
 
     private fun executeRouteCategoriesInsertBatch(connectionHandle: Handle, route: Route, insertedRouteIdentifier: Int) {
+        val categories = route.categories
+        if(categories == null || categories.isEmpty())
+            throw RouteCategoriesRequiredException()
         val routeCategoryBatch = connectionHandle.prepareBatch(RouteCategoryQueries.INSERT)
         for (category in route.categories!!) {
             routeCategoryBatch
@@ -232,6 +237,7 @@ class RouteRepositoryImplementation(
     }
 
     private fun executeRoutePointsOfInterestInsertBatch(connectionHandle: Handle, route: Route, insertedRouteIdentifier: Int) {
+        if(route.pointsOfInterest.isEmpty()) return
         val routePointOfInterestInsertBatch = connectionHandle.prepareBatch(RoutePointOfInterestQueries.INSERT)
         for (pointOfInterest in route.pointsOfInterest) {
             routePointOfInterestInsertBatch

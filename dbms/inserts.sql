@@ -11,11 +11,11 @@ INSERT INTO GoogleAuthentication(PersonIdentifier, Subject)
 VALUES('100', 'subject1'),
 	  ('200', 'subject2');
 		
-INSERT INTO Category (Name) VALUES ('Sea');
-INSERT INTO Category (Name) VALUES ('Sports');
-INSERT INTO Category (Name) VALUES ('Nature');
-INSERT INTO Category (Name) VALUES ('City');
-INSERT INTO Category (Name) VALUES ('Other');
+INSERT INTO Category (Name) VALUES ('sea');
+INSERT INTO Category (Name) VALUES ('sports');
+INSERT INTO Category (Name) VALUES ('nature');
+INSERT INTO Category (Name) VALUES ('city');
+INSERT INTO Category (Name) VALUES ('other');
 --INSERT INTO Route (Identifier, Location, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier)
 --VALUES ('100', 'Lisbon', 'Route 1', 'Description 1', 0, 10, now(), '[]', 100),
 --	   ('200', 'Lisbon', 'Route 2', 'Description 2', 2.5, 20, now(), '[]', 200),

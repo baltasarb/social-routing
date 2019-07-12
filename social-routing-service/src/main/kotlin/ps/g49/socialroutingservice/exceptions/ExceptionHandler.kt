@@ -14,6 +14,7 @@ import ps.g49.socialroutingservice.models.outputModel.ProblemJson
 import java.lang.Exception
 import java.lang.IllegalStateException
 import java.lang.NumberFormatException
+import java.sql.SQLException
 
 @ControllerAdvice
 class ExceptionHandler : ResponseEntityExceptionHandler() {
@@ -122,7 +123,7 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = [InternalServerErrorException::class, NumberFormatException::class])
+    @ExceptionHandler(value = [InternalServerErrorException::class, NumberFormatException::class, SQLException::class])
     fun handleInternalServerErrorException(exception: Exception):ResponseEntity<ProblemJson>{
         val error = ProblemJson(
                 "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#internal-server-error",
@@ -132,6 +133,19 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
                 "link to full description"
         )
         return ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR)
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = [RouteCategoriesRequiredException::class])
+    fun handleRouteCategoriesRequiredException(exception: Exception): ResponseEntity<ProblemJson> {
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#bad-request",
+                HttpStatus.BAD_REQUEST.reasonPhrase,
+                HttpStatus.BAD_REQUEST.value(),
+                "To create a route at least one valid category must be provided.",
+                "link to full description"
+        )
+        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
 
 }

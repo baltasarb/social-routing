@@ -33,7 +33,7 @@ data class RouteRequest(
                     personIdentifier = personIdentifier,
                     dateCreated = routeInput.dateCreated,
                     duration = routeInput.duration,
-                    categories = routeInput.categories.map { CategoryRequest(it.name) },
+                    categories = routeInput.categories.map { CategoryRequest(it.name.toLowerCase()) },
                     isCircular = routeInput.isCircular,
                     isOrdered = routeInput.isOrdered,
                     pointsOfInterest = routeInput.pointsOfInterest?: listOf(),

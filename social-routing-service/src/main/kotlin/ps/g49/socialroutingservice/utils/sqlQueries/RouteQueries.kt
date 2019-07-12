@@ -36,12 +36,8 @@ class RouteQueries {
                 "LIMIT :limit " +
                 "OFFSET :offset;"
 
-        const val UPDATE_ELEVATION: String = "UPDATE ROUTE " +
-                "SET elevation = :elevation " +
-                "WHERE Identifier = :identifier;"
-
         private const val SEARCH_BY_LOCATION_FIRST = "" +
-                "SELECT COUNT(*) OVER() as count, Identifier, Name, Rating, PersonIdentifier " +
+                "SELECT COUNT(*) OVER() as count, Identifier, Name, Rating, PersonIdentifier, ImageReference " +
                 "FROM Route " +
                 "JOIN RouteCategory " +
                 "ON RouteCategory.RouteIdentifier = Route.Identifier AND Route.Duration = :duration " +
@@ -54,12 +50,12 @@ class RouteQueries {
 
         private const val SEARCH_BY_COORDINATES_FIRST = "SELECT DISTINCT ON(Identifier) COUNT(*) OVER() as count, * " +
                 "FROM (" +
-                "SELECT RouteCategory.RouteIdentifier as Identifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered FROM RouteCategory " +
+                "SELECT RouteCategory.RouteIdentifier as Identifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered, Route.ImageReference FROM RouteCategory " +
                 "JOIN Route ON RouteCategory.RouteIdentifier = Route.Identifier " +
                 "WHERE Route.Duration = 'Short' "
 
         private const val SEARCH_BY_COORDINATES_LAST = "" +
-                "GROUP BY RouteCategory.RouteIdentifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered) " +
+                "GROUP BY RouteCategory.RouteIdentifier, Route.Name, Route.Rating, Route.PersonIdentifier, Route.Points, Route.Circular, Route.Ordered, Route.ImageReference) " +
                 "results " +
                 "WHERE routeBelongsToUserArea(:lowerBoundRadius, :upperBoundRadius, :userLatitude, :userLongitude, results.points, results.circular, results.ordered) = TRUE " +
                 "LIMIT :limit " +

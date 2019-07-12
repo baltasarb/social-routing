@@ -46,10 +46,10 @@ class RouteController(
     }
 
     @PostMapping
-    fun createRoute(@RequestBody route: RouteInput): ResponseEntity<Void> {
+    fun createRoute(@RequestBody route: RouteInput /*,@RequestAttribute personIdentifier: Int*/): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
 
-        val routeRequest = RouteRequest.build(route, 100)
+        val routeRequest = RouteRequest.build(route, 100/*personIdentifier*/)
         val routeIdentifier = routeService.createRoute(connectionHandle, routeRequest)
 
         connectionHandle.close()
