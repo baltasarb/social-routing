@@ -13,5 +13,5 @@ data class RouteOutput (
     val isOrdered : Boolean,
     val pointsOfInterest : List<PointOfInterestOutput>?,
     val imageReference : String,
-    val duration: Int
+    val duration: String
 )

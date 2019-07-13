@@ -58,7 +58,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         searchRoutes(placeId, searchParams.categories, searchParams.duration)
     }
 
-    private fun errorHandlerLocationIdentifier(msg: String?) {
+    private fun errorHandlerLocationIdentifier() {
         showToast("Could not find the specified location.")
         emptySearchRoutesNavigationTextView.visibility = View.GONE
     }
@@ -83,7 +83,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
             setRecyclerView(simplifiedRouteInputCollection)
     }
 
-    private fun errorHandlerSearch(msg: String) {
+    private fun errorHandlerSearch() {
         emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
     }
 

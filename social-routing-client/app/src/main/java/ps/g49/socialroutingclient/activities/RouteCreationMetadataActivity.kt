@@ -95,7 +95,7 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
         handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories, ::requestErrorHandlerRouteCategories)
     }
 
-    private fun requestErrorHandlerRouteCategories(msg: String) {
+    private fun requestErrorHandlerRouteCategories() {
         noCategoriesFoundTextView.visibility = View.VISIBLE
     }
 
@@ -134,9 +134,9 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
         }
 
         val duration = when {
-            shortRadioButton.isChecked -> 1
-            mediumRadioButton.isChecked -> 3
-            else -> 6
+            shortRadioButton.isChecked -> "short"
+            mediumRadioButton.isChecked -> "medium"
+            else -> "long"
         }
 
         val routeOutput = RouteOutput(
@@ -163,7 +163,7 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
 
     }
 
-    private fun errorHandlerRouteCreation(msg: String) {
+    private fun errorHandlerRouteCreation() {
         showToast("Could not create the route.")
     }
 
