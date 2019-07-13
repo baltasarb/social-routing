@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_route_creation_metadata.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
+import ps.g49.socialroutingclient.activities.RouteRepresentationActivity.Companion.ROUTE_REPRESENTATION_DETAILS_MESSAGE
 import ps.g49.socialroutingclient.adapters.ImageToRouteAdapter
 import ps.g49.socialroutingclient.adapters.OnImageClickListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
@@ -31,7 +32,7 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
     private lateinit var googleViewModel: GoogleViewModel
     private lateinit var socialRoutingApplication: SocialRoutingApplication
     private lateinit var route: Route
-    private lateinit var imageList: List<ImageReferenceToAdapter>
+    private lateinit var imageList: MutableList<ImageReferenceToAdapter>
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
     private var imageReferenceClicked: String? = null
@@ -48,13 +49,17 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
         socialRoutingApplication = application as SocialRoutingApplication
         socialRoutingViewModel = getViewModel(viewModelFactory)
         googleViewModel = getViewModel(viewModelFactory)
-        route = socialRoutingApplication.routeCreated
 
-        requestCategories()
+        route = socialRoutingApplication.routeCreated
         initView()
 
+        if (route.cityPhoto != null)
+            imageReferenceClicked = route.cityPhoto!!.photoReference
+
+        requestCategories()
         setPlacesOfInterestImages()
     }
+
     private fun initView() {
         noCategoriesFoundTextView.visibility = View.GONE
         noImagesTextView.visibility = View.GONE
@@ -72,7 +77,8 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
                 it.photo!!,
                 ::requestImageFromReference
             )
-        }
+        }.toMutableList()
+
         val adapter = ImageToRouteAdapter(imageList, this)
         val layoutManager = LinearLayoutManager(applicationContext)
         pointsOfInterestRecyclerView.layoutManager = layoutManager
@@ -115,19 +121,23 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
     fun createRoute(view: View) {
         val routeName = nameEditText.text.toString()
         val routeDescription = descriptionEditText.text.toString()
-        if (routeName.isEmpty() || routeDescription.isEmpty()) {
-            showToast("Fill the name and description first...")
-            return
-        }
         val categories = mutableListOf<String>()
         val isRouteOrdered = orderedCheckBox.isChecked
         for (idx in 0 until categoriesLinearLayout.childCount) {
             val checkBox = categoriesLinearLayout.getChildAt(idx) as CheckBox
-            if (checkBox.isSelected)
+            if (checkBox.isChecked)
                 categories.add(checkBox.text.toString())
         }
-        if (imageReferenceClicked == null && imageList.isNotEmpty())
-            imageReferenceClicked = imageList.first().photo.photoReference
+        if (routeName.isEmpty() || routeDescription.isEmpty() || categories.isEmpty()) {
+            showToast("Fill the form first.")
+            return
+        }
+
+        val duration = when {
+            shortRadioButton.isChecked -> 1
+            mediumRadioButton.isChecked -> 3
+            else -> 6
+        }
 
         val routeOutput = RouteOutput(
             route.placeId,
@@ -138,24 +148,47 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
             route.isCircular,
             isRouteOrdered,
             route.pointsOfInterest.map { PointOfInterestOutput(it.identifier, it.latitude, it.longitude) },
-            imageReferenceClicked.orEmpty()
+            imageReferenceClicked.orEmpty(),
+            duration
         )
         if (!route.existingRoute) {
             // Creating Route
             val liveData = socialRoutingViewModel.createRoute(routeOutput)
-            handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
+            handleRequestedData(liveData, ::successHandlerRouteCreation, ::errorHandlerRouteCreation)
         } else {
             // updating Route
             val liveData = socialRoutingViewModel.updateRoute(route.routeUrl!!, routeOutput)
-            handleRequestedData(liveData, ::requestSuccessHandlerRouteCreation)
+            handleRequestedData(liveData, ::successHandlerRouteUpdate, ::errorHandlerRouteUpdate)
         }
 
     }
 
-    private fun requestSuccessHandlerRouteCreation() {
-        showToast("Done!")
+    private fun errorHandlerRouteCreation(msg: String) {
+        showToast("Could not create the route.")
+    }
+
+    private fun errorHandlerRouteUpdate() {
+        showToast("Could not update the route.")
+    }
+
+    private fun successHandlerRouteCreation(routeUrl: String?) {
+        showToast("Route Created!")
+        val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(routeUrl!!)
         val intent = Intent(this, RouteRepresentationActivity::class.java)
+        intent.putExtra(getString(R.string.route_creation_intent_message), correctUrl)
+        setResult(RouteCreationActivity.REQUEST_CODE)
         startActivity(intent)
+        finish()
+    }
+
+    private fun successHandlerRouteUpdate(unit: Unit?) {
+        showToast("Route Updated")
+        val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(route.routeUrl!!)
+        val intent = Intent(this, RouteRepresentationActivity::class.java)
+        intent.putExtra(getString(R.string.route_creation_intent_message), correctUrl)
+        setResult(RouteCreationActivity.REQUEST_CODE)
+        startActivity(intent)
+        finish()
     }
 
     override fun onClick(position: Int) {

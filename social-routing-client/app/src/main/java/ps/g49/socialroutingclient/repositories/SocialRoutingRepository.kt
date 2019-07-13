@@ -40,6 +40,16 @@ class SocialRoutingRepository @Inject constructor(
         return resource
     }
 
+    fun <T> genericGet(url: String): LiveData<Resource<T>> {
+        val resource = MutableLiveData<Resource<T>>()
+        resource.value = Resource.loading()
+
+        val call = socialRoutingWebService.genericGet<T>(url)
+        genericEnqueue(call, resource)
+
+        return resource
+    }
+
     fun signIn(authenticationUrl: String, idTokenString: String): LiveData<Resource<AuthenticationDataInput>> {
         val resource = MutableLiveData<Resource<AuthenticationDataInput>>()
         resource.value = Resource.loading()
@@ -114,24 +124,10 @@ class SocialRoutingRepository @Inject constructor(
         val resource = MutableLiveData<Resource<String>>()
         resource.value = Resource.loading()
 
-        socialRoutingWebService
-            .createRoute(routeOutput)
-            .enqueue(object : Callback<Void> {
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
-                    resource.value = Resource.error(t.message.toString(), null)
-                }
-
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                    if (response.isSuccessful) {
-                        val url = response.headers().get("Location")
-                        resource.value = Resource.success(url!!)
-                    } else {
-                        val code = response.code()
-                        resource.value = Resource.error(response.message(), null)
-                    }
-                }
-            })
+        val call = socialRoutingWebService.createRoute(routeOutput)
+        genericEnqueue(call, resource) {
+            it.headers().get("Location")!!
+        }
 
         return resource
     }

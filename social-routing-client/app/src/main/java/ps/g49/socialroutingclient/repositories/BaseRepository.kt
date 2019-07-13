@@ -8,7 +8,7 @@ import retrofit2.Response
 
 abstract class BaseRepository {
 
-    fun <T, R> genericEnqueue(call: Call<T>, resource: MutableLiveData<Resource<R>>, mapper: (t: T) -> R) {
+    fun <T, R> genericEnqueue(call: Call<T>, resource: MutableLiveData<Resource<R>>, mapper: (response: Response<T>) -> R) {
         call.enqueue(object : Callback<T> {
 
             override fun onFailure(call: Call<T>, t: Throwable) {
@@ -17,11 +17,9 @@ abstract class BaseRepository {
 
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (response.isSuccessful) {
-                    val value = response.body()!!
-                    resource.value = Resource.success(mapper(value))
+                    resource.value = Resource.success(mapper(response))
                 }
                 else {
-                    val errorMessage = getErrorMessage(response.code())
                     resource.value = Resource.error(response.message(), null)
                 }
             }
@@ -42,22 +40,11 @@ abstract class BaseRepository {
                     resource.value = Resource.success(value)
                 }
                 else {
-                    val errorMessage = getErrorMessage(response.code())
                     resource.value = Resource.error(response.message(), null)
                 }
             }
 
         })
-    }
-
-    protected fun getErrorMessage(code: Int) : String {
-        return when (code) {
-            400 -> ""
-            401 -> ""
-            404 -> "Nothing Found"
-            500 -> "Server Problem. Sorry, try again later."
-            else -> "Unknown Error"
-        }
     }
 
 }

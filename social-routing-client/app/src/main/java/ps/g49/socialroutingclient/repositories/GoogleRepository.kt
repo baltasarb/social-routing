@@ -68,7 +68,9 @@ class GoogleRepository @Inject constructor(
             googleMapsKey
         )
         genericEnqueue(call, resource) {
-            val encodedPoints = it.routes!!.get(0).overview_polyline.points
+            val body = it.body()!!
+            val routes = body.routes!!
+            val encodedPoints = routes.get(0).overview_polyline.points
             GoogleOverviewPolylineDecoder.googleOverviewPolylineDecode(encodedPoints)
         }
 
@@ -113,8 +115,9 @@ class GoogleRepository @Inject constructor(
 
         val call = googleWebService.getPhotoFromReference(photoReference, maxHeight, maxWidth, googleMapsKey)
         genericEnqueue(call, resource) {
-            val body = it.byteStream()
-            BitmapFactory.decodeStream(body)
+            val body = it.body()!!
+            val byteStream = body.byteStream()
+            BitmapFactory.decodeStream(byteStream)
         }
 
         return resource

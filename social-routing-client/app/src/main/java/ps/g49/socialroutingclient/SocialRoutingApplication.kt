@@ -29,6 +29,10 @@ class SocialRoutingApplication : DaggerApplication() {
     private lateinit var userCurrentLocation: Location
     private var isLocationFound: Boolean = false
 
+    companion object {
+        private const val SOCIAL_ROUTING_API_ROOT = "http://10.0.2.2:8080"
+    }
+
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
         val applicationComponent = DaggerApplicationComponent
             .builder()
@@ -93,6 +97,14 @@ class SocialRoutingApplication : DaggerApplication() {
 
     fun getSocialRoutingRootResource(): SocialRoutingRootResource {
         return socialRoutingRootResource
+    }
+
+    fun setCorrectUrlToDevice(url: String): String {
+        val urlSplitList = url.split("/")
+        val correctUrl = mutableListOf(SOCIAL_ROUTING_API_ROOT)
+        for (idx in 3 until urlSplitList.size)
+            correctUrl.add(urlSplitList[idx])
+        return correctUrl.joinToString("/")
     }
 
 }

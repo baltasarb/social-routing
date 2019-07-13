@@ -6,19 +6,17 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.IntentCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.activity_route_creation.*
 import kotlinx.android.synthetic.main.activity_route_representation.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.domainModel.RouteDetails
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlaceDetailsResponse
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteDetailedInput
@@ -53,17 +51,14 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
         setContentView(R.layout.activity_route_representation)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        val url = intent.getStringExtra(getString(R.string.route_intent_message))
-        val splitUrl = url.split("/")
-        routeUrl = "http://10.0.2.2:8080/api.sr/routes/" + splitUrl[splitUrl.size - 1]
 
         socialRoutingApplication = application as SocialRoutingApplication
         socialRoutingViewModel = getViewModel(viewModelFactory)
         googleViewModel = getViewModel(viewModelFactory)
+
+        routeUrl = intent.getStringExtra(getString(R.string.route_creation_intent_message))
     }
 
     /*
@@ -73,7 +68,6 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
         googleMapsManager = GoogleMapsManager(mMap)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
@@ -82,19 +76,19 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             // Show rationale and request permission.
             ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
 
-        val correctRouteUrl = routeUrl
-        val liveData = socialRoutingViewModel.getRoute(correctRouteUrl)
-        handleRequestedData(liveData, ::requestSuccessHandlerRouteRepresentation, ::requestErrorHandlerRouteRepresentation)
+        val liveData = socialRoutingViewModel.getRoute(routeUrl)
+        handleRequestedData(liveData, ::successHandlerRouteRepresentation, ::errorHandlerRouteRepresentation)
     }
 
-    private fun requestErrorHandlerRouteRepresentation(errorMessage: String?) {
-        showToast(errorMessage!!)
+    private fun errorHandlerRouteRepresentation() {
+        routeInfoButton.visibility = View.GONE
+        showToast("Could not find the route.")
         liveTrackingButton.visibility = View.INVISIBLE
     }
 
-    private fun requestSuccessHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {
-        val points = routeDetailed!!.points
-        route = routeDetailed
+    private fun successHandlerRouteRepresentation(routeDetailed: RouteDetailedInput?) {
+        route = routeDetailed!!
+        val points = routeDetailed.points
         // Draw Route
         googleMapsManager.drawLinesSet(points)
         if (routeDetailed.circular)
@@ -103,15 +97,14 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         routeDetailed.pointsOfInterest.forEach {
             requestPointsOfInterestDetails(it.identifier)
         }
-        //googleMapsManager.addRepresentativeMarker()
     }
 
     private fun requestPointsOfInterestDetails(placeIdentifier: String) {
         val liveData = googleViewModel.getPlaceDetails(placeIdentifier)
-        handleRequestedData(liveData, ::requestSuccessHandlerPlaceDetails)
+        handleRequestedData(liveData, ::successHandlerPlaceDetails)
     }
 
-    private fun requestSuccessHandlerPlaceDetails(placeDetailsResponse: PlaceDetailsResponse?) {
+    private fun successHandlerPlaceDetails(placeDetailsResponse: PlaceDetailsResponse?) {
         val details = placeDetailsResponse!!.results
         googleMapsManager.addRepresentativeMarkerForPlaces(details.geometry.location, details.name)
     }
@@ -137,7 +130,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             locationTask.addOnSuccessListener {
                 val initialPoint = Point(it.latitude, it.longitude)
 
-                // TODO( "Change mode of transport to be a user choice
+                // TODO( "Change mode of transport to be a user choice" )
                 val liveData = googleViewModel.getDirections(
                     initialPoint,
                     route.points.first(),
@@ -149,6 +142,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         liveTrackingButton.visibility = View.INVISIBLE*/
     }
 
+    /*
     private fun successRequestHandlerGoogleDirection(list: List<Point>?) {
         googleMapsManager.drawLineSetToFollow(list!!)
     }
@@ -166,5 +160,5 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             .setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
             .create()
             .show()
-    }
+    }*/
 }

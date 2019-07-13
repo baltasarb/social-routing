@@ -53,10 +53,11 @@ interface SocialRoutingWebService {
     ): Call<AuthenticationDataInput>
 
     @POST("routes")
-    fun createRoute(@Body routeOutput: RouteOutput): Call<Void>
+    fun createRoute(@Body routeOutput: RouteOutput): Call<Unit>
 
     // PUT methods
     @PUT
+    @POST("routes/{identifier}")
     fun updateRoute(
         @Url routeUrl: String,
         @Body routeOutput: RouteOutput
@@ -68,5 +69,9 @@ interface SocialRoutingWebService {
         @Url routeUrl: String
     ): Call<Unit>
 
+    @GET
+    fun <T> genericGet(
+        @Url url: String
+    ): Call<T>
 
 }

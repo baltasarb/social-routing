@@ -37,6 +37,16 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textColor="#8D9393" app:layout_constraintTop_toBottomOf="@+id/searchFilterButton"/>
 
+        <TextView
+                android:text="@string/no_routes_to_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/emptySearchRoutesNavigationTextView"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintTop_toBottomOf="@+id/place_types_textView"
+                android:layout_marginTop="12dp" android:layout_marginStart="152dp"
+                app:layout_constraintStart_toStartOf="parent" android:visibility="gone"/>
+
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="382dp"
                 android:layout_height="598dp"

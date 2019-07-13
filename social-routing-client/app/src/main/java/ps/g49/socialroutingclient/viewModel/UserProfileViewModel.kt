@@ -22,4 +22,7 @@ class UserProfileViewModel @Inject constructor(
 
     fun deleteUserRoute(routesUrl: String): LiveData<Resource<Unit>> =
         routeRepository.deleteRoute(routesUrl)
+
+    fun <T> genericGet(url: String): LiveData<Resource<T>> =
+        routeRepository.genericGet(url)
 }

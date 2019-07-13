@@ -63,7 +63,7 @@
         Navigation Activity
     <!-->
     <string name="route_id_intent_message">ROUTE_ID_MESSAGE</string>
-    <string name="route_intent_message">ROUTE_MESSAGE</string>
+    <string name="route_creation_intent_message">ROUTE_MESSAGE</string>
     <string name="location_intent_message">SEARCH_INFO_MESSAGE</string>
 
     <string name="route_url">/route/{identifier}</string>
