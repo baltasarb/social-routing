@@ -13,6 +13,7 @@ import android.view.Menu
 import android.view.View
 import android.view.WindowManager
 import android.widget.CheckBox
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -43,7 +44,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var googleViewModel: GoogleViewModel
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var socialRoutingApplication: SocialRoutingApplication
-    private lateinit var routesSearched: List<RouteInput>
+    private lateinit var routesSearched: MutableList<RouteInput>
     private lateinit var categories: List<Category>
     private var nextPage: String? = null
 
@@ -61,10 +62,13 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_navigation)
         initView()
 
+        ActivityCompat.requestPermissions(this, PERMISSIONS, 1)
+
         socialRoutingApplication = application as SocialRoutingApplication
         googleViewModel = getViewModel(viewModelFactory)
         socialRoutingViewModel = getViewModel(viewModelFactory)
 
+        routesSearched = mutableListOf()
         requestCategories()
     }
 
@@ -173,17 +177,17 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
             DEFAULT_DURATION,
             Point(locationPoint.lat, locationPoint.lng)
         )
-        handleRequestedData(resource, ::requestSuccessHandlerRouteSearch, ::errorHandler)
+        handleRequestedData(resource, ::successHandlerRouteSearch, ::errorHandler)
     }
 
-    private fun requestSuccessHandlerRouteSearch(routeCollection: SimplifiedRouteInputCollection?) {
+    private fun successHandlerRouteSearch(routeCollection: SimplifiedRouteInputCollection?) {
         emptySearchRoutesNavigationTextView.visibility = View.GONE
         val routesSearched = routeCollection!!.routes
         nextPage = routeCollection.next
         if (routesSearched.isEmpty())
             emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
         else {
-            setRecyclerView(routesSearched)
+            setRecyclerView(routeCollection)
         }
     }
 
@@ -191,8 +195,8 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
     }
 
-    private fun setRecyclerView(list: List<RouteInput>) {
-        routesSearched = list
+    private fun setRecyclerView(simplifiedRouteInputCollection: SimplifiedRouteInputCollection) {
+        routesSearched.addAll(simplifiedRouteInputCollection.routes)
         val adapter = SearchRoutesAdapter(this, routesSearched, this, false)
         val layoutManager = LinearLayoutManager(applicationContext)
         cards_recyclerview.layoutManager = layoutManager
@@ -200,7 +204,14 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         cards_recyclerview.adapter = adapter
         cards_recyclerview.addOnScrollListener(
             ScrollListener {
-                TODO("search new page")
+                if (simplifiedRouteInputCollection.next != null) {
+                    val liveData = socialRoutingViewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
+                    handleRequestedData(
+                        liveData,
+                        ::successHandlerRouteSearch,
+                        ::errorHandler
+                    )
+                }
             }
         )
     }

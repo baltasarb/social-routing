@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import kotlinx.android.synthetic.main.activity_route_creation.*
 import kotlinx.android.synthetic.main.activity_route_representation.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
@@ -24,6 +23,18 @@ import ps.g49.socialroutingclient.utils.GoogleMapsManager
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationSettingsRequest
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationSettingsStatusCodes
+import android.content.IntentSender
+import android.widget.Button
+import android.widget.RadioButton
+import androidx.appcompat.app.AlertDialog
+import ps.g49.socialroutingclient.model.domainModel.Point
+import java.util.*
+
 
 class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
@@ -36,9 +47,12 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var route: RouteDetailedInput
     private lateinit var routeUrl: String
+    private var modeOfTransport: String = ""
 
     companion object {
         const val ROUTE_REPRESENTATION_DETAILS_MESSAGE = "ROUTE_REPRESENTATION_DETAILS_MESSAGE"
+        const val TIME_TO_CHECK_LOCATION = 5000
+        const val DEFAULT_MODE_OF_TRANSPORT = "walking"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,10 +84,14 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         mMap = googleMap
         googleMapsManager = GoogleMapsManager(mMap)
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        )
             mMap.isMyLocationEnabled = true
         else
-            // Show rationale and request permission.
+        // Show rationale and request permission.
             ActivityCompat.requestPermissions(this, PERMISSIONS, LOCATION_PERMISSION_REQUEST)
 
         val liveData = socialRoutingViewModel.getRoute(routeUrl)
@@ -124,41 +142,159 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     }
 
     fun liveTrackingOnClick(view: View) {
-        //showInitialForm()
-        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            val locationTask = fusedLocationProviderClient.lastLocation
-            locationTask.addOnSuccessListener {
-                val initialPoint = Point(it.latitude, it.longitude)
+        // Ask user to turn on GPS
+        tryToTurnOnGPS()
+        // show Initial Form
+        showFormToTransportMode()
+        // Show path to route
+        val currentLocation = socialRoutingApplication.getUserCurrentLocation()
+        val currentPoint = Point(currentLocation.latitude, currentLocation.longitude)
 
-                // TODO( "Change mode of transport to be a user choice" )
-                val liveData = googleViewModel.getDirections(
-                    initialPoint,
-                    route.points.first(),
-                    "walking"
-                )
-                handleRequestedData(liveData, ::successRequestHandlerGoogleDirection)
+        val pointToGo =
+            if (route.circular)
+                findClosestPoint(currentPoint, route.points)
+            else
+                route.points.first()
+
+        val liveData = googleViewModel.getDirections(
+            currentPoint,
+            pointToGo,
+            modeOfTransport
+        )
+        handleRequestedData(liveData, ::successHandlerDirections, ::errorHandlerDirections)
+        // Start Async Timer Task
+        asyncTimerTaskLocation(pointToGo, route.points, route.ordered)
+
+        liveTrackingButton.visibility = View.INVISIBLE
+    }
+
+    private fun tryToTurnOnGPS() {
+        val googleApiClient = GoogleApiClient.Builder(this)
+            .addApi(LocationServices.API)
+            .addConnectionCallbacks(getConnectionCallback())
+            .addOnConnectionFailedListener {
+                showToast("Turn on GPS, to be possible to help you.")
+            }.build()
+        googleApiClient.connect()
+
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 5 * 1000
+        locationRequest.fastestInterval = 2 * 1000
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+
+        builder.setAlwaysShow(true);
+
+        val result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback {
+            val status = it.status
+            //                final LocationSettingsStates state = result.getLocationSettingsStates();
+
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.SUCCESS -> {
+                }
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->
+                    // Location settings are not satisfied. But could be fixed by showing the user
+                    // a dialog.
+                    try {
+                        // Show the dialog by calling startResolutionForResult(),
+                        // and check the result in onActivityResult().
+                        status.startResolutionForResult(this, 1000)
+                    } catch (e: IntentSender.SendIntentException) {
+                        // Ignore the error.
+                    }
+
+                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                }
             }
         }
-        liveTrackingButton.visibility = View.INVISIBLE*/
     }
 
-    /*
-    private fun successRequestHandlerGoogleDirection(list: List<Point>?) {
-        googleMapsManager.drawLineSetToFollow(list!!)
+    private fun getConnectionCallback(): GoogleApiClient.ConnectionCallbacks {
+        return object : GoogleApiClient.ConnectionCallbacks {
+            override fun onConnected(p0: Bundle?) {
+            }
+
+            override fun onConnectionSuspended(p0: Int) {
+                showToast("Turn on GPS, to be possible to help you.")
+            }
+
+        }
     }
 
-    private fun showInitialForm() {
+    private fun showFormToTransportMode() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
 
-        val rowView = inflater.inflate(R.layout.route_directions_dialog, null)
+        val rowView: View = inflater.inflate(R.layout.form_mode_of_transport_to_route, null)
+        val drivingRadioButton: RadioButton = rowView.findViewById(R.id.drivingRadioButton)
+        val walkingRadioButton: RadioButton = rowView.findViewById(R.id.walkingRadioButton)
+        val bicyclingRadioButton: RadioButton = rowView.findViewById(R.id.bicyclingRadioButton)
+        val confirmButton: Button = rowView.findViewById(R.id.confirmChoiceButton)
 
-        builder.setView(rowView)
-            .setPositiveButton("Done") { dialog, which ->
-
-            }
-            .setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+        val alertDialog = builder
+            .setView(rowView)
+            .setCancelable(false)
             .create()
-            .show()
-    }*/
+
+        confirmButton.setOnClickListener {
+            if (!drivingRadioButton.isChecked && !walkingRadioButton.isChecked && !bicyclingRadioButton.isChecked)
+                showToast("Choose the mode of transport first.")
+            else {
+                modeOfTransport = when {
+                    drivingRadioButton.isChecked -> drivingRadioButton.text.toString()
+                    walkingRadioButton.isChecked -> walkingRadioButton.text.toString()
+                    bicyclingRadioButton.isChecked -> bicyclingRadioButton.text.toString()
+                    else -> DEFAULT_MODE_OF_TRANSPORT
+                }
+                alertDialog.cancel()
+            }
+        }
+
+        alertDialog.show()
+    }
+
+    private fun findClosestPoint(
+        currentPoint: Point,
+        points: List<Point>
+    ): Point {
+        var smallestDistance = Double.MAX_VALUE
+        var closestPoint: Point? = null
+        points.forEach {
+            val sumPowDistance = Math.pow(currentPoint.latitude - it.latitude, 2.0) + Math.pow(currentPoint.longitude - it.longitude,2.0)
+            val distance = Math.sqrt(sumPowDistance)
+            if (smallestDistance > distance) {
+                smallestDistance = distance
+                closestPoint = it
+            }
+        }
+        return closestPoint!!
+    }
+
+    private fun successHandlerDirections(list: List<Point>?) {
+        googleMapsManager.drawLineSetToFollow(list!!)
+    }
+
+    private fun errorHandlerDirections() {
+        showToast("Way to Route not found, sorry!")
+    }
+
+    private fun asyncTimerTaskLocation(
+        pointToGo: Point,
+        points: List<Point>,
+        isOrdered: Boolean
+    ) {
+        val timer = Timer()
+        val timerTask = object : TimerTask() {
+            val pointsPassed = mutableListOf<Point>()
+
+            override fun run() {
+                // ver dois pontos
+                //fazer reta e confirmar se interseta o range do user
+            }
+        }
+        timer.schedule(timerTask, TIME_TO_CHECK_LOCATION.toLong())
+    }
+
 }
