@@ -142,8 +142,8 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     of the PostGIS extension STDistance \cite{stdistance}, the distance between points is retrieved, if it's contained in the initially 
     chosen radius, it's selected, otherwise it is not.
 
-\section*{Social Routing API} \label{apisection}   
-    \subsection*{Schema}
+\section{Social Routing API} \label{apisection}   
+    \subsection{Schema}
         The Social Routing API uses the HTTP protocol as a medium to communicate and all the data sent or received must be in the JSON format.
         The base endpoint of the API is : http://api.sr.\par
         Data obtained from the API is either a single resource or a collection of resources. For example, a request
@@ -160,7 +160,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     
         \newpage
     
-    \subsection*{Authentication} \label{authsection}
+    \subsection{Authentication} \label{authsection}
     The authentication has two different endpoints, one to obtain credentials to access the API and the other to refresh 
     the already obtained credentials. To make an authenticated request to the API the user must make every request with 
     the already obtained access token in the Authorization header of the request.
