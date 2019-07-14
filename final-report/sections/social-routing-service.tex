@@ -1,7 +1,7 @@
 \chapter{Social Routing Service}
 
 The Social Routing Service (SRS) is comprised of three major components, 
-A Database Management System (DBMS) to store user related information, a server to process data and an API to expose it's functionality.
+a PostgreSQL based database to store user related information, a spring application to process data and an API to expose it's functionality.
 This logic is represented in the figure \ref{fig:socialroutingservice}. Beyond the mentioned
 components it also uses the external API Google Sign In to aid with the user authentication process.
 
@@ -24,7 +24,7 @@ element of the system. This way it allows that the DBMS connection is used multi
 by the same request if required.
 \newpage
 
-\section*{Database Management System}
+\section{Data Model}
 The DBMS chosen was PostgreSQL\cite{postgresql}, using the hybrid functionality 
 of storing valid JSON\cite{postgresqljson} directly in a table field. The decision of choosing JSON as a type to 
 store data comes with the need of storing large sets of coordinates belonging to a single entity and this 
@@ -32,9 +32,9 @@ allows us to make faster and easier calculations of times and distances between 
 point was it's own database entity. 
 The main concept of the project is the creation of routes in a map and their retrieval according to certain parameters.
 To consider distance between a user and a route a possible search parameter, the PostGIS\cite{postgis} 
-PostgreSQL extension was used as it allows both cartesian and geodesic distance calculations.
+PostgreSQL extension was used as it allows both cartesian and geodesic distances calculations.
 
-    \subsection*{Conceptual Model}
+    \subsection{Conceptual Model}
     The database entity diagram is shown in figure \ref{fig:erdiagram}.
 
     \begin{figure}[ht]            
@@ -44,23 +44,17 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     \end{figure}   
 
         \subsubsection*{Person}
-        The entity Person represents a single user in the database. To allow new forms of authentication to be introduced at a later time,
-        the Google Authentication table is separated from the Authentication one. A user can have multiple entries
-        on the Authentication table to enable multiple device registration, but only a single Google Authentication 
-        entry as the google account is unique.
+        The entity Person represents a single user in the database. 
 
         \subsubsection*{Route}
-        Entity that stores every information required to hold a Route. Special consideration was taken into the making
-        of this entity as a Route must have large sets of coordinates, representing the path that it undergoes. The 
-        use of JSON as a table field Points provided more customization and a more efficient way to make calculations 
-        of distances between routes and points. 
+        Entity that stores every information required to represent a Route. Special consideration was taken into the making
+        of this entity as a Route must have large sets of coordinates, representing the path that it undergoes. 
 
         \subsubsection*{GoogleAuthentication}
-        Google Authentication is the entity that stores the user unique identifier in the Google platform, the subject, as such,
-        a user can only have one entry in the GoogleAuthentication table.
-        In the future there will be multiple tables with different forms of authentication, hence the name GoogleAuthentication 
+        Google Authentication is the entity that stores the user unique identifier in the Google platform, the subject.
+        In the future there will be multiple entities with different forms of authentication, hence the name GoogleAuthentication 
         of the entity. It provides scalability to further augment the authentication process, which can be done
-        with a new table FacebookAuthentication for example.
+        with a new entity FacebookAuthentication for example.
 
         \subsubsection*{Authentication}
         This entity is used to store authentication metadata regarding each database user. The tokens have an expiration time,
@@ -75,12 +69,53 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
         A route might contain geographic points of interest along its path, this is the entity that represents them. 
 
         \subsubsection*{Image}
-        When a route is created it must be associated with a cover image. 
+        When a route is created it must be associated with a cover image.
 
-    \subsection*{Physical Model}
-    The physical model can be seen in a detailed form in the DBMS documentation.\cite{servicedbms}
+    \subsection{Physical Model}
+    The physical model can be seen in a full in the database documentation\cite{servicedbms}, the following subsections discuss 
+    some of the table fields considered important.
 
-    \subsection*{Search Route}
+        \subsubsection*{Person}
+        The table person has only two fields, the identifier of the person, generated by the database and the person's rating.
+        A user can have multiple entries on the Authentication table to enable multiple device registration, 
+        but only a single Google Authentication entry as the google account is unique.
+
+        \subsubsection*{Route}
+        The route table has amongst others, a field called points. This field is of type JSON, and is used to store sets of geographic
+        coordinates. The field is a JSON array of point objects and has the following structure:
+            \begin{lstlisting}
+    [    
+    {
+        "latitude" : double,
+        "longitude": double
+    },
+        ...
+    ]
+            \end{lstlisting}
+        This structure allows the mapping of multiple points to a single route.
+
+        \subsubsection*{GoogleAuthentication}
+        The google authentication table is used to store google account information, more specifically the subject which is primary
+        key. Only one google account per user is allowed.
+
+        \subsubsection*{Authentication}
+        The authentication table stores the user credentials generated by the Social Routing Service. It contains the access token, the refresh
+        token, the date of creation and the expiration date of the access token as well as the person identifier. The primary key of the table is the refresh token, as a single
+        person can have multiple entries on this table, to allow multiple devices to be logged in while maintaining the same account.
+
+        \subsubsection*{Category}
+        The category entity characterizes a route in a broader sense. It is used to filter the amount of routes being 
+        searched by a user. It can be one of the several: Sea, Sports, Cultural, amongst others. The categories available
+        are manually inserted to the database. Each route must be assigned at least one category.
+
+        \subsubsection*{PointOfInterest}
+        A point of interest is a pair of geographic coordinates (latitude and longitude) and it's reference to the google platform.
+
+        \subsubsection*{Image}
+        The table image contains a single field which is it's primary key, a reference. This is the image's unique identifier in the google
+        platform.
+
+    \subsection{Search Route}
     The SRS allows that a client searches routes that are nearby to a set of geographic coordinates (latitude and longitude). 
     This functionality could be implemented in either the server or the DBMS, but with the PostGIS capabilities already mentioned, the later was chosen.
     
@@ -107,10 +142,9 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     of the PostGIS extension STDistance \cite{stdistance}, the distance between points is retrieved, if it's contained in the initially 
     chosen radius, it's selected, otherwise it is not.
 
-\section*{Social Routing API}    
+\section*{Social Routing API} \label{apisection}   
     \subsection*{Schema}
-        The Social Routing API uses the HTTP protocol as a medium to 
-        communicate and all the data sent or received must be in the JSON format.
+        The Social Routing API uses the HTTP protocol as a medium to communicate and all the data sent or received must be in the JSON format.
         The base endpoint of the API is : http://api.sr.\par
         Data obtained from the API is either a single resource or a collection of resources. For example, a request
         made to retrieve a route will have as a response a single resource which will contain the representation of that
@@ -126,32 +160,34 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     
         \newpage
     
-    \subsection*{Authentication}
-    The API's authentication is made with the support of the Google Sign-In API. 
-    The authentication is done in two phases. The first phase is the registration of a new user. 
-    On this phase a POST \cite{httppostdocs} request must be made to the endpoint: http://api.sr/sign-in/google, 
-    with the Google Sign-In token in the body of the request:
+    \subsection*{Authentication} \label{authsection}
+    The authentication has two different endpoints, one to obtain credentials to access the API and the other to refresh 
+    the already obtained credentials. To make an authenticated request to the API the user must make every request with 
+    the already obtained access token in the Authorization header of the request.
+    
+    \subsubsection*{Obtaining credentials} \label{apiobtcred}
+    To obtain API credentials a POST \cite{httppostdocs} request must be made to the endpoint: http://api.sr/auhtentication/google, 
+    with the id token string in the body of the request:
     \begin{lstlisting}
     {
-      token : "Google Sign-In token"
+      idTokenString : "id token string"
     }
      \end{lstlisting}
-    The token is provided by the Google Sign-In API and when it's received in the Service's API, 
-    it's authenticity is verified using the Google Sign-in-API utilities. After the validity of the token is verified 
-    the subject field is extracted from it to identify the user performing the registration and stored by the service. 
-    Then an API token is generated from a time based unique identifier generator, provided by the Log4J library \cite{log4j},
-    and associated to the previously received subject. Before being stored the token is hashed to increase security. 
-    The response to the request will contain the generated token in it's original form so the user haves the required information 
-    to make authenticated requests from there on.\par
+    The request to this endpoint receives a response containing all the necessary data to make authenticated requests to the API.
+    An example response:
+    \begin{lstlisting}
+        {
+            "accessToken" : "access token 1",
+            "refreshToken": "refresh token 1"
+        }
+    \end{lstlisting}
 
-    The second phase of the authentication process is made in any request that follows user registration. The API user must 
-    send a request containing the previously received token in the Authorization HTTP header. When any request is received 
-    the headers are retrieved, and checked against the service's database. In this check, the received token is hashed and 
-    compared to the hashed version on the database, if no token with that hash is present then the authentication fails 
-    and the user receives an error response.
+    \subsubsection*{Refreshing the credentials}
+    To refresh credentials a POST request must be made to the endpoint: http://api.sr/auhtentication/refresh containing in it's
+    body the refresh token. If the refresh token is valid a response with a new access token and refresh token is generated.
 
     \newpage
-    \subsection*{Supported HTTP Methods}
+    \subsection{Supported HTTP Methods}
         Due to the nature of the HTTP protocol, the API supports four different HTTP request methods \cite{apihttpverbsdocs}: GET, POST, PUT and DELETE.
         
         \subsubsection*{GET}
@@ -172,7 +208,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
 
         \subsubsection*{POST}
         The POST HTTP method is used to create resources. It requires that the Content-Type\cite{contenttype}HTTP header is 
-        defined and with the value application/json\cite{applicationjson}. An example of a post request can be found in the 
+        defined with the value application/json\cite{applicationjson}. An example of a post request can be found in the 
         API POST\cite{apipostdocs} documentation. A response to a POST request has an empty body and returns the 
         location of the created resource in it's Location header. If successful the status code of a POST request response is 201.  
             
@@ -191,18 +227,19 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
         \vspace{-\baselineskip} 
         deletes the route with 1 as identifier. A successful response will have the 200 OK status and an empty body.
     
-    \subsection*{Pagination}
-    Requests that return a collection of resources will be paginated to a default value of 5 resources within the collection. 
-    A specific page can be requested with the query parameter page. 
+    \subsection{Pagination}
+    Requests that return a collection of resources will be paginated to a default value of 10 resources within the collection. 
+    A specific page can be requested with the query parameter page. If no page is specified then the first page is assumed by default.
     The request:  
     \begin{verbatim}
         GET http://api.sr/persons/1/routes?page=1
     \end{verbatim}
     \vspace{-\baselineskip}
-     returns the first five routes that a person with identifier 1 created.
-    To obtain the next 5 one would simply change de value of page to 2.
+    The response would contain a collection of the first ten routes that a person with identifier 1 created.
+    To obtain the next ten one would simply change de value of page to 2. If no further routes are available then a response with
+    the status not found and error code 404 is returned.
 
-    \subsection*{Errors}
+    \subsection{Errors}
     The error responses follow the RFC standard of type problem+json\cite{jsonproblemonlinedocs}. An error response example:
     
     \begin{lstlisting}
@@ -214,6 +251,11 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     }
     \end{lstlisting}
 
+    The type field contains a link to the API documentation which further describes the type of error generated.
+    The title describes succinctly what the error is about.
+    The status is the corresponding HTTP status for the specific error.
+    Detail is a more detailed message about the error encountered.
+
     \subsection*{Hypermedia}
     Some resources have links to other resources. Either to a parent resource or to a detailed representation of a 
     resource within a collection. For example, a user resource haves a link to their created routes, which 
@@ -221,7 +263,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distance 
     the routes.
     \newpage
 
-\section*{Server} 
+\section{Server} 
 The server uses Kotlin as a programming language and the Spring framework\cite{springwebsite}. 
 It's role within the system is data receival, data processing, 
 and to respond accordingly. It is divided in three major layers, each with it's role in the Social Routing Service's system. 
@@ -276,3 +318,39 @@ As an example, the flow of a correct HTTP POST request to the routes resource th
         and maps it to the header Location of the response and returns.
     \end{itemize}
     \newpage
+
+    \section{Authentication}
+
+    The nature of the project requires that user information such as user made routes is stored and
+    because of this user authentication is required.  
+
+    The service handles two main types of authentication requests, one to generate the user credentials and the other to refresh or update
+    already existing credentials. A detailed view of the Social Routing Service and the components that interfere with the authentication process can be seen 
+    in \ref{fig:serviceauth}.
+    
+    \begin{figure}[ht]            
+        \includegraphics[width=\textwidth]{images/project-structure/service-auth.PNG} 
+        \caption{Authentication components diagram.}
+        \label{fig:serviceauth}
+    \end{figure}   
+
+    \subsection{Generation of Credentials}
+    When a request is received, as mentioned in \ref{apiobtcred}, it must contain the id token string of the user's google account. 
+    When the controller receives it the first step is validation of the token, for that an external API is used (Google Sign In API), that has it's usage wrapped 
+    in the GoogleAuthenticationService\cite{googleauthservicecode}. This service is responsible for all actions pertaining Google Authentication's specific processing.
+    Once the token is validated and the sub extracted from it, the sub is checked against the database to see if any user with it is already registered, if not,
+    the user is created. Along with user creation, the controller requests both the access token and refresh token from the AuthenticationService's\cite{authservicecode}
+    available functionalities. The tokens are generated using Java's Secure Random class\cite{securerandom} and hashed before being stored in the database. 
+    The access token and refresh token are sent in their original form as a response to the request maker, so that further API requests have valid credentials.
+
+    \subsection{Credentials Refreshment}
+    A valid API user will have both an access token and a refresh token to make authenticated requests to the API, but the tokens themselves have a duration of a day.
+    For this reason if an API client makes a request to it and a day has passed since the token has been obtained then the client needs to update his credentials.
+    To do that a request must be made using the refresh token, obtaining newly generated credentials from the service.
+
+    Apart from these two distinctions, the service client still also needs to worry about making authenticated requests, which can be made by adding a valid
+    access token to the Authorization header of the response as detailed in section \ref{authsection}.
+    Behind every request made to the service, the Authorization header is checked, to validate the user making the request. This is made in the AuthenticationInterceptor 
+    class \cite{authinterceptor}. 
+
+   

@@ -21,3 +21,8 @@ social routing client
         * Edition
         * Creation
         * Live tracking
+
+        physical Model
+        api 
+        API POST example
+        API PUT example

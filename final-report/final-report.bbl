@@ -104,6 +104,30 @@
       \verb https://tools.ietf.org/html/rfc4627
       \endverb
     \endentry
+    \entry{authinterceptor}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Authentication Interceptor implementation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/blob/master/social-routing-service/src/main/kotlin/ps/g49/socialroutingservice/interceptors/AuthenticationInterceptor.kt
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/blob/master/social-routing-service/src/main/kotlin/ps/g49/socialroutingservice/interceptors/AuthenticationInterceptor.kt
+      \endverb
+    \endentry
+    \entry{authservicecode}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Authentication Service implementation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/blob/master/social-routing-service/src/main/kotlin/ps/g49/socialroutingservice/services/AuthenticationService.kt
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/blob/master/social-routing-service/src/main/kotlin/ps/g49/socialroutingservice/services/AuthenticationService.kt
+      \endverb
+    \endentry
     \entry{clientapplicationdocs}{online}{}
       \field{sortinit}{C}
       \field{sortinithash}{963e9d84a3da2344e8833203de5aed05}
@@ -231,6 +255,18 @@
       \verb http://www.gitta.info/DiscrSpatVar/en/html/NaturOfVaria_learningObject1.html
       \endverb
     \endentry
+    \entry{googleauthservicecode}{online}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
+      \field{labeltitlesource}{title}
+      \field{title}{Google Authentication Service implementation}
+      \verb{urlraw}
+      \verb https://github.com/baltasarb/social-routing/blob/master/social-routing-service/src/main/kotlin/ps/g49/socialroutingservice/services/GoogleAuthenticationService.kt
+      \endverb
+      \verb{url}
+      \verb https://github.com/baltasarb/social-routing/blob/master/social-routing-service/src/main/kotlin/ps/g49/socialroutingservice/services/GoogleAuthenticationService.kt
+      \endverb
+    \endentry
     \entry{googlemaps}{online}{}
       \field{sortinit}{G}
       \field{sortinithash}{5e8d2bf9d38de41b1528bd307546008f}
@@ -355,18 +391,6 @@
       \verb https://www.postgresql.org/docs/9.3/functions-json.html
       \endverb
     \endentry
-    \entry{log4j}{online}{}
-      \field{sortinit}{L}
-      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
-      \field{labeltitlesource}{title}
-      \field{title}{Log4J documentation.}
-      \verb{urlraw}
-      \verb https://logging.apache.org/log4j/2.x/
-      \endverb
-      \verb{url}
-      \verb https://logging.apache.org/log4j/2.x/
-      \endverb
-    \endentry
     \entry{jsonproblemonlinedocs}{online}{}
       \name{author}{3}{}{%
         {{hash=55ac868e62f6d4ea8f9f143c4c584739}{%
@@ -440,6 +464,18 @@
       \verb http://square.github.io/retrofit/
       \endverb
       \keyw{retrofit}
+    \endentry
+    \entry{securerandom}{online}{}
+      \field{sortinit}{S}
+      \field{sortinithash}{322b1d5276f2f6c1bccdcd15920dbee6}
+      \field{labeltitlesource}{title}
+      \field{title}{Secure Random Documentation}
+      \verb{urlraw}
+      \verb https://docs.oracle.com/javase/7/docs/api/java/security/SecureRandom.html
+      \endverb
+      \verb{url}
+      \verb https://docs.oracle.com/javase/7/docs/api/java/security/SecureRandom.html
+      \endverb
     \endentry
     \entry{apihttpverbsdocs}{online}{}
       \field{sortinit}{S}
