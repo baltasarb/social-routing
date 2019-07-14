@@ -5,11 +5,10 @@ data class PersonRoutesRequest (
         val page : Int
 ){
     companion object{
-        fun build(identifier: Int, params: HashMap<String, String>): PersonRoutesRequest {
-            val page = params["page"]?.toInt()
+        fun build(identifier: Int, page : Int): PersonRoutesRequest {
             return PersonRoutesRequest(
                     identifier = identifier,
-                    page = page?:1
+                    page = page
             )
         }
     }

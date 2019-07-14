@@ -20,12 +20,12 @@ class ConnectionManager {
 
 
     private val db = "SocialRoutingDatabase"
-    private val newUrl = "jdbc:postgresql://35.246.58.159/$db"
-    private val newUsername = "socialRoutingApi"
-    private val newPassword = "nAGqC9G7wRUwrwt"
+    private val newUrl = "jdbc:postgresql://izjgibgq:WfgBNzr5uKHAPD_JIIzzi6yA9nTRvlBn@manny.db.elephantsql.com:5432/izjgibgq"
+    private val newUsername = "izjgibgq"
+    private val newPassword = "WfgBNzr5uKHAPD_JIIzzi6yA9nTRvlBn"
 
-    private val jdbi: Jdbi = Jdbi.create(url, username, password) // returns a Jdbi instance which uses DriverManager as a connection factory.
-
+    //private val jdbi: Jdbi = Jdbi.create(newUrl, newUsername, newPassword) // returns a Jdbi instance which uses DriverManager as a connection factory.
+    private val jdbi: Jdbi = Jdbi.create(newUrl)
     fun generateHandle(): Handle = jdbi.open()
 
     /**

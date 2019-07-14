@@ -48,34 +48,30 @@ class RouteController(
     @PostMapping
     fun createRoute(@RequestBody route: RouteInput /*,@RequestAttribute personIdentifier: Int*/): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
-
-        val routeRequest = RouteRequest.build(route, 100/*personIdentifier*/)
-        val routeIdentifier = routeService.createRoute(connectionHandle, routeRequest)
-
-        connectionHandle.close()
-
-        val headers = HttpHeaders()
-        headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
-
-        return OutputUtils.ok(headers)
+        connectionHandle.use{
+            val routeRequest = RouteRequest.build(route, 100/*personIdentifier*/)
+            val routeIdentifier = routeService.createRoute(it, routeRequest)
+            val headers = HttpHeaders()
+            headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
+            return OutputUtils.ok(headers)
+        }
     }
 
     @PutMapping("/{identifier}")
-    fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
+    fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput/*@RequestAttribute personIdentifier: Int*/): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
+        connectionHandle.use{
+            val routeRequest = RouteRequest.build(route, 100, identifier)
 
-        val routeRequest = RouteRequest.build(route, personIdentifier, identifier)
+            routeService.updateRoute(it, routeRequest)
 
-        routeService.updateRoute(connectionHandle, routeRequest)
-
-        connectionHandle.close()
-
-        return OutputUtils.ok()
+            return OutputUtils.ok()
+        }
     }
 
     @DeleteMapping("/{identifier}")
-    fun deleteRoute(@PathVariable identifier: Int, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
-        if (identifier != personIdentifier)
+    fun deleteRoute(@PathVariable identifier: Int/*@RequestAttribute personIdentifier: Int*/): ResponseEntity<Void> {
+        if (identifier != 1)
             throw ForbiddenRequestException()
         routeService.deleteRoute(identifier)
         return OutputUtils.ok()

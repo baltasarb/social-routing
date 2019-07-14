@@ -148,4 +148,16 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
 
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(value = [ForbiddenRequestException::class])
+    fun handleForbiddenException(exception: Exception): ResponseEntity<ProblemJson> {
+        val error = ProblemJson(
+                "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#forbidden-request",
+                HttpStatus.FORBIDDEN.reasonPhrase,
+                HttpStatus.FORBIDDEN.value(),
+                "The credentials are invalid.",
+                "link to full description"
+        )
+        return ResponseEntity(error, HttpStatus.FORBIDDEN)
+    }
 }

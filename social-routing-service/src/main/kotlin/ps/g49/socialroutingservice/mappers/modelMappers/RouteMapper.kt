@@ -30,9 +30,6 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
         val categoriesStringArray : Array<String> = categoriesSQLArray.array as Array<String>
 
         val pointOfInterest : List<PointOfInterest>? = null//TODO
-        val poiLatitude = rs.getDouble("Latitude")
-        val poiLongitude = rs.getDouble("Longitude")
-        val poiIdentifier = rs.getDouble("PointOfInterestIdentifier")
 
         return Route(
                 identifier = rs.getInt("Identifier"),
@@ -56,15 +53,6 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
 
     override fun map(from: RouteRequest): Route {
         val convertedCategories = from.categories.stream().map { Category(it.name) }.toList()
-        val durationValue = from.duration
-
-        val duration : String?
-
-        duration = when {
-            durationValue <= SHORT_DURATION -> SHORT_DURATION_STRING
-            durationValue <= MEDIUM_DURATION -> MEDIUM_DURATION_STRING
-            else -> LONG_DURATION_STRING
-        }
 
         return Route(
                 identifier = from.identifier,
@@ -74,7 +62,7 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
                 points = from.geographicPoints,
                 personIdentifier = from.personIdentifier,
                 rating = from.rating,
-                duration = duration,
+                duration = from.duration,
                 dateCreated = from.dateCreated,
                 categories = convertedCategories,
                 isOrdered = from.isOrdered,

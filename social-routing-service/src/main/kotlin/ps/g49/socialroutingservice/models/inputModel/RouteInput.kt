@@ -15,6 +15,6 @@ data class RouteInput (
         val pointsOfInterest : List<PointOfInterest>?,
         val imageReference : String,
         var rating: Double? = null, //might be used on an UPDATE but not on a create
-        var duration: Int, // short, medium , long
+        var duration: String, // short, medium , long
         var dateCreated: Date? = null //might be used on an UPDATE but not on a create
 )

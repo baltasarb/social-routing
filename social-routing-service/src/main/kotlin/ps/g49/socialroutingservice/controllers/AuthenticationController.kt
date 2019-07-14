@@ -35,58 +35,55 @@ class AuthenticationController(
 
         val connectionHandle = connectionManager.generateHandle()
 
-        //transaction
+        connectionHandle.use{
+            var personIdentifier = googleAuthenticationService.getPersonIdWithSub(it, subject)
 
-        var personIdentifier = googleAuthenticationService.getPersonIdWithSub(connectionHandle, subject)
+            //if the person does not exist, create a new one and add the google authentication to it
+            if (personIdentifier == null){
+                personIdentifier = personService.createPerson(it)
+                googleAuthenticationService.storeGoogleAuthenticationData(it, subject, personIdentifier)
+            }
 
-        //if the person does not exist, create a new one and add the google authentication to it
-        if (personIdentifier == null){
-            personIdentifier = personService.createPerson(connectionHandle)
-            googleAuthenticationService.storeGoogleAuthenticationData(connectionHandle, subject, personIdentifier)
+            val authenticationData = authenticationService.generateAuthenticationData(personIdentifier)
+            val hashedAuthenticationData = authenticationService.hashAuthenticationDataAndGet(authenticationData)
+
+            authenticationService.storeHashedAuthenticationData(it, hashedAuthenticationData)
+
+            val output = authenticationDataOutputMapper.map(authenticationData)
+            val headers = HttpHeaders()
+            headers.set("Location", OutputUtils.personUrl(personIdentifier))
+            return OutputUtils.ok(headers,output)
         }
-
-        val authenticationData = authenticationService.generateAuthenticationData(personIdentifier)
-        val hashedAuthenticationData = authenticationService.hashAuthenticationDataAndGet(authenticationData)
-
-        authenticationService.storeHashedAuthenticationData(connectionHandle, hashedAuthenticationData)
-
-        connectionHandle.close()
-
-        val output = authenticationDataOutputMapper.map(authenticationData)
-        val headers = HttpHeaders()
-        headers.set("Location", OutputUtils.personUrl(personIdentifier))
-        return OutputUtils.ok(headers,output)
     }
 
     @PostMapping("/refresh")
     fun refreshToken(@RequestBody refreshAuthenticationDataInput: RefreshAuthenticationDataInput): ResponseEntity<AuthenticationDataOutput> {
-        val handle = connectionManager.generateHandle()
+        val connectionHandle = connectionManager.generateHandle()
+        connectionHandle.use{
+            val hashedRefreshToken = authenticationService.hashTokenToSHA256(refreshAuthenticationDataInput.refreshToken)
 
-        val hashedRefreshToken = authenticationService.hashTokenToSHA256(refreshAuthenticationDataInput.refreshToken)
+            //try to retrieve the user authentication data and throw an exception if not present
+            val retrievedAuthenticationData =
+                    authenticationService.getPersonAuthenticationDataByRefreshToken(it, hashedRefreshToken)
+                            ?: throw InvalidRefreshTokenException()
 
-        //try to retrieve the user authentication data and throw an exception if not present
-        val retrievedAuthenticationData =
-                authenticationService.getPersonAuthenticationDataByRefreshToken(handle, hashedRefreshToken)
-                        ?: throw InvalidRefreshTokenException()
+            //check if a refresh is required/possible
+            if (retrievedAuthenticationData.accessTokenIsExpired()) {
+                throw RefreshNotAllowedException()
+            }
 
-        //check if a refresh is required/possible
-        if (retrievedAuthenticationData.accessTokenIsExpired()) {
-            throw RefreshNotAllowedException()
+            //create the new data
+            val newAuthenticationData = authenticationService.generateAuthenticationData(retrievedAuthenticationData.personIdentifier)
+
+            //hash the new data
+            val newAuthenticationDataHashed = authenticationService.hashAuthenticationDataAndGet(newAuthenticationData)
+
+            //store the new data
+            authenticationService.storeHashedAuthenticationData(it, newAuthenticationDataHashed)
+
+            val output = authenticationDataOutputMapper.map(newAuthenticationData)
+            return OutputUtils.ok(output)
         }
-
-        //create the new data
-        val newAuthenticationData = authenticationService.generateAuthenticationData(retrievedAuthenticationData.personIdentifier)
-
-        //hash the new data
-        val newAuthenticationDataHashed = authenticationService.hashAuthenticationDataAndGet(newAuthenticationData)
-
-        //store the new data
-        authenticationService.storeHashedAuthenticationData(handle, newAuthenticationDataHashed)
-
-        handle.close()
-
-        val output = authenticationDataOutputMapper.map(newAuthenticationData)
-        return OutputUtils.ok(output)
     }
 
 }

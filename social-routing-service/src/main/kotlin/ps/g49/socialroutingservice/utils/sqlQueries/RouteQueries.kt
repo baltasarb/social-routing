@@ -11,7 +11,8 @@ class RouteQueries {
 
         const val UPDATE = "UPDATE Route " +
                 "SET (LocationIdentifier, Name, Description, Rating, Duration, Circular, Ordered, ImageReference, Points) = " +
-                "(:locationIdentifier, :name, :description, :rating, :duration, :circular, :ordered, :imageReference, to_json(:points));"
+                "(:locationIdentifier, :name, :description, :rating, :duration, :circular, :ordered, :imageReference, to_json(:points)) " +
+                "WHERE Identifier = :identifier;"
 
         const val DELETE = "DELETE FROM Route WHERE identifier = ?;"
 
@@ -29,7 +30,7 @@ class RouteQueries {
 
         const val SELECT_MANY_BY_OWNER_WITH_PAGINATION_AND_COUNT = "" +
                 "SELECT " +
-                "COUNT(*) OVER() as count, Identifier, Name, Rating, PersonIdentifier " +
+                "COUNT(*) OVER() as count, Identifier, Name, Rating, PersonIdentifier, ImageReference " +
                 "FROM Route " +
                 "WHERE PersonIdentifier = :personIdentifier " +
                 "ORDER BY Rating DESC " +

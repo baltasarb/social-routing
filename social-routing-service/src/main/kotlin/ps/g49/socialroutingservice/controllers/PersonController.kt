@@ -32,8 +32,8 @@ class PersonController(
     }
 
     @GetMapping("/{identifier}/routes")
-    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam params: HashMap<String, String>): ResponseEntity<SimplifiedRouteCollectionOutput> {
-        val userRoutesRequest = PersonRoutesRequest.build(identifier, params)
+    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam page : Int = 1): ResponseEntity<SimplifiedRouteCollectionOutput> {
+        val userRoutesRequest = PersonRoutesRequest.build(identifier, page)
         val simplifiedRouteCollection = personService.findUserCreatedRoutes(userRoutesRequest)
         val output = simplifiedRouteCollectionOutputMapper.map(simplifiedRouteCollection)
         return OutputUtils.ok(output)
@@ -41,14 +41,15 @@ class PersonController(
 
     @PostMapping
     fun createPerson(@RequestBody personInput: PersonInput): ResponseEntity<Void> {
-        val handle = connectionManager.generateHandle()
-        val id = personService.createPerson(handle)
-        handle.close()
+        val connectionHandle = connectionManager.generateHandle()
+        connectionHandle.use{
+            val id = personService.createPerson(it)
 
-        val headers = HttpHeaders()
-        headers.set("Location", OutputUtils.personUrl(id))
+            val headers = HttpHeaders()
+            headers.set("Location", OutputUtils.personUrl(id))
 
-        return OutputUtils.ok(headers)
+            return OutputUtils.ok(headers)
+        }
     }
 
     @DeleteMapping("/{identifier}")
@@ -67,9 +68,11 @@ class PersonController(
         }
         val personDto = PersonRequest.build(personInput, personIdentifier)
         val connectionHandle = connectionManager.generateHandle()
-        personService.updatePerson(connectionHandle, personDto)
-        connectionHandle.close()
-        return OutputUtils.ok()
+        connectionHandle.use{
+            personService.updatePerson(it, personDto)
+            connectionHandle.close()
+            return OutputUtils.ok()
+        }
     }
 
 }

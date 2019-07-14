@@ -38,6 +38,8 @@ class RouteRepositoryImplementation(
                 .map(redundantRouteMapper)
                 .list()
 
+        if(redundantRouteList.isEmpty())
+            throw ResourceNotFoundException()
         return routeMapper.buildRouteFromRedundantRouteList(redundantRouteList)
     }
 
@@ -52,7 +54,7 @@ class RouteRepositoryImplementation(
         val page = searchRequest.page
 
         for (i in categories.indices) {
-                params["category$i"] = categories[i].name
+                params["category$i"] = categories[i].name.toLowerCase()
         }
 
         params["duration"] = duration
@@ -88,7 +90,7 @@ class RouteRepositoryImplementation(
         val page = searchRequest.page
 
         for (i in categories.indices) {
-            params["category$i"] = categories[i].name
+            params["category$i"] = categories[i].name.toLowerCase()
         }
 
         params["duration"] = duration
@@ -184,6 +186,7 @@ class RouteRepositoryImplementation(
         val points = jsonMapper.writeValueAsString(route.points)
 
         connectionHandle.createUpdate(RouteQueries.UPDATE)
+                .bind("identifier", route.identifier)
                 .bind("locationIdentifier", route.location)
                 .bind("name", route.name)
                 .bind("description", route.description)
