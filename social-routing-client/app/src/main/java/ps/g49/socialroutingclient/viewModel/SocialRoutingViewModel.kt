@@ -64,4 +64,7 @@ class SocialRoutingViewModel @Inject constructor(
     fun updateRoute(routeUrl: String, routeOutput: RouteOutput): LiveData<Resource<Unit>> =
         routeRepository.updateRoute(routeUrl, routeOutput)
 
+    fun <T> genericGet(url: String): LiveData<Resource<T>> =
+        routeRepository.genericGet(url)
+
 }

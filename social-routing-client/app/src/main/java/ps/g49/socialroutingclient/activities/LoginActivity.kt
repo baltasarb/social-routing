@@ -39,6 +39,7 @@ class LoginActivity : BaseActivity() {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         socialRoutingApplication = application as SocialRoutingApplication
         stopSpinner()
 
@@ -54,44 +55,12 @@ class LoginActivity : BaseActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         socialRoutingViewModel = getViewModel(viewModelFactory)
 
-        defineOnClickListenerGoogleAccountButton()
-        obtainSocialRoutingAPIRootResources()
-    }
-
-    private fun defineOnClickListenerGoogleAccountButton() {
         sign_in_google_account_button.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
-    }
 
-    private fun obtainSocialRoutingAPIRootResources() {
-        val liveData = socialRoutingViewModel.getRootResource()
-        handleRequestedData(liveData, ::successHandlerRootResources, ::errorHandlerRootResource)
-    }
-
-    private fun successHandlerRootResources(socialRoutingRootResource: SocialRoutingRootResource?) {
-        socialRoutingApplication.setSocialRoutingRootResource(socialRoutingRootResource!!)
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-        sign_in_google_account_button.visibility = View.VISIBLE
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        if (account != null) {
-            saveAccount(account)
-            val authenticationUrl = socialRoutingRootResource.authenticationUrls[GOOGLE]!!
-            val liveData = socialRoutingViewModel.signIn(authenticationUrl, account.idToken!!)
-            handleRequestedData(liveData, ::successHandlerSignIn)
-        }
-        else {
-            val signInIntent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-    }
-
-    private fun errorHandlerRootResource(msg: String) {
-        val serverDownMessage = getString(R.string.server_down_message)
-        showToast(serverDownMessage)
-        sign_in_google_account_button.visibility = View.INVISIBLE
+        getSocialRoutingRootResource()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,6 +94,38 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+    private fun saveAccount(account: GoogleSignInAccount) {
+        val accountName = account.displayName ?: "No name"
+        val accountEmail = account.email ?: "No email"
+        val accountPhotoUrl = account.photoUrl ?: Uri.EMPTY
+        val userAccount = UserAccount(accountName, accountEmail, accountPhotoUrl)
+        socialRoutingApplication.setUser(userAccount)
+    }
+
+    private fun getSocialRoutingRootResource() {
+        val liveData = socialRoutingViewModel.getRootResource()
+        handleRequestedData(liveData, ::successHandlerRootResources, ::errorHandlerRootResource)
+    }
+
+    private fun successHandlerRootResources(socialRoutingRootResource: SocialRoutingRootResource?) {
+        socialRoutingApplication.setSocialRoutingRootResource(socialRoutingRootResource!!)
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+        sign_in_google_account_button.visibility = View.VISIBLE
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account != null) {
+            saveAccount(account)
+            val authenticationUrl = socialRoutingRootResource.authenticationUrls[GOOGLE]!!
+            val liveData = socialRoutingViewModel.signIn(authenticationUrl, account.idToken!!)
+            handleRequestedData(liveData, ::successHandlerSignIn, :: errorHandlerSignIn)
+        }
+    }
+
+    private fun errorHandlerRootResource() {
+        val serverDownMessage = getString(R.string.server_down_message)
+        showToast(serverDownMessage)
+        sign_in_google_account_button.visibility = View.INVISIBLE
+    }
 
     private fun successHandlerSignIn(authenticationData: AuthenticationDataInput?) {
         val user = socialRoutingApplication.getUser()
@@ -137,13 +138,9 @@ class LoginActivity : BaseActivity() {
         startNewActivity(NavigationActivity::class.java, true)
     }
 
-    private fun saveAccount(account: GoogleSignInAccount) {
-        val accountName = account.displayName ?: "No name"
-        val accountEmail = account.email ?: "No email"
-        val accountPhotoUrl = account.photoUrl ?: Uri.EMPTY
-        val userAccount =
-            UserAccount(accountName, accountEmail, accountPhotoUrl)
-        socialRoutingApplication.setUser(userAccount)
+    private fun errorHandlerSignIn() {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
 }

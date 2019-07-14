@@ -2033,11 +2033,29 @@
     <bcf:citekey order="36">fragments</bcf:citekey>
     <bcf:citekey order="37">viewmodel</bcf:citekey>
     <bcf:citekey order="38">googlesignindocs</bcf:citekey>
-    <bcf:citekey order="39">livedata</bcf:citekey>
-    <bcf:citekey order="40">googlemaps</bcf:citekey>
-    <bcf:citekey order="41">retrofit</bcf:citekey>
-    <bcf:citekey order="42">jsonwebsite</bcf:citekey>
-    <bcf:citekey order="43">jackson</bcf:citekey>
+    <bcf:citekey order="39">webserver</bcf:citekey>
+    <bcf:citekey order="40">jsonwebsite</bcf:citekey>
+    <bcf:citekey order="41">jackson</bcf:citekey>
+    <bcf:citekey order="42">retrofit</bcf:citekey>
+    <bcf:citekey order="43">livedata</bcf:citekey>
+    <bcf:citekey order="44">endpoint TODO</bcf:citekey>
+    <bcf:citekey order="45">geocode</bcf:citekey>
+    <bcf:citekey order="46">toasts</bcf:citekey>
+    <bcf:citekey order="47">progressBar</bcf:citekey>
+    <bcf:citekey order="48">loginactivitylayout</bcf:citekey>
+    <bcf:citekey order="49">navigationactivitylayout</bcf:citekey>
+    <bcf:citekey order="50">routecreationactivitylayout</bcf:citekey>
+    <bcf:citekey order="51">googleplayservices</bcf:citekey>
+    <bcf:citekey order="52">googlemaps</bcf:citekey>
+    <bcf:citekey order="53">geocodingapi</bcf:citekey>
+    <bcf:citekey order="54">googleplacesapi</bcf:citekey>
+    <bcf:citekey order="55">routecreationametadatactivitylayout</bcf:citekey>
+    <bcf:citekey order="56">intent</bcf:citekey>
+    <bcf:citekey order="57">routedetailsactivitylayout</bcf:citekey>
+    <bcf:citekey order="58">routerepresentationactivitylayout</bcf:citekey>
+    <bcf:citekey order="59">url</bcf:citekey>
+    <bcf:citekey order="60">routesearchactivitylayout</bcf:citekey>
+    <bcf:citekey order="61">userprofilectivitylayout</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

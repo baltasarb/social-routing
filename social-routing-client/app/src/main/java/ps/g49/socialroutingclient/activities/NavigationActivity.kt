@@ -13,10 +13,10 @@ import android.view.Menu
 import android.view.View
 import android.view.WindowManager
 import android.widget.CheckBox
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
-import kotlinx.android.synthetic.main.activity_search_routes.*
 import kotlinx.android.synthetic.main.nav_header_navigation.*
 import kotlinx.android.synthetic.main.search_content_navigation_layout.*
 import ps.g49.socialroutingclient.R
@@ -44,7 +44,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var googleViewModel: GoogleViewModel
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var socialRoutingApplication: SocialRoutingApplication
-    private lateinit var routesSearched: List<RouteInput>
+    private lateinit var routesSearched: MutableList<RouteInput>
     private lateinit var categories: List<Category>
     private var nextPage: String? = null
 
@@ -61,19 +61,59 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         )
         setContentView(R.layout.activity_navigation)
         initView()
-        sliding_layout.isEnabled = false
+
+        ActivityCompat.requestPermissions(this, PERMISSIONS, 1)
 
         socialRoutingApplication = application as SocialRoutingApplication
         googleViewModel = getViewModel(viewModelFactory)
         socialRoutingViewModel = getViewModel(viewModelFactory)
 
+        routesSearched = mutableListOf()
         requestCategories()
+    }
+
+    private fun requestCategories() {
+        categories = listOf()
+        val categoriesUrl = socialRoutingApplication.getSocialRoutingRootResource().categoriesUrl
+        val liveData = socialRoutingViewModel.getRouteCategories(categoriesUrl)
+        handleRequestedData(liveData, ::requestSuccessHandlerCategories)
+    }
+
+    private fun requestSuccessHandlerCategories(categoryCollection: CategoryCollectionInput?) {
+        categories = categoryCollection!!.categories
+    }
+
+    private fun initView() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val toggle = ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        navView.setNavigationItemSelectedListener(this)
+        sliding_layout.isEnabled = false
+        stopSpinner()
     }
 
     override fun onStart() {
         super.onStart()
         if (socialRoutingApplication.isLocationFound())
             getUserLocationName(socialRoutingApplication.getUserCurrentLocation())
+        else emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
+    }
+
+    private fun getUserLocationName(location: Location) {
+        val resource = googleViewModel.getLocationFromGeoCoordinates(location)
+        handleRequestedData(resource, ::successHandlerLocationRequest, ::errorHandler)
     }
 
     override fun onBackPressed() {
@@ -89,8 +129,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.navigation, menu)
 
-        val application = this@NavigationActivity.application as SocialRoutingApplication
-        val user = application.getUser()
+        val user = socialRoutingApplication.getUser()
         name_account_textview.text = user.name
         email_account_textview.text = user.email
 
@@ -122,43 +161,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         return true
     }
 
-    private fun initView() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        stopSpinner()
-
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val toggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-
-        navView.setNavigationItemSelectedListener(this)
-    }
-
-    private fun requestCategories() {
-        categories = listOf()
-        val categoriesUrl = socialRoutingApplication.getSocialRoutingRootResource().categoriesUrl
-        val liveData = socialRoutingViewModel.getRouteCategories(categoriesUrl)
-        handleRequestedData(liveData, ::requestSuccessHandlerCategories)
-    }
-
-    private fun requestSuccessHandlerCategories(categoryCollection: CategoryCollectionInput?) {
-        categories = categoryCollection!!.categories
-    }
-
-    private fun getUserLocationName(location: Location) {
-        val resource = googleViewModel.getLocationFromGeoCoordinates(location)
-        handleRequestedData(resource, ::requestSuccessHandlerLocationRequest)
-    }
-
-    private fun requestSuccessHandlerLocationRequest(reverseGeoCodingResponse: ReverseGeoCodingResponse?) {
+    private fun successHandlerLocationRequest(reverseGeoCodingResponse: ReverseGeoCodingResponse?) {
         val searchRoutesUrl = socialRoutingApplication
             .getSocialRoutingRootResource()
             .routeSearchUrl
@@ -166,50 +169,60 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
             it.types.contains("locality") && it.types.contains("political")
         }
         val locationIdentifier = result.placeId
-        val location = result.geometry.location
+        val locationPoint = result.geometry.location
         val resource = socialRoutingViewModel.searchRoutes(
             searchRoutesUrl,
             locationIdentifier,
             categories,
             DEFAULT_DURATION,
-            Point(location.lat, location.lng)
+            Point(locationPoint.lat, locationPoint.lng)
         )
-        handleRequestedData(resource, ::requestSuccessHandlerRouteSearch)
+        handleRequestedData(resource, ::successHandlerRouteSearch, ::errorHandler)
     }
 
-    private fun requestSuccessHandlerRouteSearch(routeCollection: SimplifiedRouteInputCollection?) {
+    private fun successHandlerRouteSearch(routeCollection: SimplifiedRouteInputCollection?) {
+        emptySearchRoutesNavigationTextView.visibility = View.GONE
         val routesSearched = routeCollection!!.routes
         nextPage = routeCollection.next
         if (routesSearched.isEmpty())
-            emptySearchRoutesTextView.visibility = View.VISIBLE
-        else
-            setRecyclerView(routesSearched)
+            emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
+        else {
+            setRecyclerView(routeCollection)
+        }
     }
 
-    private fun setRecyclerView(list: List<RouteInput>) {
-        val adapter = SearchRoutesAdapter(this, list, this, false)
+    private fun errorHandler() {
+        emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
+    }
+
+    private fun setRecyclerView(simplifiedRouteInputCollection: SimplifiedRouteInputCollection) {
+        routesSearched.addAll(simplifiedRouteInputCollection.routes)
+        val adapter = SearchRoutesAdapter(this, routesSearched, this, false)
         val layoutManager = LinearLayoutManager(applicationContext)
-        routesSearched = list
         cards_recyclerview.layoutManager = layoutManager
         cards_recyclerview.itemAnimator = DefaultItemAnimator()
         cards_recyclerview.adapter = adapter
         cards_recyclerview.addOnScrollListener(
             ScrollListener {
-                TODO()
+                if (simplifiedRouteInputCollection.next != null) {
+                    val liveData = socialRoutingViewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
+                    handleRequestedData(
+                        liveData,
+                        ::successHandlerRouteSearch,
+                        ::errorHandler
+                    )
+                }
             }
         )
     }
 
     override fun onRouteClick(position: Int) {
         if (routesSearched.isNotEmpty()) {
-            val routeIdIntentMessage = getString(R.string.route_id_intent_message)
-            val routeIntentMessage = getString(R.string.route_intent_message)
-            val routeUrl = getString(R.string.route_url)
+            val routeIntentMessage = getString(R.string.route_creation_intent_message)
+            val routeUrl = socialRoutingApplication.setCorrectUrlToDevice(routesSearched[position].routeUrl)
 
-            val routeInput = routesSearched.get(position)
             val intent = Intent(this, RouteRepresentationActivity::class.java)
             intent.putExtra(routeIntentMessage, routeUrl)
-            intent.putExtra(routeIdIntentMessage, routeInput.identifier)
             startActivity(intent)
         }
     }

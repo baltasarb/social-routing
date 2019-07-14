@@ -11,6 +11,7 @@ data class RouteOutput (
     val categories : List<Category>,
     val isCircular : Boolean,
     val isOrdered : Boolean,
-    val pointsOfInterest : List<PointOfInterestOutput>,
-    val imageReference : String
+    val pointsOfInterest : List<PointOfInterestOutput>?,
+    val imageReference : String,
+    val duration: String
 )

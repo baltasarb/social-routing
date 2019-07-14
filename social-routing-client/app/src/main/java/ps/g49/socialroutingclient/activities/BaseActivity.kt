@@ -85,6 +85,28 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         })
     }
 
+    protected fun <T> handleRequestedData(
+        data: LiveData<Resource<T>>,
+        requestSuccessHandler: (result: T?) -> Unit,
+        requestErrorHandler: () -> Unit
+    ) {
+        data.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    requestLoadingHandler()
+                }
+                Resource.Status.ERROR -> {
+                    stopSpinner()
+                    requestErrorHandler()
+                }
+                Resource.Status.SUCCESS -> {
+                    stopSpinner()
+                    requestSuccessHandler(it.data)
+                }
+            }
+        })
+    }
+
     protected fun <T> startNewActivity(cls: Class<T>, finish: Boolean) {
         val intent = Intent(this, cls)
         startActivity(intent)

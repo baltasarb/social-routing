@@ -14,10 +14,10 @@ class RouteDetails(
 
     constructor(parcel: Parcel) : this(
         parcel.createTypedArrayList(Category),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readDouble()
     ) {
     }

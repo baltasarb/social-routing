@@ -11,7 +11,6 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -40,17 +39,22 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
 
     private lateinit var mMap: GoogleMap
     private lateinit var mMapManager: GoogleMapsManager
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
+
     private lateinit var googleViewModel: GoogleViewModel
+
     private lateinit var socialRoutingApplication: SocialRoutingApplication
     private lateinit var placeResults: MutableList<PlacesOfInterest>
+    private lateinit var placeResultsWaiting: MutableList<PlacesOfInterest>
     private lateinit var locationIdentifier: String
     private lateinit var nextPageTokens: MutableList<String>
+    private var cityImage: Photo? = null
     private var routeUrl: String? = null
     private var isEditMode: Boolean = false
     private var termination: Boolean = false
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
 
     companion object {
         const val MAX_DISTANCE_TO_CIRCULAR = 0.0009
@@ -58,6 +62,8 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         const val ROUTE_CREATION_MESSAGE = "ROUTE_CREATION_MESSAGE"
         const val MAX_WIDTH = 750
         const val MAX_HEIGHT = 750
+        const val MAX_PLACES_OF_INTEREST_TO_SHOW = 60
+        const val REQUEST_CODE = 999
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,14 +74,11 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_route_creation)
-        socialRoutingApplication = application as SocialRoutingApplication
+        initView()
+
         routeUrl = intent.getStringExtra(ROUTE_CREATION_MESSAGE)
         if (routeUrl != null)
             isEditMode = true
-
-        stopSpinner()
-        routeMetadataButton.visibility = View.GONE
-        finishButton.visibility = View.VISIBLE
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -84,9 +87,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         // Initialize the Route Repository.
         socialRoutingViewModel = getViewModel(viewModelFactory)
         googleViewModel = getViewModel(viewModelFactory)
+        socialRoutingApplication = application as SocialRoutingApplication
 
         placeResults = mutableListOf()
+        placeResultsWaiting = mutableListOf()
         nextPageTokens = mutableListOf()
+    }
+
+    private fun initView() {
+        stopSpinner()
+        routeMetadataButton.visibility = View.GONE
+        finishButton.visibility = View.VISIBLE
     }
 
     /*
@@ -103,7 +114,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
                 mMapManager.addMarker(it)
         }
 
-        showRouteFromIntent()
+        processRoute()
     }
 
     override fun onBackPressed() {
@@ -124,15 +135,15 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
             finish()
     }
 
-    private fun showRouteFromIntent() {
+    private fun processRoute() {
         if (isEditMode) {
             val liveData = socialRoutingViewModel.getRoute(routeUrl!!)
-            handleRequestedData(liveData, ::requestRouteFromIntent)
+            handleRequestedData(liveData, ::successHandlerRoute)
         } else
             getLocationFromViewInput()
     }
 
-    private fun requestRouteFromIntent(routeDetailedInput: RouteDetailedInput?) {
+    private fun successHandlerRoute(routeDetailedInput: RouteDetailedInput?) {
         routeDetailedInput!!.points.forEach {
             mMapManager.addMarker(LatLng(it.latitude, it.longitude))
         }
@@ -141,34 +152,55 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         mMapManager.zoomInGeoCoordinatesCity(firstPoint.latitude, firstPoint.longitude)
     }
 
-    private fun requestPlacesOfInterest(location: String) {
-        val liveData = googleViewModel.findPlacesOfInterest(location, DEFAULT_RADIUS)
-        handleRequestedData(liveData, ::requestSuccessHandlerPlacesOfInterest)
+    private fun getLocationFromViewInput() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+
+        val rowView: View = inflater.inflate(R.layout.form_location_dialog, null)
+        val locationEditText = rowView.findViewById<EditText>(R.id.route_location_editText)
+        val searchLocationButton = rowView.findViewById<ImageButton>(R.id.search_location_imageButton)
+
+        val alertDialog = builder
+            .setView(rowView)
+            .setCancelable(false)
+            .create()
+
+        searchLocationButton.setOnClickListener {
+            val locationStr = locationEditText.text.toString()
+            if (locationStr.isEmpty())
+                showToast("Fill the location first.")
+            else {
+                requestLocationGeoCoordinatesRequest(locationStr)
+                alertDialog.cancel()
+            }
+        }
+
+        alertDialog.show()
     }
 
     private fun requestNextPageOfPlacesOfInterest(pageToken: String) {
         val liveData = googleViewModel.findPlacesOfInterestNextPage(pageToken)
-        handleRequestedData(liveData, ::requestSuccessHandlerPlacesOfInterest)
+        handleRequestedData(liveData, ::successHandlerPointsOfInterest)
     }
 
-    private fun requestImageFromReference(
-        photoReference: String,
-        maxHeight: Int,
-        maxWidth: Int,
-        func: (bitmap: Bitmap?) -> Unit
-    ) {
-        val liveData = googleViewModel.getPhotoFromReference(photoReference, maxHeight, maxWidth)
-        handleRequestedData(liveData, func)
-    }
-
-    private fun requestSuccessHandlerPlacesOfInterest(placesResponse: PlacesResponse?) {
+    private fun successHandlerPointsOfInterest(placesResponse: PlacesResponse?) {
         placesResponse!!.nextPageToken?.let { nextPageTokens.add(it) }
-
         val placesOfInterest = mapPlacesOfPlaceResponseToPlacesOfInterest(placesResponse)
-        placeResults.addAll(placesOfInterest)
-        filterPlacesOfInterest(placeResults)
+        if (placeResults.size + placesResponse.results.size > MAX_PLACES_OF_INTEREST_TO_SHOW) {
+            placeResultsWaiting.addAll(placesOfInterest)
+        }
+        else {
+            placeResults.addAll(placesOfInterest)
+            saveCityImage()
+            filterPlacesOfInterest(placeResults)
+            setRecyclerView()
+        }
+    }
 
-        setRecyclerView()
+    private fun saveCityImage() {
+        cityImage = placeResults.find {
+            it.types.contains("locality") && it.types.contains("political")
+        }!!.photo
     }
 
     private fun setRecyclerView() {
@@ -178,8 +210,13 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         dragView_recyclerView.itemAnimator = DefaultItemAnimator()
         dragView_recyclerView.adapter = adapter
         dragView_recyclerView.addOnScrollListener(
-            ScrollListener{
-                if (nextPageTokens.isNotEmpty())
+            ScrollListener {
+                if (placeResultsWaiting.isNotEmpty()) {
+                    for (idx in 0 until MAX_PLACES_OF_INTEREST_TO_SHOW)
+                        placeResults.add(placeResultsWaiting.removeAt(idx))
+                    setRecyclerView()
+                }
+                else if (nextPageTokens.isNotEmpty())
                     requestNextPageOfPlacesOfInterest(nextPageTokens.removeAt(0))
             }
         )
@@ -189,7 +226,6 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         backImageButton.visibility = View.GONE
         termination = true
     }
-
 
     private fun filterPlacesOfInterest(placesOfInterest: List<PlacesOfInterest>) {
         placeResults = placesOfInterest
@@ -223,6 +259,16 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         }
     }
 
+    private fun requestImageFromReference(
+        photoReference: String,
+        maxHeight: Int,
+        maxWidth: Int,
+        func: (bitmap: Bitmap?) -> Unit
+    ) {
+        val liveData = googleViewModel.getPhotoFromReference(photoReference, maxHeight, maxWidth)
+        handleRequestedData(liveData, func)
+    }
+
     private fun isRouteCircular(): Boolean {
         val points = mMapManager.getMarkerPoints()
         if (points.size < 2)
@@ -244,12 +290,12 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
                 LatLng(
                     placesOfInterest.location.latitude,
                     placesOfInterest.location.longitude
-                ), placesOfInterest.name
+                ),
+                placesOfInterest.name
             )
             mMapManager.zoomInGeoCoordinates(placesOfInterest.location.latitude, placesOfInterest.location.longitude)
             sliding_layout.panelState = SlidingUpPanelLayout.PanelState.COLLAPSED
-        }
-        else
+        } else
             placesOfInterest.isSaved = isSaved
     }
 
@@ -263,6 +309,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
 
         socialRoutingApplication.routeCreated = Route(
             isEditMode,
+            cityImage,
             routeUrl,
             locationIdentifier,
             mMapManager.getMarkerPoints(),
@@ -271,42 +318,15 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         )
 
         val intent = Intent(this, RouteCreationMetadataActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun getLocationFromViewInput() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-
-        val rowView: View = inflater.inflate(R.layout.form_location_dialog, null)
-        val locationEditText = rowView.findViewById<EditText>(R.id.route_location_editText)
-        val searchLocationButton = rowView.findViewById<ImageButton>(R.id.search_location_imageButton)
-
-        val alertDialog = builder
-            .setView(rowView)
-            .setCancelable(false)
-            .create()
-
-        searchLocationButton.setOnClickListener {
-            val locationStr = locationEditText.text.toString()
-            if (locationStr.isEmpty()) {
-                finish()
-                getLocationFromViewInput()
-            } else {
-                requestLocationGeoCoordinatesRequest(locationStr)
-                alertDialog.cancel()
-            }
-        }
-
-        alertDialog.show()
+        startActivityForResult(intent, REQUEST_CODE)
     }
 
     private fun requestLocationGeoCoordinatesRequest(locationStr: String) {
         val liveData = googleViewModel.getGeoCoordinatesFromLocation(locationStr)
-        handleRequestedData(liveData, ::handleLocationInformationSuccessHandler)
+        handleRequestedData(liveData, ::successHandlerLocationInformation)
     }
 
-    private fun handleLocationInformationSuccessHandler(geoCodingResponse: GeoCodingResponse?) {
+    private fun successHandlerLocationInformation(geoCodingResponse: GeoCodingResponse?) {
         if (geoCodingResponse!!.results.isEmpty()) {
             showToast("Results Not Found.")
             getLocationFromViewInput()
@@ -338,5 +358,17 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
                 requestPlacesOfInterest(location)
             }
         }
+    }
+
+    private fun requestPlacesOfInterest(location: String) {
+        val liveData = googleViewModel.findPlacesOfInterest(location, DEFAULT_RADIUS)
+        handleRequestedData(liveData, ::successHandlerPointsOfInterest)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE)
+            finish()
     }
 }

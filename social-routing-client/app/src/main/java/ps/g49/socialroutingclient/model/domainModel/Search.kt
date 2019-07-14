@@ -10,9 +10,9 @@ data class Search (
 ): Parcelable {
 
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
+        parcel.readString()!!,
         parcel.createTypedArrayList(Category),
-        parcel.readString()
+        parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

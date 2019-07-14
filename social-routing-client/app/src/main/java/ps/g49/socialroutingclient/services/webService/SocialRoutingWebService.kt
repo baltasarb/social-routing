@@ -6,6 +6,7 @@ import ps.g49.socialroutingclient.model.outputModel.PersonOutput
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
 import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
+import ps.g49.socialroutingclient.model.outputModel.RefreshAuthenticationDataOutput
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -52,11 +53,18 @@ interface SocialRoutingWebService {
         @Body authorizationOutput: AuthorizationOutput
     ): Call<AuthenticationDataInput>
 
+
+    @POST("/authentication/refresh")
+    fun refreshToken(
+        @Body refreshAuthenticationDataOutput: RefreshAuthenticationDataOutput
+    ): Call<AuthenticationDataInput>
+
     @POST("routes")
-    fun createRoute(@Body routeOutput: RouteOutput): Call<Void>
+    fun createRoute(@Body routeOutput: RouteOutput): Call<Unit>
 
     // PUT methods
     @PUT
+    @POST("routes/{identifier}")
     fun updateRoute(
         @Url routeUrl: String,
         @Body routeOutput: RouteOutput
@@ -67,6 +75,11 @@ interface SocialRoutingWebService {
     fun deleteRoute(
         @Url routeUrl: String
     ): Call<Unit>
+
+    @GET
+    fun <T> genericGet(
+        @Url url: String
+    ): Call<T>
 
 
 }

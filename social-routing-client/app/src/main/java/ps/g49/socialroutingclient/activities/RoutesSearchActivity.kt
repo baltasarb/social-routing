@@ -28,7 +28,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
     lateinit var viewModelFactory: ViewModelFactory
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var googleViewModel: GoogleViewModel
-    private lateinit var routesSearched: List<RouteInput>
+    private lateinit var routesSearched: MutableList<RouteInput>
     private lateinit var socialRoutingApplication: SocialRoutingApplication
     private lateinit var searchParams: Search
 
@@ -42,22 +42,25 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
 
         searchParams = intent.getParcelableExtra(getString(R.string.location_intent_message))
         requestLocationIdentifier(searchParams.locationName)
+
+        routesSearched = mutableListOf()
     }
 
     private fun requestLocationIdentifier(locationName: String) {
         val liveData = googleViewModel.getGeoCoordinatesFromLocation(locationName)
-        handleRequestedData(liveData, ::requestSuccessHandlerLocationIdentifier, ::requestErrorHandlerLocationIdentifier)
+        handleRequestedData(liveData, ::successHandlerLocationIdentifier, ::errorHandlerLocationIdentifier)
     }
 
-    private fun requestSuccessHandlerLocationIdentifier(geoCodingResponse: GeoCodingResponse?) {
+    private fun successHandlerLocationIdentifier(geoCodingResponse: GeoCodingResponse?) {
         val placeId = geoCodingResponse!!.results.first {
             it.types.contains("locality") && it.types.contains("political")
         }.place_id
-        searchRoutes(placeId, searchParams.categories, searchParams.locationName)
+        searchRoutes(placeId, searchParams.categories, searchParams.duration)
     }
 
-    private fun requestErrorHandlerLocationIdentifier(msg: String?) {
+    private fun errorHandlerLocationIdentifier() {
         showToast("Could not find the specified location.")
+        emptySearchRoutesNavigationTextView.visibility = View.GONE
     }
 
     private fun searchRoutes(locationIdentifier: String, categories: List<Category>, duration: String) {
@@ -67,43 +70,50 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         val liveData = socialRoutingViewModel.searchRoutes(searchRoutesUrl, locationIdentifier, categories, duration)
         handleRequestedData(
             liveData,
-            ::requestSuccessHandlerRouteSearch,
-            ::requestErrorHandlerSearch
+            ::successHandlerRouteSearch,
+            ::errorHandlerSearch
         )
     }
 
-    private fun requestSuccessHandlerRouteSearch(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
+    private fun successHandlerRouteSearch(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
         val routesSearched = simplifiedRouteInputCollection!!.routes
         if (routesSearched.isEmpty())
-            emptySearchRoutesTextView.visibility = View.VISIBLE
+            emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
         else
-            setRecyclerView(routesSearched)
+            setRecyclerView(simplifiedRouteInputCollection)
     }
 
-    private fun requestErrorHandlerSearch(msg: String) {
-        emptySearchRoutesTextView.visibility = View.VISIBLE
+    private fun errorHandlerSearch() {
+        emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
     }
 
-    private fun setRecyclerView(list: List<RouteInput>) {
+    private fun setRecyclerView(simplifiedRouteInputCollection: SimplifiedRouteInputCollection) {
+        val list = simplifiedRouteInputCollection.routes
+        routesSearched.addAll(list)
         val adapter = SearchRoutesAdapter(this, list, this, false)
         val layoutManager = LinearLayoutManager(applicationContext)
-        routesSearched = list
         routesRecyclerView.layoutManager = layoutManager
         routesRecyclerView.itemAnimator = DefaultItemAnimator()
         routesRecyclerView.adapter = adapter
         routesRecyclerView.addOnScrollListener(ScrollListener {
-            TODO ()
+            if (simplifiedRouteInputCollection.next != null) {
+                val liveData = socialRoutingViewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
+                handleRequestedData(
+                    liveData,
+                    ::successHandlerRouteSearch,
+                    ::errorHandlerSearch
+                )
+            }
         })
     }
 
     override fun onRouteClick(position: Int) {
         if (routesSearched.isNotEmpty()) {
-            val routeIntentMessage = getString(R.string.route_intent_message)
-            val routeUrl = routesSearched[position].routeUrl.split("/")
-            val url = "http://10.0.2.2:8080/api.sr/" + routeUrl[routeUrl.size - 2] + routeUrl[routeUrl.size - 1]
+            val routeIntentMessage = getString(R.string.route_creation_intent_message)
+            val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(routesSearched[position].routeUrl)
 
             val intent = Intent(this, RouteRepresentationActivity::class.java)
-            intent.putExtra(routeIntentMessage, url)
+            intent.putExtra(routeIntentMessage, correctUrl)
             startActivity(intent)
         }
     }

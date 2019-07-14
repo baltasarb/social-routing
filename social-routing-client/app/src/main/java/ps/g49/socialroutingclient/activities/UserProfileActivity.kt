@@ -35,65 +35,68 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         setSupportActionBar(toolbar)
 
         viewModel = getViewModel(viewModelFactory)
-
-        // TODO("receive the correct user url")
         socialRoutingApplication = application as SocialRoutingApplication
-        val personUrl = socialRoutingApplication.getUser().userUrl.split("/")
-        val correctUrl = getString(R.string.api_url) + "persons/" + personUrl[5]
+        initView(socialRoutingApplication.getUser())
+
+        val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(socialRoutingApplication.getUser().userUrl)
         getUserProfileInfo(correctUrl)
-        setView(socialRoutingApplication.getUser())
+    }
+
+    private fun initView(user: UserAccount) {
+        toolbar_layout.title = user.name
     }
 
     private fun getUserProfileInfo(userUrl: String) {
         val liveData = viewModel.getUser(userUrl)
-        handleRequestedData(liveData, ::requestSuccessHandlerUserProfile)
+        handleRequestedData(liveData, ::successHandlerUserProfile)
     }
 
-    private fun setView(user: UserAccount) {
-        toolbar_layout.title = user.name
+    private fun successHandlerUserProfile(personInput: PersonInput?) {
+        userRatingBar.rating = personInput!!.rating.toFloat()
+        requestUserRoutes(personInput)
     }
 
     private fun requestUserRoutes(personInput: PersonInput?) {
-        val personUrl = socialRoutingApplication.getUser().userUrl.split("/")
-        val correctUrl = getString(R.string.api_url) + "persons/" + personUrl[5] + "/routes"
-        val liveDataRoutes = viewModel.getUserRoutesFromUrl(/*personInput!!.routesUrl*/correctUrl)
+        val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(personInput!!.routesUrl)
+        val liveDataRoutes = viewModel.getUserRoutesFromUrl(correctUrl)
         handleRequestedData(liveDataRoutes, ::requestSuccessHandlerUserRoutes)
     }
 
-    private fun setRecyclerView(routesList: List<RouteInput>) {
+    private fun requestSuccessHandlerUserRoutes(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
+        val routesList = simplifiedRouteInputCollection!!.routes
+
+        if (routesList.isEmpty())
+            emptyUserRoutesTextView.visibility = View.VISIBLE
+        else {
+            emptyUserRoutesTextView.visibility = View.GONE
+            setRecyclerView(simplifiedRouteInputCollection)
+        }
+    }
+
+    private fun setRecyclerView(simplifiedRouteInputCollection: SimplifiedRouteInputCollection) {
+        val routesList = simplifiedRouteInputCollection.routes
         val adapter = SearchRoutesAdapter(this, routesList, this, true)
+        routesInputs = routesList
         val layoutManager = LinearLayoutManager(applicationContext)
         userRoutesRecyclerView.layoutManager = layoutManager
         userRoutesRecyclerView.itemAnimator = DefaultItemAnimator()
         userRoutesRecyclerView.adapter = adapter
         userRoutesRecyclerView.addOnScrollListener(ScrollListener {
-            TODO()
+            if (simplifiedRouteInputCollection.next != null) {
+                val liveData = viewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
+                handleRequestedData(liveData, ::requestSuccessHandlerUserRoutes)
+            }
         })
     }
 
     override fun onRouteClick(position: Int) {
         if (routesInputs.isNotEmpty()) {
-            val routeIntentMessage = getString(R.string.route_intent_message)
+            val routeIntentMessage = getString(R.string.route_creation_intent_message)
             val routeInput = routesInputs[position]
+            val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(routeInput.routeUrl)
             val intent = Intent(this, RouteRepresentationActivity::class.java)
-            intent.putExtra(routeIntentMessage, routeInput.routeUrl)
+            intent.putExtra(routeIntentMessage, correctUrl)
             startActivity(intent)
-        }
-    }
-
-    private fun requestSuccessHandlerUserProfile(personInput: PersonInput?) {
-        userRatingBar.rating = personInput!!.rating.toFloat()
-        requestUserRoutes(personInput)
-    }
-
-    private fun requestSuccessHandlerUserRoutes(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
-        val routesList = simplifiedRouteInputCollection!!.routes
-        routesInputs = routesList
-        if (routesList.isEmpty())
-            emptyUserRoutesTextView.visibility = View.VISIBLE
-        else {
-            emptyUserRoutesTextView.visibility = View.INVISIBLE
-            setRecyclerView(routesList)
         }
     }
 

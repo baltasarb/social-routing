@@ -8,7 +8,12 @@ import retrofit2.Response
 
 abstract class BaseRepository {
 
-    fun <T, R> genericEnqueue(call: Call<T>, resource: MutableLiveData<Resource<R>>, mapper: (t: T) -> R) {
+    fun <T, R> genericEnqueue(
+        call: Call<T>,
+        resource: MutableLiveData<Resource<R>>,
+        mapper: (response: Response<T>) -> R,
+        errorHandler: ((response: Response<T>) -> Unit)? = null
+    ) {
         call.enqueue(object : Callback<T> {
 
             override fun onFailure(call: Call<T>, t: Throwable) {
@@ -17,19 +22,23 @@ abstract class BaseRepository {
 
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 if (response.isSuccessful) {
-                    val value = response.body()!!
-                    resource.value = Resource.success(mapper(value))
-                }
-                else {
-                    val errorMessage = getErrorMessage(response.code())
+                    resource.value = Resource.success(mapper(response))
+                } else {
+                    if (errorHandler != null)
+                        errorHandler(response)
                     resource.value = Resource.error(response.message(), null)
                 }
             }
 
         })
+
     }
 
-    fun <T> genericEnqueue(call: Call<T>, resource: MutableLiveData<Resource<T>>) {
+    fun <T> genericEnqueue(
+        call: Call<T>,
+        resource: MutableLiveData<Resource<T>>,
+        errorHandler: ((response: Response<T>) -> Unit)? = null
+    ) {
         call.enqueue(object : Callback<T> {
 
             override fun onFailure(call: Call<T>, t: Throwable) {
@@ -37,27 +46,16 @@ abstract class BaseRepository {
             }
 
             override fun onResponse(call: Call<T>, response: Response<T>) {
-                if (response.isSuccessful) {
-                    val value = response.body()!!
-                    resource.value = Resource.success(value)
-                }
+                if (response.isSuccessful)
+                    resource.value = Resource.success(response.body()!!)
                 else {
-                    val errorMessage = getErrorMessage(response.code())
+                    if (errorHandler != null)
+                        errorHandler(response)
                     resource.value = Resource.error(response.message(), null)
                 }
             }
 
         })
-    }
-
-    protected fun getErrorMessage(code: Int) : String {
-        return when (code) {
-            400 -> ""
-            401 -> ""
-            404 -> "Nothing Found"
-            500 -> "Server Problem. Sorry, try again later."
-            else -> "Unknown Error"
-        }
     }
 
 }
