@@ -1,6 +1,6 @@
 package ps.g49.socialroutingclient.utils
 
-// A generic class that contains data and status about requestLoadingHandler this data.
+// A generic class that contains data and status about requestDefaultLoadingHandler this data.
 class Resource<T> private constructor(
     val status: Status,
     val data: T?,

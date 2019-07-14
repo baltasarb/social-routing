@@ -7,7 +7,5 @@ data class UserAccount (
     val email: String,
     val photoUrl: Uri,
     val rating: Double = 0.0,
-    var userUrl: String = "",
-    var accessToken: String = "",
-    var refreshToken: String = ""
+    var userUrl: String = ""
 )

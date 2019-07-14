@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_search_routes.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.adapters.OnRouteListener
+import ps.g49.socialroutingclient.adapters.listeners.OnRouteListener
 import ps.g49.socialroutingclient.adapters.SearchRoutesAdapter
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.model.domainModel.Category
@@ -46,6 +46,8 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         routesSearched = mutableListOf()
     }
 
+    override fun initView() {}
+
     private fun requestLocationIdentifier(locationName: String) {
         val liveData = googleViewModel.getGeoCoordinatesFromLocation(locationName)
         handleRequestedData(liveData, ::successHandlerLocationIdentifier, ::errorHandlerLocationIdentifier)
@@ -55,7 +57,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         val placeId = geoCodingResponse!!.results.first {
             it.types.contains("locality") && it.types.contains("political")
         }.place_id
-        searchRoutes(placeId, searchParams.categories, searchParams.duration)
+        requestSearchRoute(placeId, searchParams.categories, searchParams.duration)
     }
 
     private fun errorHandlerLocationIdentifier() {
@@ -63,7 +65,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         emptySearchRoutesNavigationTextView.visibility = View.GONE
     }
 
-    private fun searchRoutes(locationIdentifier: String, categories: List<Category>, duration: String) {
+    private fun requestSearchRoute(locationIdentifier: String, categories: List<Category>, duration: String) {
         val searchRoutesUrl = socialRoutingApplication
             .getSocialRoutingRootResource()
             .routeSearchUrl
@@ -71,26 +73,27 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         handleRequestedData(
             liveData,
             ::successHandlerRouteSearch,
-            ::errorHandlerSearch
+            ::errorHandlerRouteSearch
         )
     }
 
     private fun successHandlerRouteSearch(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
-        val routesSearched = simplifiedRouteInputCollection!!.routes
-        if (routesSearched.isEmpty())
+        val routesResult = simplifiedRouteInputCollection!!.routes
+        if (routesResult.isEmpty())
             emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
-        else
+        else {
+            val list = simplifiedRouteInputCollection.routes
+            routesSearched.addAll(list)
             setRecyclerView(simplifiedRouteInputCollection)
+        }
     }
 
-    private fun errorHandlerSearch() {
+    private fun errorHandlerRouteSearch() {
         emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
     }
 
     private fun setRecyclerView(simplifiedRouteInputCollection: SimplifiedRouteInputCollection) {
-        val list = simplifiedRouteInputCollection.routes
-        routesSearched.addAll(list)
-        val adapter = SearchRoutesAdapter(this, list, this, false)
+        val adapter = SearchRoutesAdapter(this, routesSearched, this, false)
         val layoutManager = LinearLayoutManager(applicationContext)
         routesRecyclerView.layoutManager = layoutManager
         routesRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -101,7 +104,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
                 handleRequestedData(
                     liveData,
                     ::successHandlerRouteSearch,
-                    ::errorHandlerSearch
+                    ::errorHandlerRouteSearch
                 )
             }
         })

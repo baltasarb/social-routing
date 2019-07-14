@@ -15,7 +15,7 @@ import ps.g49.socialroutingclient.model.domainModel.UserAccount
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
-import ps.g49.socialroutingclient.adapters.OnRouteListener
+import ps.g49.socialroutingclient.adapters.listeners.OnRouteListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.UserProfileViewModel
@@ -36,17 +36,17 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
 
         viewModel = getViewModel(viewModelFactory)
         socialRoutingApplication = application as SocialRoutingApplication
-        initView(socialRoutingApplication.getUser())
+        initView()
 
         val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(socialRoutingApplication.getUser().userUrl)
-        getUserProfileInfo(correctUrl)
+        requestUserProfileInfo(correctUrl)
     }
 
-    private fun initView(user: UserAccount) {
-        toolbar_layout.title = user.name
+    override fun initView() {
+        toolbar_layout.title = socialRoutingApplication.getUser().name
     }
 
-    private fun getUserProfileInfo(userUrl: String) {
+    private fun requestUserProfileInfo(userUrl: String) {
         val liveData = viewModel.getUser(userUrl)
         handleRequestedData(liveData, ::successHandlerUserProfile)
     }
@@ -59,10 +59,10 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
     private fun requestUserRoutes(personInput: PersonInput?) {
         val correctUrl = socialRoutingApplication.setCorrectUrlToDevice(personInput!!.routesUrl)
         val liveDataRoutes = viewModel.getUserRoutesFromUrl(correctUrl)
-        handleRequestedData(liveDataRoutes, ::requestSuccessHandlerUserRoutes)
+        handleRequestedData(liveDataRoutes, ::successHandlerUserRoutes)
     }
 
-    private fun requestSuccessHandlerUserRoutes(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
+    private fun successHandlerUserRoutes(simplifiedRouteInputCollection: SimplifiedRouteInputCollection?) {
         val routesList = simplifiedRouteInputCollection!!.routes
 
         if (routesList.isEmpty())
@@ -84,7 +84,7 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         userRoutesRecyclerView.addOnScrollListener(ScrollListener {
             if (simplifiedRouteInputCollection.next != null) {
                 val liveData = viewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
-                handleRequestedData(liveData, ::requestSuccessHandlerUserRoutes)
+                handleRequestedData(liveData, ::successHandlerUserRoutes)
             }
         })
     }

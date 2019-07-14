@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.activities.RouteCreationActivity
+import ps.g49.socialroutingclient.adapters.listeners.OnRouteListener
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 
 class SearchRoutesAdapter(

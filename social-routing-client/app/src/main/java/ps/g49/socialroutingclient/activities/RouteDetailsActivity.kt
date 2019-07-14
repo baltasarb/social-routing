@@ -1,22 +1,23 @@
 package ps.g49.socialroutingclient.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_route_details.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.model.domainModel.RouteDetails
 
-class RouteDetailsActivity : AppCompatActivity() {
+class RouteDetailsActivity : BaseActivity() {
+
+    private lateinit var routeDetails: RouteDetails
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_route_details)
 
-        val routeDetails = intent.getParcelableExtra<RouteDetails>(RouteRepresentationActivity.ROUTE_REPRESENTATION_DETAILS_MESSAGE)
-        setView(routeDetails)
+        routeDetails = intent.getParcelableExtra<RouteDetails>(RouteRepresentationActivity.ROUTE_REPRESENTATION_DETAILS_MESSAGE)
+        initView()
     }
 
-    private fun setView(routeDetails: RouteDetails) {
+    override fun initView() {
         nameRouteTextView.text = routeDetails.name
         descriptionRouteTextView.text = routeDetails.description
         creationDateTextView.text = routeDetails.dateCreated

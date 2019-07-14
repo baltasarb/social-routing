@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_route_creation_metadata.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
-import ps.g49.socialroutingclient.activities.RouteRepresentationActivity.Companion.ROUTE_REPRESENTATION_DETAILS_MESSAGE
 import ps.g49.socialroutingclient.adapters.ImageToRouteAdapter
-import ps.g49.socialroutingclient.adapters.OnImageClickListener
+import ps.g49.socialroutingclient.adapters.listeners.OnImageClickListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.domainModel.Category
@@ -26,7 +25,10 @@ import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
 
-class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
+
+
+class RouteCreationMetadataActivity : BaseActivity(),
+    OnImageClickListener {
 
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var googleViewModel: GoogleViewModel
@@ -53,14 +55,11 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
         route = socialRoutingApplication.routeCreated
         initView()
 
-        if (route.cityPhoto != null)
-            imageReferenceClicked = route.cityPhoto!!.photoReference
-
         requestCategories()
         setPlacesOfInterestImages()
     }
 
-    private fun initView() {
+    override fun initView() {
         noCategoriesFoundTextView.visibility = View.GONE
         noImagesTextView.visibility = View.GONE
         circularCheckBox.isChecked = route.isCircular
@@ -70,6 +69,9 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
     }
 
     private fun setPlacesOfInterestImages() {
+        if (route.cityPhoto != null)
+            imageReferenceClicked = route.cityPhoto!!.photoReference
+
         imageList = route.pointsOfInterest.filter {
             it.photo != null
         }.map {
@@ -92,14 +94,14 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
     private fun requestCategories() {
         val categoriesUrl = socialRoutingApplication.getSocialRoutingRootResource().categoriesUrl
         val liveData = socialRoutingViewModel.getRouteCategories(categoriesUrl)
-        handleRequestedData(liveData, ::requestSuccessHandlerRouteCategories, ::requestErrorHandlerRouteCategories)
+        handleRequestedData(liveData, ::successHandlerCategories, ::errorHandlerCategories)
     }
 
-    private fun requestErrorHandlerRouteCategories() {
+    private fun errorHandlerCategories() {
         noCategoriesFoundTextView.visibility = View.VISIBLE
     }
 
-    private fun requestSuccessHandlerRouteCategories(categoriesCollection: CategoryCollectionInput?) {
+    private fun successHandlerCategories(categoriesCollection: CategoryCollectionInput?) {
         val categories = categoriesCollection!!.categories
         categories.forEach {
             val checkBox = CheckBox(this)
@@ -112,10 +114,10 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
         photoReference: String,
         maxHeight: Int,
         maxWidth: Int,
-        func: (bitmap: Bitmap?) -> Unit
+        successHandler: (bitmap: Bitmap?) -> Unit
     ) {
         val liveData = googleViewModel.getPhotoFromReference(photoReference, maxHeight, maxWidth)
-        handleRequestedData(liveData, func)
+        handleRequestedData(liveData, successHandler)
     }
 
     fun createRoute(view: View) {
@@ -151,16 +153,22 @@ class RouteCreationMetadataActivity : BaseActivity(), OnImageClickListener {
             imageReferenceClicked.orEmpty(),
             duration
         )
-        if (!route.existingRoute) {
-            // Creating Route
-            val liveData = socialRoutingViewModel.createRoute(routeOutput)
-            handleRequestedData(liveData, ::successHandlerRouteCreation, ::errorHandlerRouteCreation)
-        } else {
-            // updating Route
-            val liveData = socialRoutingViewModel.updateRoute(route.routeUrl!!, routeOutput)
-            handleRequestedData(liveData, ::successHandlerRouteUpdate, ::errorHandlerRouteUpdate)
-        }
 
+        if (!route.existingRoute)
+            requestRouteCreation(routeOutput)
+        else
+            requestRouteUpdate(routeOutput)
+
+    }
+
+    private fun requestRouteCreation(routeOutput: RouteOutput) {
+        val liveData = socialRoutingViewModel.createRoute(routeOutput)
+        handleRequestedData(liveData, ::successHandlerRouteCreation, ::errorHandlerRouteCreation)
+    }
+
+    private fun requestRouteUpdate(routeOutput: RouteOutput) {
+        val liveData = socialRoutingViewModel.updateRoute(route.routeUrl!!, routeOutput)
+        handleRequestedData(liveData, ::successHandlerRouteUpdate, ::errorHandlerRouteUpdate)
     }
 
     private fun errorHandlerRouteCreation() {

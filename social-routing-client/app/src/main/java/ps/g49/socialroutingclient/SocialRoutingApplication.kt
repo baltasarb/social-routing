@@ -31,6 +31,8 @@ class SocialRoutingApplication : DaggerApplication() {
 
     companion object {
         private const val SOCIAL_ROUTING_API_ROOT = "http://10.0.2.2:8080"
+        private const val SOCIAL_ROUTING_API_URL = "${SOCIAL_ROUTING_API_ROOT}/api.sr/"
+        private const val GOOGLE_API_ROOT = "https://maps.googleapis.com/maps/api/"
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {
@@ -38,8 +40,8 @@ class SocialRoutingApplication : DaggerApplication() {
             .builder()
             .applicationModule(ApplicationModule(this))
             .networkModule(NetworkModule())
-            .socialRoutingAPIBaseUrl("http://10.0.2.2:8080/api.sr/")
-            .googleMapsAPIBaseUrl("https://maps.googleapis.com/maps/api/")
+            .socialRoutingAPIBaseUrl(SOCIAL_ROUTING_API_URL)
+            .googleMapsAPIBaseUrl(GOOGLE_API_ROOT)
             .application(this)
             .build()
         applicationComponent.inject(this)

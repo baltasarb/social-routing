@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.adapters.listeners.OnPointClickListener
 import ps.g49.socialroutingclient.model.domainModel.PlacesOfInterest
 
 class PlacesOfInterestAdapter(

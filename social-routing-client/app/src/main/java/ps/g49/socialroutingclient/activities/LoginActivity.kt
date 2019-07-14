@@ -41,7 +41,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         socialRoutingApplication = application as SocialRoutingApplication
-        stopSpinner()
+        initView()
 
         // Configure sign-in to request the user's ID, email address, and basic profile.
         // ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -55,12 +55,16 @@ class LoginActivity : BaseActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         socialRoutingViewModel = getViewModel(viewModelFactory)
 
+        requestSocialRoutingRootResource()
+    }
+
+    override fun initView() {
+        stopSpinner()
+
         sign_in_google_account_button.setOnClickListener {
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
-
-        getSocialRoutingRootResource()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -102,7 +106,7 @@ class LoginActivity : BaseActivity() {
         socialRoutingApplication.setUser(userAccount)
     }
 
-    private fun getSocialRoutingRootResource() {
+    private fun requestSocialRoutingRootResource() {
         val liveData = socialRoutingViewModel.getRootResource()
         handleRequestedData(liveData, ::successHandlerRootResources, ::errorHandlerRootResource)
     }
@@ -129,9 +133,7 @@ class LoginActivity : BaseActivity() {
 
     private fun successHandlerSignIn(authenticationData: AuthenticationDataInput?) {
         val user = socialRoutingApplication.getUser()
-        user.accessToken = authenticationData!!.accessToken
-        user.refreshToken = authenticationData.refreshToken
-        user.userUrl = authenticationData.userUrl!!
+        user.userUrl = authenticationData!!.userUrl!!
 
         val welcomeMessage = getString(R.string.welcome_message)
         showToast(String.format(welcomeMessage, user.name))

@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import ps.g49.socialroutingclient.R
+import ps.g49.socialroutingclient.adapters.listeners.OnImageClickListener
 import ps.g49.socialroutingclient.model.domainModel.ImageReferenceToAdapter
 
 class ImageToRouteAdapter(

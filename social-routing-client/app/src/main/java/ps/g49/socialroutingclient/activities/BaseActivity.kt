@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import dagger.android.support.DaggerAppCompatActivity
@@ -28,7 +27,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         data.observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> {
-                    requestLoadingHandler()
+                    requestDefaultLoadingHandler()
                 }
                 Resource.Status.ERROR -> {
                     stopSpinner()
@@ -49,7 +48,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         data.observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> {
-                    requestLoadingHandler()
+                    requestDefaultLoadingHandler()
                 }
                 Resource.Status.ERROR -> {
                     stopSpinner()
@@ -66,6 +65,29 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
     protected fun <T> handleRequestedData(
         data: LiveData<Resource<T>>,
         requestSuccessHandler: (result: T?) -> Unit,
+        requestErrorHandler: (msg: String) -> Unit
+    ) {
+        data.observe(this, Observer {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    requestDefaultLoadingHandler()
+                }
+                Resource.Status.ERROR -> {
+                    stopSpinner()
+                    requestErrorHandler(it.message!!)
+                }
+                Resource.Status.SUCCESS -> {
+                    stopSpinner()
+                    requestSuccessHandler(it.data)
+                }
+            }
+        })
+    }
+
+    protected fun <T> handleRequestedData(
+        data: LiveData<Resource<T>>,
+        requestSuccessHandler: (result: T?) -> Unit,
+        requestLoadingHandler: () -> Unit,
         requestErrorHandler: (msg: String) -> Unit
     ) {
         data.observe(this, Observer {
@@ -93,7 +115,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         data.observe(this, Observer {
             when (it.status) {
                 Resource.Status.LOADING -> {
-                    requestLoadingHandler()
+                    requestDefaultLoadingHandler()
                 }
                 Resource.Status.ERROR -> {
                     stopSpinner()
@@ -106,6 +128,8 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
             }
         })
     }
+
+    protected abstract fun initView()
 
     protected fun <T> startNewActivity(cls: Class<T>, finish: Boolean) {
         val intent = Intent(this, cls)
@@ -124,7 +148,7 @@ abstract class BaseActivity : DaggerAppCompatActivity() {
         spinner.visibility = View.GONE
     }
 
-    protected open fun requestLoadingHandler() {
+    protected open fun requestDefaultLoadingHandler() {
         startSpinner()
     }
 

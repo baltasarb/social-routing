@@ -19,7 +19,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.activity_route_creation.*
 import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
-import ps.g49.socialroutingclient.adapters.OnPointClickListener
+import ps.g49.socialroutingclient.adapters.listeners.OnPointClickListener
 import ps.g49.socialroutingclient.adapters.PlacesOfInterestAdapter
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
@@ -35,7 +35,8 @@ import java.lang.Math.pow
 import java.lang.Math.sqrt
 import javax.inject.Inject
 
-class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickListener {
+class RouteCreationActivity : BaseActivity(), OnMapReadyCallback,
+    OnPointClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var mMapManager: GoogleMapsManager
@@ -94,7 +95,7 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
         nextPageTokens = mutableListOf()
     }
 
-    private fun initView() {
+    override fun initView() {
         stopSpinner()
         routeMetadataButton.visibility = View.GONE
         finishButton.visibility = View.VISIBLE
@@ -136,11 +137,15 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback, OnPointClickLi
     }
 
     private fun processRoute() {
-        if (isEditMode) {
-            val liveData = socialRoutingViewModel.getRoute(routeUrl!!)
-            handleRequestedData(liveData, ::successHandlerRoute)
-        } else
+        if (isEditMode)
+            requestRouteInformation()
+        else
             getLocationFromViewInput()
+    }
+
+    private fun requestRouteInformation() {
+        val liveData = socialRoutingViewModel.getRoute(routeUrl!!)
+        handleRequestedData(liveData, ::successHandlerRoute)
     }
 
     private fun successHandlerRoute(routeDetailedInput: RouteDetailedInput?) {

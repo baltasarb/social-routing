@@ -1,4 +1,4 @@
-package ps.g49.socialroutingclient.services.webService.interceptors
+package ps.g49.socialroutingclient.interceptors
 
 import okhttp3.Headers
 import okhttp3.Interceptor

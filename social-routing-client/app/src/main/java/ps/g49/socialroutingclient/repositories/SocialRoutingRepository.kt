@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fasterxml.jackson.databind.ObjectMapper
 import okhttp3.OkHttpClient
-import okhttp3.internal.http.HttpCodec
 import ps.g49.socialroutingclient.model.domainModel.Category
 import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.outputModel.RouteOutput
@@ -13,7 +12,7 @@ import ps.g49.socialroutingclient.utils.Resource
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.*
 import ps.g49.socialroutingclient.model.outputModel.AuthorizationOutput
 import ps.g49.socialroutingclient.model.outputModel.RefreshAuthenticationDataOutput
-import ps.g49.socialroutingclient.services.webService.interceptors.HeaderInterceptor
+import ps.g49.socialroutingclient.interceptors.HeaderInterceptor
 import retrofit2.*
 import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.inject.Inject

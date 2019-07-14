@@ -26,7 +26,7 @@ import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
 import ps.g49.socialroutingclient.kotlinx.getViewModel
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
-import ps.g49.socialroutingclient.adapters.OnRouteListener
+import ps.g49.socialroutingclient.adapters.listeners.OnRouteListener
 import ps.g49.socialroutingclient.model.domainModel.Category
 import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.domainModel.Search
@@ -37,7 +37,8 @@ import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
 
-class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener, OnRouteListener {
+class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener,
+    OnRouteListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -72,18 +73,24 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         requestCategories()
     }
 
-    private fun requestCategories() {
-        categories = listOf()
-        val categoriesUrl = socialRoutingApplication.getSocialRoutingRootResource().categoriesUrl
-        val liveData = socialRoutingViewModel.getRouteCategories(categoriesUrl)
-        handleRequestedData(liveData, ::requestSuccessHandlerCategories)
+    override fun onStart() {
+        super.onStart()
+        if (socialRoutingApplication.isLocationFound())
+            requestUserLocationName(socialRoutingApplication.getUserCurrentLocation())
+        else emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
     }
 
-    private fun requestSuccessHandlerCategories(categoryCollection: CategoryCollectionInput?) {
+    private fun requestCategories() {
+        val categoriesUrl = socialRoutingApplication.getSocialRoutingRootResource().categoriesUrl
+        val liveData = socialRoutingViewModel.getRouteCategories(categoriesUrl)
+        handleRequestedData(liveData, ::successHandlerCategories)
+    }
+
+    private fun successHandlerCategories(categoryCollection: CategoryCollectionInput?) {
         categories = categoryCollection!!.categories
     }
 
-    private fun initView() {
+    override fun initView() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -104,14 +111,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         stopSpinner()
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (socialRoutingApplication.isLocationFound())
-            getUserLocationName(socialRoutingApplication.getUserCurrentLocation())
-        else emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
-    }
-
-    private fun getUserLocationName(location: Location) {
+    private fun requestUserLocationName(location: Location) {
         val resource = googleViewModel.getLocationFromGeoCoordinates(location)
         handleRequestedData(resource, ::successHandlerLocationRequest, ::errorHandler)
     }

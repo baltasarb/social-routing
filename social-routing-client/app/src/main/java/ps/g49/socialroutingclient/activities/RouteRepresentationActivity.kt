@@ -35,7 +35,6 @@ import androidx.appcompat.app.AlertDialog
 import ps.g49.socialroutingclient.model.domainModel.Point
 import java.util.*
 
-
 class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
     @Inject
@@ -64,15 +63,19 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         )
 
         setContentView(R.layout.activity_route_representation)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        initView()
 
         socialRoutingApplication = application as SocialRoutingApplication
         socialRoutingViewModel = getViewModel(viewModelFactory)
         googleViewModel = getViewModel(viewModelFactory)
 
         routeUrl = intent.getStringExtra(getString(R.string.route_creation_intent_message))
+    }
+
+    override fun initView() {
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     /*
@@ -119,10 +122,10 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
     private fun requestPointsOfInterestDetails(placeIdentifier: String) {
         val liveData = googleViewModel.getPlaceDetails(placeIdentifier)
-        handleRequestedData(liveData, ::successHandlerPlaceDetails)
+        handleRequestedData(liveData, ::successHandlerPlaceOfInterest)
     }
 
-    private fun successHandlerPlaceDetails(placeDetailsResponse: PlaceDetailsResponse?) {
+    private fun successHandlerPlaceOfInterest(placeDetailsResponse: PlaceDetailsResponse?) {
         val details = placeDetailsResponse!!.results
         googleMapsManager.addRepresentativeMarkerForPlaces(details.geometry.location, details.name)
     }
