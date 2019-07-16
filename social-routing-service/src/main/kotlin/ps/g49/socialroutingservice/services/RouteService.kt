@@ -11,8 +11,6 @@ import ps.g49.socialroutingservice.repositories.RouteRepository
 @Service
 class RouteService(private val routeRepository: RouteRepository, private val routeMapper: RouteMapper) {
 
-    fun findAllRoutes() = routeRepository.findAll()
-
     fun findRouteById(connectionHandle: Handle, id: Int) = routeRepository.findById(connectionHandle, id)
 
     fun createRoute(connectionHandle: Handle, routeRequest: RouteRequest) : Int {

@@ -11,21 +11,17 @@ import java.sql.SQLException
 @Component
 class ConnectionManager {
 
-    private val host = "localhost"
-    private val port = "5432"
-    private val databaseName = "SocialRouting"
-    private val username = "socialRoutingApi"
-    private val password = "123"
-    private val url = "jdbc:postgresql://localhost:5432/SocialRouting"
+    companion object{
+        private const val HOST = "localhost"
+        private const val PORT = "5432"
+        private const val DATABASE_NAME = "SocialRouting"
+        private const val USERNAME = "socialRoutingApi"
+        private const val PASSWORD = "123"
+        private const val URL = "jdbc:postgresql://$HOST:$PORT/$DATABASE_NAME"
+    }
 
+    private val jdbi: Jdbi = Jdbi.create(URL, USERNAME, PASSWORD) // returns a Jdbi instance which uses DriverManager as a connection factory.
 
-    private val db = "SocialRoutingDatabase"
-    private val newUrl = "jdbc:postgresql://izjgibgq:WfgBNzr5uKHAPD_JIIzzi6yA9nTRvlBn@manny.db.elephantsql.com:5432/izjgibgq"
-    private val newUsername = "izjgibgq"
-    private val newPassword = "WfgBNzr5uKHAPD_JIIzzi6yA9nTRvlBn"
-
-    //private val jdbi: Jdbi = Jdbi.create(newUrl, newUsername, newPassword) // returns a Jdbi instance which uses DriverManager as a connection factory.
-    private val jdbi: Jdbi = Jdbi.create(newUrl)
     fun generateHandle(): Handle = jdbi.open()
 
     /**

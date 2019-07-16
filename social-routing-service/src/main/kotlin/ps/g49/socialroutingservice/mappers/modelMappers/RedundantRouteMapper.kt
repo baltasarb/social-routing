@@ -20,7 +20,6 @@ class RedundantRouteMapper : RowMapper<RedundantRoute> {
         val pointArray = mapper.readValue(jsonString, Array<GeographicPoint>::class.java)
         val pointList = pointArray.toList()
 
-        //TODO CHECK EXCEPTION
         val poiLatitude = rs.getDouble("Latitude")
         val poiLongitude = rs.getDouble("Longitude")
         val poiIdentifier = rs.getString("PointOfInterestIdentifier")

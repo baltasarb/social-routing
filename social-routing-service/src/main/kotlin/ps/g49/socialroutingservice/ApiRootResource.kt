@@ -6,7 +6,7 @@ data class ApiRootResource (
         @JsonProperty("person_url")
         val personUrl : String = "$PERSONS_URL/{personIdentifier}",
         @JsonProperty("route_search_url")
-        val routeSearchUrl : String = "$ROUTES_URL/search?{params}",//todo specific params
+        val routeSearchUrl : String = "$ROUTES_URL/search?{params}",
         @JsonProperty("categories_url")
         var categoriesUrl : String = CATEGORIES_URL,
         @JsonProperty("authentication_urls")

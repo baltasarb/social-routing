@@ -24,9 +24,6 @@ class RouteController(
         private val simplifiedRouteCollectionOutputMapper: SimplifiedRouteCollectionOutputMapper
 ) {
 
-    @GetMapping
-    fun findAllRoutes() = routeService.findAllRoutes()
-
     @GetMapping("/{identifier}")
     fun findRouteById(@PathVariable identifier: Int): ResponseEntity<RouteOutput> {
         val connectionHandle = connectionManager.generateHandle()

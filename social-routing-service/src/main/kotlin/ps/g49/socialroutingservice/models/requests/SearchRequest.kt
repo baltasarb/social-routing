@@ -5,10 +5,10 @@ import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.models.domainModel.GeographicPoint
 
 data class SearchRequest(
-        val location: String,// id da localizacao onde user se encontra
+        val location: String,// location id from where the user is at the time
         val page: Int,
         val categories: List<Category>,
-        val duration: String, //1hora / meio dia / 1 dia -- short/medium/long
+        val duration: String, //short/medium/long
         val coordinates: GeographicPoint? = null
 ) {
 

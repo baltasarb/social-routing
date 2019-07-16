@@ -4,7 +4,7 @@ import java.util.*
 
 /*
 * used to map the result from the database into a single route objects
-* because of required table joins reduntant information is returned and
+* because of required table joins redundant information is returned and
 * needs to be filtered
 * */
 data class RedundantRoute (

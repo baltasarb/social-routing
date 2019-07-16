@@ -10,15 +10,6 @@ import kotlin.streams.toList
 @Component
 class RouteMapper : ModelMapper<RouteRequest, Route> {
 
-    companion object{
-        const val SHORT_DURATION = 1
-        const val MEDIUM_DURATION = 3
-        const val LONG_DURATION = 6
-        const val SHORT_DURATION_STRING = "Short"
-        const val MEDIUM_DURATION_STRING = "Medium"
-        const val LONG_DURATION_STRING = "Long"
-    }
-
     override fun mapFromResultSet(rs: ResultSet): Route {
         val jsonString = buildValidJsonString(rs.getString("Points"))
 
