@@ -56,6 +56,18 @@
       \verb https://developer.android.com/guide/components/fragments
       \endverb
     \endentry
+    \entry{intent}{online}{}
+      \field{sortinit}{A}
+      \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
+      \field{labeltitlesource}{title}
+      \field{title}{Android Intent Documentation.}
+      \verb{urlraw}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+      \verb{url}
+      \verb https://developer.android.com/reference/android/content/Intent
+      \endverb
+    \endentry
     \entry{livedata}{online}{}
       \field{sortinit}{A}
       \field{sortinithash}{d77c7cdd82ff690d4c3ef13216f92f0b}
@@ -463,6 +475,43 @@
       \verb https://www.postgresql.org/docs/9.3/functions-json.html
       \endverb
     \endentry
+    \entry{kotlinwebsite}{online}{}
+      \field{sortinit}{K}
+      \field{sortinithash}{9fd838a31ba64d981e8f44562bd33f89}
+      \field{labeltitlesource}{title}
+      \field{title}{Kotlin Documentation}
+      \verb{urlraw}
+      \verb https://kotlinlang.org/docs/reference
+      \endverb
+      \verb{url}
+      \verb https://kotlinlang.org/docs/reference
+      \endverb
+      \keyw{kotlin}
+    \endentry
+    \entry{loginactivitylayout}{online}{}
+      \field{sortinit}{L}
+      \field{sortinithash}{2c7981aaabc885868aba60f0c09ee20f}
+      \field{labeltitlesource}{title}
+      \field{title}{Login Activity Layout documentation.}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+    \endentry
+    \entry{navigationactivitylayout}{online}{}
+      \field{sortinit}{N}
+      \field{sortinithash}{f7242c3ed3dc50029fca1be76c497c7c}
+      \field{labeltitlesource}{title}
+      \field{title}{Navigation Activity Layout documentation}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Geocode
+      \endverb
+    \endentry
     \entry{jsonproblemonlinedocs}{online}{}
       \name{author}{3}{}{%
         {{hash=55ac868e62f6d4ea8f9f143c4c584739}{%
@@ -521,6 +570,30 @@
       \endverb
       \verb{url}
       \verb https://www.postgresql.org/files/documentation/pdf/11/postgresql-11-A4.pdf
+      \endverb
+    \endentry
+    \entry{sqlfunctions}{online}{}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labeltitlesource}{title}
+      \field{title}{PostGreSQL Functions Documentation}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/docs/9.1/sql-createfunction.html
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/docs/9.1/sql-createfunction.html
+      \endverb
+    \endentry
+    \entry{sqlqueries}{online}{}
+      \field{sortinit}{P}
+      \field{sortinithash}{8d51b3d5b78d75b54308d706b9bbe285}
+      \field{labeltitlesource}{title}
+      \field{title}{PostGreSQL Queries Documentation}
+      \verb{urlraw}
+      \verb https://www.postgresql.org/docs/9.4/queries-overview.html
+      \endverb
+      \verb{url}
+      \verb https://www.postgresql.org/docs/9.4/queries-overview.html
       \endverb
     \endentry
     \entry{retrofit}{online}{}

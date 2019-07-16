@@ -1,5 +1,8 @@
 \chapter{Social Routing Service}
 
+This chapter describes in detail the Social Routing Service and it's components, specifying the role of each of them in the system
+as well as their connection with each other.
+
 The Social Routing Service (SRS) is comprised of three major components, 
 a PostgreSQL based database to store user related information, a spring application to process data and an API to expose it's functionality.
 This logic is represented in the figure \ref{fig:socialroutingservice}. Beyond the mentioned
@@ -69,7 +72,8 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         A route might contain geographic points of interest along its path, this is the entity that represents them. 
 
         \subsubsection*{Image}
-        When a route is created it must be associated with a cover image.
+        The image entity represents the image that is associated with the route, namely it's cover image. It is characterized by a reference
+        that allows the image's URI to be fetched.
 
     \subsection{Physical Model}
     The physical model can be seen in a full in the database documentation\cite{servicedbms}, the following subsections discuss 
@@ -85,14 +89,17 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         coordinates. The field is a JSON array of point objects and has the following structure:
             \begin{lstlisting}
     [    
-    {
-        "latitude" : double,
-        "longitude": double
-    },
+        {
+            "latitude" : double,
+            "longitude": double
+        },
         ...
     ]
             \end{lstlisting}
         This structure allows the mapping of multiple points to a single route.
+        Two other very important fields are the booleans ordered and circular. The field ordered is used to store if a route should start only at it's first geographic
+        point or if the order of which a user can undergo is not defined. The circular parameter is used to verify if a route ends where it starts,
+        because if that is the case, then the route can be started by the user in any of the route's geographic points-
 
         \subsubsection*{GoogleAuthentication}
         The google authentication table is used to store google account information, more specifically the subject which is primary
@@ -115,35 +122,65 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         The table image contains a single field which is it's primary key, a reference. This is the image's unique identifier in the google
         platform.
 
-    \subsection{Search Route}
-    The SRS allows that a client searches routes that are nearby to a set of geographic coordinates (latitude and longitude). 
-    This functionality could be implemented in either the server or the DBMS, but with the PostGIS capabilities already mentioned, the later was chosen.
+    \subsection{Route Search}
+    The SRS allows that a service client searches routes that are inside a predetermined area. This feature is useful to determine
+    if a route is close to a user location or not. This functionality is exposed in an SQL query\cite{sqlqueries} and an SQL function\cite{sqlfunctions}.
     
-    The search by proximity algorithm is built on two phases, the initial filtering by data received as parameter, to reduce the amount of 
-    calculations required, and the calculations on the resulting set of routes to check if they belong to a user area or not.
+    The route search algorithm is made in two different phases, the first uses a set of parameters such as the categories of the routes being searched,
+    the duration desired and the geographic location being searched. These parameters function as initial filters to reduce the 
+    number of inputs being worked over.
+
+    After this initial list of routes is reduced to relevant routes, the algorithm must then check which of these routes are in the user desired area.
+    The user desired area is by default a 1km circumference around the user's geographic coordinates, but a few other aspects have to be considered
+    when choosing the perfect route. When a route is initially created, it has characterization related to its ordering, this allows for a better route suggestion
+    algorithm, as a circular route can be started in any of its points, where an ordered route can only be started in it's first point. A user far from the starting
+    point (over 1km distance) would not want it to be suggested to him, as he would have to walk too much to the starting point only to come back to undergo the route.
+    An example of this scenario can be seen in \ref{fig:startingpoint}
     
-    More specifically, when searching for routes close to a user's coordinates, the initial parameters must be the lower bound radius
-    and the upper bound radius. These parameters build a circumference around the user's coordinates that goes from the lower radius to the 
-    upper one. With these parameters, if no routes are found in the specified radius, the radius can be increased or decreased in repeated
-    searches without incurring in the overhead of filtering the already discarded routes. 
+    \begin{figure}[H]            
+        \includegraphics[width=\textwidth]{images/project-structure/starting-point.PNG}
+        \caption{Starting point is outside the user area example.}
+        \label{fig:startingpoint}
+    \end{figure}   
 
-    The following example illustrates the data required to make such search:
-    A user has the coordinates 38.755833, -9.116667 and is searching for short routes, that are sports related.
-    With this data, first the city where the coordinates belong is found. After that, a query is made to the database
-    to find which routes in the given coordinates city are short and sports related. This is the first phase of filtering.
-    The second phase is to filter the retrieved routes by distance to the original coordinates. If they are inside the 
-    given radius, they are selected, if not, discarded.
+    For a route that starts where it also ends this poses no problem, as any point can be suggested as a starting point to the user as seen in \ref{fig:circularexample}
+    The user can go straight to the closest point and start the route, so the fact that the route is circular immediately makes it relevant to the user in this
+    specific case.
 
-    To be able to calculate if a route belongs to a user given area, the user coordinates are transformed into a Geographic Object\cite{geographicobject},
+    \begin{figure}[H]            
+        \includegraphics[width=\textwidth]{images/project-structure/circular-example.PNG}
+        \caption{Relevant circular route example.}
+        \label{fig:circularexample} 
+    \end{figure}   
+
+    The third case is when a rout is not ordered and can be started either by the first or last geographic route point. An example can be seen in figure \ref{fig:unorderedexample}.
+    \begin{figure}[H]            
+        \includegraphics[width=\textwidth]{images/project-structure/unordered-example.PNG}
+        \caption{Relevant unordered route example.}
+        \label{fig:unorderedexample} 
+    \end{figure}   
+    Because the route does not require the user to start from the first geographic point, then the choice between the first and last is available, 
+    and in this case, as seen in figure \ref{fig:unorderedexample} the path B, to the last point of the route is much shorter than path A. If the route was ordered
+    it would not be relevant to this user, but the possibility of starting from the end makes it relevant.
+
+    After initial filters are applied the algorithm's second phase begins, being that it will vary according to the previously described fields
+    circular and ordered. 
+    If a route is circular, the geographic location of the user (latitude and longitude) will be compared with every point each of the already filtered routes,
+    to check if they belong to the user area. If they belong to the area they are considered relevant, if not they are discarded.
+
+    If a route is ordered the starting point of the route is the only one being compared to the user's location, if not, both the final and starting point are
+    compared. Like the circular, the ones that belong to the area remain, the rest are discarded.
+
+    From a technical point of view, to be able to calculate if a route belongs to a user given area, the user coordinates are transformed into a Geographic Object\cite{geographicobject},
     then, each of the already filtered and retrieved routes is checked for distance to that geographic object. To be noted that the construction of a geographic
     object is necessary because the calculations being made are not made on the cartesian plane but on the spatial one. They must be made considering a spherical 
-    object to provide accurate results (in case a long distance between route points exists). Of course each route contains every geographic point in its field points,
-    which is of type JSON. Of of each of the routes the points must be extracted and converted into the same Geographic Object type. From here, using the built in function
-    of the PostGIS extension STDistance \cite{stdistance}, the distance between points is retrieved, if it's contained in the initially 
-    chosen radius, it's selected, otherwise it is not.
-
+    object to provide accurate results (in case a long distance between route points exists). Each route contains every geographic point in its field points,
+    which is of type JSON. Of of each of the routes, its points must be extracted and converted into the same Geographic Object type. From here, using the built in function
+    of the PostGIS extension STDistance \cite{stdistance}, the distance between points is retrieved, if it's within the selected radius, it's selected, otherwise it is discarded.
+    
+    \newpage
 \section{Social Routing API} \label{apisection}   
-    \subsection{Schema}
+    \subsection{Schema} 
         The Social Routing API uses the HTTP protocol as a medium to communicate and all the data sent or received must be in the JSON format.
         The base endpoint of the API is : http://api.sr.\par
         Data obtained from the API is either a single resource or a collection of resources. For example, a request
@@ -244,7 +281,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     
     \begin{lstlisting}
     {
-      "type": "Social-Routing-API#unsupported-media-type\cite{unsupportedmedia}",
+      "type": "Social-Routing-API#unsupported-media-type",
       "title": "The requested type is not supported.",
       "status": "415",
       "detail": "The xml format is not supported."
@@ -256,11 +293,19 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     The status is the corresponding HTTP status for the specific error.
     Detail is a more detailed message about the error encountered.
 
-    \subsection*{Hypermedia}
+    \subsection{Hypermedia}
+    
+    \begin{figure}[H]            
+        \includegraphics[width=\textwidth]{images/project-structure/hypermedia-relations.PNG}
+        \caption{Hypermedia.}
+        \label{fig:hypermedia-relations}
+    \end{figure}   
+
     Some resources have links to other resources. Either to a parent resource or to a detailed representation of a 
     resource within a collection. For example, a user resource haves a link to their created routes, which 
     holds a collection of routes. That same collection haves a link to the profile of the person who created 
-    the routes.
+    the routes. A detailed relationship diagram containing the most relevant relations can be found in figure \ref{fig:hypermedia-relations} 
+    
     \newpage
 
 \section{Server} 
@@ -319,7 +364,7 @@ As an example, the flow of a correct HTTP POST request to the routes resource th
     \end{itemize}
     \newpage
 
-    \section{Authentication}
+    \subsection{Authentication}
 
     The nature of the project requires that user information such as user made routes is stored and
     because of this user authentication is required.  
@@ -334,7 +379,7 @@ As an example, the flow of a correct HTTP POST request to the routes resource th
         \label{fig:serviceauth}
     \end{figure}   
 
-    \subsection{Generation of Credentials}
+    \subsubsection*{Generation of Credentials}
     When a request is received, as mentioned in \ref{apiobtcred}, it must contain the id token string of the user's google account. 
     When the controller receives it the first step is validation of the token, for that an external API is used (Google Sign In API), that has it's usage wrapped 
     in the GoogleAuthenticationService\cite{googleauthservicecode}. This service is responsible for all actions pertaining Google Authentication's specific processing.
@@ -343,7 +388,7 @@ As an example, the flow of a correct HTTP POST request to the routes resource th
     available functionalities. The tokens are generated using Java's Secure Random class\cite{securerandom} and hashed before being stored in the database. 
     The access token and refresh token are sent in their original form as a response to the request maker, so that further API requests have valid credentials.
 
-    \subsection{Credentials Refreshment}
+    \subsubsection*{Credential Refreshment}
     A valid API user will have both an access token and a refresh token to make authenticated requests to the API, but the tokens themselves have a duration of a day.
     For this reason if an API client makes a request to it and a day has passed since the token has been obtained then the client needs to update his credentials.
     To do that a request must be made using the refresh token, obtaining newly generated credentials from the service.

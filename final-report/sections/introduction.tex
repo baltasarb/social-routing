@@ -1,6 +1,11 @@
 \chapter{Introduction}
 
-    The project is a system that provides the ability to define and share touristic pedestrian routes. It allows
+    This document describes the project's context, decisions and reasons behind them. It starts with
+    the description of the global system architecture where a general system view is described.
+    After that each component of the system is explained in greater detail. In this chapter the context of the application is explained as well
+    as the features made available by the system that was built.
+
+    The project consists of system that provides the ability to define and share touristic pedestrian routes. It allows
     area exploration by utilizing user made routes as virtual tour guides to other users. 
     Essentially a user of the Social Routing Application is be able to:
     \begin{itemize}
@@ -11,24 +16,23 @@
         \item Rate routes based on his experience when undergoing such route.
     \end{itemize}
 
-    \section*{Use case}
-        In the context of the application, a route is a path from point A to point B, that goes through user selected sub paths
-        that might either have relevance or simply provide the fastest way to the next point of interest of that route. 
+    In the context of the application, a route is a path from point A to point B, that goes through user selected sub paths
+    that might either have relevance or simply provide the fastest way to the next point of interest of that route. 
+    An example of events when using the application might be:
 
-        An example of events when using the application might be:
-
-        A user at his hotel decides he wants to go sightseeing for an hour and check the surrounding area by foot.
-        \begin{itemize}  
-            \item The user starts the application and searches for a route specifying either his location or a desired one.
-            \item The search parameter Cultural is chosen as a route category.
-            \item The application suggests the first five routes available that match the user parameters. 
-            \item The user selects one of the suggested routes and is shown the route on a map.
-            \item The user chooses to begin the route and receives directions in real time on a map that he has to follow to undergo such route until it is done.
-            \item The user finishes the route and evaluates it. 
-        \end{itemize}
-        
-    \noindent
-    This document describes the project's decisions and reasons behind them. It starts with
-    the description of the global system architecture where a general system view is described.
-    After that each component of the system is explained in greater detail. 
-    It finalizes with tests made to the system and the conclusion.
+    A user at his hotel decides he wants to go sightseeing for an hour and check the surrounding area by foot.
+    \begin{itemize}  
+        \item Ability to search routes made by other application users: 
+        the user starts the application and searches for a route specifying either his location or a desired one.
+        \item Ability to filter results by paramaters such as route category or duration: 
+        The search parameter Cultural is chosen as a route category and the duration is set to short.
+        \item The application suggests the first five routes available that match the user parameters. 
+        \item Ability to preview routes before making the choice to undergo one:
+        The user selects one of the suggested routes and is shown the route on a map.
+        \item Live tracking, the user is able to check his positioning on the map while performing the chosen route:
+        the user chooses to begin the route and receives directions in real time on a map that he has to follow to undergo such route until it is done.
+        \item Ability to rate other user's routes after performing them: 
+        The user finishes the route and evaluates it. 
+    \end{itemize}
+    Apart from the mentioned features an application user also has the possibility of creating and editing his own routes as well as to check his profile.        
+    

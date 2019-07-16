@@ -1,0 +1,35 @@
+\begin{abstract}
+    \begin{center}\LARGE\bfseries
+        Abstract
+        \end{center}
+This project consists of a mobile application to allow an application user to 
+either create or undergo pedestrian routes. A route is a set of geographical coordinates
+(latitude and longitude) and as such a route is a path formed by sub paths on a map.
+
+To application is structured in two major components, one with the front end, the Social Routing Client
+Application (SRCA) built for Android based devices and the back end, the Social Routing 
+Service (SRS) which exposes it's functionality through an HTTP\cite{httponlinedocs} API\cite{api}.
+
+The SRCA is made for Android users, using Kotlin\cite{kotlinwebsite} as a programming language,
+and the guidelines made available by Google for Android application development.
+The features available are user login, profile viewing, route creation, searching, and live tracking.
+The live tracking feature helps the user while he is performing a route, informing the user
+about his current location and if he is far from the route. There is also the ability
+to rate other users route's.
+
+The SRS exposes it's functionality through an HTTP API, and is subdivided into a Spring Application\cite{springwebsite}, using
+Kotlin as a programming language, and a Database Management System, using PostgreSQL\cite{postgresql}. The database is necessary
+because as a user creates routes, other users must be able to see them and as such storage is required for
+persistent information maintainability.
+
+As the application requires users to access information such as routes created by
+other users as well as their own, it requires authentication. Both the SRCA and the SRS require the user
+to be authenticated, being that they communicate with each other, the user requests credentials from the 
+SRCA that in turn reaches out to the SRS to get them. This is made with 
+aid of an externa API being the SRS responsible for the generation of user credentials.
+
+The major problems encountered were the route search functionality: a user has
+the ability to search for routes near his location, and authentication. The first 
+was solved with aid from a PostgreSQL extension PostGIS\cite{postgis} and the second with the Google
+Sign In API\cite{googlesignindocs}.
+\end{abstract}
