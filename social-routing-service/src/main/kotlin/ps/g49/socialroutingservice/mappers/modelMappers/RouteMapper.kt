@@ -17,10 +17,10 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
         val pointArray = mapper.readValue(jsonString, Array<GeographicPoint>::class.java)
         val pointList = pointArray.toList()
 
-        val categoriesSQLArray : java.sql.Array = rs.getArray("Categories")
-        val categoriesStringArray : Array<String> = categoriesSQLArray.array as Array<String>
+        val categoriesSQLArray: java.sql.Array = rs.getArray("Categories")
+        val categoriesStringArray: Array<String> = categoriesSQLArray.array as Array<String>
 
-        val pointOfInterest : List<PointOfInterest>? = null//TODO
+        val pointOfInterest: List<PointOfInterest>? = null//TODO
 
         return Route(
                 identifier = rs.getInt("Identifier"),
@@ -63,13 +63,13 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
         )
     }
 
-    fun buildRouteFromRedundantRouteList(redundantRouteList: List<RedundantRoute>) : Route{
+    fun buildRouteFromRedundantRouteList(redundantRouteList: List<RedundantRoute>): Route {
         val firstRoute = redundantRouteList.first()
         val categories = redundantRouteList.map { it.category }.distinct()
         val pointsOfInterest = redundantRouteList.map { it.pointOfInterest }.distinct()
 
         return Route(
-                identifier =firstRoute.identifier,
+                identifier = firstRoute.identifier,
                 location = firstRoute.location,
                 name = firstRoute.name,
                 description = firstRoute.description,
@@ -96,7 +96,7 @@ class RouteMapper : ModelMapper<RouteRequest, Route> {
      *  to:
      *  [{"latitude":3.0,"longitude":4.0},{"latitude":3.0,"longitude":4.0}]
      */
-    private fun buildValidJsonString(string: String) : String{
+    private fun buildValidJsonString(string: String): String {
         val temp = string.filterNot { it == '\\' }
         return temp.substring(1, temp.length - 1)
     }

@@ -15,12 +15,14 @@ data class SearchRequest(
     companion object {
         fun build(params: HashMap<String, String>): SearchRequest {
             val page = params["page"]?.toInt()
+            val duration = params["duration"]
+                    ?: throw InvalidRouteSearchParameterException("Missing parameter, Duration is required when performing a search.")
             return SearchRequest(
                     location = verifyAndGetLocation(params["location"]),
                     page = page ?: 1,
                     categories = verifyAndGetCategories(params["categories"]),
                     coordinates = verifyAndGetPoint(params["latitude"], params["longitude"]),
-                    duration = params["duration"]?: throw InvalidRouteSearchParameterException("Missing parameter, Duration is required when performing a search.")
+                    duration = duration.toLowerCase()
             )
         }
 

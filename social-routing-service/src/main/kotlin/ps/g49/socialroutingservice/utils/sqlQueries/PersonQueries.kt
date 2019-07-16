@@ -14,7 +14,6 @@ class PersonQueries {
 
         // Delete Queries
         const val DELETE = "DELETE FROM Person WHERE identifier = ?;"
-
     }
 
 }

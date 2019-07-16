@@ -6,6 +6,7 @@ import ps.g49.socialroutingservice.models.requests.RouteRequest
 import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.models.domainModel.SimplifiedRouteCollection
+import ps.g49.socialroutingservice.models.requests.DeleteRouteRequest
 import ps.g49.socialroutingservice.repositories.RouteRepository
 
 @Service
@@ -13,12 +14,12 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
 
     fun findRouteById(connectionHandle: Handle, id: Int) = routeRepository.findById(connectionHandle, id)
 
-    fun createRoute(connectionHandle: Handle, routeRequest: RouteRequest) : Int {
+    fun createRoute(connectionHandle: Handle, routeRequest: RouteRequest): Int {
         val route = routeMapper.map(routeRequest)
         return routeRepository.create(connectionHandle, route)
     }
 
-    fun deleteRoute(identifier: Int) = routeRepository.delete(identifier)
+    fun deleteRoute(deleteRouteRequest: DeleteRouteRequest) = routeRepository.delete(deleteRouteRequest)
 
     fun updateRoute(connectionHandle: Handle, routeRequest: RouteRequest) {
         val route = routeMapper.map(routeRequest)
@@ -26,7 +27,7 @@ class RouteService(private val routeRepository: RouteRepository, private val rou
     }
 
     fun search(searchRequest: SearchRequest): SimplifiedRouteCollection {
-        if(searchRequest.coordinates == null)
+        if (searchRequest.coordinates == null)
             return routeRepository.findByLocation(searchRequest)
 
         return routeRepository.findByCoordinates(searchRequest)

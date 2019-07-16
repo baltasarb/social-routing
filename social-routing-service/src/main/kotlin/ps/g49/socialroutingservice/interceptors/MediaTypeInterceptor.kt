@@ -9,6 +9,9 @@ import ps.g49.socialroutingservice.exceptions.UnsupportedMediaTypeException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+/**
+ * interceptor used for checking the media type of the request, only application/json is allowed
+ */
 @Component
 class MediaTypeInterceptor : HandlerInterceptorAdapter() {
 

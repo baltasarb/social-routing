@@ -23,7 +23,7 @@ class RedundantRouteMapper : RowMapper<RedundantRoute> {
         val poiLatitude = rs.getDouble("Latitude")
         val poiLongitude = rs.getDouble("Longitude")
         val poiIdentifier = rs.getString("PointOfInterestIdentifier")
-        val pointOfInterest = PointOfInterest(poiIdentifier, poiLatitude,poiLongitude)
+        val pointOfInterest = PointOfInterest(poiIdentifier, poiLatitude, poiLongitude)
 
         val category = Category(rs.getString("CategoryName"))
 
@@ -56,7 +56,7 @@ class RedundantRouteMapper : RowMapper<RedundantRoute> {
      *  to:
      *  [{"latitude":3.0,"longitude":4.0},{"latitude":3.0,"longitude":4.0}]
      */
-    private fun buildValidJsonString(string: String) : String{
+    private fun buildValidJsonString(string: String): String {
         val temp = string.filterNot { it == '\\' }
         return temp.substring(1, temp.length - 1)
     }

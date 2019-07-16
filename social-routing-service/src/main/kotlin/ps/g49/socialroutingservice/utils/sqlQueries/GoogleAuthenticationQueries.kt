@@ -2,7 +2,7 @@ package ps.g49.socialroutingservice.utils.sqlQueries
 
 class GoogleAuthenticationQueries {
 
-    companion object{
+    companion object {
         const val INSERT: String = "INSERT INTO GoogleAuthentication (Subject, PersonIdentifier) " +
                 "VALUES (:subject, :personIdentifier);"
 
@@ -12,4 +12,5 @@ class GoogleAuthenticationQueries {
 
         const val SELECT_IF_SUB_EXISTS = "SELECT 1 as Result FROM GoogleAuthenticationData WHERE HashedToken = :hashedToken AND Subject = :subject;"
     }
+
 }

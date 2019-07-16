@@ -7,7 +7,7 @@ import java.util.*
 * because of required table joins redundant information is returned and
 * needs to be filtered
 * */
-data class RedundantRoute (
+data class RedundantRoute(
         var identifier: Int,
         val location: String,
         val name: String,
@@ -17,8 +17,8 @@ data class RedundantRoute (
         var dateCreated: Date,
         val points: List<GeographicPoint>? = null,
         val personIdentifier: Int,
-        var category : Category,
-        val elevation : Double? = null,
+        var category: Category,
+        val elevation: Double? = null,
         val isCircular: Boolean,
         val isOrdered: Boolean,
         val pointOfInterest: PointOfInterest,

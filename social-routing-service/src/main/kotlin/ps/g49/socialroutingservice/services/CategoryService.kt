@@ -5,10 +5,10 @@ import ps.g49.socialroutingservice.models.domainModel.Category
 import ps.g49.socialroutingservice.repositories.CategoryRepository
 
 @Service
-class CategoryService (
+class CategoryService(
         private val categoryRepository: CategoryRepository
 ) {
 
-    fun getAllCategories() : List<Category> = categoryRepository.findAll()
+    fun getAllCategories(): List<Category> = categoryRepository.findAll()
 
 }

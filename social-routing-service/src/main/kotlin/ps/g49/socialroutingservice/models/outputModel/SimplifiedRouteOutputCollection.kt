@@ -4,6 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class SimplifiedRouteCollectionOutput(
-        val next : String ? = null,
-        val routes : List<SimplifiedRouteOutput>
+        val next: String? = null,
+        val routes: List<SimplifiedRouteOutput>
 )

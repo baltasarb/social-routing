@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.jdbi.v3.core.Handle
 import org.springframework.stereotype.Component
 import ps.g49.socialroutingservice.ConnectionManager
+import ps.g49.socialroutingservice.exceptions.ForbiddenRequestException
 import ps.g49.socialroutingservice.exceptions.InsertException
 import ps.g49.socialroutingservice.exceptions.ResourceNotFoundException
 import ps.g49.socialroutingservice.exceptions.RouteCategoriesRequiredException
@@ -12,41 +13,50 @@ import ps.g49.socialroutingservice.mappers.modelMappers.RouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteMapper
 import ps.g49.socialroutingservice.mappers.modelMappers.SimplifiedRouteWithCountMapper
 import ps.g49.socialroutingservice.models.domainModel.*
+import ps.g49.socialroutingservice.models.requests.DeleteRouteRequest
 import ps.g49.socialroutingservice.models.requests.SearchRequest
 import ps.g49.socialroutingservice.repositories.RouteRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.*
 import java.lang.Exception
 
+/**
+ * repository used to establish a connection to the database regarding every route related transaction
+ */
 @Component
 class RouteRepositoryImplementation(
         private val connectionManager: ConnectionManager,
         private val routeMapper: RouteMapper,
         private val redundantRouteMapper: RedundantRouteMapper,
-        private val simplifiedRouteMapper: SimplifiedRouteMapper,
         private val simplifiedRouteWithCountMapper: SimplifiedRouteWithCountMapper
 ) : RouteRepository {
 
-    companion object{
-        private const val ROUTES_PER_RESULT = 2//TODO CHANGE TO 10
+    companion object {
+        private const val ROUTES_PER_RESULT = 10
+
+        // the user surrounding area, goes from 0 to 1km by default
         private const val LOWER_BOUND_RADIUS = 0.toDouble()
-        private const val UPPER_BOUND_RADIUS = 999999999.toDouble()
+        private const val UPPER_BOUND_RADIUS = 1000.toDouble()
     }
 
+    /**
+     * used to get the details of a route by its identifier
+     * @param id the identifier of the route
+     * @return A route object containing the details of a route
+     */
     override fun findById(connectionHandle: Handle, id: Int): Route {
         val redundantRouteList = connectionHandle.select(RouteQueries.SELECT_BY_ID)
                 .bind("routeIdentifier", id)
                 .map(redundantRouteMapper)
                 .list()
 
-        if(redundantRouteList.isEmpty())
+        if (redundantRouteList.isEmpty())
             throw ResourceNotFoundException()
         return routeMapper.buildRouteFromRedundantRouteList(redundantRouteList)
     }
 
-    override fun findAll(): List<SimplifiedRoute> {
-        return connectionManager.findMany(RouteQueries.SELECT_MANY, simplifiedRouteMapper)
-    }
-
+    /**
+     * retrieves a collection of routes that belong to a chosen location
+     */
     override fun findByLocation(searchRequest: SearchRequest): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>("locationIdentifier" to searchRequest.location)
         val categories = searchRequest.categories
@@ -54,7 +64,7 @@ class RouteRepositoryImplementation(
         val page = searchRequest.page
 
         for (i in categories.indices) {
-                params["category$i"] = categories[i].name.toLowerCase()
+            params["category$i"] = categories[i].name.toLowerCase()
         }
 
         params["duration"] = duration
@@ -73,11 +83,14 @@ class RouteRepositoryImplementation(
         val totalCount = result.first().count
 
         return SimplifiedRouteCollection(
-                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.imageReference,it.personIdentifier) },
+                result.map { SimplifiedRoute(it.identifier, it.name, it.rating, it.imageReference, it.personIdentifier) },
                 if (nextPageExists(totalCount, page)) page + 1 else null
         )
     }
 
+    /**
+     * retrieves a collection of routes that are close to the received user coordinates
+     */
     override fun findByCoordinates(searchRequest: SearchRequest): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>(
                 "userLatitude" to searchRequest.coordinates!!.latitude,
@@ -115,6 +128,10 @@ class RouteRepositoryImplementation(
         )
     }
 
+    /**
+     * retrieves a persons created routes
+     * @param identifier the identifier of the owner of the routes
+     */
     override fun findPersonCreatedRoutes(identifier: Int, page: Int): SimplifiedRouteCollection {
         val params = hashMapOf<String, Any>("personIdentifier" to identifier)
 
@@ -199,17 +216,27 @@ class RouteRepositoryImplementation(
                 .execute()
     }
 
-    override fun delete(identifier: Int) {
-        return connectionManager.deleteByIntId(RouteQueries.DELETE, identifier)
+    override fun delete(deleteRouteRequest: DeleteRouteRequest) {
+        val connectionHandle = connectionManager.generateHandle()
+        var numberOfRowsAffected: Int = 0
+        connectionHandle.use {
+            numberOfRowsAffected = it.execute(RouteQueries.DELETE, deleteRouteRequest.identifier, deleteRouteRequest.personIdentifier)
+        }
+        if (numberOfRowsAffected == 0) {
+            throw ForbiddenRequestException()
+        }
     }
 
     private fun nextPageExists(totalCount: Int, currentPage: Int): Boolean {
         return totalCount != 0 && totalCount > ROUTES_PER_RESULT * currentPage
     }
 
-    private fun executeInsertPointOfInterestBatch(connectionHandle: Handle, pointsOfInterest : List<PointOfInterest>){
+    /**
+     * inserts multiple points of interest in a batch into the database
+     */
+    private fun executeInsertPointOfInterestBatch(connectionHandle: Handle, pointsOfInterest: List<PointOfInterest>) {
         //insert into points of interest
-        if(pointsOfInterest.isEmpty()) return
+        if (pointsOfInterest.isEmpty()) return
         val pointOfInterestInsertBatch = connectionHandle.prepareBatch(PointOfInterestQueries.INSERT)
         for (pointOfInterest in pointsOfInterest) {
             pointOfInterestInsertBatch
@@ -221,9 +248,12 @@ class RouteRepositoryImplementation(
         pointOfInterestInsertBatch.execute()
     }
 
+    /**
+     * inserts multiple categories in a batch into the database
+     */
     private fun executeRouteCategoriesInsertBatch(connectionHandle: Handle, route: Route, insertedRouteIdentifier: Int) {
         val categories = route.categories
-        if(categories == null || categories.isEmpty())
+        if (categories == null || categories.isEmpty())
             throw RouteCategoriesRequiredException()
         val routeCategoryBatch = connectionHandle.prepareBatch(RouteCategoryQueries.INSERT)
         for (category in route.categories!!) {
@@ -239,8 +269,11 @@ class RouteRepositoryImplementation(
             throw Exception("Categories insert error on route creation")
     }
 
+    /**
+     * inserts multiple routeCategories in a batch into the database
+     */
     private fun executeRoutePointsOfInterestInsertBatch(connectionHandle: Handle, route: Route, insertedRouteIdentifier: Int) {
-        if(route.pointsOfInterest.isEmpty()) return
+        if (route.pointsOfInterest.isEmpty()) return
         val routePointOfInterestInsertBatch = connectionHandle.prepareBatch(RoutePointOfInterestQueries.INSERT)
         for (pointOfInterest in route.pointsOfInterest) {
             routePointOfInterestInsertBatch

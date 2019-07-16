@@ -6,21 +6,21 @@ import ps.g49.socialroutingservice.models.outputModel.SimplifiedRouteCollectionO
 import ps.g49.socialroutingservice.utils.OutputUtils
 
 @Component
-class SimplifiedRouteCollectionOutputMapper (private val mapper : SimplifiedRouteOutputMapper): OutputMapper<SimplifiedRouteCollection, SimplifiedRouteCollectionOutput> {
+class SimplifiedRouteCollectionOutputMapper(private val mapper: SimplifiedRouteOutputMapper) : OutputMapper<SimplifiedRouteCollection, SimplifiedRouteCollectionOutput> {
 
     override fun map(from: SimplifiedRouteCollection): SimplifiedRouteCollectionOutput {
         val page = from.nextPage
         return SimplifiedRouteCollectionOutput(
-                if(page == null) null else OutputUtils.personRoutesUrlWithPage(from.routes.first().personIdentifier, page),
+                if (page == null) null else OutputUtils.personRoutesUrlWithPage(from.routes.first().personIdentifier, page),
                 mapper.mapCollection(from.routes)
         )
     }
 
-    fun mapSearch(from : SimplifiedRouteCollection, params : HashMap<String, String>) : SimplifiedRouteCollectionOutput{
+    fun mapSearch(from: SimplifiedRouteCollection, params: HashMap<String, String>): SimplifiedRouteCollectionOutput {
         val page = from.nextPage
-        var next : String? = null
+        var next: String? = null
 
-        if(page != null){
+        if (page != null) {
             next = OutputUtils.searchRoutesUrlWithParams(params, page)
         }
 

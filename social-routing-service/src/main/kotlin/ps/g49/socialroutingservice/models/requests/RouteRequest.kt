@@ -22,7 +22,7 @@ data class RouteRequest(
         val imageReference: String
 ) {
     companion object {
-        fun build(routeInput: RouteInput, personIdentifier : Int): RouteRequest {
+        fun build(routeInput: RouteInput, personIdentifier: Int): RouteRequest {
             return RouteRequest(
                     identifier = null,
                     location = routeInput.location,
@@ -36,12 +36,12 @@ data class RouteRequest(
                     categories = routeInput.categories.map { CategoryRequest(it.name.toLowerCase()) },
                     isCircular = routeInput.isCircular,
                     isOrdered = routeInput.isOrdered,
-                    pointsOfInterest = routeInput.pointsOfInterest?: listOf(),
+                    pointsOfInterest = routeInput.pointsOfInterest ?: listOf(),
                     imageReference = routeInput.imageReference
             )
         }
 
-        fun build(routeInput: RouteInput, personIdentifier : Int, routeIdentifier : Int): RouteRequest {
+        fun build(routeInput: RouteInput, personIdentifier: Int, routeIdentifier: Int): RouteRequest {
             return RouteRequest(
                     identifier = routeIdentifier,
                     location = routeInput.location,
@@ -55,7 +55,7 @@ data class RouteRequest(
                     categories = routeInput.categories.map { CategoryRequest(it.name.toLowerCase()) },
                     isCircular = routeInput.isCircular,
                     isOrdered = routeInput.isOrdered,
-                    pointsOfInterest = routeInput.pointsOfInterest?: listOf(),
+                    pointsOfInterest = routeInput.pointsOfInterest ?: listOf(),
                     imageReference = routeInput.imageReference
             )
         }

@@ -20,27 +20,57 @@ class UnsupportedMediaTypeException : Exception()
  */
 class InsertException : Exception()
 
+/**
+ * thrown when an invalid google token is received
+ */
 class GoogleTokenInvalidException : Exception()
 
+/**
+ * thrown when the authorization header is not present
+ */
 class AuthorizationHeaderException : Exception()
 
-class AuthorizationException : Exception()
-
+/**
+ * thrown when the refresh token is invalid or not present
+ */
 class InvalidRefreshTokenException : Exception()
 
+/**
+ * thrown when a refresh is attempted but the corresponding access token is still valid
+ */
 class RefreshNotAllowedException : Exception()
 
+/**
+ * thrown when an access token is expired
+ */
 class TokenExpiredException : Exception()
 
+/**
+ * thrown when the provided access token is invalid
+ */
 class InvalidAccessTokenException() : Exception()
 
+/**
+ * thrown when the media type is undefined in the request
+ */
 class MediaTypeNotPresentException() : Exception()
 
-class InvalidRouteSearchParameterException(override val message : String) : Exception()
+/**
+ * thrown when one of the search parameters is not present or in an invalid format
+ */
+class InvalidRouteSearchParameterException(override val message: String) : Exception()
 
+/**
+ * thrown when an uknown error occurs
+ */
 class InternalServerErrorException() : Exception()
 
-//thrown when a user requests to change other user data
+/**
+ * thrown when a user attempts to change other user's data
+ */
 class ForbiddenRequestException() : Exception()
 
+/**
+ * thrown when a user attempts to create or update a route but does not provide any categories
+ */
 class RouteCategoriesRequiredException : Exception()

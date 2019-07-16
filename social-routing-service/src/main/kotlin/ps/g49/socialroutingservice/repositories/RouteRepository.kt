@@ -2,11 +2,10 @@ package ps.g49.socialroutingservice.repositories
 
 import org.jdbi.v3.core.Handle
 import ps.g49.socialroutingservice.models.domainModel.*
+import ps.g49.socialroutingservice.models.requests.DeleteRouteRequest
 import ps.g49.socialroutingservice.models.requests.SearchRequest
 
 interface RouteRepository {
-
-    fun findAll(): List<SimplifiedRoute>
 
     fun findByLocation(searchRequest: SearchRequest): SimplifiedRouteCollection
 
@@ -18,7 +17,7 @@ interface RouteRepository {
 
     fun create(connectionHandle: Handle, route: Route) : Int
 
-    fun delete(identifier: Int)
+    fun delete(deleteRouteRequest: DeleteRouteRequest)
 
     fun update(connectionHandle: Handle, route: Route)
 

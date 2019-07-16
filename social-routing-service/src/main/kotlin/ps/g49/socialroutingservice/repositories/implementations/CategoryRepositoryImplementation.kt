@@ -12,7 +12,12 @@ class CategoryRepositoryImplementation(
         private val connectionManager: ConnectionManager,
         private val categoryMapper: CategoryMapper
 ) : CategoryRepository {
+
+    /**
+     * used to retrieve all categories existing in the database
+     */
     override fun findAll(): List<Category> {
         return connectionManager.findMany(CategoryQueries.SELECT_MANY, categoryMapper)
     }
+
 }

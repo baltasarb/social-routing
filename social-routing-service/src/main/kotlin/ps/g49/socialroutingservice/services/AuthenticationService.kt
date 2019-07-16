@@ -10,19 +10,22 @@ import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.SecureRandom
 
+/**
+ * communicates with the authentication related repository and is used by the controllers
+ */
 @Service
 class AuthenticationService(
         private val authenticationRepository: AuthenticationRepository
 ) {
 
-    private val tokenDuration : Int = 86400000 // 1 day in milliseconds
+    private val tokenDuration: Int = 86400000 // 1 day in milliseconds
 
     fun getPersonAuthenticationDataByRefreshToken(connectionHandle: Handle, refreshToken: String): AuthenticationData? {
         return authenticationRepository.findAuthenticationDataByRefreshToken(connectionHandle, refreshToken)
     }
 
     fun storeHashedAuthenticationData(connectionHandle: Handle, authenticationData: AuthenticationData) {
-        authenticationRepository.createOrUpdateAuthenticationData(connectionHandle, authenticationData)
+        authenticationRepository.createAuthenticationData(connectionHandle, authenticationData)
     }
 
     fun generateAuthenticationData(personIdentifier: Int): AuthenticationData {
@@ -33,6 +36,9 @@ class AuthenticationService(
         return AuthenticationData(creationDate, expirationDate, accessToken, refreshToken, personIdentifier)
     }
 
+    /**
+     * generates a token in hexadecimal using secure random and converting the resulting bytes to hex
+     */
     private fun generateToken(): String {
         val sha1Random = SecureRandom.getInstance("SHA1PRNG", "SUN")
         sha1Random.setSeed(SecureRandom().generateSeed(55))
@@ -41,6 +47,9 @@ class AuthenticationService(
         return bytesToHex(values)
     }
 
+    /**
+     * converts the received bytes to an hexadecimal string
+     */
     private fun bytesToHex(bytes: ByteArray): String {
         val hexStringBuffer = StringBuffer()
         for (i in 0 until bytes.size) {
@@ -49,6 +58,9 @@ class AuthenticationService(
         return hexStringBuffer.toString()
     }
 
+    /**
+     * converts a single byte to hexadecimal
+     */
     fun byteToHex(num: Byte): String {
         val hexDigits = CharArray(2)
         hexDigits[0] = Character.forDigit((num.toInt() shr 4) and 0xF, 16)
@@ -56,6 +68,9 @@ class AuthenticationService(
         return String(hexDigits)
     }
 
+    /**
+     * hashed a user's authenticated data so that is can be stored
+     */
     fun hashAuthenticationDataAndGet(authenticationData: AuthenticationData): AuthenticationData {
         return AuthenticationData(
                 authenticationData.creationDate,
@@ -66,6 +81,10 @@ class AuthenticationService(
         )
     }
 
+    /**
+     * hashes a received token to SHA256
+     * @return hexadecimal string of the hashed token
+     */
     fun hashTokenToSHA256(token: String): String {
         val digest = MessageDigest.getInstance(MessageDigestAlgorithms.SHA_256)//todo : try sha3
         val stringBytes = token.toByteArray(StandardCharsets.UTF_8)

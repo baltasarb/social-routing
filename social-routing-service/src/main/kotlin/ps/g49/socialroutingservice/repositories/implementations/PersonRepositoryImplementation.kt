@@ -8,6 +8,9 @@ import ps.g49.socialroutingservice.models.domainModel.Person
 import ps.g49.socialroutingservice.repositories.PersonRepository
 import ps.g49.socialroutingservice.utils.sqlQueries.PersonQueries
 
+/**
+ * repository used to establish a connection to the database regarding every person related transaction
+ */
 @Component
 class PersonRepositoryImplementation(
         private val connectionManager: ConnectionManager,
@@ -37,7 +40,4 @@ class PersonRepositoryImplementation(
                 .execute()
     }
 
-    override fun findBySub(sub : String): Person? {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }

@@ -16,6 +16,9 @@ import ps.g49.socialroutingservice.services.GoogleAuthenticationService
 import ps.g49.socialroutingservice.services.PersonService
 import ps.g49.socialroutingservice.utils.OutputUtils
 
+/**
+ * class responsible for every endpoint related to a route
+ */
 @RestController
 @RequestMapping("/authentication")
 class AuthenticationController(
@@ -26,6 +29,11 @@ class AuthenticationController(
         private val authenticationDataOutputMapper: AuthenticationDataOutputMapper
 ) {
 
+    /**
+     * enpoint used to retrieve valid credentials to further access the API
+     * @param googleRegistrationInput should contain a valid id token string obtained from the google sign in api
+     * @return an object containing a valid access token and and refresh token
+     */
     @PostMapping("/google")
     fun googleRegistration(@RequestBody googleRegistrationInput: GoogleRegistrationInput): ResponseEntity<AuthenticationDataOutput> {
         val googleIdToken = googleAuthenticationService.validateAndGetIdToken(googleRegistrationInput.idTokenString)
@@ -35,11 +43,11 @@ class AuthenticationController(
 
         val connectionHandle = connectionManager.generateHandle()
 
-        connectionHandle.use{
+        connectionHandle.use {
             var personIdentifier = googleAuthenticationService.getPersonIdWithSub(it, subject)
 
             //if the person does not exist, create a new one and add the google authentication to it
-            if (personIdentifier == null){
+            if (personIdentifier == null) {
                 personIdentifier = personService.createPerson(it)
                 googleAuthenticationService.storeGoogleAuthenticationData(it, subject, personIdentifier)
             }
@@ -52,14 +60,19 @@ class AuthenticationController(
             val output = authenticationDataOutputMapper.map(authenticationData)
             val headers = HttpHeaders()
             headers.set("Location", OutputUtils.personUrl(personIdentifier))
-            return OutputUtils.ok(headers,output)
+            return OutputUtils.ok(headers, output)
         }
     }
 
+    /**
+     * endpoint used to refresh the access token belonging to a user
+     * @param refreshAuthenticationDataInput an object containing a valid refresh token used to refresh the corresponding access token
+     * @return an object containing a valid access token and and refresh token
+     */
     @PostMapping("/refresh")
     fun refreshToken(@RequestBody refreshAuthenticationDataInput: RefreshAuthenticationDataInput): ResponseEntity<AuthenticationDataOutput> {
         val connectionHandle = connectionManager.generateHandle()
-        connectionHandle.use{
+        connectionHandle.use {
             val hashedRefreshToken = authenticationService.hashTokenToSHA256(refreshAuthenticationDataInput.refreshToken)
 
             //try to retrieve the user authentication data and throw an exception if not present

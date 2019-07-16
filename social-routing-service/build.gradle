@@ -34,7 +34,6 @@ dependencies {
 	compile group: 'com.google.api-client', name: 'google-api-client', version: '1.29.2'
 
     implementation 'com.google.maps:google-maps-services:0.9.3'
-    //implementation 'org.slf4j:slf4j-simple:1.7.25'
 }
 
 configurations {

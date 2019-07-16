@@ -11,7 +11,7 @@ import java.sql.SQLException
 @Component
 class ConnectionManager {
 
-    companion object{
+    companion object {
         private const val HOST = "localhost"
         private const val PORT = "5432"
         private const val DATABASE_NAME = "SocialRouting"

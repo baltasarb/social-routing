@@ -14,10 +14,12 @@ class GoogleAuthenticationService(
         private val googleAuthenticationRepository: GoogleAuthenticationRepository
 ) {
 
-    companion object{
+    companion object {
+        //the client application identifier in the google api service
         private const val CLIENT_ID = "989313558568-hh544t4t551d4dd04amadvj3sft9hj0t.apps.googleusercontent.com"
     }
 
+    //validates the received id token string using a google library
     fun validateAndGetIdToken(idTokenString: String): GoogleIdToken? {
         val jacksonFactory = JacksonFactory()
         val transport = NetHttpTransport.Builder().build()

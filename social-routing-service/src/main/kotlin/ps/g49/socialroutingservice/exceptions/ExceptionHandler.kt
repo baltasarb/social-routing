@@ -124,7 +124,7 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = [InternalServerErrorException::class, NumberFormatException::class, SQLException::class])
-    fun handleInternalServerErrorException(exception: Exception):ResponseEntity<ProblemJson>{
+    fun handleInternalServerErrorException(exception: Exception): ResponseEntity<ProblemJson> {
         val error = ProblemJson(
                 "https://github.com/baltasarb/social-routing/wiki/Social-Routing-API#internal-server-error",
                 HttpStatus.INTERNAL_SERVER_ERROR.reasonPhrase,

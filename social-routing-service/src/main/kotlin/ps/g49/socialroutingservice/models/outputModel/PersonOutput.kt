@@ -6,5 +6,5 @@ data class PersonOutput(
         val identifier: Int,
         val rating: Double,
         @JsonProperty("routes_url")
-        val routesUrl : String
+        val routesUrl: String
 )

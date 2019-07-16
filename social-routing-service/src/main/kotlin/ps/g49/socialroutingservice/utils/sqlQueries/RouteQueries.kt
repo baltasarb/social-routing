@@ -14,7 +14,7 @@ class RouteQueries {
                 "(:locationIdentifier, :name, :description, :rating, :duration, :circular, :ordered, :imageReference, to_json(:points)) " +
                 "WHERE Identifier = :identifier;"
 
-        const val DELETE = "DELETE FROM Route WHERE identifier = ?;"
+        const val DELETE = "DELETE FROM Route WHERE identifier = ? AND PersonIdentifier = ?;"
 
         const val SELECT_BY_ID = "SELECT Route.Identifier, Route.LocationIdentifier, Route.Name, Route.Description, Route.Rating, Route.Duration," +
                 "Route.DateCreated, Route.Points, Route.PersonIdentifier, Route.Elevation, Route.Circular, Route.Ordered, Route.ImageReference, RouteCategory.CategoryName, PointOfInterest.Identifier as PointOfInterestIdentifier," +
@@ -25,8 +25,6 @@ class RouteQueries {
                 "JOIN PointOfInterest ON PointOfInterest.Identifier = RoutePointOfInterest.PointOfInterestIdentifier " +
                 "WHERE Route.Identifier = :routeIdentifier " +
                 "GROUP BY Route.Identifier, RouteCategory.CategoryName, PointOfInterest.Identifier;"
-
-        const val SELECT_MANY = "SELECT Identifier, LocationIdentifier, Name, Description, Rating, Duration, DateCreated, Points, PersonIdentifier FROM Route;"
 
         const val SELECT_MANY_BY_OWNER_WITH_PAGINATION_AND_COUNT = "" +
                 "SELECT " +

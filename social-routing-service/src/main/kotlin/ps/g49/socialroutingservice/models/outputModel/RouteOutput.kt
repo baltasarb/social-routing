@@ -8,19 +8,19 @@ import java.util.*
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class RouteOutput(
-        val identifier : Int,
-        val location : String,
-        val name : String,
-        val description : String,
-        val rating : Double,
-        val duration : String,
-        val dateCreated : Date,
-        val points : List<GeographicPoint>,
-        val categories : List<CategoryOutput>,
-        val pointsOfInterest : List<PointOfInterest>,
-        val ordered : Boolean,
-        val circular : Boolean,
-        val imageReference : String,
+        val identifier: Int,
+        val location: String,
+        val name: String,
+        val description: String,
+        val rating: Double,
+        val duration: String,
+        val dateCreated: Date,
+        val points: List<GeographicPoint>,
+        val categories: List<CategoryOutput>,
+        val pointsOfInterest: List<PointOfInterest>,
+        val ordered: Boolean,
+        val circular: Boolean,
+        val imageReference: String,
         @JsonProperty("owner_url")
-        val ownerUrl : String
+        val ownerUrl: String
 )

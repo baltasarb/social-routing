@@ -7,7 +7,7 @@ import ps.g49.socialroutingservice.utils.OutputUtils
 
 @Component
 class SimplifiedRouteOutputMapper : OutputMapper<SimplifiedRoute, SimplifiedRouteOutput>, OutputCollectionMapper<SimplifiedRoute, List<SimplifiedRouteOutput>> {
-    override fun mapCollection(list: List<SimplifiedRoute>): List<SimplifiedRouteOutput>{
+    override fun mapCollection(list: List<SimplifiedRoute>): List<SimplifiedRouteOutput> {
         return list.map { map(it) }
     }
 

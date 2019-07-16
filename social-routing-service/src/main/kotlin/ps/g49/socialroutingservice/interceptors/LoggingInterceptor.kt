@@ -7,6 +7,9 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+/**
+ * interceptor used for logging of received requests
+ */
 @Component
 class LoggingInterceptor : HandlerInterceptorAdapter() {
 

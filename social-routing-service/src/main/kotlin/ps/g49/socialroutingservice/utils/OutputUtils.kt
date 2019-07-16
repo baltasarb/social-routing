@@ -4,6 +4,9 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
+/**
+ * class used to generate urls to output and to convert objects into response entities
+ */
 class OutputUtils {
 
     companion object {
@@ -17,18 +20,18 @@ class OutputUtils {
         fun personUrl(personIdentifier: Int): String = "$PERSONS_URL/$personIdentifier"
         fun personRoutesUrl(personIdentifier: Int) = "$PERSONS_URL/$personIdentifier/routes"
         fun routeUrl(routeIdentifier: Int): String = "$ROUTES_URL/$routeIdentifier"
-        fun personRoutesUrlWithPage(personIdentifier: Int, page : Int) : String = personRoutesUrl(personIdentifier) + "?page=$page"
+        fun personRoutesUrlWithPage(personIdentifier: Int, page: Int): String = personRoutesUrl(personIdentifier) + "?page=$page"
 
-        fun searchRoutesUrlWithParams(params : HashMap<String,String>, page : Int) : String {
+        fun searchRoutesUrlWithParams(params: HashMap<String, String>, page: Int): String {
             val stringBuilder = StringBuilder()
 
             stringBuilder.append(SEARCH_ROUTES_URL)
             stringBuilder.append("page=$page")
 
-            val latitude : String? = params["latitude"]
-            val longitude : String? = params["longitude"]
+            val latitude: String? = params["latitude"]
+            val longitude: String? = params["longitude"]
 
-            if((latitude != null) and (longitude != null)) {
+            if ((latitude != null) and (longitude != null)) {
                 stringBuilder.append("&latitude=$latitude")
                 stringBuilder.append("&longitude=$longitude")
             }
@@ -65,7 +68,7 @@ class OutputUtils {
                     .build()
         }
 
-        fun <T> ok (headers: HttpHeaders, body :T) : ResponseEntity<T>{
+        fun <T> ok(headers: HttpHeaders, body: T): ResponseEntity<T> {
             return ResponseEntity(body, headers, HttpStatus.OK)
         }
     }

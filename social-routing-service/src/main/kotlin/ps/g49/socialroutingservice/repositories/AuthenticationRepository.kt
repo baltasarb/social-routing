@@ -9,7 +9,7 @@ interface AuthenticationRepository {
 
     fun findAuthenticationDataByRefreshToken(connectionHandler: Handle, refreshToken: String): AuthenticationData?
 
-    fun createOrUpdateAuthenticationData(connectionHandler: Handle, authenticationData: AuthenticationData)
+    fun createAuthenticationData(connectionHandler: Handle, authenticationData: AuthenticationData)
 
     fun findAuthenticationDataByAccessToken(accessToken: String): AuthenticationData
 
