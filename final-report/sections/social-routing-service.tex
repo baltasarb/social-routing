@@ -99,7 +99,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         This structure allows the mapping of multiple points to a single route.
         Two other very important fields are the booleans ordered and circular. The field ordered is used to store if a route should start only at it's first geographic
         point or if the order of which a user can undergo is not defined. The circular parameter is used to verify if a route ends where it starts,
-        because if that is the case, then the route can be started by the user in any of the route's geographic points-
+        because if that is the case, then the route can be started by the user in any of the route's geographic points.
 
         \subsubsection*{GoogleAuthentication}
         The google authentication table is used to store google account information, more specifically the subject which is primary
@@ -182,7 +182,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
 \section{Social Routing API} \label{apisection}   
     \subsection{Schema} 
         The Social Routing API uses the HTTP protocol as a medium to communicate and all the data sent or received must be in the JSON format.
-        The base endpoint of the API is : http://api.sr.\par
+        The base endpoint of the API is : http://host/api.sr.\par
         Data obtained from the API is either a single resource or a collection of resources. For example, a request
         made to retrieve a route will have as a response a single resource which will contain the representation of that
         route. If a request is made to obtain routes by location then the response will be a collection of resources containing
@@ -195,7 +195,6 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         information about that element that is necessary.
         Examples of both a detailed and summary representation can be found in the Schema Documentation \cite{schemadocs}.    
     
-        \newpage
     
     \subsection{Authentication} \label{authsection}
     The authentication has two different endpoints, one to obtain credentials to access the API and the other to refresh 
@@ -203,7 +202,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     the already obtained access token in the Authorization header of the request.
     
     \subsubsection*{Obtaining credentials} \label{apiobtcred}
-    To obtain API credentials a POST \cite{httppostdocs} request must be made to the endpoint: http://api.sr/auhtentication/google, 
+    To obtain API credentials a POST \cite{httppostdocs} request must be made to the endpoint: http://host/api.sr/auhtentication/google, 
     with the id token string in the body of the request:
     \begin{lstlisting}
     {
@@ -223,14 +222,13 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     To refresh credentials a POST request must be made to the endpoint: http://api.sr/auhtentication/refresh containing in it's
     body the refresh token. If the refresh token is valid a response with a new access token and refresh token is generated.
 
-    \newpage
     \subsection{Supported HTTP Methods}
         Due to the nature of the HTTP protocol, the API supports four different HTTP request methods \cite{apihttpverbsdocs}: GET, POST, PUT and DELETE.
         
         \subsubsection*{GET}
         This method is used to retrieve resources from the API. The request: 
         \begin{verbatim}
-            GET http://api.sr/persons/1 
+            GET http://host/api.sr/persons/1 
         \end{verbatim}
         \vspace{-\baselineskip}
         retrieves a resource representing a person resource with the identifier 1. 
@@ -239,7 +237,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         {
           "identifier": 1,
           "rating": 4,
-          "routesUrl": "http://api.sr/persons/1/routes"
+          "routesUrl": "http://host/api.sr/persons/1/routes"
         }
         \end{lstlisting}
 
@@ -259,7 +257,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
         \subsubsection*{DELETE}
         DELETE, as the name implies is utilized to delete a resource. The request: 
         \begin{verbatim}
-            DELETE http://api.sr/routes/1
+            DELETE http://host/api.sr/routes/1
         \end{verbatim}
         \vspace{-\baselineskip} 
         deletes the route with 1 as identifier. A successful response will have the 200 OK status and an empty body.
@@ -269,7 +267,7 @@ PostgreSQL extension was used as it allows both cartesian and geodesic distances
     A specific page can be requested with the query parameter page. If no page is specified then the first page is assumed by default.
     The request:  
     \begin{verbatim}
-        GET http://api.sr/persons/1/routes?page=1
+        GET http://host/api.sr/persons/1/routes?page=1
     \end{verbatim}
     \vspace{-\baselineskip}
     The response would contain a collection of the first ten routes that a person with identifier 1 created.

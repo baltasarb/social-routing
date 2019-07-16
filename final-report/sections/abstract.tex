@@ -6,9 +6,9 @@ This project consists of a mobile application to allow an application user to
 either create or undergo pedestrian routes. A route is a set of geographical coordinates
 (latitude and longitude) and as such a route is a path formed by sub paths on a map.
 
-To application is structured in two major components, one with the front end, the Social Routing Client
-Application (SRCA) built for Android based devices and the back end, the Social Routing 
-Service (SRS) which exposes it's functionality through an HTTP\cite{httponlinedocs} API\cite{api}.
+The application is structured in two major components, one with the front end, the Social Routing Client
+Application (SRCA), built for Android based devices and the back end, the Social Routing 
+Service (SRS), which exposes it's functionality through an HTTP\cite{httponlinedocs} API\cite{api}.
 
 The SRCA is made for Android users, using Kotlin\cite{kotlinwebsite} as a programming language,
 and the guidelines made available by Google for Android application development.
@@ -26,7 +26,7 @@ As the application requires users to access information such as routes created b
 other users as well as their own, it requires authentication. Both the SRCA and the SRS require the user
 to be authenticated, being that they communicate with each other, the user requests credentials from the 
 SRCA that in turn reaches out to the SRS to get them. This is made with 
-aid of an externa API being the SRS responsible for the generation of user credentials.
+aid of an external API being the SRS responsible for the generation of user credentials.
 
 The major problems encountered were the route search functionality: a user has
 the ability to search for routes near his location, and authentication. The first 

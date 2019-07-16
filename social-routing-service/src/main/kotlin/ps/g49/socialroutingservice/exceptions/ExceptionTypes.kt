@@ -48,12 +48,12 @@ class TokenExpiredException : Exception()
 /**
  * thrown when the provided access token is invalid
  */
-class InvalidAccessTokenException() : Exception()
+class InvalidAccessTokenException : Exception()
 
 /**
  * thrown when the media type is undefined in the request
  */
-class MediaTypeNotPresentException() : Exception()
+class MediaTypeNotPresentException : Exception()
 
 /**
  * thrown when one of the search parameters is not present or in an invalid format
@@ -63,12 +63,12 @@ class InvalidRouteSearchParameterException(override val message: String) : Excep
 /**
  * thrown when an uknown error occurs
  */
-class InternalServerErrorException() : Exception()
+class InternalServerErrorException : Exception()
 
 /**
  * thrown when a user attempts to change other user's data
  */
-class ForbiddenRequestException() : Exception()
+class ForbiddenRequestException : Exception()
 
 /**
  * thrown when a user attempts to create or update a route but does not provide any categories

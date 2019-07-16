@@ -20,20 +20,50 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {3.2.1}Schema}{17}{subsection.3.2.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.2}Authentication}{18}{subsection.3.2.2}% 
+\contentsline {subsection}{\numberline {3.2.2}Authentication}{17}{subsection.3.2.2}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.3}Supported HTTP Methods}{19}{subsection.3.2.3}% 
+\contentsline {subsection}{\numberline {3.2.3}Supported HTTP Methods}{18}{subsection.3.2.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.4}Pagination}{20}{subsection.3.2.4}% 
+\contentsline {subsection}{\numberline {3.2.4}Pagination}{19}{subsection.3.2.4}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.5}Errors}{20}{subsection.3.2.5}% 
+\contentsline {subsection}{\numberline {3.2.5}Errors}{19}{subsection.3.2.5}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.2.6}Hypermedia}{21}{subsection.3.2.6}% 
+\contentsline {subsection}{\numberline {3.2.6}Hypermedia}{20}{subsection.3.2.6}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {3.3}Server}{22}{section.3.3}% 
+\contentsline {section}{\numberline {3.3}Server}{21}{section.3.3}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {3.3.1}Authentication}{24}{subsection.3.3.1}% 
+\contentsline {subsection}{\numberline {3.3.1}Authentication}{23}{subsection.3.3.1}% 
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Social Routing Client Application}{26}{chapter.4}% 
+\contentsline {chapter}{\numberline {4}Social Routing Client Application}{25}{chapter.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}Remote Data Source}{27}{section.4.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.2}Repository}{27}{section.4.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.3}View Models}{28}{section.4.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.4}Activities/Fragments}{28}{section.4.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.1}BaseActivity}{28}{subsection.4.4.1}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.2}LoginActivity}{28}{subsection.4.4.2}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.3}NavigationActivity}{29}{subsection.4.4.3}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.4}RouteCreationActivity}{29}{subsection.4.4.4}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.5}RouteCreationMetadataActivity}{30}{subsection.4.4.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.6}RouteDetailsActivity}{30}{subsection.4.4.6}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.7}RouteRepresentationActivity}{30}{subsection.4.4.7}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.8}RouteSearchActivity}{30}{subsection.4.4.8}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.4.9}UserProfileActivity}{30}{subsection.4.4.9}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.5}External Services}{31}{section.4.5}% 
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.6}Authentication}{31}{section.4.6}% 
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {5}Conclusion}{32}{chapter.5}% 

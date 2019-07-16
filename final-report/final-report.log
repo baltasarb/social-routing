@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  16 JUL 2019 17:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018/W32TeX) (preloaded format=pdflatex 2019.2.25)  16 JUL 2019 23:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -668,15 +668,7 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'final-report.bbl' found.
- (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.bbl
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                endpoint TODO
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-)
+ (c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.bbl)
 Package biblatex Info: Reference section=0 on input line 58.
 Package biblatex Info: Reference segment=0 on input line 58.
 
@@ -740,7 +732,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 
 ]) [6] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/system-architecture.tex
 chapter 2.
-<images/project-structure/system-structure.PNG, id=91, 797.98125pt x 736.7525pt>
+<images/project-structure/system-structure.PNG, id=121, 797.98125pt x 736.7525pt>
 File: images/project-structure/system-structure.PNG Graphic file (type png)
 <use images/project-structure/system-structure.PNG>
 Package pdftex.def Info: images/project-structure/system-structure.PNG  used on input line 8.
@@ -748,14 +740,14 @@ Package pdftex.def Info: images/project-structure/system-structure.PNG  used on 
 [7
 
  <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/system-structure.PNG>] [8]
-<images/project-structure/authentication-diagram.PNG, id=118, 759.83875pt x 542.025pt>
+<images/project-structure/authentication-diagram.PNG, id=148, 759.83875pt x 541.02126pt>
 File: images/project-structure/authentication-diagram.PNG Graphic file (type png)
 <use images/project-structure/authentication-diagram.PNG>
-Package pdftex.def Info: images/project-structure/authentication-diagram.PNG  used on input line 32.
-(pdftex.def)             Requested size: 418.25555pt x 298.36278pt.
+Package pdftex.def Info: images/project-structure/authentication-diagram.PNG  used on input line 31.
+(pdftex.def)             Requested size: 418.25555pt x 297.81026pt.
 ) [9 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/authentication-diagram.png>] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-service.tex
 chapter 3.
-<images/project-structure/service-structure2.PNG, id=125, 768.8725pt x 379.4175pt>
+<images/project-structure/service-structure2.PNG, id=155, 768.8725pt x 379.4175pt>
 File: images/project-structure/service-structure2.PNG Graphic file (type png)
 <use images/project-structure/service-structure2.PNG>
 Package pdftex.def Info: images/project-structure/service-structure2.PNG  used on input line 12.
@@ -763,75 +755,71 @@ Package pdftex.def Info: images/project-structure/service-structure2.PNG  used o
 [10
 
  <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/service-structure2.png>]
-<images/project-structure/dbms-structure.PNG, id=142, 763.85374pt x 549.05125pt>
+<images/project-structure/dbms-structure.PNG, id=172, 763.85374pt x 549.05125pt>
 File: images/project-structure/dbms-structure.PNG Graphic file (type png)
 <use images/project-structure/dbms-structure.PNG>
 Package pdftex.def Info: images/project-structure/dbms-structure.PNG  used on input line 44.
 (pdftex.def)             Requested size: 418.25555pt x 300.63867pt.
  [11 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/dbms-structure.PNG>] [12] [13]
-<images/project-structure/starting-point.PNG, id=186, 548.0475pt x 318.18875pt>
+<images/project-structure/starting-point.PNG, id=216, 548.0475pt x 318.18875pt>
 File: images/project-structure/starting-point.PNG Graphic file (type png)
 <use images/project-structure/starting-point.PNG>
 Package pdftex.def Info: images/project-structure/starting-point.PNG  used on input line 141.
 (pdftex.def)             Requested size: 418.25555pt x 242.83582pt.
  [14 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/starting-point.png>]
-<images/project-structure/circular-example.PNG, id=197, 548.0475pt x 347.2975pt>
+<images/project-structure/circular-example.PNG, id=227, 548.0475pt x 347.2975pt>
 File: images/project-structure/circular-example.PNG Graphic file (type png)
 <use images/project-structure/circular-example.PNG>
 Package pdftex.def Info: images/project-structure/circular-example.PNG  used on input line 151.
 (pdftex.def)             Requested size: 418.25555pt x 265.0511pt.
-<images/project-structure/unordered-example.PNG, id=199, 558.085pt x 293.095pt>
+<images/project-structure/unordered-example.PNG, id=229, 558.085pt x 293.095pt>
 File: images/project-structure/unordered-example.PNG Graphic file (type png)
 <use images/project-structure/unordered-example.PNG>
 Package pdftex.def Info: images/project-structure/unordered-example.PNG  used on input line 158.
 (pdftex.def)             Requested size: 418.25555pt x 219.66417pt.
- [15 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/circular-example.png>] [16 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/unordered-example.png>] [17]
-Underfull \hbox (badness 6944) in paragraph at lines 223--225
+ [15 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/circular-example.png>] [16 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/unordered-example.png>]
+Underfull \hbox (badness 6944) in paragraph at lines 222--224
 \OT1/cmr/m/n/10.95 To re-fresh cre-den-tials a POST re-quest must be made to the end-point:
  []
 
-[18] [19]
-<images/project-structure/hypermedia-relations.PNG, id=267, 653.44125pt x 427.5975pt>
+[17] [18]
+<images/project-structure/hypermedia-relations.PNG, id=292, 653.44125pt x 427.5975pt>
 File: images/project-structure/hypermedia-relations.PNG Graphic file (type png)
 <use images/project-structure/hypermedia-relations.PNG>
-Package pdftex.def Info: images/project-structure/hypermedia-relations.PNG  used on input line 299.
+Package pdftex.def Info: images/project-structure/hypermedia-relations.PNG  used on input line 297.
 (pdftex.def)             Requested size: 418.25555pt x 273.69408pt.
- [20] [21 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/hypermedia-relations.png>] [22] [23]
-<images/project-structure/service-auth.PNG, id=304, 1026.83624pt x 500.87125pt>
+ [19] [20 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/hypermedia-relations.png>] [21] [22]
+<images/project-structure/service-auth.PNG, id=330, 1026.83624pt x 500.87125pt>
 File: images/project-structure/service-auth.PNG Graphic file (type png)
 <use images/project-structure/service-auth.PNG>
-Package pdftex.def Info: images/project-structure/service-auth.PNG  used on input line 377.
+Package pdftex.def Info: images/project-structure/service-auth.PNG  used on input line 375.
 (pdftex.def)             Requested size: 418.25555pt x 204.02106pt.
- [24 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/service-auth.png>]) [25] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-client.tex
+ [23 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/service-auth.png>]) [24] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/social-routing-client.tex
 chapter 4.
-<images/project-structure/social-routing-client-application-structure.PNG, id=333, 733.23938pt x 426.84468pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--11
+
+ []
+
+[25
+
+]
+<images/project-structure/social-routing-client-application-structure.PNG, id=358, 964.60374pt x 551.05875pt>
 File: images/project-structure/social-routing-client-application-structure.PNG Graphic file (type png)
 <use images/project-structure/social-routing-client-application-structure.PNG>
-Package pdftex.def Info: images/project-structure/social-routing-client-application-structure.PNG  used on input line 9.
-(pdftex.def)             Requested size: 418.25555pt x 243.48636pt.
-[26
-
- <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/social-routing-client-application-structure.PNG>]
-Underfull \hbox (badness 10000) in paragraph at lines 16--20
+Package pdftex.def Info: images/project-structure/social-routing-client-application-structure.PNG  used on input line 32.
+(pdftex.def)             Requested size: 418.25555pt x 238.93503pt.
+ [26 <c:/Users/user/Documents/isel/ps/social-routing/final-report/images/project-structure/social-routing-client-application-structure.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 51--55
 
  []
 
-
-Underfull \hbox (badness 5578) in paragraph at lines 22--34
-\OT1/cmr/m/n/10.95 The Repos-i-tory spe-cific to our API (So-cial Rout-ing API) knows all the
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 45--48
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 80--83
 
  []
 
-[27] [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 129--137
-
- []
-
-[30]) [31] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/conclusion.tex
+[28] [29] [30]) [31] (c:/Users/user/Documents/isel/ps/social-routing/final-report/sections/conclusion.tex
 chapter 5.
 ) [32
 
@@ -885,18 +873,18 @@ Package logreq Info: Writing requests to 'final-report.run.xml'.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 87.
  ) 
 Here is how much of TeX's memory you used:
- 18572 strings out of 492616
- 322018 string characters out of 6132768
- 890911 words of memory out of 5000000
- 22061 multiletter control sequences out of 15000+600000
+ 18584 strings out of 492616
+ 322121 string characters out of 6132768
+ 890904 words of memory out of 5000000
+ 22075 multiletter control sequences out of 15000+600000
  11792 words of font info for 41 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,9n,66p,9151b,1306s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,9n,66p,9151b,1308s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.pdf (36 pages, 621710 bytes).
+Output written on c:/Users/user/Documents/isel/ps/social-routing/final-report/final-report.pdf (36 pages, 616762 bytes).
 PDF statistics:
- 707 PDF objects out of 1000 (max. 8388607)
- 632 compressed objects within 7 object streams
- 197 named destinations out of 1000 (max. 500000)
- 208 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 763 PDF objects out of 1000 (max. 8388607)
+ 688 compressed objects within 7 object streams
+ 195 named destinations out of 1000 (max. 500000)
+ 328 words of extra memory for PDF output out of 10000 (max. 10000000)
 

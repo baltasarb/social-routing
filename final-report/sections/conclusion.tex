@@ -1,23 +1,18 @@
 \chapter{Conclusion}
-All the functionalities are currently done but some still need work done to be improved. 
-On the client side both the route search functionality and Live Tracking functionalities are done, albeit in a minimalistic way,
-the route creation and representation functionality are fully implemented and will only change upon addition of new functionalities.
-User authentication, using the google account to authenticate is also completed. 
-The Server side is close to complete lacking only (complete) error handling, finish pagination and search algorithm improvement. 
+All the functionalities are currently done at this point. On the client side all the application flow is done properly, containing the authentication
+that communicates with the Social Routing Service and Google Sign In API, the route search used to find the best possible route by getting 
+authentication information from our service, and the route creation/update that is fully done in the client side and sent to the SRS to be 
+saved and finally the user profile to show the user created routes.The Server side is also fully developed to materialize all the 
+functionalities established initially like the support of the model and its management, server pagination and error handling. 
+The focus on this system is to expose a good route search, to find the route that is the most relevant to the user and the Live Tracking that 
+indicates the path to the route and understands if the user is inside the route while he is traveling in it.
 
-The expectations to this beta version are pretty similar to the current state of the system, however some problems were found configuring the entire system.
-One of the first problems encountered was how a route should be defined. Several iterations were made before arriving at the current one. We avoid saying final
-because the definition of a route is susceptive to change when new functionalities are implemented.
-
-While implementing the Client Application some problems were encountered when utilizing the Google Maps API, namely the API key and the service's usage. 
-Without an account with a credit card associated we were limited to one API call per day, which was limiting our testing capabilities. This was overcome by creating a wallet (offered by the service with an initial value).
-The process that is required to create a route was also a problem, there are some considerations to be had due to the nature of a path: where it starts, 
-where it ends, if it is circular, if it is doable in a determined time amongst others.
-This topic is intertwined with route definition, changes in the definition also change the creation.
-
-The Service had problems initially with the connection to the Database Management System, specifically because the choice of technologies was not the appropriate one, which
-forced a shift to a different one. This used valuable time because two different libraries were learned (Spring Data and JDBI) and later Spring Data was discarded.
-
-Some of the final changes might be the global optimization of the system regarding all the functionalities and the core changes might be in the route Search Algorithm that should have the best
-possible route suggestions, the route live tracking that should send to the user some notifications to help him go through the route and reliable system tests to ensure that 
-everything is working properly. Small adjustments to all functionalities will occur as well to guarantee that the structure and representation are in their best possible state.
+While implementing the Client Application some problems were encountered when utilizing the Google Maps API, namely the API key and the 
+service's usage. Without an account with a credit card associated we were limited to one API call per day, which was limiting our testing 
+capabilities. This was overcome by creating a wallet (offered by the service with an initial value). The process that is required to create 
+a route was also a problem, there are some considerations to be had due to the nature of a path: where it starts, where it ends, if it is 
+circular, if it is doable in a determined time amongst others. This topic is intertwined with route definition, changes in the definition 
+also change the creation. The Service had problems initially with the connection to the Database Management System, specifically because 
+the choice of technologies was not the appropriate one, which forced a shift to a different one. This used valuable time because two different 
+libraries were learned (Spring Data and JDBI) and later Spring Data was discarded. All the system is doing the purpose, with some optimization 
+in some functionalities like the search and the live tracking. 
