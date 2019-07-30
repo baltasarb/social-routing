@@ -98,7 +98,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
         routesRecyclerView.layoutManager = layoutManager
         routesRecyclerView.itemAnimator = DefaultItemAnimator()
         routesRecyclerView.adapter = adapter
-        routesRecyclerView.addOnScrollListener(ScrollListener {
+        /*routesRecyclerView.addOnScrollListener(ScrollListener {
             if (simplifiedRouteInputCollection.next != null) {
                 val liveData = socialRoutingViewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
                 handleRequestedData(
@@ -107,7 +107,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
                     ::errorHandlerRouteSearch
                 )
             }
-        })
+        })*/
     }
 
     override fun onRouteClick(position: Int) {

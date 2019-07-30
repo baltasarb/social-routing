@@ -20,7 +20,7 @@ interface SocialRoutingWebService {
     fun searchRoutes(
         @Url searchRoutesUrl: String,
         @Query("location") location: String,
-        @Query("categories") categories: List<Category>,
+        @Query("categories") categories: String,
         @Query("duration") duration: String
     ): Call<SimplifiedRouteInputCollection>
 
@@ -28,7 +28,7 @@ interface SocialRoutingWebService {
     fun searchRoutes(
         @Url searchRoutesUrl: String,
         @Query("location") location: String,
-        @Query("categories") categories: List<Category>,
+        @Query("categories") categories: String,
         @Query("duration") duration: String,
         @Query("coordinates") coordinates: Point
     ): Call<SimplifiedRouteInputCollection>

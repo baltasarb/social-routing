@@ -86,7 +86,7 @@ class AuthenticationRepositoryImplementation(
      * @param accessToken the access token used to search the database
      */
     override fun findAuthenticationDataByAccessToken(accessToken: String): AuthenticationData {
-        val params = hashMapOf<String, Any>(accessToken to "accessToken")
+        val params = hashMapOf<String, Any>("accessToken" to accessToken)
         return connectionManager.findOnlyByParams(
                 AuthenticationQueries.FIND_AUTHENTICATION_DATA_BY_ACCESS_TOKEN,
                 authenticationDataMapper as RowMapper<AuthenticationData>,

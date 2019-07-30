@@ -158,10 +158,14 @@ class SocialRoutingRepository @Inject constructor(
         val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
         resource.value = Resource.loading()
 
+        var categoriesStr = categories.first().name
+        for (idx in 1 until categories.size) {
+            categoriesStr += ",${categories[idx].name}"
+        }
         val call = socialRoutingWebService.searchRoutes(
             searchRoutesUrl,
             locationId,
-            categories,
+            categoriesStr,
             duration
         )
         genericEnqueue(
@@ -183,10 +187,15 @@ class SocialRoutingRepository @Inject constructor(
         val resource = MutableLiveData<Resource<SimplifiedRouteInputCollection>>()
         resource.value = Resource.loading()
 
+        var categoriesStr = categories.first().name
+        for (idx in 1 until categories.size) {
+            categoriesStr += ",${categories[idx].name}"
+        }
+
         val call = socialRoutingWebService.searchRoutes(
             searchRoutesUrl,
             locationId,
-            categories,
+            categoriesStr,
             duration,
             coordinates
         )

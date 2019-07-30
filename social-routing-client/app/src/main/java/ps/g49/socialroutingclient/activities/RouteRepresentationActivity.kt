@@ -1,6 +1,7 @@
 package ps.g49.socialroutingclient.activities
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -29,8 +30,7 @@ import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationSettingsStatusCodes
 import android.content.IntentSender
-import android.widget.Button
-import android.widget.RadioButton
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import ps.g49.socialroutingclient.model.domainModel.Point
 import java.util.*
@@ -50,7 +50,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
     companion object {
         const val ROUTE_REPRESENTATION_DETAILS_MESSAGE = "ROUTE_REPRESENTATION_DETAILS_MESSAGE"
-        const val TIME_TO_CHECK_LOCATION = 5000
+        const val TIME_TO_CHECK_LOCATION = 2000
         const val DEFAULT_MODE_OF_TRANSPORT = "walking"
     }
 
@@ -127,7 +127,8 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
 
     private fun successHandlerPlaceOfInterest(placeDetailsResponse: PlaceDetailsResponse?) {
         val details = placeDetailsResponse!!.results
-        googleMapsManager.addRepresentativeMarkerForPlaces(details.geometry.location, details.name)
+        if (details != null)
+            googleMapsManager.addRepresentativeMarkerForPlaces(details.geometry.location, details.name)
     }
 
     fun routeDetailsOnClick(view: View) {
@@ -166,7 +167,7 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         )
         handleRequestedData(liveData, ::successHandlerDirections, ::errorHandlerDirections)
         // Start Async Timer Task
-        asyncTimerTaskLocation(pointToGo, route.points, route.ordered)
+        asyncTimerTaskLocation(pointToGo, route.points, route.ordered, this)
 
         liveTrackingButton.visibility = View.INVISIBLE
     }
@@ -286,7 +287,8 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
     private fun asyncTimerTaskLocation(
         pointToGo: Point,
         points: List<Point>,
-        isOrdered: Boolean
+        isOrdered: Boolean,
+        context: Context
     ) {
         val timer = Timer()
         val timerTask = object : TimerTask() {
@@ -295,6 +297,11 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
             override fun run() {
                 // ver dois pontos
                 //fazer reta e confirmar se interseta o range do user
+                val currentLocation = socialRoutingApplication.getUserCurrentLocation()
+                val cuurPoint = Point(currentLocation.latitude, currentLocation.longitude)
+                if ( findClosestPoint(cuurPoint, points).equals(points.last()) ) {
+                    finish()
+                }
             }
         }
         timer.schedule(timerTask, TIME_TO_CHECK_LOCATION.toLong())

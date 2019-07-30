@@ -46,7 +46,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
     private lateinit var socialRoutingViewModel: SocialRoutingViewModel
     private lateinit var socialRoutingApplication: SocialRoutingApplication
     private lateinit var routesSearched: MutableList<RouteInput>
-    private lateinit var categories: List<Category>
+    private lateinit var categories: MutableList<Category>
     private var nextPage: String? = null
 
     companion object {
@@ -70,6 +70,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         socialRoutingViewModel = getViewModel(viewModelFactory)
 
         routesSearched = mutableListOf()
+        categories = mutableListOf()
         requestCategories()
     }
 
@@ -87,7 +88,7 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
     }
 
     private fun successHandlerCategories(categoryCollection: CategoryCollectionInput?) {
-        categories = categoryCollection!!.categories
+        categories = categoryCollection!!.categories.toMutableList()
     }
 
     override fun initView() {

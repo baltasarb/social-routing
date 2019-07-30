@@ -61,7 +61,7 @@ class RouteController(
     fun createRoute(@RequestBody route: RouteInput, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
         connectionHandle.use {
-            val routeRequest = RouteRequest.build(route, 100/*personIdentifier*/)
+            val routeRequest = RouteRequest.build(route, personIdentifier)
             val routeIdentifier = routeService.createRoute(it, routeRequest)
             val headers = HttpHeaders()
             headers.set("Location", OutputUtils.routeUrl(routeIdentifier))
@@ -77,7 +77,7 @@ class RouteController(
     fun updateRoute(@PathVariable identifier: Int, @RequestBody route: RouteInput, @RequestAttribute personIdentifier: Int): ResponseEntity<Void> {
         val connectionHandle = connectionManager.generateHandle()
         connectionHandle.use {
-            val routeRequest = RouteRequest.build(route, 100, identifier)
+            val routeRequest = RouteRequest.build(route, personIdentifier, identifier)
 
             routeService.updateRoute(it, routeRequest)
 

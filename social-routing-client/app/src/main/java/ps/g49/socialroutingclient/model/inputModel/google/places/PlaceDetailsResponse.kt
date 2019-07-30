@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonProperty
 data class PlaceDetailsResponse (
     @JsonProperty("html_attributions")
     val htmlAttributions: List<String>,
-    val results: PlaceDetailsResult
+    val results: PlaceDetailsResult?
 )

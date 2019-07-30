@@ -352,10 +352,10 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback,
             val markersRequiredMessage = getString(R.string.markers_required)
             showToast(markersRequiredMessage)
         } else {
+            sliding_layout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
             val displayMetrics = DisplayMetrics()
             windowManager.defaultDisplay.getMetrics(displayMetrics)
             sliding_layout.panelHeight = displayMetrics.heightPixels / 3
-            sliding_layout.panelState = SlidingUpPanelLayout.PanelState.EXPANDED
 
             val markerPoints = mMapManager.getMarkerPoints()
             for (markerPoint in markerPoints) {
