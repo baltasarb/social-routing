@@ -32,7 +32,6 @@ import ps.g49.socialroutingclient.model.domainModel.Point
 import ps.g49.socialroutingclient.model.domainModel.Search
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.reverse.ReverseGeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.CategoryCollectionInput
-import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
@@ -203,18 +202,6 @@ class NavigationActivity : BaseActivity(), NavigationView.OnNavigationItemSelect
         cards_recyclerview.layoutManager = layoutManager
         cards_recyclerview.itemAnimator = DefaultItemAnimator()
         cards_recyclerview.adapter = adapter
-        cards_recyclerview.addOnScrollListener(
-            ScrollListener {
-                if (simplifiedRouteInputCollection.next != null) {
-                    val liveData = socialRoutingViewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
-                    handleRequestedData(
-                        liveData,
-                        ::successHandlerRouteSearch,
-                        ::errorHandler
-                    )
-                }
-            }
-        )
     }
 
     override fun onRouteClick(position: Int) {

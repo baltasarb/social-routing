@@ -28,7 +28,6 @@ import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingRes
 import ps.g49.socialroutingclient.model.inputModel.google.places.PlacesResponse
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteDetailedInput
 import ps.g49.socialroutingclient.utils.GoogleMapsManager
-import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import java.lang.Math.pow
@@ -214,17 +213,6 @@ class RouteCreationActivity : BaseActivity(), OnMapReadyCallback,
         dragView_recyclerView.layoutManager = layoutManager
         dragView_recyclerView.itemAnimator = DefaultItemAnimator()
         dragView_recyclerView.adapter = adapter
-        dragView_recyclerView.addOnScrollListener(
-            ScrollListener {
-                if (placeResultsWaiting.isNotEmpty()) {
-                    for (idx in 0 until MAX_PLACES_OF_INTEREST_TO_SHOW)
-                        placeResults.add(placeResultsWaiting.removeAt(idx))
-                    setRecyclerView()
-                }
-                else if (nextPageTokens.isNotEmpty())
-                    requestNextPageOfPlacesOfInterest(nextPageTokens.removeAt(0))
-            }
-        )
 
         finishButton.visibility = View.GONE
         routeMetadataButton.visibility = View.VISIBLE

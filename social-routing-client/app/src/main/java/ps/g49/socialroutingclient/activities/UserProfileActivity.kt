@@ -11,13 +11,11 @@ import ps.g49.socialroutingclient.R
 import ps.g49.socialroutingclient.SocialRoutingApplication
 import ps.g49.socialroutingclient.adapters.SearchRoutesAdapter
 import ps.g49.socialroutingclient.kotlinx.getViewModel
-import ps.g49.socialroutingclient.model.domainModel.UserAccount
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.PersonInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
 import ps.g49.socialroutingclient.adapters.listeners.OnRouteListener
 import ps.g49.socialroutingclient.dagger.factory.ViewModelFactory
-import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.UserProfileViewModel
 import javax.inject.Inject
 
@@ -81,12 +79,6 @@ class UserProfileActivity : BaseActivity(), OnRouteListener {
         userRoutesRecyclerView.layoutManager = layoutManager
         userRoutesRecyclerView.itemAnimator = DefaultItemAnimator()
         userRoutesRecyclerView.adapter = adapter
-        userRoutesRecyclerView.addOnScrollListener(ScrollListener {
-            if (simplifiedRouteInputCollection.next != null) {
-                val liveData = viewModel.genericGet<SimplifiedRouteInputCollection>(simplifiedRouteInputCollection.next)
-                handleRequestedData(liveData, ::successHandlerUserRoutes)
-            }
-        })
     }
 
     override fun onRouteClick(position: Int) {

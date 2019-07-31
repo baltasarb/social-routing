@@ -66,6 +66,7 @@ class SearchRoutesAdapter(
         val route = routes.get(position)
         holder.nameTextView.text = route.name
         holder.ratingTextView.text = route.rating.toString()
+        holder.editImageView.visibility = View.GONE
         if (isEditable) {
             holder.editImageView.visibility = View.VISIBLE
             holder.editImageView.setOnClickListener {

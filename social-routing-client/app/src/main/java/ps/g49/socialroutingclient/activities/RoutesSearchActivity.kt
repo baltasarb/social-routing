@@ -17,7 +17,6 @@ import ps.g49.socialroutingclient.model.domainModel.Search
 import ps.g49.socialroutingclient.model.inputModel.google.geocoding.GeoCodingResponse
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.RouteInput
 import ps.g49.socialroutingclient.model.inputModel.socialRouting.SimplifiedRouteInputCollection
-import ps.g49.socialroutingclient.utils.ScrollListener
 import ps.g49.socialroutingclient.viewModel.GoogleViewModel
 import ps.g49.socialroutingclient.viewModel.SocialRoutingViewModel
 import javax.inject.Inject
@@ -83,7 +82,7 @@ class RoutesSearchActivity : BaseActivity(), OnRouteListener {
             emptySearchRoutesNavigationTextView.visibility = View.VISIBLE
         else {
             val list = simplifiedRouteInputCollection.routes
-            routesSearched.addAll(list)
+            routesSearched = list.toMutableList()
             setRecyclerView(simplifiedRouteInputCollection)
         }
     }

@@ -45,8 +45,8 @@ class PersonController(
      * @return a collection of simplified routes
      */
     @GetMapping("/{identifier}/routes")
-    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam page: Int = 1): ResponseEntity<SimplifiedRouteCollectionOutput> {
-        val userRoutesRequest = PersonRoutesRequest.build(identifier, page)
+    fun findUserCreatedRoutes(@PathVariable identifier: Int, @RequestParam page: Int?): ResponseEntity<SimplifiedRouteCollectionOutput> {
+        val userRoutesRequest = PersonRoutesRequest.build(identifier, if (page == null) 1 else page)
         val simplifiedRouteCollection = personService.findUserCreatedRoutes(userRoutesRequest)
         val output = simplifiedRouteCollectionOutputMapper.map(simplifiedRouteCollection)
         return OutputUtils.ok(output)

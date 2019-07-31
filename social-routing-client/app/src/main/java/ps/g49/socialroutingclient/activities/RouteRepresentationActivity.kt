@@ -151,25 +151,29 @@ class RouteRepresentationActivity : BaseActivity(), OnMapReadyCallback {
         // show Initial Form
         showFormToTransportMode()
         // Show path to route
-        val currentLocation = socialRoutingApplication.getUserCurrentLocation()
-        val currentPoint = Point(currentLocation.latitude, currentLocation.longitude)
+        if (socialRoutingApplication.isLocationFound()) {
+            val currentLocation = socialRoutingApplication.getUserCurrentLocation()
 
-        val pointToGo =
-            if (route.circular)
-                findClosestPoint(currentPoint, route.points)
-            else
-                route.points.first()
+            val currentPoint = Point(currentLocation.latitude, currentLocation.longitude)
 
-        val liveData = googleViewModel.getDirections(
-            currentPoint,
-            pointToGo,
-            modeOfTransport
-        )
-        handleRequestedData(liveData, ::successHandlerDirections, ::errorHandlerDirections)
-        // Start Async Timer Task
-        asyncTimerTaskLocation(pointToGo, route.points, route.ordered, this)
+            val pointToGo =
+                if (route.circular)
+                    findClosestPoint(currentPoint, route.points)
+                else
+                    route.points.first()
 
-        liveTrackingButton.visibility = View.INVISIBLE
+            val liveData = googleViewModel.getDirections(
+                currentPoint,
+                pointToGo,
+                modeOfTransport
+            )
+            handleRequestedData(liveData, ::successHandlerDirections, ::errorHandlerDirections)
+            // Start Async Timer Task
+            asyncTimerTaskLocation(pointToGo, route.points, route.ordered, this)
+
+            liveTrackingButton.visibility = View.INVISIBLE
+        }
+        else showToast("Could not find user location, try to turn on GPS.")
     }
 
     private fun tryToTurnOnGPS() {
