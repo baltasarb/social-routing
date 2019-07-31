@@ -19,7 +19,7 @@ class AuthenticationInterceptor(
         val uri = request.requestURI
 
         //if the user is attempting to access the registration or root endpoints no authentication is necessary
-        if ((uri == "/api.sr/") or uri.contains("/google"))
+        if ((uri == "/api.sr/") or uri.contains("/authentication"))
             return true
 
         //if the header is not present the request is invalid
